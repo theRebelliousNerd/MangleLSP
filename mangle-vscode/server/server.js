@@ -17,6 +17,8 @@ const connection = (0, node_1.createConnection)(node_1.ProposedFeatures.all);
 // Create document manager
 const documents = new node_1.TextDocuments(vscode_languageserver_textdocument_1.TextDocument);
 const documentStates = new Map();
+// Validation debouncing - prevents excessive revalidation during rapid typing
+const validationTimeouts = new Map();
 const defaultSettings = {
     maxNumberOfProblems: 100,
     enableSemanticAnalysis: true,
@@ -118,16 +120,41 @@ documents.onDidOpen((event) => {
  * Document content changed.
  */
 documents.onDidChangeContent((change) => {
-    validateDocument(change.document);
+    scheduleValidation(change.document);
 });
+/**
+ * Schedule validation with debouncing.
+ * Prevents excessive revalidation during rapid typing.
+ */
+function scheduleValidation(document) {
+    const uri = document.uri;
+    // Clear any pending validation for this document
+    const existing = validationTimeouts.get(uri);
+    if (existing) {
+        clearTimeout(existing);
+    }
+    // Schedule new validation with 200ms delay
+    const timeout = setTimeout(() => {
+        validationTimeouts.delete(uri);
+        validateDocument(document);
+    }, 200);
+    validationTimeouts.set(uri, timeout);
+}
 /**
  * Document closed.
  */
 documents.onDidClose((event) => {
-    documentSettings.delete(event.document.uri);
-    documentStates.delete(event.document.uri);
+    const uri = event.document.uri;
+    // Clear any pending validation timeout
+    const timeout = validationTimeouts.get(uri);
+    if (timeout) {
+        clearTimeout(timeout);
+        validationTimeouts.delete(uri);
+    }
+    documentSettings.delete(uri);
+    documentStates.delete(uri);
     // Clear diagnostics
-    connection.sendDiagnostics({ uri: event.document.uri, diagnostics: [] });
+    connection.sendDiagnostics({ uri, diagnostics: [] });
 });
 /**
  * Validate a document and publish diagnostics.
@@ -165,6 +192,56 @@ async function validateDocument(document) {
                 break;
             }
             diagnostics.push(semanticErrorToDiagnostic(error));
+        }
+    }
+    // Stratification errors (negation cycles)
+    if (parseResult.unit && settings.enableSemanticAnalysis) {
+        const stratErrors = (0, index_2.checkStratification)(parseResult.unit);
+        for (const error of stratErrors) {
+            if (diagnostics.length >= settings.maxNumberOfProblems) {
+                break;
+            }
+            diagnostics.push(stratificationErrorToDiagnostic(error));
+        }
+        // Unbounded recursion warnings
+        const recursionWarnings = (0, index_2.checkUnboundedRecursion)(parseResult.unit);
+        for (const warning of recursionWarnings) {
+            if (diagnostics.length >= settings.maxNumberOfProblems) {
+                break;
+            }
+            diagnostics.push(stratificationErrorToDiagnostic(warning));
+        }
+        // Cartesian explosion warnings
+        const cartesianWarnings = (0, index_2.checkCartesianExplosion)(parseResult.unit);
+        for (const warning of cartesianWarnings) {
+            if (diagnostics.length >= settings.maxNumberOfProblems) {
+                break;
+            }
+            diagnostics.push(stratificationErrorToDiagnostic(warning));
+        }
+        // Late filtering warnings
+        const lateFilterWarnings = (0, index_2.checkLateFiltering)(parseResult.unit);
+        for (const warning of lateFilterWarnings) {
+            if (diagnostics.length >= settings.maxNumberOfProblems) {
+                break;
+            }
+            diagnostics.push(stratificationErrorToDiagnostic(warning));
+        }
+        // Late negation warnings
+        const lateNegationWarnings = (0, index_2.checkLateNegation)(parseResult.unit);
+        for (const warning of lateNegationWarnings) {
+            if (diagnostics.length >= settings.maxNumberOfProblems) {
+                break;
+            }
+            diagnostics.push(stratificationErrorToDiagnostic(warning));
+        }
+        // Multiple independent variables (massive Cartesian)
+        const multiIndepWarnings = (0, index_2.checkMultipleIndependentVars)(parseResult.unit);
+        for (const warning of multiIndepWarnings) {
+            if (diagnostics.length >= settings.maxNumberOfProblems) {
+                break;
+            }
+            diagnostics.push(stratificationErrorToDiagnostic(warning));
         }
     }
     // Send diagnostics
@@ -214,6 +291,32 @@ function semanticErrorToDiagnostic(error) {
     };
 }
 /**
+ * Convert a stratification error to an LSP diagnostic.
+ */
+function stratificationErrorToDiagnostic(error) {
+    let severity;
+    switch (error.severity) {
+        case 'error':
+            severity = node_1.DiagnosticSeverity.Error;
+            break;
+        case 'warning':
+            severity = node_1.DiagnosticSeverity.Warning;
+            break;
+        default:
+            severity = node_1.DiagnosticSeverity.Error;
+    }
+    return {
+        severity,
+        range: {
+            start: { line: error.range.start.line - 1, character: error.range.start.column },
+            end: { line: error.range.end.line - 1, character: error.range.end.column },
+        },
+        message: error.message,
+        source: 'mangle-stratification',
+        code: error.code,
+    };
+}
+/**
  * Get the symbol table for a document.
  */
 function getSymbolTable(state) {
@@ -229,111 +332,187 @@ function getSymbolTable(state) {
  * Hover provider.
  */
 connection.onHover((params) => {
-    const state = documentStates.get(params.textDocument.uri);
-    if (!state || !state.parseResult.unit) {
+    try {
+        const state = documentStates.get(params.textDocument.uri);
+        if (!state || !state.parseResult.unit) {
+            return null;
+        }
+        const symbolTable = getSymbolTable(state);
+        if (!symbolTable) {
+            return null;
+        }
+        return (0, index_3.getHover)(state.parseResult.unit, symbolTable, params.position);
+    }
+    catch (e) {
+        connection.console.error(`Hover error: ${e}`);
         return null;
     }
-    const symbolTable = getSymbolTable(state);
-    if (!symbolTable) {
-        return null;
-    }
-    return (0, index_3.getHover)(state.parseResult.unit, symbolTable, params.position);
 });
 /**
  * Completion provider.
  */
 connection.onCompletion((params) => {
-    const state = documentStates.get(params.textDocument.uri);
-    const document = documents.get(params.textDocument.uri);
-    if (!document) {
+    try {
+        const state = documentStates.get(params.textDocument.uri);
+        const document = documents.get(params.textDocument.uri);
+        if (!document) {
+            return [];
+        }
+        const symbolTable = state ? getSymbolTable(state) : null;
+        const unit = state?.parseResult.unit || null;
+        return (0, index_3.getCompletions)(document, unit, symbolTable, params.position);
+    }
+    catch (e) {
+        connection.console.error(`Completion error: ${e}`);
         return [];
     }
-    const symbolTable = state ? getSymbolTable(state) : null;
-    const unit = state?.parseResult.unit || null;
-    return (0, index_3.getCompletions)(document, unit, symbolTable, params.position);
 });
 /**
  * Completion resolve provider.
  */
 connection.onCompletionResolve((item) => {
-    return (0, index_3.resolveCompletion)(item);
+    try {
+        return (0, index_3.resolveCompletion)(item);
+    }
+    catch (e) {
+        connection.console.error(`Completion resolve error: ${e}`);
+        return item;
+    }
 });
 /**
  * Go to definition provider.
  */
 connection.onDefinition((params) => {
-    const state = documentStates.get(params.textDocument.uri);
-    if (!state || !state.parseResult.unit) {
+    try {
+        const state = documentStates.get(params.textDocument.uri);
+        if (!state || !state.parseResult.unit) {
+            return null;
+        }
+        const symbolTable = getSymbolTable(state);
+        if (!symbolTable) {
+            return null;
+        }
+        return (0, index_3.getDefinition)(params.textDocument.uri, symbolTable, params.position);
+    }
+    catch (e) {
+        connection.console.error(`Definition error: ${e}`);
         return null;
     }
-    const symbolTable = getSymbolTable(state);
-    if (!symbolTable) {
-        return null;
-    }
-    return (0, index_3.getDefinition)(params.textDocument.uri, state.parseResult.unit, symbolTable, params.position);
 });
 /**
  * Find references provider.
  */
 connection.onReferences((params) => {
-    const state = documentStates.get(params.textDocument.uri);
-    if (!state || !state.parseResult.unit) {
+    try {
+        const state = documentStates.get(params.textDocument.uri);
+        if (!state || !state.parseResult.unit) {
+            return [];
+        }
+        const symbolTable = getSymbolTable(state);
+        if (!symbolTable) {
+            return [];
+        }
+        return (0, index_3.findReferences)(params.textDocument.uri, symbolTable, params.position, params.context);
+    }
+    catch (e) {
+        connection.console.error(`References error: ${e}`);
         return [];
     }
-    const symbolTable = getSymbolTable(state);
-    if (!symbolTable) {
-        return [];
-    }
-    return (0, index_3.findReferences)(params.textDocument.uri, state.parseResult.unit, symbolTable, params.position, params.context);
 });
 /**
  * Document symbols provider.
  */
 connection.onDocumentSymbol((params) => {
-    const state = documentStates.get(params.textDocument.uri);
-    if (!state || !state.parseResult.unit) {
+    try {
+        const state = documentStates.get(params.textDocument.uri);
+        if (!state || !state.parseResult.unit) {
+            return [];
+        }
+        return (0, index_3.getDocumentSymbols)(state.parseResult.unit);
+    }
+    catch (e) {
+        connection.console.error(`Document symbols error: ${e}`);
         return [];
     }
-    return (0, index_3.getDocumentSymbols)(state.parseResult.unit);
 });
 /**
  * Document formatting provider.
  */
 connection.onDocumentFormatting((params) => {
-    const state = documentStates.get(params.textDocument.uri);
-    const document = documents.get(params.textDocument.uri);
-    if (!state || !state.parseResult.unit || !document) {
+    try {
+        const state = documentStates.get(params.textDocument.uri);
+        const document = documents.get(params.textDocument.uri);
+        if (!state || !state.parseResult.unit || !document) {
+            return [];
+        }
+        return (0, index_3.formatDocument)(document, state.parseResult.unit, params.options);
+    }
+    catch (e) {
+        connection.console.error(`Formatting error: ${e}`);
         return [];
     }
-    return (0, index_3.formatDocument)(document, state.parseResult.unit, params.options);
 });
 /**
  * Prepare rename provider.
  */
 connection.onPrepareRename((params) => {
-    const state = documentStates.get(params.textDocument.uri);
-    if (!state || !state.parseResult.unit) {
+    try {
+        const state = documentStates.get(params.textDocument.uri);
+        if (!state || !state.parseResult.unit) {
+            return null;
+        }
+        const symbolTable = getSymbolTable(state);
+        if (!symbolTable) {
+            return null;
+        }
+        return (0, index_3.prepareRename)(state.parseResult.unit, symbolTable, params.position);
+    }
+    catch (e) {
+        connection.console.error(`Prepare rename error: ${e}`);
         return null;
     }
-    const symbolTable = getSymbolTable(state);
-    if (!symbolTable) {
-        return null;
-    }
-    return (0, index_3.prepareRename)(state.parseResult.unit, symbolTable, params.position);
 });
 /**
  * Rename provider.
  */
 connection.onRenameRequest((params) => {
-    const state = documentStates.get(params.textDocument.uri);
-    if (!state || !state.parseResult.unit) {
+    try {
+        const state = documentStates.get(params.textDocument.uri);
+        if (!state || !state.parseResult.unit) {
+            return null;
+        }
+        const symbolTable = getSymbolTable(state);
+        if (!symbolTable) {
+            return null;
+        }
+        return (0, index_3.doRename)(params.textDocument.uri, state.parseResult.unit, symbolTable, params.position, params.newName);
+    }
+    catch (e) {
+        connection.console.error(`Rename error: ${e}`);
         return null;
     }
-    const symbolTable = getSymbolTable(state);
-    if (!symbolTable) {
-        return null;
+});
+/**
+ * Shutdown handler.
+ * Called when the client requests the server to shut down.
+ */
+connection.onShutdown(() => {
+    connection.console.log('Mangle LSP server shutting down');
+    // Clear all pending validation timeouts
+    for (const timeout of validationTimeouts.values()) {
+        clearTimeout(timeout);
     }
-    return (0, index_3.doRename)(params.textDocument.uri, state.parseResult.unit, symbolTable, params.position, params.newName);
+    validationTimeouts.clear();
+    // Clean up document caches
+    documentStates.clear();
+    documentSettings.clear();
+});
+/**
+ * Exit handler.
+ * Called when the connection is closed.
+ */
+connection.onExit(() => {
+    process.exit(0);
 });
 // Start listening
 documents.listen(connection);

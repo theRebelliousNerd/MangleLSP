@@ -28,14 +28,11 @@ export declare function toRange(range: SourceRange): Range;
  */
 export declare function fromRange(range: Range): SourceRange;
 /**
- * Create a SourcePosition from ANTLR token information.
- * ANTLR uses 1-indexed lines and 0-indexed columns.
+ * Check if a position (line, column) is within a SourceRange.
+ * Uses Mangle 1-indexed lines, 0-indexed columns.
+ * This is the canonical implementation - use this instead of local copies.
  */
-export declare function positionFromToken(line: number, column: number, offset: number): SourcePosition;
-/**
- * Create a SourceRange from ANTLR start/stop tokens.
- */
-export declare function rangeFromTokens(startLine: number, startColumn: number, startOffset: number, stopLine: number, stopColumn: number, stopOffset: number, stopLength: number): SourceRange;
+export declare function isWithinSourceRange(line: number, column: number, range: SourceRange): boolean;
 /**
  * Check if a position is within a range.
  * Uses LSP 0-indexed positions.

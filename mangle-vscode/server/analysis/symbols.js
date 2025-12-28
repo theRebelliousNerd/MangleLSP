@@ -8,6 +8,23 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SymbolTable = void 0;
 exports.buildSymbolTable = buildSymbolTable;
+const ast_1 = require("../parser/ast");
+const position_1 = require("../utils/position");
+/**
+ * Calculate the predicate name range from an atom.
+ * The name starts at the atom's start position and extends for the length of the predicate name.
+ */
+function calculatePredicateNameRange(atom) {
+    const nameLength = atom.predicate.symbol.length;
+    return {
+        start: { ...atom.range.start },
+        end: {
+            line: atom.range.start.line,
+            column: atom.range.start.column + nameLength,
+            offset: atom.range.start.offset + nameLength,
+        },
+    };
+}
 /**
  * Symbol table for a Mangle source file.
  */
@@ -41,21 +58,29 @@ class SymbolTable {
         let info = this.predicates.get(key);
         // Extract documentation string from descr atoms if present
         const docString = this.extractDocumentation(decl.descr);
+        // Calculate the name range from the declared atom
+        const nameRange = calculatePredicateNameRange(decl.declaredAtom);
         if (!info) {
             info = {
                 symbol: decl.declaredAtom.predicate,
                 declLocation: decl.range,
+                declNameRange: nameRange,
                 definitions: [],
+                definitionNameRanges: [],
                 references: [],
+                referenceNameRanges: [],
                 documentation: docString,
                 isExternal: this.detectIsExternal(decl.descr),
+                isPrivate: this.detectIsPrivate(decl.descr),
             };
             this.predicates.set(key, info);
         }
         else {
             // Update with declaration info
             info.declLocation = decl.range;
+            info.declNameRange = nameRange;
             info.documentation = docString || info.documentation;
+            info.isPrivate = this.detectIsPrivate(decl.descr);
         }
     }
     /**
@@ -84,11 +109,24 @@ class SymbolTable {
         if (!descr || descr.length === 0) {
             return false;
         }
-        // Look for mode(...) atoms with bound (+) patterns indicating external
+        // Look for external() or mode(...) atoms
         for (const atom of descr) {
-            if (atom.predicate.symbol === 'mode') {
-                // A mode declaration suggests this is an external predicate
-                // In Mangle, external predicates have mode declarations
+            if (atom.predicate.symbol === 'external' || atom.predicate.symbol === 'mode') {
+                return true;
+            }
+        }
+        return false;
+    }
+    /**
+     * Detect if a predicate is private from descr atoms.
+     */
+    detectIsPrivate(descr) {
+        if (!descr || descr.length === 0) {
+            return false;
+        }
+        // Look for private() atom
+        for (const atom of descr) {
+            if (atom.predicate.symbol === 'private') {
                 return true;
             }
         }
@@ -107,14 +145,19 @@ class SymbolTable {
             headInfo = {
                 symbol: clause.head.predicate,
                 declLocation: null,
+                declNameRange: null,
                 definitions: [],
+                definitionNameRanges: [],
                 references: [],
+                referenceNameRanges: [],
                 documentation: null,
                 isExternal: false,
+                isPrivate: false,
             };
             this.predicates.set(headKey, headInfo);
         }
         headInfo.definitions.push(clause.head.range);
+        headInfo.definitionNameRanges.push(calculatePredicateNameRange(clause.head));
         // Track variables in this clause
         const clauseKey = this.rangeKey(clause.range);
         const variables = new Map();
@@ -126,18 +169,28 @@ class SymbolTable {
             for (const premise of clause.premises) {
                 if (premise.type === 'Atom') {
                     const atom = premise;
-                    this.addReference(atom);
-                    this.collectVariables(atom, clause.range, variables, true);
+                    // Check if this is a comparison atom (:lt, :le, :gt, :ge)
+                    if ((0, ast_1.isComparisonAtom)(atom)) {
+                        // Comparison atoms don't bind variables, they only check bound values
+                        for (const arg of atom.args) {
+                            if (arg?.type === 'Variable') {
+                                this.addVariableOccurrence(arg, clause.range, variables, false);
+                            }
+                        }
+                    }
+                    else {
+                        // Regular atom - add reference and collect variables
+                        this.addReference(atom);
+                        this.collectVariables(atom, clause.range, variables, true);
+                    }
                 }
                 else if (premise.type === 'NegAtom') {
                     const negAtom = premise;
                     this.addReference(negAtom.atom);
                     this.collectVariables(negAtom.atom, clause.range, variables, false);
                 }
-                else if (premise.type === 'Eq' || premise.type === 'Ineq' ||
-                    premise.type === 'Lt' || premise.type === 'Le' ||
-                    premise.type === 'Gt' || premise.type === 'Ge') {
-                    // Collect variables from comparison terms
+                else if (premise.type === 'Eq' || premise.type === 'Ineq') {
+                    // Collect variables from equality/inequality terms
                     const cmp = premise;
                     if (cmp.left?.type === 'Variable') {
                         this.addVariableOccurrence(cmp.left, clause.range, variables, premise.type === 'Eq');
@@ -161,14 +214,19 @@ class SymbolTable {
             info = {
                 symbol: atom.predicate,
                 declLocation: null,
+                declNameRange: null,
                 definitions: [],
+                definitionNameRanges: [],
                 references: [],
+                referenceNameRanges: [],
                 documentation: null,
                 isExternal: false,
+                isPrivate: false,
             };
             this.predicates.set(key, info);
         }
         info.references.push(atom.range);
+        info.referenceNameRanges.push(calculatePredicateNameRange(atom));
     }
     /**
      * Collect variables from an atom.
@@ -248,13 +306,31 @@ class SymbolTable {
         return Array.from(this.predicates.keys());
     }
     /**
+     * Get predicate info by full name (name/arity format).
+     */
+    getPredicateInfo(fullName) {
+        return this.predicates.get(fullName);
+    }
+    /**
+     * Get all arities for a predicate base name.
+     */
+    getPredicateArities(baseName) {
+        const arities = [];
+        for (const [key, info] of this.predicates) {
+            if (key.startsWith(baseName + '/')) {
+                arities.push(info.symbol.arity);
+            }
+        }
+        return arities;
+    }
+    /**
      * Find variable info at a given position.
      */
     findVariableAt(line, column) {
         for (const [, variables] of this.clauseVariables) {
             for (const [, info] of variables) {
                 for (const occ of info.occurrences) {
-                    if (this.isWithinRange(line, column, occ)) {
+                    if ((0, position_1.isWithinSourceRange)(line, column, occ)) {
                         return info;
                     }
                 }
@@ -268,39 +344,23 @@ class SymbolTable {
     findPredicateAt(line, column) {
         for (const info of this.predicates.values()) {
             // Check declaration
-            if (info.declLocation && this.isWithinRange(line, column, info.declLocation)) {
+            if (info.declLocation && (0, position_1.isWithinSourceRange)(line, column, info.declLocation)) {
                 return info;
             }
             // Check definitions
             for (const def of info.definitions) {
-                if (this.isWithinRange(line, column, def)) {
+                if ((0, position_1.isWithinSourceRange)(line, column, def)) {
                     return info;
                 }
             }
             // Check references
             for (const ref of info.references) {
-                if (this.isWithinRange(line, column, ref)) {
+                if ((0, position_1.isWithinSourceRange)(line, column, ref)) {
                     return info;
                 }
             }
         }
         return undefined;
-    }
-    /**
-     * Check if a position is within a range.
-     */
-    isWithinRange(line, column, range) {
-        // Convert to 1-indexed for comparison with SourceRange
-        if (line < range.start.line || line > range.end.line) {
-            return false;
-        }
-        if (line === range.start.line && column < range.start.column) {
-            return false;
-        }
-        if (line === range.end.line && column >= range.end.column) {
-            return false;
-        }
-        return true;
     }
     /**
      * Get variables for a clause at a given position.

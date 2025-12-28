@@ -8,8 +8,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDefinition = getDefinition;
 /**
  * Get the definition location for the symbol at a position.
+ *
+ * Returns all definition locations for predicates (declaration + all clause heads),
+ * or the binding location for variables.
  */
-function getDefinition(uri, unit, symbolTable, position) {
+function getDefinition(uri, symbolTable, position) {
     // Convert to 1-indexed for our AST
     const line = position.line + 1;
     const column = position.character;
@@ -18,22 +21,22 @@ function getDefinition(uri, unit, symbolTable, position) {
     if (predInfo) {
         const locations = [];
         // Add declaration location if available
+        // Use declNameRange if available for precise name highlighting, otherwise declLocation
         if (predInfo.declLocation) {
-            locations.push(createLocation(uri, predInfo.declLocation));
+            const range = predInfo.declNameRange || predInfo.declLocation;
+            locations.push(createLocation(uri, range));
         }
-        // Add first definition location if no declaration
-        if (locations.length === 0 && predInfo.definitions.length > 0) {
-            const firstDef = predInfo.definitions[0];
-            if (firstDef) {
-                locations.push(createLocation(uri, firstDef));
-            }
+        // Add ALL definition locations (clause heads) - not just first
+        // Use definitionNameRanges for precise name highlighting if available
+        const defs = predInfo.definitionNameRanges || predInfo.definitions;
+        for (const def of defs) {
+            locations.push(createLocation(uri, def));
         }
-        // If we clicked on a reference, show definition
-        // If we clicked on definition, show all definitions
-        if (locations.length === 1) {
-            return locations[0] || null;
-        }
-        return locations.length > 0 ? locations : null;
+        if (locations.length === 0)
+            return null;
+        if (locations.length === 1)
+            return locations[0];
+        return locations;
     }
     // Check for variable at position
     const varInfo = symbolTable.findVariableAt(line, column);

@@ -12,10 +12,10 @@ const node_1 = require("vscode-languageserver/node");
  */
 function getDocumentSymbols(unit) {
     const symbols = [];
-    // Group clauses by predicate
+    // Group clauses by predicate name/arity
     const predicateGroups = new Map();
     for (const clause of unit.clauses) {
-        const key = clause.head.predicate.symbol;
+        const key = `${clause.head.predicate.symbol}/${clause.head.predicate.arity}`;
         const group = predicateGroups.get(key);
         if (group) {
             group.push(clause);
@@ -33,6 +33,16 @@ function getDocumentSymbols(unit) {
             selectionRange: convertRange(unit.packageDecl.range),
         });
     }
+    // Add use declarations
+    for (const useDecl of unit.useDecls) {
+        symbols.push({
+            name: `Use: ${useDecl.name}`,
+            kind: node_1.SymbolKind.Module,
+            range: convertRange(useDecl.range),
+            selectionRange: convertRange(useDecl.range),
+            detail: 'import',
+        });
+    }
     // Add declarations section if there are declarations
     if (unit.decls.length > 0) {
         const declSymbols = unit.decls.map(decl => createDeclSymbol(decl));
@@ -46,20 +56,19 @@ function getDocumentSymbols(unit) {
         });
     }
     // Add predicate groups
-    for (const [predName, clauses] of predicateGroups) {
+    for (const [key, clauses] of predicateGroups) {
         const firstClause = clauses[0];
         if (!firstClause)
             continue;
-        const arity = firstClause.head.predicate.arity;
         const clauseSymbols = clauses.map((clause, index) => createClauseSymbol(clause, index));
         const groupRange = combineRanges(clauses.map(c => c.range));
         symbols.push({
-            name: `${predName}/${arity}`,
+            name: key,
             kind: node_1.SymbolKind.Function,
             range: convertRange(groupRange),
             selectionRange: convertRange(firstClause.head.range),
             detail: `${clauses.length} clause(s)`,
-            children: clauseSymbols.length > 1 ? clauseSymbols : undefined,
+            children: clauseSymbols.length > 0 ? clauseSymbols : undefined,
         });
     }
     return symbols;
@@ -72,7 +81,7 @@ function createDeclSymbol(decl) {
     const arity = decl.declaredAtom.predicate.arity;
     return {
         name: `${name}/${arity}`,
-        kind: node_1.SymbolKind.Interface,
+        kind: node_1.SymbolKind.Class,
         range: convertRange(decl.range),
         selectionRange: convertRange(decl.declaredAtom.range),
         detail: 'Declaration',
@@ -85,13 +94,25 @@ function createClauseSymbol(clause, index) {
     const name = clause.head.predicate.symbol;
     const isFact = !clause.premises || clause.premises.length === 0;
     const detail = isFact ? 'fact' : `rule (${clause.premises?.length || 0} premises)`;
-    return {
+    const clauseSymbol = {
         name: `${name} [${index + 1}]`,
-        kind: isFact ? node_1.SymbolKind.Constant : node_1.SymbolKind.Method,
+        kind: isFact ? node_1.SymbolKind.Field : node_1.SymbolKind.Function,
         range: convertRange(clause.range),
         selectionRange: convertRange(clause.head.range),
         detail,
     };
+    // Add transform as child if present
+    if (clause.transform) {
+        const transformSymbol = {
+            name: 'transform',
+            kind: node_1.SymbolKind.Operator,
+            range: convertRange(clause.transform.range),
+            selectionRange: convertRange(clause.transform.range),
+            detail: 'aggregation',
+        };
+        clauseSymbol.children = [transformSymbol];
+    }
+    return clauseSymbol;
 }
 /**
  * Convert our SourceRange to LSP Range.

@@ -33,6 +33,9 @@ export interface ParseResult {
 /**
  * Parse Mangle source code into an AST.
  *
+ * This parser implements error recovery: it will produce a partial AST
+ * even when there are errors, enabling LSP features to work on broken code.
+ *
  * @param source The source code to parse
  * @returns ParseResult with AST and any errors
  */

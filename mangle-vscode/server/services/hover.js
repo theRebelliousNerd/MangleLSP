@@ -9,6 +9,7 @@ exports.getHover = getHover;
 const node_1 = require("vscode-languageserver/node");
 const predicates_1 = require("../builtins/predicates");
 const functions_1 = require("../builtins/functions");
+const position_1 = require("../utils/position");
 /**
  * Get hover information at a position in the document.
  */
@@ -17,20 +18,25 @@ function getHover(unit, symbolTable, position) {
     const line = position.line + 1;
     const column = position.character;
     // Try to find what's at this position
-    // Check predicates first
-    const predInfo = symbolTable.findPredicateAt(line, column);
-    if (predInfo) {
-        return createPredicateHover(predInfo);
-    }
-    // Check variables
+    // IMPORTANT: Check more specific items FIRST (variables), then less specific (predicates)
+    // This ensures hovering on a variable argument inside an atom returns the variable,
+    // not the containing predicate.
+    // Check variables FIRST (most specific - can be inside predicates)
     const varInfo = symbolTable.findVariableAt(line, column);
     if (varInfo) {
         return createVariableHover(varInfo);
     }
     // Check built-in predicates and functions by scanning the AST
+    // This also needs to be before user-defined predicates since builtins
+    // can have nested functions that need precise hover
     const builtinHover = findBuiltinAtPosition(unit, line, column);
     if (builtinHover) {
         return builtinHover;
+    }
+    // Check user-defined predicates (least specific - contains other elements)
+    const predInfo = symbolTable.findPredicateAt(line, column);
+    if (predInfo) {
+        return createPredicateHover(predInfo);
     }
     return null;
 }
@@ -143,21 +149,25 @@ function findBuiltinInTerm(term, line, column) {
  * Search for built-in predicate in an atom.
  */
 function findBuiltinInAtom(atom, line, column) {
-    // Check if this is a built-in predicate and position is on it
-    if (atom.predicate.symbol.startsWith(':')) {
-        if (isWithinRange(line, column, atom.range)) {
-            const builtin = (0, predicates_1.getBuiltinPredicate)(atom.predicate.symbol);
-            if (builtin) {
-                return createBuiltinPredicateHover(builtin.name, builtin.doc, builtin.arity, builtin.mode);
-            }
-        }
-    }
-    // Check arguments for functions
+    // IMPORTANT: Check arguments FIRST (most specific - nested elements)
+    // This ensures hovering on a function inside an atom returns the function,
+    // not the containing predicate.
     for (const arg of atom.args) {
         if (arg.type === 'ApplyFn') {
             const fnHover = findBuiltinInApplyFn(arg, line, column);
             if (fnHover)
                 return fnHover;
+        }
+    }
+    // Check if this is a built-in predicate and position is on the predicate NAME only
+    // The predicate name starts at the atom's start position and extends for the length of the name
+    if (atom.predicate.symbol.startsWith(':')) {
+        const predicateNameRange = calculateNameRange(atom.range, atom.predicate.symbol);
+        if ((0, position_1.isWithinSourceRange)(line, column, predicateNameRange)) {
+            const builtin = (0, predicates_1.getBuiltinPredicate)(atom.predicate.symbol);
+            if (builtin) {
+                return createBuiltinPredicateHover(builtin.name, builtin.doc, builtin.arity, builtin.mode);
+            }
         }
     }
     return null;
@@ -166,18 +176,24 @@ function findBuiltinInAtom(atom, line, column) {
  * Search for built-in function in an ApplyFn.
  */
 function findBuiltinInApplyFn(applyFn, line, column) {
-    if (isWithinRange(line, column, applyFn.range)) {
-        const builtin = (0, functions_1.getBuiltinFunction)(applyFn.function.symbol);
-        if (builtin) {
-            return createBuiltinFunctionHover(builtin.name, builtin.doc, builtin.arity, builtin.isReducer);
-        }
-    }
-    // Check nested functions
+    // IMPORTANT: Check nested functions FIRST (most specific)
+    // For `fn:plus(fn:mult(X, 2), 3)`, hovering on `fn:mult` should return fn:mult,
+    // not fn:plus. Since fn:mult's range is within fn:plus's range, we must check
+    // the more specific (nested) element first.
     for (const arg of applyFn.args) {
         if (arg.type === 'ApplyFn') {
             const fnHover = findBuiltinInApplyFn(arg, line, column);
             if (fnHover)
                 return fnHover;
+        }
+    }
+    // Now check if position is on THIS function's NAME only (not the entire expression)
+    // The function name starts at the ApplyFn's start position and extends for the length of the name
+    const functionNameRange = calculateNameRange(applyFn.range, applyFn.function.symbol);
+    if ((0, position_1.isWithinSourceRange)(line, column, functionNameRange)) {
+        const builtin = (0, functions_1.getBuiltinFunction)(applyFn.function.symbol);
+        if (builtin) {
+            return createBuiltinFunctionHover(builtin.name, builtin.doc, builtin.arity, builtin.isReducer);
         }
     }
     return null;
@@ -220,18 +236,24 @@ function createBuiltinFunctionHover(name, doc, arity, isReducer) {
     };
 }
 /**
- * Check if a position is within a range.
+ * Calculate the range that covers just the function/predicate NAME,
+ * not the entire expression including arguments.
+ *
+ * For `fn:plus(X, Y)` starting at column 5, this returns the range for "fn:plus"
+ * (columns 5-12), not the entire expression (columns 5-20).
+ *
+ * This is critical for proper hover behavior: hovering on arguments should not
+ * trigger hover for the containing function.
  */
-function isWithinRange(line, column, range) {
-    if (line < range.start.line || line > range.end.line) {
-        return false;
-    }
-    if (line === range.start.line && column < range.start.column) {
-        return false;
-    }
-    if (line === range.end.line && column >= range.end.column) {
-        return false;
-    }
-    return true;
+function calculateNameRange(expressionRange, name) {
+    // The name starts at the expression's start and extends for the name's length
+    return {
+        start: expressionRange.start,
+        end: {
+            line: expressionRange.start.line,
+            column: expressionRange.start.column + name.length,
+            offset: expressionRange.start.offset + name.length,
+        },
+    };
 }
 //# sourceMappingURL=hover.js.map

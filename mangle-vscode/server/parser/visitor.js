@@ -5,16 +5,37 @@
  * Ported from upstream Go implementation (parse/parse.go).
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MangleASTVisitor = void 0;
+exports.MangleASTVisitor = exports.ERROR_SYMBOL = void 0;
 const antlr4ng_1 = require("antlr4ng");
 const ast_1 = require("./ast");
+/**
+ * Error placeholder symbol used in broken AST nodes.
+ * LSP features can check for this to identify error nodes.
+ */
+exports.ERROR_SYMBOL = '$$error$$';
 const MangleParser_1 = require("./gen/MangleParser");
 /**
  * Get source range from a parser rule context.
+ * Handles multi-line stop tokens (like multi-line strings) correctly.
  */
 function getRangeFromContext(ctx) {
     const startToken = ctx.start;
     const stopToken = ctx.stop ?? startToken;
+    // Calculate end position, handling multi-line stop tokens
+    const stopText = stopToken?.text ?? '';
+    const stopLines = stopText.split('\n');
+    const stopNumNewlines = stopLines.length - 1;
+    let endLine = (stopToken?.line ?? 1) + stopNumNewlines;
+    let endColumn;
+    if (stopNumNewlines > 0) {
+        // Multi-line: end column is length of last line
+        const lastLine = stopLines[stopLines.length - 1];
+        endColumn = lastLine?.length ?? 0;
+    }
+    else {
+        // Single line: add text length to start column
+        endColumn = (stopToken?.column ?? 0) + stopText.length;
+    }
     return {
         start: {
             line: startToken?.line ?? 1,
@@ -22,17 +43,31 @@ function getRangeFromContext(ctx) {
             offset: startToken?.start ?? 0,
         },
         end: {
-            line: stopToken?.line ?? 1,
-            column: (stopToken?.column ?? 0) + ((stopToken?.text?.length ?? 1)),
+            line: endLine,
+            column: endColumn,
             offset: (stopToken?.stop ?? 0) + 1,
         },
     };
 }
 /**
  * Get source range from a token.
+ * Handles multi-line tokens (like multi-line strings) correctly.
  */
 function getRangeFromToken(token) {
     const text = token.text ?? '';
+    const lines = text.split('\n');
+    const numNewlines = lines.length - 1;
+    let endLine = token.line + numNewlines;
+    let endColumn;
+    if (numNewlines > 0) {
+        // Multi-line: end column is length of last line
+        const lastLine = lines[lines.length - 1];
+        endColumn = lastLine?.length ?? 0;
+    }
+    else {
+        // Single line: add text length to start column
+        endColumn = token.column + text.length;
+    }
     return {
         start: {
             line: token.line,
@@ -40,8 +75,8 @@ function getRangeFromToken(token) {
             offset: token.start,
         },
         end: {
-            line: token.line,
-            column: token.column + text.length,
+            line: endLine,
+            column: endColumn,
             offset: token.stop + 1,
         },
     };
@@ -145,22 +180,113 @@ function unescapeByteString(s) {
 }
 /**
  * Visitor that builds AST from ANTLR parse tree.
+ *
+ * This visitor implements error recovery: instead of throwing exceptions
+ * when encountering malformed AST nodes, it records the error and returns
+ * placeholder nodes. This allows the parser to produce a partial AST
+ * even when there are errors, enabling LSP features to work on broken code.
  */
 class MangleASTVisitor extends antlr4ng_1.AbstractParseTreeVisitor {
+    /** Collected visitor errors during AST construction */
+    errors = [];
+    /** Partial unit built so far (for error recovery) */
+    partialUnit = null;
     defaultResult() {
         return null;
+    }
+    /**
+     * Get all errors collected during AST construction.
+     */
+    getErrors() {
+        return this.errors;
+    }
+    /**
+     * Get the partial unit built so far (for error recovery).
+     * Returns the last successfully built unit, or null if none.
+     */
+    getPartialUnit() {
+        return this.partialUnit;
+    }
+    /**
+     * Record an error and return a range from the context.
+     */
+    addError(message, ctx) {
+        const range = getRangeFromContext(ctx);
+        this.errors.push({
+            message,
+            line: range.start.line,
+            column: range.start.column,
+            offset: range.start.offset,
+            length: range.end.offset - range.start.offset,
+        });
+    }
+    /**
+     * Create an error placeholder atom.
+     */
+    createErrorAtom(ctx) {
+        return (0, ast_1.createAtom)((0, ast_1.createPredicateSym)(exports.ERROR_SYMBOL, 0), [], getRangeFromContext(ctx));
+    }
+    /**
+     * Create an error placeholder variable.
+     */
+    createErrorVariable(ctx) {
+        return (0, ast_1.createVariable)(exports.ERROR_SYMBOL, getRangeFromContext(ctx));
+    }
+    /**
+     * Create an error placeholder ApplyFn.
+     */
+    createErrorApplyFn(ctx) {
+        return (0, ast_1.createApplyFn)((0, ast_1.createFunctionSym)(`fn:${exports.ERROR_SYMBOL}`, 0), [], getRangeFromContext(ctx));
     }
     visitStart(ctx) {
         return this.visitProgram(ctx.program());
     }
     visitProgram(ctx) {
-        const packageDecl = ctx.packageDecl()
-            ? this.visitPackageDecl(ctx.packageDecl())
-            : null;
-        const useDecls = ctx.useDecl().map(u => this.visitUseDecl(u));
-        const decls = ctx.decl().map(d => this.visitDecl(d));
-        const clauses = ctx.clause().map(c => this.visitClause(c));
-        return { packageDecl, useDecls, decls, clauses };
+        // Try to get package decl, but don't fail if it's broken
+        let packageDecl = null;
+        const packageDeclCtx = ctx.packageDecl();
+        if (packageDeclCtx) {
+            try {
+                packageDecl = this.visitPackageDecl(packageDeclCtx);
+            }
+            catch (e) {
+                this.addError(`Failed to parse package declaration: ${e instanceof Error ? e.message : String(e)}`, packageDeclCtx);
+            }
+        }
+        // Collect use decls with error recovery
+        const useDecls = [];
+        for (const useDeclCtx of ctx.useDecl()) {
+            try {
+                useDecls.push(this.visitUseDecl(useDeclCtx));
+            }
+            catch (e) {
+                this.addError(`Failed to parse use declaration: ${e instanceof Error ? e.message : String(e)}`, useDeclCtx);
+            }
+        }
+        // Collect decls with error recovery
+        const decls = [];
+        for (const declCtx of ctx.decl()) {
+            try {
+                decls.push(this.visitDecl(declCtx));
+            }
+            catch (e) {
+                this.addError(`Failed to parse declaration: ${e instanceof Error ? e.message : String(e)}`, declCtx);
+            }
+        }
+        // Collect clauses with error recovery
+        const clauses = [];
+        for (const clauseCtx of ctx.clause()) {
+            try {
+                clauses.push(this.visitClause(clauseCtx));
+            }
+            catch (e) {
+                this.addError(`Failed to parse clause: ${e instanceof Error ? e.message : String(e)}`, clauseCtx);
+            }
+        }
+        const unit = { packageDecl, useDecls, decls, clauses };
+        // Save as partial unit for error recovery
+        this.partialUnit = unit;
+        return unit;
     }
     visitPackageDecl(ctx) {
         const name = ctx.NAME().getText();
@@ -242,8 +368,9 @@ class MangleASTVisitor extends antlr4ng_1.AbstractParseTreeVisitor {
                 range: term.range,
             };
         }
-        // For other cases, create an error placeholder
-        throw new Error(`Expected atom but got ${term?.type ?? 'null'}`);
+        // For other cases, create an error placeholder and record the error
+        this.addError(`Expected atom but got ${term?.type ?? 'null'}`, ctx);
+        return this.createErrorAtom(ctx);
     }
     visitClause(ctx) {
         const atomCtx = ctx.atom();
@@ -320,7 +447,12 @@ class MangleASTVisitor extends antlr4ng_1.AbstractParseTreeVisitor {
         };
         const termCtx = ctx.term();
         if (!termCtx) {
-            throw new Error('Expected term in let statement');
+            this.addError('Expected term in let statement', ctx);
+            return {
+                variable,
+                fn: this.createErrorApplyFn(ctx),
+                range: getRangeFromContext(ctx),
+            };
         }
         const fn = this.visitTerm(termCtx);
         return {
@@ -335,7 +467,8 @@ class MangleASTVisitor extends antlr4ng_1.AbstractParseTreeVisitor {
         if (bangToken) {
             const termCtx = ctx.term(0);
             if (!termCtx) {
-                throw new Error('Expected term after negation');
+                this.addError('Expected term after negation', ctx);
+                return this.createErrorAtom(ctx);
             }
             const term = this.visitTerm(termCtx);
             if (term && term.type === 'Atom') {
@@ -345,14 +478,21 @@ class MangleASTVisitor extends antlr4ng_1.AbstractParseTreeVisitor {
                     range: getRangeFromContext(ctx),
                 };
             }
-            throw new Error('Negation must be applied to an atom');
+            // Negation applied to non-atom; wrap in NegAtom with error atom
+            this.addError('Negation must be applied to an atom', ctx);
+            return {
+                type: 'NegAtom',
+                atom: this.createErrorAtom(ctx),
+                range: getRangeFromContext(ctx),
+            };
         }
         // Get the terms
         const termCtxs = ctx.term();
         if (termCtxs.length === 1) {
             const termCtx = termCtxs[0];
             if (!termCtx) {
-                throw new Error('Expected term');
+                this.addError('Expected term', ctx);
+                return this.createErrorVariable(ctx);
             }
             // Just a single term (atom, variable, etc.)
             return this.visitTerm(termCtx);
@@ -361,7 +501,9 @@ class MangleASTVisitor extends antlr4ng_1.AbstractParseTreeVisitor {
         const leftCtx = termCtxs[0];
         const rightCtx = termCtxs[1];
         if (!leftCtx || !rightCtx) {
-            throw new Error('Expected two terms for comparison');
+            this.addError('Expected two terms for comparison', ctx);
+            const errorVar = this.createErrorVariable(ctx);
+            return { type: 'Eq', left: errorVar, right: errorVar, range: getRangeFromContext(ctx) };
         }
         const left = this.visitTerm(leftCtx);
         const right = this.visitTerm(rightCtx);
@@ -373,22 +515,25 @@ class MangleASTVisitor extends antlr4ng_1.AbstractParseTreeVisitor {
         if (ctx.BANGEQ()) {
             return { type: 'Ineq', left, right, range };
         }
+        // Comparison operators are converted to Atoms with builtin predicates
+        // to match upstream Go behavior (parse.go lines 413-422)
         if (ctx.LESS()) {
-            return { type: 'Lt', left, right, range };
+            return (0, ast_1.createAtom)((0, ast_1.createPredicateSym)(':lt', 2), [left, right], range);
         }
         if (ctx.LESSEQ()) {
-            return { type: 'Le', left, right, range };
+            return (0, ast_1.createAtom)((0, ast_1.createPredicateSym)(':le', 2), [left, right], range);
         }
         if (ctx.GREATER()) {
-            return { type: 'Gt', left, right, range };
+            return (0, ast_1.createAtom)((0, ast_1.createPredicateSym)(':gt', 2), [left, right], range);
         }
         if (ctx.GREATEREQ()) {
-            return { type: 'Ge', left, right, range };
+            return (0, ast_1.createAtom)((0, ast_1.createPredicateSym)(':ge', 2), [left, right], range);
         }
         // Fallback: just the first term
         const firstTermCtx = termCtxs[0];
         if (!firstTermCtx) {
-            throw new Error('Expected at least one term');
+            this.addError('Expected at least one term', ctx);
+            return this.createErrorVariable(ctx);
         }
         return this.visitTerm(firstTermCtx);
     }
@@ -488,124 +633,66 @@ class MangleASTVisitor extends antlr4ng_1.AbstractParseTreeVisitor {
         };
     }
     visitList(ctx) {
+        // Upstream Go (parse.go:551-565) converts list literals to ApplyFn with fn:list
         const termCtxs = ctx.term();
-        const items = termCtxs.map(t => this.visitTerm(t));
-        if (items.length === 0) {
-            return {
-                type: 'Constant',
-                constantType: 'list',
-                range: getRangeFromContext(ctx),
-            };
+        const args = [];
+        for (const termCtx of termCtxs) {
+            const term = this.visitTerm(termCtx);
+            if (term && (term.type === 'Constant' || term.type === 'Variable' || term.type === 'ApplyFn')) {
+                args.push(term);
+            }
         }
-        // Build cons-list from end
-        let result = {
-            type: 'Constant',
-            constantType: 'list',
-            range: getRangeFromContext(ctx),
-        };
-        for (let i = items.length - 1; i >= 0; i--) {
-            result = {
-                type: 'Constant',
-                constantType: 'list',
-                fst: items[i],
-                snd: result,
-                range: getRangeFromContext(ctx),
-            };
-        }
-        return result;
+        return (0, ast_1.createApplyFn)((0, ast_1.createFunctionSym)('fn:list', -1), args, getRangeFromContext(ctx));
     }
     visitMap(ctx) {
-        // Map is [key:value, ...]
+        // Upstream Go (parse.go:518-533) converts map literals to ApplyFn with fn:map
+        // Map is [key:value, ...] - terms come in pairs: key, value, key, value, ...
         const termCtxs = ctx.term();
-        // Terms come in pairs: key, value, key, value, ...
-        if (termCtxs.length === 0) {
-            return {
-                type: 'Constant',
-                constantType: 'map',
-                range: getRangeFromContext(ctx),
-            };
+        const args = [];
+        for (const termCtx of termCtxs) {
+            const term = this.visitTerm(termCtx);
+            if (term && (term.type === 'Constant' || term.type === 'Variable' || term.type === 'ApplyFn')) {
+                args.push(term);
+            }
         }
-        // Build map entries
-        let result = {
-            type: 'Constant',
-            constantType: 'map',
-            range: getRangeFromContext(ctx),
-        };
-        for (let i = termCtxs.length - 2; i >= 0; i -= 2) {
-            const keyCtx = termCtxs[i];
-            const valueCtx = termCtxs[i + 1];
-            if (!keyCtx || !valueCtx)
-                continue;
-            const key = this.visitTerm(keyCtx);
-            const value = this.visitTerm(valueCtx);
-            const entry = {
-                type: 'Constant',
-                constantType: 'pair',
-                fst: key,
-                snd: value,
-                range: getRangeFromContext(ctx),
-            };
-            result = {
-                type: 'Constant',
-                constantType: 'map',
-                fst: entry,
-                snd: result,
-                range: getRangeFromContext(ctx),
-            };
-        }
-        return result;
+        return (0, ast_1.createApplyFn)((0, ast_1.createFunctionSym)('fn:map', -1), args, getRangeFromContext(ctx));
     }
     visitStruct(ctx) {
-        // Struct is {field:value, ...}
+        // Upstream Go (parse.go:535-549) converts struct literals to ApplyFn with fn:struct
+        // Struct is {field:value, ...} - terms come in pairs: field, value, field, value, ...
         const termCtxs = ctx.term();
-        if (termCtxs.length === 0) {
-            return {
-                type: 'Constant',
-                constantType: 'struct',
-                range: getRangeFromContext(ctx),
-            };
+        const args = [];
+        for (const termCtx of termCtxs) {
+            const term = this.visitTerm(termCtx);
+            if (term && (term.type === 'Constant' || term.type === 'Variable' || term.type === 'ApplyFn')) {
+                args.push(term);
+            }
         }
-        // Build struct fields
-        let result = {
-            type: 'Constant',
-            constantType: 'struct',
-            range: getRangeFromContext(ctx),
-        };
-        for (let i = termCtxs.length - 2; i >= 0; i -= 2) {
-            const fieldCtx = termCtxs[i];
-            const valueCtx = termCtxs[i + 1];
-            if (!fieldCtx || !valueCtx)
-                continue;
-            const field = this.visitTerm(fieldCtx);
-            const value = this.visitTerm(valueCtx);
-            const entry = {
-                type: 'Constant',
-                constantType: 'pair',
-                fst: field,
-                snd: value,
-                range: getRangeFromContext(ctx),
-            };
-            result = {
-                type: 'Constant',
-                constantType: 'struct',
-                fst: entry,
-                snd: result,
-                range: getRangeFromContext(ctx),
-            };
-        }
-        return result;
+        return (0, ast_1.createApplyFn)((0, ast_1.createFunctionSym)('fn:struct', -1), args, getRangeFromContext(ctx));
     }
     visitDotType(ctx) {
-        // .TypeName<member, ...>
+        // Upstream Go (parse.go:588-596) converts .TypeName<member, ...> to ApplyFn with fn:TypeName
         const typeToken = ctx.DOT_TYPE();
-        const typeName = typeToken.getText();
-        // For now, treat as a special constant
-        return {
-            type: 'Constant',
-            constantType: 'name',
-            symbol: typeName,
-            range: getRangeFromContext(ctx),
-        };
+        const typeName = typeToken.getText().slice(1); // Remove leading '.'
+        const memberCtxs = ctx.member();
+        const args = [];
+        for (const memberCtx of memberCtxs) {
+            const memberTerms = this.visitMember(memberCtx);
+            args.push(...memberTerms);
+        }
+        return (0, ast_1.createApplyFn)((0, ast_1.createFunctionSym)('fn:' + typeName, -1), args, getRangeFromContext(ctx));
+    }
+    visitMember(ctx) {
+        // Upstream Go (parse.go:598-609) returns []ast.BaseTerm from a member context
+        const termCtxs = ctx.term();
+        const baseterms = [];
+        for (const termCtx of termCtxs) {
+            const term = this.visitTerm(termCtx);
+            if (term && (term.type === 'Constant' || term.type === 'Variable' || term.type === 'ApplyFn')) {
+                baseterms.push(term);
+            }
+        }
+        return baseterms;
     }
     visitAppl(ctx) {
         const nameToken = ctx.NAME();

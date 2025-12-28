@@ -39,13 +39,30 @@ class MangleErrorListener extends antlr4ng_1.BaseErrorListener {
     }
 }
 /**
+ * Convert a VisitorParseError to a ParseError.
+ */
+function visitorErrorToParseError(error) {
+    return {
+        message: error.message,
+        line: error.line,
+        column: error.column,
+        offset: error.offset,
+        length: error.length,
+        source: 'parser',
+    };
+}
+/**
  * Parse Mangle source code into an AST.
+ *
+ * This parser implements error recovery: it will produce a partial AST
+ * even when there are errors, enabling LSP features to work on broken code.
  *
  * @param source The source code to parse
  * @returns ParseResult with AST and any errors
  */
 function parse(source) {
     const errors = [];
+    let visitor = null;
     try {
         // Create input stream
         const inputStream = antlr4ng_1.CharStream.fromString(source);
@@ -65,16 +82,19 @@ function parse(source) {
         parser.addErrorListener(parserErrorListener);
         // Parse
         const tree = parser.start();
-        // Collect errors
+        // Collect lexer and parser errors
         errors.push(...lexerErrorListener.errors);
         errors.push(...parserErrorListener.errors);
-        // Build AST
-        const visitor = new visitor_1.MangleASTVisitor();
+        // Build AST with error recovery
+        visitor = new visitor_1.MangleASTVisitor();
         const unit = visitor.visit(tree);
+        // Collect visitor errors (from AST construction)
+        const visitorErrors = visitor.getErrors();
+        errors.push(...visitorErrors.map(visitorErrorToParseError));
         return { unit, errors };
     }
     catch (e) {
-        // Handle unexpected errors
+        // Handle unexpected errors - try to return partial unit if available
         const message = e instanceof Error ? e.message : String(e);
         errors.push({
             message: `Internal parser error: ${message}`,
@@ -84,7 +104,9 @@ function parse(source) {
             length: 1,
             source: 'parser',
         });
-        return { unit: null, errors };
+        // Try to return partial unit if we have one from the visitor
+        const partialUnit = visitor?.getPartialUnit() ?? null;
+        return { unit: partialUnit, errors };
     }
 }
 /**

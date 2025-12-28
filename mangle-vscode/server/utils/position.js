@@ -12,8 +12,7 @@ exports.toPosition = toPosition;
 exports.fromPosition = fromPosition;
 exports.toRange = toRange;
 exports.fromRange = fromRange;
-exports.positionFromToken = positionFromToken;
-exports.rangeFromTokens = rangeFromTokens;
+exports.isWithinSourceRange = isWithinSourceRange;
 exports.isPositionInRange = isPositionInRange;
 exports.rangesOverlap = rangesOverlap;
 exports.comparePositions = comparePositions;
@@ -60,20 +59,21 @@ function fromRange(range) {
     };
 }
 /**
- * Create a SourcePosition from ANTLR token information.
- * ANTLR uses 1-indexed lines and 0-indexed columns.
+ * Check if a position (line, column) is within a SourceRange.
+ * Uses Mangle 1-indexed lines, 0-indexed columns.
+ * This is the canonical implementation - use this instead of local copies.
  */
-function positionFromToken(line, column, offset) {
-    return { line, column, offset };
-}
-/**
- * Create a SourceRange from ANTLR start/stop tokens.
- */
-function rangeFromTokens(startLine, startColumn, startOffset, stopLine, stopColumn, stopOffset, stopLength) {
-    return {
-        start: { line: startLine, column: startColumn, offset: startOffset },
-        end: { line: stopLine, column: stopColumn + stopLength, offset: stopOffset + stopLength }
-    };
+function isWithinSourceRange(line, column, range) {
+    if (line < range.start.line || line > range.end.line) {
+        return false;
+    }
+    if (line === range.start.line && column < range.start.column) {
+        return false;
+    }
+    if (line === range.end.line && column >= range.end.column) {
+        return false;
+    }
+    return true;
 }
 /**
  * Check if a position is within a range.

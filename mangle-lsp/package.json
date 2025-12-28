@@ -5,7 +5,6 @@
   "author": "Next-Gen Engineering and Research Development LLC",
   "license": "MIT",
   "private": true,
-  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {

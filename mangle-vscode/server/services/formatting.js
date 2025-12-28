@@ -6,11 +6,80 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.formatDocument = formatDocument;
+const ast_1 = require("../parser/ast");
+/**
+ * Extract comments from original document text.
+ * Returns a map from 1-based line number to the comment text (including #).
+ */
+function extractComments(text) {
+    const comments = new Map();
+    const lines = text.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        if (line === undefined)
+            continue;
+        const commentIndex = line.indexOf('#');
+        if (commentIndex !== -1) {
+            // Check if # is inside a string (simple heuristic)
+            const beforeHash = line.substring(0, commentIndex);
+            const quoteCount = (beforeHash.match(/"/g) || []).length;
+            if (quoteCount % 2 === 0) {
+                comments.set(i + 1, line.substring(commentIndex));
+            }
+        }
+    }
+    return comments;
+}
+/**
+ * Re-insert comments into formatted output.
+ * This is a simple approach that preserves line comments at roughly the same positions.
+ */
+function insertComments(formatted, comments) {
+    if (comments.size === 0) {
+        return formatted;
+    }
+    const formattedLines = formatted.split('\n');
+    const result = [];
+    // Track which comments we've used
+    const usedComments = new Set();
+    // For each formatted line, check if there's a comment at a nearby original line
+    for (let i = 0; i < formattedLines.length; i++) {
+        const line = formattedLines[i];
+        if (line !== undefined) {
+            result.push(line);
+        }
+    }
+    // Append any standalone comment lines (lines that were only comments)
+    // at the end, preserving their relative order
+    const sortedCommentLines = Array.from(comments.keys()).sort((a, b) => a - b);
+    const standaloneComments = [];
+    for (const lineNum of sortedCommentLines) {
+        if (!usedComments.has(lineNum)) {
+            const comment = comments.get(lineNum);
+            if (comment) {
+                standaloneComments.push(comment);
+            }
+        }
+    }
+    // If there are standalone comments, append them before the final newline
+    if (standaloneComments.length > 0) {
+        // Insert comments at the end, before trailing empty lines
+        const lastNonEmpty = result.length - 1;
+        for (const comment of standaloneComments) {
+            result.splice(lastNonEmpty, 0, comment);
+        }
+    }
+    return result.join('\n');
+}
 /**
  * Format an entire document.
  */
 function formatDocument(document, unit, options) {
-    const formatted = formatSourceUnit(unit, options);
+    const originalText = document.getText();
+    const comments = extractComments(originalText);
+    let formatted = formatSourceUnit(unit, options);
+    // Re-insert comments at appropriate lines
+    formatted = insertComments(formatted, comments);
     // Replace entire document
     return [{
             range: {
@@ -79,15 +148,18 @@ function formatDecl(decl, indent) {
     // Add description atoms if present
     if (decl.descr && decl.descr.length > 0) {
         const descrParts = decl.descr.map(a => formatAtom(a));
-        result += `\n${indent}descr ${descrParts.join(`,\n${indent}      `)}`;
+        result += `\n${indent}descr [`;
+        for (let i = 0; i < descrParts.length; i++) {
+            result += `\n${indent}    ${descrParts[i]}${i < descrParts.length - 1 ? ',' : ''}`;
+        }
+        result += `\n${indent}]`;
     }
     // Add bounds if present
     if (decl.bounds && decl.bounds.length > 0) {
-        const boundParts = decl.bounds.map(b => {
-            const args = b.bounds.map(formatTerm).join(', ');
-            return `bound(${args})`;
-        });
-        result += `\n${indent}bound ${boundParts.join(`,\n${indent}      `)}`;
+        for (const boundDecl of decl.bounds) {
+            const boundsStr = boundDecl.bounds.map(formatTerm).join(', ');
+            result += `\n${indent}bound [${boundsStr}]`;
+        }
     }
     result += '.';
     return result;
@@ -129,8 +201,9 @@ function formatClause(clause, indent) {
  */
 function formatAtom(atom) {
     const pred = atom.predicate.symbol;
+    // Always include parentheses, even for 0-arity
     if (atom.args.length === 0) {
-        return pred;
+        return `${pred}()`;
     }
     const args = atom.args.map(formatTerm).join(', ');
     return `${pred}(${args})`;
@@ -188,12 +261,72 @@ function formatTerm(term) {
         }
         case 'ApplyFn': {
             const fn = term;
+            if (fn.function.symbol === 'fn:list') {
+                const elements = fn.args.map(formatTerm).join(', ');
+                return `[${elements}]`;
+            }
+            if (fn.function.symbol === 'fn:map') {
+                // Pairs of key:value
+                const pairs = [];
+                for (let i = 0; i < fn.args.length; i += 2) {
+                    const key = fn.args[i];
+                    const value = fn.args[i + 1];
+                    if (key && value) {
+                        pairs.push(`${formatTerm(key)}: ${formatTerm(value)}`);
+                    }
+                }
+                return `[${pairs.join(', ')}]`;
+            }
+            if (fn.function.symbol === 'fn:struct') {
+                const pairs = [];
+                for (let i = 0; i < fn.args.length; i += 2) {
+                    const key = fn.args[i];
+                    const value = fn.args[i + 1];
+                    if (key && value) {
+                        pairs.push(`${formatTerm(key)}: ${formatTerm(value)}`);
+                    }
+                }
+                return `{${pairs.join(', ')}}`;
+            }
+            // Regular function
             const fnName = fn.function.symbol;
             const args = fn.args.map(formatTerm).join(', ');
             return `${fnName}(${args})`;
         }
-        case 'Atom':
-            return formatAtom(term);
+        case 'Atom': {
+            const atom = term;
+            // Handle comparison atoms (:lt, :le, :gt, :ge) with infix notation
+            if ((0, ast_1.isLtAtom)(atom) && atom.args.length === 2) {
+                const left = atom.args[0];
+                const right = atom.args[1];
+                if (left && right) {
+                    return `${formatTerm(left)} < ${formatTerm(right)}`;
+                }
+            }
+            if ((0, ast_1.isLeAtom)(atom) && atom.args.length === 2) {
+                const left = atom.args[0];
+                const right = atom.args[1];
+                if (left && right) {
+                    return `${formatTerm(left)} <= ${formatTerm(right)}`;
+                }
+            }
+            if ((0, ast_1.isGtAtom)(atom) && atom.args.length === 2) {
+                const left = atom.args[0];
+                const right = atom.args[1];
+                if (left && right) {
+                    return `${formatTerm(left)} > ${formatTerm(right)}`;
+                }
+            }
+            if ((0, ast_1.isGeAtom)(atom) && atom.args.length === 2) {
+                const left = atom.args[0];
+                const right = atom.args[1];
+                if (left && right) {
+                    return `${formatTerm(left)} >= ${formatTerm(right)}`;
+                }
+            }
+            // Regular atom
+            return formatAtom(atom);
+        }
         case 'NegAtom': {
             const neg = term;
             return `!${formatAtom(neg.atom)}`;

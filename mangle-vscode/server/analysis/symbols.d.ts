@@ -11,16 +11,24 @@ import { SourceUnit, SourceRange, PredicateSym } from '../parser/ast';
 export interface PredicateInfo {
     /** The predicate symbol */
     symbol: PredicateSym;
-    /** Location of the declaration (if any) */
+    /** Location of the declaration (if any) - full declaration range */
     declLocation: SourceRange | null;
-    /** Locations of all defining clauses (where predicate appears in head) */
+    /** Location of just the predicate name in the declaration (if any) */
+    declNameRange: SourceRange | null;
+    /** Locations of all defining clauses (where predicate appears in head) - full atom ranges */
     definitions: SourceRange[];
-    /** Locations of all references (where predicate is used in body) */
+    /** Locations of just the predicate names in definitions (for rename operations) */
+    definitionNameRanges: SourceRange[];
+    /** Locations of all references (where predicate is used in body) - full atom ranges */
     references: SourceRange[];
+    /** Locations of just the predicate names in references (for rename operations) */
+    referenceNameRanges: SourceRange[];
     /** Documentation from the declaration (if any) */
     documentation: string | null;
     /** Whether the predicate is declared external */
     isExternal: boolean;
+    /** Whether the predicate is declared private */
+    isPrivate: boolean;
 }
 /**
  * Information about a variable within a clause.
@@ -61,6 +69,10 @@ export declare class SymbolTable {
      */
     private detectIsExternal;
     /**
+     * Detect if a predicate is private from descr atoms.
+     */
+    private detectIsPrivate;
+    /**
      * Add a clause to the symbol table.
      */
     private addClause;
@@ -97,6 +109,14 @@ export declare class SymbolTable {
      */
     getPredicateNames(): string[];
     /**
+     * Get predicate info by full name (name/arity format).
+     */
+    getPredicateInfo(fullName: string): PredicateInfo | undefined;
+    /**
+     * Get all arities for a predicate base name.
+     */
+    getPredicateArities(baseName: string): number[];
+    /**
      * Find variable info at a given position.
      */
     findVariableAt(line: number, column: number): VariableInfo | undefined;
@@ -104,10 +124,6 @@ export declare class SymbolTable {
      * Find predicate info at a given position.
      */
     findPredicateAt(line: number, column: number): PredicateInfo | undefined;
-    /**
-     * Check if a position is within a range.
-     */
-    private isWithinRange;
     /**
      * Get variables for a clause at a given position.
      */
