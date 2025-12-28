@@ -62,21 +62,22 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "vscode:prepublish": "npm run bundle",
     "compile": "tsc -p ./",
+    "bundle": "npm run compile && npm run bundle:client && npm run bundle:server",
+    "bundle:client": "node ../../node_modules/.pnpm/esbuild@0.21.5/node_modules/esbuild/bin/esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
+    "bundle:server": "node ../../node_modules/.pnpm/esbuild@0.21.5/node_modules/esbuild/bin/esbuild server/server.js --bundle --outfile=server/server.bundle.js --format=cjs --platform=node",
     "watch": "tsc -watch -p ./",
     "package": "node ./node_modules/@vscode/vsce/vsce package --allow-missing-repository"
-  },
-  "dependencies": {
-    "vscode-languageclient": "^9.0.0",
-    "vscode-languageserver": "^9.0.0",
-    "vscode-languageserver-textdocument": "^1.0.11",
-    "antlr4ng": "^3.0.4"
   },
   "devDependencies": {
     "@types/vscode": "^1.75.0",
     "@types/node": "^20.0.0",
     "typescript": "^5.0.0",
-    "@vscode/vsce": "^2.22.0"
+    "@vscode/vsce": "^2.22.0",
+    "vscode-languageclient": "^9.0.0",
+    "vscode-languageserver": "^9.0.0",
+    "vscode-languageserver-textdocument": "^1.0.11",
+    "antlr4ng": "^3.0.4"
   }
 }

@@ -40278,4 +40278,3 @@ connection.listen();
 function startServer() {
   connection.console.log("Mangle LSP server started.");
 }
-//# sourceMappingURL=server.bundle.js.map
