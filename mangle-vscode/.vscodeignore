@@ -5,7 +5,10 @@ src/**
 **/*.map
 .gitignore
 tsconfig.json
-node_modules/**
 .claude/**
 **/../**
 **/../../**
+# Exclude dev dependencies, keep runtime deps
+node_modules/@types/**
+node_modules/@vscode/**
+node_modules/typescript/**
