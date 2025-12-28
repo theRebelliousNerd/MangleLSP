@@ -1,0 +1,27 @@
+{
+  "name": "mangle-lsp-monorepo",
+  "version": "0.1.0",
+  "description": "Mangle Language Server Protocol implementation and VS Code extension",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "build": "npm run build:server && npm run build:client",
+    "build:server": "npm run build --workspace=server",
+    "build:client": "npm run build --workspace=client",
+    "watch": "npm run watch --workspace=server & npm run watch --workspace=client",
+    "package": "npm run build && npm run package --workspace=client",
+    "clean": "rimraf server/dist client/out"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theRebelliousNerd/MangleLSP"
+  },
+  "author": "Next-Gen Engineering and Research Development LLC",
+  "license": "MIT",
+  "devDependencies": {
+    "rimraf": "^5.0.5"
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "name": "mangle-vscode",
+  "displayName": "Mangle Language Support",
+  "description": "Language support for Mangle (.mg files) - syntax highlighting, diagnostics, and more",
+  "version": "0.1.0",
+  "publisher": "mangle",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theRebelliousNerd/MangleLSP"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "onLanguage:mangle"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "mangle",
+        "aliases": [
+          "Mangle",
+          "mangle"
+        ],
+        "extensions": [
+          ".mg"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "mangle",
+        "scopeName": "source.mangle",
+        "path": "./syntaxes/mangle.tmLanguage.json"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Mangle",
+      "properties": {
+        "mangle.maxNumberOfProblems": {
+          "scope": "resource",
+          "type": "number",
+          "default": 100,
+          "description": "Maximum number of problems to report per file."
+        },
+        "mangle.enableSemanticAnalysis": {
+          "scope": "resource",
+          "type": "boolean",
+          "default": true,
+          "description": "Enable semantic analysis (variable binding, arity checking)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "npm run copy-server && tsc -p ./",
+    "copy-server": "node -e \"require('fs').cpSync('../server/dist', './server', {recursive: true})\"",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package --allow-missing-repository"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.75.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "@vscode/vsce": "^2.22.0"
+  }
+}
