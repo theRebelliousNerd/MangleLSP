@@ -8,7 +8,6 @@ tsconfig.json
 .claude/**
 **/../**
 **/../../**
-# Exclude dev dependencies, keep runtime deps
-node_modules/@types/**
-node_modules/@vscode/**
-node_modules/typescript/**
+# Everything is bundled with esbuild, exclude all node_modules
+node_modules/**
+esbuild.js

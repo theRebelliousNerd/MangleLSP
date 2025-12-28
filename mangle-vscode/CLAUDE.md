@@ -40,12 +40,31 @@ cp -r dist ../mangle-vscode/server
 cd ../mangle-vscode
 npm run compile
 
-# 4. Package as VSIX
-./node_modules/.bin/vsce package --allow-missing-repository
+# 4. Bundle with esbuild (CRITICAL: bundles all dependencies)
+# Bundle extension client:
+npx esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node --sourcemap
 
-# 5. Install
+# Bundle server (includes all runtime deps like vscode-languageserver, antlr4ng):
+npx esbuild server/server.js --bundle --outfile=server/server.bundle.js --format=cjs --platform=node --sourcemap
+
+# 5. Package as VSIX
+npx vsce package --allow-missing-repository
+
+# 6. Install
 code --install-extension mangle-vscode-1.0.0.vsix --force
 ```
+
+## Why esbuild Bundling is Required
+
+The pnpm monorepo uses symlinked dependencies which are NOT included in VSIX packages.
+Without bundling:
+- The extension client can't find `minimatch`, `semver`, etc. (vscode-languageclient deps)
+- The server can't find `vscode-languageserver`, `antlr4ng`, etc.
+
+By bundling with esbuild:
+- All dependencies are inlined into single files
+- No node_modules needed at runtime
+- Extension: ~765kb, Server: ~1.2mb (fully self-contained)
 
 ## Critical: Runtime Dependencies
 

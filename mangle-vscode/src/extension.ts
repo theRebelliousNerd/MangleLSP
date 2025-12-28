@@ -5,7 +5,7 @@
  */
 
 import * as path from 'path';
-import { workspace, ExtensionContext, window } from 'vscode';
+import { workspace, ExtensionContext, window, OutputChannel } from 'vscode';
 
 import {
     LanguageClient,
@@ -15,12 +15,18 @@ import {
 } from 'vscode-languageclient/node';
 
 let client: LanguageClient;
+let outputChannel: OutputChannel;
 
 export async function activate(context: ExtensionContext) {
+    // Create output channel for logging
+    outputChannel = window.createOutputChannel('Mangle Extension');
+    outputChannel.appendLine('Mangle extension activating...');
+
     // Path to the LSP server module (bundled in ./server/)
     const serverModule = context.asAbsolutePath(
-        path.join('server', 'server.js')
+        path.join('server', 'server.bundle.js')
     );
+    outputChannel.appendLine(`Server module path: ${serverModule}`);
 
     // Server options - run in Node.js
     const serverOptions: ServerOptions = {
@@ -45,6 +51,7 @@ export async function activate(context: ExtensionContext) {
             // Notify the server about file changes to '.mg' files in the workspace
             fileEvents: workspace.createFileSystemWatcher('**/*.mg'),
         },
+        outputChannel: outputChannel,
     };
 
     // Create the language client and start it
@@ -56,11 +63,14 @@ export async function activate(context: ExtensionContext) {
     );
 
     try {
+        outputChannel.appendLine('Starting language client...');
         // Start the client (also starts the server)
         await client.start();
         context.subscriptions.push(client);
-        console.log('Mangle Language Server started');
+        outputChannel.appendLine('Mangle Language Server started successfully!');
+        window.showInformationMessage('Mangle Language Server started');
     } catch (error) {
+        outputChannel.appendLine(`ERROR: Failed to start server: ${error}`);
         window.showErrorMessage(`Failed to start Mangle Language Server: ${error}`);
     }
 }
