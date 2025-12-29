@@ -20,7 +20,8 @@
     "deductive-database"
   ],
   "bin": {
-    "mangle-lsp": "dist/server.js"
+    "mangle-lsp": "dist/server.js",
+    "mangle-cli": "dist/cli.js"
   },
   "files": ["dist"],
   "scripts": {

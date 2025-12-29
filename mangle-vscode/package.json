@@ -15,6 +15,24 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "commands": [
+      {
+        "command": "mangle.checkFile",
+        "title": "Mangle: Check Current File"
+      },
+      {
+        "command": "mangle.checkWorkspace",
+        "title": "Mangle: Check All Files in Workspace"
+      },
+      {
+        "command": "mangle.exportDiagnostics",
+        "title": "Mangle: Export Diagnostics to JSON"
+      },
+      {
+        "command": "mangle.exportToFile",
+        "title": "Mangle: Export Diagnostics to File"
+      }
+    ],
     "languages": [
       {
         "id": "mangle",
@@ -57,6 +75,19 @@
           "enum": ["off", "messages", "verbose"],
           "default": "off",
           "description": "Traces the communication between VS Code and the Mangle language server."
+        },
+        "mangle.cli.outputFile": {
+          "scope": "resource",
+          "type": "string",
+          "default": "",
+          "description": "Path to write CLI output (empty = output channel only). Use with 'Mangle: Export Diagnostics to File' command."
+        },
+        "mangle.cli.outputFormat": {
+          "scope": "resource",
+          "type": "string",
+          "enum": ["json", "text", "sarif"],
+          "default": "json",
+          "description": "Output format for CLI commands and exports."
         }
       }
     }

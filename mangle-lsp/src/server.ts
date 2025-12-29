@@ -599,6 +599,224 @@ connection.onRenameRequest((params: RenameParams) => {
     }
 });
 
+// ============================================================================
+// Custom LSP Request Handlers for CLI/Agent Integration
+// ============================================================================
+
+/**
+ * Custom request: Get all diagnostics for a file.
+ * Request: 'mangle/getDiagnostics'
+ * Params: { uri: string }
+ * Returns: { uri, parseErrors, semanticErrors, stratificationErrors }
+ */
+connection.onRequest('mangle/getDiagnostics', (params: { uri: string }) => {
+    try {
+        const state = documentStates.get(params.uri);
+        if (!state) {
+            return {
+                uri: params.uri,
+                parseErrors: [],
+                semanticErrors: [],
+                stratificationErrors: [],
+            };
+        }
+
+        // Collect parse errors
+        const parseErrors = state.parseResult.errors.map(e => ({
+            code: 'P001',
+            source: e.source === 'lexer' ? 'mangle-lexer' : 'mangle-parse',
+            message: e.message,
+            range: {
+                start: { line: e.line, column: e.column },
+                end: { line: e.line, column: e.column + e.length },
+            },
+        }));
+
+        // Collect semantic errors
+        const semanticErrors = state.validationResult?.errors.map(e => ({
+            code: e.code,
+            source: 'mangle-semantic',
+            severity: e.severity,
+            message: e.message,
+            range: {
+                start: { line: e.range.start.line, column: e.range.start.column },
+                end: { line: e.range.end.line, column: e.range.end.column },
+            },
+        })) || [];
+
+        // Collect stratification errors
+        let stratificationErrors: any[] = [];
+        if (state.parseResult.unit) {
+            const stratErrors = checkStratification(state.parseResult.unit);
+            stratificationErrors = stratErrors.map(e => ({
+                code: e.code,
+                source: 'mangle-stratification',
+                severity: e.severity,
+                message: e.message,
+                range: {
+                    start: { line: e.range.start.line, column: e.range.start.column },
+                    end: { line: e.range.end.line, column: e.range.end.column },
+                },
+                cycle: e.cycle,
+            }));
+        }
+
+        return {
+            uri: params.uri,
+            parseErrors,
+            semanticErrors,
+            stratificationErrors,
+        };
+    } catch (e) {
+        connection.console.error(`mangle/getDiagnostics error: ${e}`);
+        return {
+            uri: params.uri,
+            parseErrors: [],
+            semanticErrors: [],
+            stratificationErrors: [],
+            error: String(e),
+        };
+    }
+});
+
+/**
+ * Custom request: Check multiple files.
+ * Request: 'mangle/checkFiles'
+ * Params: { uris: string[] }
+ * Returns: { files: [{ uri, diagnostics }] }
+ */
+connection.onRequest('mangle/checkFiles', async (params: { uris: string[] }) => {
+    const results: any[] = [];
+
+    for (const uri of params.uris) {
+        const state = documentStates.get(uri);
+        if (state) {
+            const diagnostics = await connection.sendRequest('mangle/getDiagnostics', { uri }) as Record<string, any>;
+            results.push({ uri, ...diagnostics });
+        }
+    }
+
+    return { files: results };
+});
+
+/**
+ * Custom request: Get structured symbol information.
+ * Request: 'mangle/getStructuredSymbols'
+ * Params: { uri: string }
+ * Returns: { uri, predicates, declarations, clauses }
+ */
+connection.onRequest('mangle/getStructuredSymbols', (params: { uri: string }) => {
+    try {
+        const state = documentStates.get(params.uri);
+        if (!state || !state.parseResult.unit) {
+            return {
+                uri: params.uri,
+                predicates: [],
+                declarations: [],
+                clauses: [],
+            };
+        }
+
+        const symbolTable = getSymbolTable(state);
+        if (!symbolTable) {
+            return {
+                uri: params.uri,
+                predicates: [],
+                declarations: [],
+                clauses: [],
+            };
+        }
+
+        // Get predicate info
+        const predicates = symbolTable.getAllPredicates().map(info => ({
+            name: info.symbol.symbol,
+            arity: info.symbol.arity,
+            isExternal: info.isExternal,
+            isPrivate: info.isPrivate,
+            declLocation: info.declLocation ? {
+                start: { line: info.declLocation.start.line, column: info.declLocation.start.column },
+                end: { line: info.declLocation.end.line, column: info.declLocation.end.column },
+            } : null,
+            definitionCount: info.definitions.length,
+            referenceCount: info.references.length,
+        }));
+
+        // Get declaration info
+        const declarations = state.parseResult.unit.decls.map(d => ({
+            predicate: `${d.declaredAtom.predicate.symbol}/${d.declaredAtom.predicate.arity}`,
+            range: {
+                start: { line: d.range.start.line, column: d.range.start.column },
+                end: { line: d.range.end.line, column: d.range.end.column },
+            },
+        }));
+
+        // Get clause info
+        const clauses = state.parseResult.unit.clauses.map(c => ({
+            head: `${c.head.predicate.symbol}/${c.head.predicate.arity}`,
+            isFact: !c.premises || c.premises.length === 0,
+            hasTransform: !!c.transform,
+            range: {
+                start: { line: c.head.range.start.line, column: c.head.range.start.column },
+                end: { line: c.head.range.end.line, column: c.head.range.end.column },
+            },
+        }));
+
+        return {
+            uri: params.uri,
+            predicates,
+            declarations,
+            clauses,
+        };
+    } catch (e) {
+        connection.console.error(`mangle/getStructuredSymbols error: ${e}`);
+        return {
+            uri: params.uri,
+            predicates: [],
+            declarations: [],
+            clauses: [],
+            error: String(e),
+        };
+    }
+});
+
+/**
+ * Custom request: Get AST for a file.
+ * Request: 'mangle/getAST'
+ * Params: { uri: string }
+ * Returns: { uri, ast } where ast is the parsed SourceUnit
+ */
+connection.onRequest('mangle/getAST', (params: { uri: string }) => {
+    try {
+        const state = documentStates.get(params.uri);
+        if (!state || !state.parseResult.unit) {
+            return {
+                uri: params.uri,
+                ast: null,
+                error: state ? 'Parse errors present' : 'Document not found',
+            };
+        }
+
+        // Return a simplified AST (to avoid circular references)
+        const unit = state.parseResult.unit;
+        return {
+            uri: params.uri,
+            ast: {
+                packageDecl: unit.packageDecl,
+                useDecls: unit.useDecls,
+                declCount: unit.decls.length,
+                clauseCount: unit.clauses.length,
+            },
+        };
+    } catch (e) {
+        connection.console.error(`mangle/getAST error: ${e}`);
+        return {
+            uri: params.uri,
+            ast: null,
+            error: String(e),
+        };
+    }
+});
+
 /**
  * Shutdown handler.
  * Called when the client requests the server to shut down.
