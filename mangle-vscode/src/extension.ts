@@ -407,6 +407,63 @@ function registerCommands(context: ExtensionContext): void {
         })
     );
 
+    // Command: Batch lookup (programmatic API for agents)
+    context.subscriptions.push(
+        commands.registerCommand('mangle.api.batchLookup', async (queries: any[]) => {
+            if (!queries || !Array.isArray(queries)) {
+                return { results: [], error: 'Invalid queries array' };
+            }
+
+            try {
+                const result = await client.sendRequest('mangle/batchLookup', { queries });
+                return result;
+            } catch (e) {
+                return { results: [], error: String(e) };
+            }
+        })
+    );
+
+    // Command: Get file info (programmatic API)
+    context.subscriptions.push(
+        commands.registerCommand('mangle.api.getFileInfo', async (uri?: string) => {
+            const targetUri = uri || window.activeTextEditor?.document.uri.toString();
+            if (!targetUri) {
+                return { error: 'No file specified' };
+            }
+
+            try {
+                const result = await client.sendRequest('mangle/getFileInfo', { uri: targetUri });
+                return result;
+            } catch (e) {
+                return { error: String(e) };
+            }
+        })
+    );
+
+    // Command: Check all open files
+    context.subscriptions.push(
+        commands.registerCommand('mangle.api.checkAll', async () => {
+            try {
+                const result = await client.sendRequest('mangle/checkAll', {});
+                return result;
+            } catch (e) {
+                return { error: String(e) };
+            }
+        })
+    );
+
+    // Command: Get workspace summary
+    context.subscriptions.push(
+        commands.registerCommand('mangle.api.getWorkspaceSummary', async () => {
+            try {
+                const result = await client.sendRequest('mangle/getWorkspaceSummary', {});
+                return result;
+            } catch (e) {
+                return { error: String(e) };
+            }
+        })
+    );
+
     outputChannel.appendLine('CLI commands registered');
 }
 

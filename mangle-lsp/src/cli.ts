@@ -30,6 +30,8 @@ import {
     runFormat,
     getFormatExitCode,
     ReferencesOptions,
+    runBatch,
+    parseBatchInput,
 } from './cli/commands/index';
 
 import {
@@ -76,6 +78,8 @@ Commands:
   references    Find all references
   completion    Get completions at position
   format        Format Mangle source files
+  batch         Run multiple queries in one call (for agents)
+  file-info     Get complete analysis of a file
 
 Global Options:
   --format, -f    Output format: json | text | sarif (default: json)
@@ -120,6 +124,24 @@ Examples:
 
   # Generate SARIF for GitHub Actions
   mangle-cli check --format sarif src/**/*.mg > results.sarif
+
+  # Batch queries (for coding agents)
+  mangle-cli batch queries.json
+  echo '[{"type":"hover","file":"src/main.mg","line":10,"column":5}]' | mangle-cli batch -
+
+  # Get complete file analysis
+  mangle-cli file-info src/main.mg
+
+Batch Query Format:
+  [
+    { "id": 1, "type": "hover", "file": "src/main.mg", "line": 10, "column": 5 },
+    { "id": 2, "type": "definition", "file": "src/main.mg", "line": 15, "column": 3 },
+    { "id": 3, "type": "diagnostics", "file": "src/main.mg" },
+    { "id": 4, "type": "symbols", "file": "src/main.mg" },
+    { "id": 5, "type": "fileInfo", "file": "src/main.mg" }
+  ]
+
+Query Types: hover, definition, references, completion, symbols, diagnostics, format, fileInfo
 `);
 }
 
@@ -265,6 +287,14 @@ function main(): void {
 
             case 'format':
                 handleFormat(files, outputFormat, args.options);
+                break;
+
+            case 'batch':
+                handleBatch(files[0] || '', outputFormat, args.options);
+                break;
+
+            case 'file-info':
+                handleFileInfo(files[0] || '', outputFormat, args.options);
                 break;
 
             default:
@@ -534,6 +564,139 @@ function handleFormat(
     }
 
     process.exit(getFormatExitCode(results, formatOptions));
+}
+
+/**
+ * Handle batch command.
+ */
+function handleBatch(
+    input: string,
+    format: string,
+    options: Record<string, string | boolean | number>
+): void {
+    let queryInput: string;
+
+    if (input === '-') {
+        // Read from stdin
+        const chunks: Buffer[] = [];
+        const fd = require('fs').openSync(0, 'r');
+        const buf = Buffer.alloc(1024);
+        let n: number;
+        while ((n = require('fs').readSync(fd, buf)) > 0) {
+            chunks.push(buf.slice(0, n));
+        }
+        queryInput = Buffer.concat(chunks).toString('utf-8');
+    } else if (input) {
+        queryInput = input;
+    } else {
+        console.error('Error: No batch input specified. Use a file path or - for stdin');
+        process.exit(1);
+    }
+
+    try {
+        const queries = parseBatchInput(queryInput);
+        const commonOptions = {
+            format: format as 'json' | 'text' | 'sarif',
+            quiet: !!options['quiet'],
+        };
+
+        const result = runBatch(queries, commonOptions);
+
+        // Always output as JSON for batch (it's meant for programmatic use)
+        console.log(JSON.stringify(result, null, 2));
+
+        // Exit with error if any queries failed
+        process.exit(result.summary.failed > 0 ? 1 : 0);
+    } catch (e) {
+        console.error(`Error parsing batch input: ${e}`);
+        process.exit(2);
+    }
+}
+
+/**
+ * Handle file-info command.
+ */
+function handleFileInfo(
+    file: string,
+    format: string,
+    options: Record<string, string | boolean | number>
+): void {
+    if (!file) {
+        console.error('Error: No file specified');
+        process.exit(1);
+    }
+
+    const commonOptions = {
+        format: format as 'json' | 'text' | 'sarif',
+        quiet: !!options['quiet'],
+    };
+
+    // Run batch with a single fileInfo query
+    const result = runBatch([{ type: 'fileInfo', file }], commonOptions);
+
+    if (result.results.length > 0 && result.results[0]) {
+        const fileInfo = result.results[0].result;
+        if (format === 'text') {
+            console.log(formatFileInfoText(fileInfo));
+        } else {
+            console.log(JSON.stringify(fileInfo, null, 2));
+        }
+    } else {
+        console.error('Error: Failed to get file info');
+        process.exit(1);
+    }
+}
+
+/**
+ * Format file info as text.
+ */
+function formatFileInfoText(info: any): string {
+    if (!info) return 'No file info available';
+
+    const lines: string[] = [];
+    lines.push(`File: ${info.path}`);
+    lines.push(`Lines: ${info.lineCount}`);
+    lines.push(`Syntax Errors: ${info.hasSyntaxErrors ? 'Yes' : 'No'}`);
+    lines.push(`Semantic Errors: ${info.hasSemanticErrors ? 'Yes' : 'No'}`);
+
+    if (info.ast) {
+        lines.push(`\nAST:`);
+        lines.push(`  Declarations: ${info.ast.declCount}`);
+        lines.push(`  Clauses: ${info.ast.clauseCount}`);
+        if (info.ast.packageDecl) {
+            lines.push(`  Package: ${info.ast.packageDecl.name}`);
+        }
+    }
+
+    if (info.predicates && info.predicates.length > 0) {
+        lines.push(`\nPredicates (${info.predicates.length}):`);
+        for (const pred of info.predicates) {
+            const attrs = [];
+            if (pred.isExternal) attrs.push('external');
+            if (pred.isPrivate) attrs.push('private');
+            const attrStr = attrs.length > 0 ? ` [${attrs.join(', ')}]` : '';
+            lines.push(`  ${pred.name}/${pred.arity}${attrStr} - ${pred.definitionCount} def, ${pred.referenceCount} ref`);
+        }
+    }
+
+    if (info.symbols && info.symbols.length > 0) {
+        lines.push(`\nSymbols (${info.symbols.length}):`);
+        for (const sym of info.symbols.slice(0, 10)) {
+            lines.push(`  ${sym.name} (line ${sym.range.start.line})`);
+        }
+        if (info.symbols.length > 10) {
+            lines.push(`  ... and ${info.symbols.length - 10} more`);
+        }
+    }
+
+    const diag = info.diagnostics;
+    if (diag) {
+        lines.push(`\nDiagnostics:`);
+        lines.push(`  Errors: ${diag.totalErrors || 0}`);
+        lines.push(`  Warnings: ${diag.totalWarnings || 0}`);
+    }
+
+    return lines.join('\n');
 }
 
 // Run main

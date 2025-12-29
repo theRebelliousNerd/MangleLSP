@@ -230,9 +230,113 @@ mangle-cli format --check src/**/*.mg
 
 # Format files in place
 mangle-cli format --write src/**/*.mg
+```
 
-# Show what would change
-mangle-cli format --diff src/**/*.mg
+#### `batch` - Batch Queries (For Agents)
+
+Run multiple queries in a single call. Designed for coding agents that need to gather multiple pieces of information efficiently.
+
+```bash
+mangle-cli batch <queries.json>
+mangle-cli batch -              # Read from stdin
+```
+
+**Query Format:**
+
+```json
+[
+  { "id": 1, "type": "hover", "file": "src/main.mg", "line": 10, "column": 5 },
+  { "id": 2, "type": "definition", "file": "src/main.mg", "line": 15, "column": 3 },
+  { "id": 3, "type": "references", "file": "src/main.mg", "line": 20, "column": 5, "includeDeclaration": true },
+  { "id": 4, "type": "completion", "file": "src/main.mg", "line": 25, "column": 10 },
+  { "id": 5, "type": "symbols", "file": "src/main.mg" },
+  { "id": 6, "type": "diagnostics", "file": "src/main.mg" },
+  { "id": 7, "type": "format", "file": "src/main.mg" },
+  { "id": 8, "type": "fileInfo", "file": "src/main.mg" }
+]
+```
+
+**Query Types:**
+
+| Type | Description | Required Fields |
+|------|-------------|-----------------|
+| `hover` | Get hover info at position | `file`, `line`, `column` |
+| `definition` | Get definition location | `file`, `line`, `column` |
+| `references` | Find all references | `file`, `line`, `column` |
+| `completion` | Get completions | `file`, `line`, `column` |
+| `symbols` | List document symbols | `file` |
+| `diagnostics` | Get all diagnostics | `file` |
+| `format` | Get formatted output | `file` |
+| `fileInfo` | Get complete file analysis | `file` |
+
+**Output:**
+
+```json
+{
+  "version": "1.0",
+  "results": [
+    { "id": 1, "type": "hover", "file": "src/main.mg", "result": { "contents": "..." } },
+    { "id": 2, "type": "definition", "file": "src/main.mg", "result": { "locations": [...] } }
+  ],
+  "summary": {
+    "total": 2,
+    "succeeded": 2,
+    "failed": 0
+  }
+}
+```
+
+**Example Usage:**
+
+```bash
+# Create a queries file
+cat > queries.json << 'EOF'
+[
+  {"type": "fileInfo", "file": "src/main.mg"},
+  {"type": "hover", "file": "src/main.mg", "line": 10, "column": 5}
+]
+EOF
+
+# Run batch
+mangle-cli batch queries.json
+
+# Or pipe directly
+echo '[{"type":"diagnostics","file":"src/main.mg"}]' | mangle-cli batch -
+```
+
+#### `file-info` - Complete File Analysis
+
+Get comprehensive information about a single file including diagnostics, symbols, predicates, and AST info.
+
+```bash
+mangle-cli file-info <file>
+mangle-cli file-info --format text <file>   # Human-readable output
+```
+
+**JSON Output:**
+
+```json
+{
+  "path": "src/main.mg",
+  "lineCount": 50,
+  "hasSyntaxErrors": false,
+  "hasSemanticErrors": false,
+  "diagnostics": {
+    "parseErrors": [],
+    "semanticErrors": [],
+    "totalErrors": 0,
+    "totalWarnings": 0
+  },
+  "symbols": [...],
+  "predicates": [
+    { "name": "my_pred", "arity": 2, "definitionCount": 3, "referenceCount": 5 }
+  ],
+  "ast": {
+    "declCount": 5,
+    "clauseCount": 20,
+    "packageDecl": { "name": "mypackage" }
+  }
+}
 ```
 
 ### Output Formats
@@ -289,6 +393,24 @@ const completions = await vscode.commands.executeCommand('mangle.api.getCompleti
 
 // Format a file
 const result = await vscode.commands.executeCommand('mangle.api.format', 'file:///path/to/file.mg');
+
+// BATCH OPERATIONS (new)
+
+// Batch lookup - run multiple queries in one call
+const batchResult = await vscode.commands.executeCommand('mangle.api.batchLookup', [
+    { type: 'hover', uri: 'file:///path/to/file.mg', line: 10, column: 5 },
+    { type: 'definition', uri: 'file:///path/to/file.mg', line: 15, column: 3 },
+    { type: 'diagnostics', uri: 'file:///path/to/file.mg' }
+]);
+
+// Get complete file info
+const fileInfo = await vscode.commands.executeCommand('mangle.api.getFileInfo', 'file:///path/to/file.mg');
+
+// Check all open documents
+const checkAll = await vscode.commands.executeCommand('mangle.api.checkAll');
+
+// Get workspace summary (all predicates, files)
+const summary = await vscode.commands.executeCommand('mangle.api.getWorkspaceSummary');
 ```
 
 ### Extension Settings
@@ -394,6 +516,109 @@ Get the parsed AST for a file.
     "declCount": 5,
     "clauseCount": 20
   }
+}
+```
+
+### `mangle/batchLookup`
+
+Run multiple queries in a single request. Perfect for coding agents.
+
+**Request:**
+```json
+{
+  "queries": [
+    { "id": 1, "type": "hover", "uri": "file:///path/to/file.mg", "line": 10, "column": 5 },
+    { "id": 2, "type": "definition", "uri": "file:///path/to/file.mg", "line": 15, "column": 3 },
+    { "id": 3, "type": "diagnostics", "uri": "file:///path/to/file.mg" }
+  ]
+}
+```
+
+**Response:**
+```json
+{
+  "results": [
+    { "id": 1, "type": "hover", "uri": "...", "result": { "contents": "..." } },
+    { "id": 2, "type": "definition", "uri": "...", "result": { "locations": [...] } },
+    { "id": 3, "type": "diagnostics", "uri": "...", "result": { "parseErrors": [], ... } }
+  ]
+}
+```
+
+**Query Types:** `hover`, `definition`, `references`, `completion`, `symbols`, `diagnostics`, `format`
+
+### `mangle/getFileInfo`
+
+Get complete information about a file in a single request.
+
+**Request:**
+```json
+{
+  "uri": "file:///path/to/file.mg"
+}
+```
+
+**Response:**
+```json
+{
+  "uri": "file:///path/to/file.mg",
+  "exists": true,
+  "version": 1,
+  "hasSyntaxErrors": false,
+  "hasSemanticErrors": false,
+  "diagnostics": { ... },
+  "symbols": [...],
+  "predicates": [...],
+  "ast": { ... },
+  "lineCount": 50
+}
+```
+
+### `mangle/checkAll`
+
+Check all open documents and get aggregated diagnostics.
+
+**Request:**
+```json
+{}
+```
+
+**Response:**
+```json
+{
+  "files": [
+    { "uri": "file:///path/to/file1.mg", "parseErrors": [...], ... },
+    { "uri": "file:///path/to/file2.mg", "parseErrors": [...], ... }
+  ],
+  "summary": {
+    "totalFiles": 2,
+    "totalErrors": 0,
+    "totalWarnings": 3,
+    "totalInfo": 1
+  }
+}
+```
+
+### `mangle/getWorkspaceSummary`
+
+Get a summary of all predicates and files in the workspace.
+
+**Request:**
+```json
+{}
+```
+
+**Response:**
+```json
+{
+  "files": [
+    { "uri": "...", "hasSyntaxErrors": false, "declCount": 5, "clauseCount": 20 }
+  ],
+  "predicates": [
+    { "name": "my_pred/2", "arity": 2, "definedIn": ["file1.mg"], "referencedIn": ["file1.mg", "file2.mg"] }
+  ],
+  "totalFiles": 2,
+  "totalPredicates": 15
 }
 ```
 
