@@ -3059,7 +3059,7 @@ var require_ril = __commonJS({
 var require_main = __commonJS({
   "node_modules/vscode-jsonrpc/lib/node/main.js"(exports2) {
     "use strict";
-    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
       var desc = Object.getOwnPropertyDescriptor(m, k);
       if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -3068,10 +3068,10 @@ var require_main = __commonJS({
         } };
       }
       Object.defineProperty(o, k2, desc);
-    } : function(o, m, k, k2) {
+    }) : (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
       o[k2] = m[k];
-    });
+    }));
     var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
       for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p)) __createBinding(exports3, m, p);
     };
@@ -3754,7 +3754,7 @@ var require_main2 = __commonJS({
       })(WorkspaceEdit || (exports3.WorkspaceEdit = WorkspaceEdit = {}));
       var TextEditChangeImpl = (
         /** @class */
-        function() {
+        (function() {
           function TextEditChangeImpl2(edits, changeAnnotations) {
             this.edits = edits;
             this.changeAnnotations = changeAnnotations;
@@ -3828,11 +3828,11 @@ var require_main2 = __commonJS({
             }
           };
           return TextEditChangeImpl2;
-        }()
+        })()
       );
       var ChangeAnnotations = (
         /** @class */
-        function() {
+        (function() {
           function ChangeAnnotations2(annotations) {
             this._annotations = annotations === void 0 ? /* @__PURE__ */ Object.create(null) : annotations;
             this._counter = 0;
@@ -3871,11 +3871,11 @@ var require_main2 = __commonJS({
             return this._counter.toString();
           };
           return ChangeAnnotations2;
-        }()
+        })()
       );
       var WorkspaceChange = (
         /** @class */
-        function() {
+        (function() {
           function WorkspaceChange2(workspaceEdit) {
             var _this = this;
             this._textEditChanges = /* @__PURE__ */ Object.create(null);
@@ -4038,7 +4038,7 @@ var require_main2 = __commonJS({
             }
           };
           return WorkspaceChange2;
-        }()
+        })()
       );
       exports3.WorkspaceChange = WorkspaceChange;
       var TextDocumentIdentifier;
@@ -4684,7 +4684,7 @@ var require_main2 = __commonJS({
       })(TextDocument2 || (exports3.TextDocument = TextDocument2 = {}));
       var FullTextDocument2 = (
         /** @class */
-        function() {
+        (function() {
           function FullTextDocument3(uri, languageId, version, content) {
             this._uri = uri;
             this._languageId = languageId;
@@ -4786,7 +4786,7 @@ var require_main2 = __commonJS({
             configurable: true
           });
           return FullTextDocument3;
-        }()
+        })()
       );
       var Is;
       (function(Is2) {
@@ -6280,7 +6280,7 @@ var require_connection2 = __commonJS({
 var require_api2 = __commonJS({
   "node_modules/vscode-languageserver-protocol/lib/common/api.js"(exports2) {
     "use strict";
-    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
       var desc = Object.getOwnPropertyDescriptor(m, k);
       if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -6289,10 +6289,10 @@ var require_api2 = __commonJS({
         } };
       }
       Object.defineProperty(o, k2, desc);
-    } : function(o, m, k, k2) {
+    }) : (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
       o[k2] = m[k];
-    });
+    }));
     var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
       for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p)) __createBinding(exports3, m, p);
     };
@@ -6322,7 +6322,7 @@ var require_api2 = __commonJS({
 var require_main3 = __commonJS({
   "node_modules/vscode-languageserver-protocol/lib/node/main.js"(exports2) {
     "use strict";
-    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
       var desc = Object.getOwnPropertyDescriptor(m, k);
       if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -6331,10 +6331,10 @@ var require_main3 = __commonJS({
         } };
       }
       Object.defineProperty(o, k2, desc);
-    } : function(o, m, k, k2) {
+    }) : (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
       o[k2] = m[k];
-    });
+    }));
     var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
       for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p)) __createBinding(exports3, m, p);
     };
@@ -8567,7 +8567,7 @@ var require_inlineCompletion_proposed = __commonJS({
 var require_api3 = __commonJS({
   "node_modules/vscode-languageserver/lib/common/api.js"(exports2) {
     "use strict";
-    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
       var desc = Object.getOwnPropertyDescriptor(m, k);
       if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -8576,10 +8576,10 @@ var require_api3 = __commonJS({
         } };
       }
       Object.defineProperty(o, k2, desc);
-    } : function(o, m, k, k2) {
+    }) : (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
       o[k2] = m[k];
-    });
+    }));
     var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
       for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p)) __createBinding(exports3, m, p);
     };
@@ -8614,7 +8614,7 @@ var require_api3 = __commonJS({
 var require_main4 = __commonJS({
   "node_modules/vscode-languageserver/lib/node/main.js"(exports2) {
     "use strict";
-    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
       var desc = Object.getOwnPropertyDescriptor(m, k);
       if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -8623,10 +8623,10 @@ var require_main4 = __commonJS({
         } };
       }
       Object.defineProperty(o, k2, desc);
-    } : function(o, m, k, k2) {
+    }) : (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
       o[k2] = m[k];
-    });
+    }));
     var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
       for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p)) __createBinding(exports3, m, p);
     };
@@ -26650,7 +26650,7 @@ var require_dist = __commonJS({
 var require_MangleLexer = __commonJS({
   "server/parser/gen/MangleLexer.js"(exports2) {
     "use strict";
-    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
       var desc = Object.getOwnPropertyDescriptor(m, k);
       if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -26659,16 +26659,16 @@ var require_MangleLexer = __commonJS({
         } };
       }
       Object.defineProperty(o, k2, desc);
-    } : function(o, m, k, k2) {
+    }) : (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
       o[k2] = m[k];
-    });
-    var __setModuleDefault = exports2 && exports2.__setModuleDefault || (Object.create ? function(o, v) {
+    }));
+    var __setModuleDefault = exports2 && exports2.__setModuleDefault || (Object.create ? (function(o, v) {
       Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
+    }) : function(o, v) {
       o["default"] = v;
     });
-    var __importStar = exports2 && exports2.__importStar || /* @__PURE__ */ function() {
+    var __importStar = exports2 && exports2.__importStar || /* @__PURE__ */ (function() {
       var ownKeys = function(o) {
         ownKeys = Object.getOwnPropertyNames || function(o2) {
           var ar = [];
@@ -26686,7 +26686,7 @@ var require_MangleLexer = __commonJS({
         __setModuleDefault(result, mod);
         return result;
       };
-    }();
+    })();
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.MangleLexer = void 0;
     var antlr = __importStar(require_dist());
@@ -30742,7 +30742,7 @@ var require_MangleLexer = __commonJS({
 var require_MangleParser = __commonJS({
   "server/parser/gen/MangleParser.js"(exports2) {
     "use strict";
-    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
       var desc = Object.getOwnPropertyDescriptor(m, k);
       if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -30751,16 +30751,16 @@ var require_MangleParser = __commonJS({
         } };
       }
       Object.defineProperty(o, k2, desc);
-    } : function(o, m, k, k2) {
+    }) : (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
       o[k2] = m[k];
-    });
-    var __setModuleDefault = exports2 && exports2.__setModuleDefault || (Object.create ? function(o, v) {
+    }));
+    var __setModuleDefault = exports2 && exports2.__setModuleDefault || (Object.create ? (function(o, v) {
       Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
+    }) : function(o, v) {
       o["default"] = v;
     });
-    var __importStar = exports2 && exports2.__importStar || /* @__PURE__ */ function() {
+    var __importStar = exports2 && exports2.__importStar || /* @__PURE__ */ (function() {
       var ownKeys = function(o) {
         ownKeys = Object.getOwnPropertyNames || function(o2) {
           var ar = [];
@@ -30778,7 +30778,7 @@ var require_MangleParser = __commonJS({
         __setModuleDefault(result, mod);
         return result;
       };
-    }();
+    })();
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.AtomsContext = exports2.AtomContext = exports2.MemberContext = exports2.DotTypeContext = exports2.StructContext = exports2.MapContext = exports2.ListContext = exports2.NumContext = exports2.ConstContext = exports2.VarContext = exports2.ApplContext = exports2.FloatContext = exports2.BStrContext = exports2.StrContext = exports2.TermContext = exports2.LiteralOrFmlContext = exports2.LetStmtContext = exports2.TransformContext = exports2.ClauseBodyContext = exports2.ClauseContext = exports2.ConstraintsBlockContext = exports2.BoundsBlockContext = exports2.DescrBlockContext = exports2.DeclContext = exports2.UseDeclContext = exports2.PackageDeclContext = exports2.ProgramContext = exports2.StartContext = exports2.MangleParser = void 0;
     var antlr = __importStar(require_dist());
@@ -36355,7 +36355,7 @@ var require_parser = __commonJS({
 var require_parser2 = __commonJS({
   "server/parser/index.js"(exports2) {
     "use strict";
-    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
       var desc = Object.getOwnPropertyDescriptor(m, k);
       if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -36364,10 +36364,10 @@ var require_parser2 = __commonJS({
         } };
       }
       Object.defineProperty(o, k2, desc);
-    } : function(o, m, k, k2) {
+    }) : (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
       o[k2] = m[k];
-    });
+    }));
     var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
       for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p)) __createBinding(exports3, m, p);
     };
@@ -38540,7 +38540,7 @@ var require_stratification = __commonJS({
 var require_analysis = __commonJS({
   "server/analysis/index.js"(exports2) {
     "use strict";
-    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
+    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
       var desc = Object.getOwnPropertyDescriptor(m, k);
       if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -38549,10 +38549,10 @@ var require_analysis = __commonJS({
         } };
       }
       Object.defineProperty(o, k2, desc);
-    } : function(o, m, k, k2) {
+    }) : (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
       o[k2] = m[k];
-    });
+    }));
     var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
       for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p)) __createBinding(exports3, m, p);
     };
