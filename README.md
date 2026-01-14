@@ -82,9 +82,23 @@ npm test
 - npm 9+
 - VS Code 1.75+
 
+## About
+
+<p align="center">
+  <a href="https://nextgenrd.com/">
+    <strong>🚀 Next-Gen Engineering and Research Development LLC (N.E.R.D.)</strong>
+  </a>
+  <br>
+  <em>Engineering the Future. Today.</em>
+</p>
+
+This project is developed and maintained by **[N.E.R.D.](https://nextgenrd.com/)** — a dynamic engineering company founded on the principle of bringing innovative ideas to fruition. We operate with a hybrid model, combining engineering expertise with strategic representation, and harness future technologies through a powerful network of partnerships.
+
+**Creator:** Steve Moore ([@theRebelliousNerd](https://github.com/theRebelliousNerd))
+
 ## License
 
-MIT
+MIT © [Next-Gen Engineering and Research Development LLC](https://nextgenrd.com/)
 
 ## Contributing
 
