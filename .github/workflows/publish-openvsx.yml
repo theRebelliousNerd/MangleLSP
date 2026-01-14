@@ -1,0 +1,57 @@
+name: Publish to Open VSX
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (e.g., 0.1.0)'
+        required: false
+        type: string
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build server
+        run: npm run build:server
+
+      - name: Build client
+        run: npm run build:client
+
+      - name: Package extension
+        working-directory: ./client
+        run: npx @vscode/vsce package --allow-missing-repository
+
+      - name: Get package info
+        id: package
+        working-directory: ./client
+        run: |
+          echo "name=$(node -p "require('./package.json').name")" >> $GITHUB_OUTPUT
+          echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Publish to Open VSX
+        working-directory: ./client
+        run: |
+          npx ovsx publish ${{ steps.package.outputs.name }}-${{ steps.package.outputs.version }}.vsix -p ${{ secrets.OPEN_VSX_TOKEN }}
+
+      - name: Upload VSIX as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.package.outputs.name }}-${{ steps.package.outputs.version }}.vsix
+          path: ./client/*.vsix
+          retention-days: 30

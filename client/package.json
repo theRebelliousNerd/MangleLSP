@@ -3,19 +3,30 @@
   "displayName": "Mangle Language Support",
   "description": "Language support for Mangle (.mg files) - syntax highlighting, diagnostics, and more",
   "version": "0.1.0",
-  "publisher": "mangle",
+  "publisher": "theRebelliousNerd",
+  "license": "MIT",
+  "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.75.0"
+  },
+  "homepage": "https://github.com/theRebelliousNerd/MangleLSP#readme",
+  "bugs": {
+    "url": "https://github.com/theRebelliousNerd/MangleLSP/issues"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/theRebelliousNerd/MangleLSP"
   },
+  "keywords": [
+    "mangle",
+    "datalog",
+    "declarative",
+    "logic programming",
+    "lsp",
+    "language server"
+  ],
   "categories": [
     "Programming Languages"
-  ],
-  "activationEvents": [
-    "onLanguage:mangle"
   ],
   "main": "./out/extension.js",
   "contributes": {
