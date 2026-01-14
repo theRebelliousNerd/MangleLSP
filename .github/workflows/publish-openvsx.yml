@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version to publish (e.g., 0.1.0)'
+        description: 'Version to publish (e.g., 1.0.0)'
         required: false
         type: string
 
@@ -27,25 +27,25 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build server
-        run: npm run build:server
+      - name: Build mangle-lsp
+        run: npm run build:lsp
 
-      - name: Build client
-        run: npm run build:client
+      - name: Build mangle-vscode
+        run: npm run build:vscode
 
       - name: Package extension
-        working-directory: ./client
-        run: npx @vscode/vsce package --allow-missing-repository
+        working-directory: ./mangle-vscode
+        run: npm run package
 
       - name: Get package info
         id: package
-        working-directory: ./client
+        working-directory: ./mangle-vscode
         run: |
           echo "name=$(node -p "require('./package.json').name")" >> $GITHUB_OUTPUT
           echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
       - name: Publish to Open VSX
-        working-directory: ./client
+        working-directory: ./mangle-vscode
         run: |
           npx ovsx publish ${{ steps.package.outputs.name }}-${{ steps.package.outputs.version }}.vsix -p ${{ secrets.OPEN_VSX_TOKEN }}
 
@@ -53,5 +53,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.package.outputs.name }}-${{ steps.package.outputs.version }}.vsix
-          path: ./client/*.vsix
+          path: ./mangle-vscode/*.vsix
           retention-days: 30

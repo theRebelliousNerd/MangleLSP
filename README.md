@@ -1,5 +1,8 @@
 # MangleLSP
 
+[![Open VSX](https://img.shields.io/open-vsx/v/theRebelliousNerd/mangle-vscode)](https://open-vsx.org/extension/theRebelliousNerd/mangle-vscode)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Language Server Protocol (LSP) implementation and VS Code extension for the [Mangle](https://github.com/google/mangle) declarative programming language.
 
 ## Features
@@ -7,27 +10,29 @@ Language Server Protocol (LSP) implementation and VS Code extension for the [Man
 - **Syntax Highlighting** - Full TextMate grammar support for `.mg` files
 - **Diagnostics** - Real-time syntax and semantic error reporting
 - **Semantic Analysis** - Variable binding, arity checking, and safety validation
+- **CLI Tools** - Command-line interface for CI/CD integration (SARIF output support)
 
 ## Project Structure
 
 ```
 MangleLSP/
-├── server/          # LSP server implementation
-│   ├── src/         # TypeScript source
-│   │   ├── parser/  # ANTLR-based parser
-│   │   ├── analysis/ # Semantic analysis
-│   │   └── server.ts # LSP server entry point
-│   └── Mangle.g4    # ANTLR grammar
-└── client/          # VS Code extension
-    ├── src/         # Extension source
-    └── syntaxes/    # TextMate grammar
+├── mangle-lsp/           # Standalone LSP server library
+│   ├── src/              # TypeScript source
+│   │   ├── parser/       # ANTLR-based parser
+│   │   ├── analysis/     # Semantic analysis
+│   │   └── cli.ts        # CLI entry point
+│   └── Mangle.g4         # ANTLR grammar
+└── mangle-vscode/        # VS Code extension
+    ├── src/              # Extension client source
+    ├── server/           # Bundled LSP server
+    └── syntaxes/         # TextMate grammar
 ```
 
 ## Installation
 
-### From VS Code Marketplace
+### From Open VSX
 
-*(Coming soon)*
+Install from [Open VSX Registry](https://open-vsx.org/extension/theRebelliousNerd/mangle-vscode)
 
 ### Build from Source
 
@@ -46,7 +51,7 @@ npm run build
 npm run package
 ```
 
-The `.vsix` file will be created in the `client/` directory.
+The `.vsix` file will be created in the `mangle-vscode/` directory.
 
 ### Install the Extension
 
@@ -61,11 +66,14 @@ The `.vsix` file will be created in the `client/` directory.
 # Watch mode for development
 npm run watch
 
-# Build server only
-npm run build:server
+# Build LSP server only
+npm run build:lsp
 
-# Build client only
-npm run build:client
+# Build VS Code extension only
+npm run build:vscode
+
+# Run tests
+npm test
 ```
 
 ## Requirements

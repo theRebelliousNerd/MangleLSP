@@ -1,17 +1,33 @@
 {
   "name": "mangle-vscode",
   "displayName": "Mangle Language Support",
-  "description": "Language support for Mangle (.mg files)",
+  "description": "Language support for Mangle (.mg files) - syntax highlighting, diagnostics, CLI tools, and more",
   "version": "1.0.0",
-  "publisher": "mangle",
+  "publisher": "theRebelliousNerd",
+  "license": "MIT",
+  "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.75.0"
   },
+  "homepage": "https://github.com/theRebelliousNerd/MangleLSP#readme",
+  "bugs": {
+    "url": "https://github.com/theRebelliousNerd/MangleLSP/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theRebelliousNerd/MangleLSP"
+  },
+  "keywords": [
+    "mangle",
+    "datalog",
+    "declarative",
+    "logic programming",
+    "lsp",
+    "language server",
+    "deductive database"
+  ],
   "categories": [
     "Programming Languages"
-  ],
-  "activationEvents": [
-    "onLanguage:mangle"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -112,7 +128,7 @@
   "devDependencies": {
     "@types/node": "^20.0.0",
     "@types/vscode": "^1.75.0",
-    "@vscode/vsce": "^2.22.0",
+    "@vscode/vsce": "^2.32.0",
     "antlr4ng": "^3.0.4",
     "esbuild": "^0.27.2",
     "typescript": "^5.0.0",
