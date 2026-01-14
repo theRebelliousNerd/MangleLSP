@@ -1,0 +1,43 @@
+{
+  "name": "@mangle/mangle-lsp",
+  "version": "1.0.0",
+  "description": "Language Server Protocol (LSP) implementation for the Mangle declarative programming language",
+  "author": "Next-Gen Engineering and Research Development LLC",
+  "license": "MIT",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theRebelliousNerd/MangleLSP"
+  },
+  "keywords": [
+    "mangle",
+    "lsp",
+    "language-server",
+    "datalog",
+    "declarative",
+    "deductive-database"
+  ],
+  "bin": {
+    "mangle-lsp": "dist/server.js",
+    "mangle-cli": "dist/cli.js"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "generate-parser": "antlr4ng -Dlanguage=TypeScript -visitor -o src/parser/gen Mangle.g4",
+    "prebuild": "npm run generate-parser",
+    "build": "tsc -p tsconfig.json",
+    "lint": "node -e \"console.log('mangle-lsp: lint not configured')\"",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "antlr4ng": "^3.0.4",
+    "vscode-languageserver": "^9.0.0",
+    "vscode-languageserver-textdocument": "^1.0.11"
+  },
+  "devDependencies": {
+    "antlr4ng-cli": "^2.0.0",
+    "vitest": "^2.1.8"
+  }
+}

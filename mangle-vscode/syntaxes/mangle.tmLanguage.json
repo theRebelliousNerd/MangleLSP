@@ -1,0 +1,160 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Mangle",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#keywords" },
+    { "include": "#builtins" },
+    { "include": "#functions" },
+    { "include": "#strings" },
+    { "include": "#numbers" },
+    { "include": "#variables" },
+    { "include": "#predicates" },
+    { "include": "#operators" },
+    { "include": "#names" },
+    { "include": "#types" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.mangle",
+          "match": "#.*$"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.mangle",
+          "match": "\\b(Package|Use|Decl|let|do)\\b"
+        },
+        {
+          "name": "keyword.other.mangle",
+          "match": "\\b(descr|bound|inclusion|opt|private|external|mode|doc|arg|fundep|merge|deferred)\\b"
+        },
+        {
+          "name": "keyword.operator.mangle",
+          "match": ":-|\\|>"
+        }
+      ]
+    },
+    "builtins": {
+      "patterns": [
+        {
+          "name": "support.function.builtin.mangle",
+          "match": ":[a-z][a-z0-9_:]*"
+        }
+      ]
+    },
+    "functions": {
+      "patterns": [
+        {
+          "name": "support.function.mangle",
+          "match": "fn:[a-z][a-z0-9_:]*"
+        }
+      ]
+    },
+    "string-escape": {
+      "name": "constant.character.escape.mangle",
+      "match": "\\\\."
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.mangle",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            { "include": "#string-escape" }
+          ]
+        },
+        {
+          "name": "string.quoted.byte.mangle",
+          "begin": "b\"",
+          "end": "\"",
+          "patterns": [
+            { "include": "#string-escape" }
+          ]
+        },
+        {
+          "name": "string.quoted.single.mangle",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            { "include": "#string-escape" }
+          ]
+        },
+        {
+          "name": "string.quoted.backtick.mangle",
+          "begin": "`",
+          "end": "`",
+          "patterns": [
+            { "include": "#string-escape" }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.float.mangle",
+          "match": "-?\\d+\\.\\d+([eE][+-]?\\d+)?"
+        },
+        {
+          "name": "constant.numeric.integer.mangle",
+          "match": "-?\\d+"
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "variable.other.mangle",
+          "match": "\\b[A-Z][A-Za-z0-9_]*\\b"
+        },
+        {
+          "name": "variable.language.wildcard.mangle",
+          "match": "\\b_\\b"
+        }
+      ]
+    },
+    "predicates": {
+      "patterns": [
+        {
+          "name": "entity.name.function.mangle",
+          "match": "\\b[a-z][a-z0-9_]*(?=\\s*\\()"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.comparison.mangle",
+          "match": "!=|<=|>=|<|>|="
+        },
+        {
+          "name": "keyword.operator.logical.mangle",
+          "match": "!"
+        }
+      ]
+    },
+    "names": {
+      "patterns": [
+        {
+          "name": "constant.other.name.mangle",
+          "match": "/[a-zA-Z0-9_/.~%-]+"
+        }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "name": "entity.name.type.mangle",
+          "match": "\\.[A-Z][a-zA-Z0-9]*"
+        }
+      ]
+    }
+  },
+  "scopeName": "source.mangle"
+}

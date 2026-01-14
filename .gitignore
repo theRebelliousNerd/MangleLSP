@@ -7,7 +7,7 @@ out/
 *.js.map
 *.d.ts.map
 
-# Generated parser files
+# Generated parser files (old location)
 server/src/parser/gen/
 
 # VS Code extension packages
@@ -20,6 +20,7 @@ server/src/parser/gen/
 # OS
 .DS_Store
 Thumbs.db
+nul
 
 # Logs
 *.log
@@ -28,3 +29,39 @@ npm-debug.log*
 # Environment
 .env
 .env.local
+
+# Lock files (keep one - using pnpm)
+package-lock.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+*.egg
+.venv/
+venv/
+.pytest_cache/
+
+# TypeScript incremental compilation
+*.tsbuildinfo
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
+
+# Archives (don't commit large zips)
+*.zip
+
+# Upstream reference (local copy of google/mangle)
+upstream/
+
+# Separate monorepo packages (mangle-ts, mangle-py ports)
+packages/

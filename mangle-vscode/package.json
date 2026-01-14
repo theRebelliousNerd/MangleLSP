@@ -1,0 +1,123 @@
+{
+  "name": "mangle-vscode",
+  "displayName": "Mangle Language Support",
+  "description": "Language support for Mangle (.mg files)",
+  "version": "1.0.0",
+  "publisher": "mangle",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "onLanguage:mangle"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "mangle.checkFile",
+        "title": "Mangle: Check Current File"
+      },
+      {
+        "command": "mangle.checkWorkspace",
+        "title": "Mangle: Check All Files in Workspace"
+      },
+      {
+        "command": "mangle.exportDiagnostics",
+        "title": "Mangle: Export Diagnostics to JSON"
+      },
+      {
+        "command": "mangle.exportToFile",
+        "title": "Mangle: Export Diagnostics to File"
+      }
+    ],
+    "languages": [
+      {
+        "id": "mangle",
+        "aliases": [
+          "Mangle",
+          "mangle"
+        ],
+        "extensions": [
+          ".mg"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "mangle",
+        "scopeName": "source.mangle",
+        "path": "./syntaxes/mangle.tmLanguage.json"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Mangle",
+      "properties": {
+        "mangle.maxNumberOfProblems": {
+          "scope": "resource",
+          "type": "number",
+          "default": 100,
+          "description": "Maximum number of problems to report per file."
+        },
+        "mangle.enableSemanticAnalysis": {
+          "scope": "resource",
+          "type": "boolean",
+          "default": true,
+          "description": "Enable semantic analysis (variable binding, arity checking)."
+        },
+        "mangle.trace.server": {
+          "scope": "window",
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "off",
+          "description": "Traces the communication between VS Code and the Mangle language server."
+        },
+        "mangle.cli.outputFile": {
+          "scope": "resource",
+          "type": "string",
+          "default": "",
+          "description": "Path to write CLI output (empty = output channel only). Use with 'Mangle: Export Diagnostics to File' command."
+        },
+        "mangle.cli.outputFormat": {
+          "scope": "resource",
+          "type": "string",
+          "enum": [
+            "json",
+            "text",
+            "sarif"
+          ],
+          "default": "json",
+          "description": "Output format for CLI commands and exports."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run bundle",
+    "compile": "tsc -p ./",
+    "bundle": "npm run compile && npm run bundle:client && npm run bundle:server",
+    "bundle:client": "npx esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
+    "bundle:server": "npx esbuild server/server.js --bundle --outfile=server/server.bundle.js --format=cjs --platform=node",
+    "watch": "tsc -watch -p ./",
+    "package": "node ./node_modules/@vscode/vsce/vsce package --allow-missing-repository"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.75.0",
+    "@vscode/vsce": "^2.22.0",
+    "antlr4ng": "^3.0.4",
+    "esbuild": "^0.27.2",
+    "typescript": "^5.0.0",
+    "vscode-languageclient": "^9.0.0",
+    "vscode-languageserver": "^9.0.0",
+    "vscode-languageserver-textdocument": "^1.0.11"
+  }
+}

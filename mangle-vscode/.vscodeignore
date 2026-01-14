@@ -1,0 +1,13 @@
+.vscode/**
+.vscode-test/**
+src/**
+**/*.ts
+**/*.map
+.gitignore
+tsconfig.json
+.claude/**
+**/../**
+**/../../**
+# Everything is bundled with esbuild, exclude all node_modules
+node_modules/**
+esbuild.js
