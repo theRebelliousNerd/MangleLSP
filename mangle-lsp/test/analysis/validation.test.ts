@@ -416,11 +416,11 @@ describe('Validation Module', () => {
     describe('E031: Package names must be lowercase', () => {
         // TODO: Package name case validation not fully implemented
         it.todo('should error on uppercase package name', () => {
-            expectError('Decl Package(X) descr [name("MyPackage")].');
+            expectError('Decl Package(X) descr [name("MyPackage")].', 'E031');
         });
 
         it.todo('should error on mixed case package name', () => {
-            expectError('Decl Package(X) descr [name("myPackage")].');
+            expectError('Decl Package(X) descr [name("myPackage")].', 'E031');
         });
 
         it('should allow lowercase package name', () => {
@@ -1379,6 +1379,164 @@ describe('Validation Module', () => {
             const predInfo = result.symbolTable.getPredicate('foo', 1);
             expect(predInfo).toBeDefined();
             expect(predInfo?.definitions.length).toBe(2);
+        });
+    });
+
+    describe('E047: Non-reducer functions after group_by', () => {
+        it('should allow normal function using group_by key variables', () => {
+            // fn:plus uses G which is a group_by key - this is OK
+            const source = `
+                result(G, V) :- data(G, X)
+                    |> do fn:group_by(G),
+                       let S = fn:sum(X),
+                       let V = fn:plus(G, S).
+            `;
+            expectNoErrors(source);
+        });
+
+        it('should allow normal function using earlier transform-defined variables', () => {
+            // fn:mult uses S which was defined by an earlier let statement
+            const source = `
+                result(V) :- data(X)
+                    |> do fn:group_by(),
+                       let S = fn:sum(X),
+                       let V = fn:mult(S, 2).
+            `;
+            expectNoErrors(source);
+        });
+
+        it('should error when normal function uses body-only variable after group_by', () => {
+            // fn:plus uses X which is not a group_by key or transform-defined var
+            const source = `
+                result(V) :- data(G, X)
+                    |> do fn:group_by(G),
+                       let V = fn:plus(X, 1).
+            `;
+            expectError(source, 'E047');
+        });
+
+        it('should error with meaningful message mentioning the variable', () => {
+            const source = `
+                result(V) :- data(G, X)
+                    |> do fn:group_by(G),
+                       let V = fn:plus(X, 1).
+            `;
+            const parseResult = parse(source);
+            const result = validate(parseResult.unit!);
+            const error = result.errors.find(e => e.code === 'E047');
+            expect(error).toBeDefined();
+            expect(error?.message).toContain('X');
+            expect(error?.message).toContain('fn:plus');
+        });
+
+        it('should allow reducer functions after group_by', () => {
+            // Reducer functions are always allowed
+            expectNoErrors('total(S) :- values(X) |> do fn:group_by(), let S = fn:sum(X).');
+        });
+
+        it('should allow normal function without group_by (no aggregation)', () => {
+            // Without do fn:group_by, normal functions are always allowed
+            expectNoErrors('result(Y) :- input(X) |> let Y = fn:plus(X, 1).');
+        });
+    });
+
+    describe('Time/duration built-in predicates', () => {
+        it('should recognize :time:lt predicate', () => {
+            expectNoErrors('earlier(T1) :- time(T1), time(T2), :time:lt(T1, T2).');
+        });
+
+        it('should recognize :time:le predicate', () => {
+            expectNoErrors('notAfter(T1) :- time(T1), time(T2), :time:le(T1, T2).');
+        });
+
+        it('should recognize :time:gt predicate', () => {
+            expectNoErrors('later(T1) :- time(T1), time(T2), :time:gt(T1, T2).');
+        });
+
+        it('should recognize :time:ge predicate', () => {
+            expectNoErrors('notBefore(T1) :- time(T1), time(T2), :time:ge(T1, T2).');
+        });
+
+        it('should recognize :duration:lt predicate', () => {
+            expectNoErrors('shorter(D1) :- dur(D1), dur(D2), :duration:lt(D1, D2).');
+        });
+
+        it('should recognize :duration:le predicate', () => {
+            expectNoErrors('notLonger(D1) :- dur(D1), dur(D2), :duration:le(D1, D2).');
+        });
+
+        it('should recognize :duration:gt predicate', () => {
+            expectNoErrors('longer(D1) :- dur(D1), dur(D2), :duration:gt(D1, D2).');
+        });
+
+        it('should recognize :duration:ge predicate', () => {
+            expectNoErrors('notShorter(D1) :- dur(D1), dur(D2), :duration:ge(D1, D2).');
+        });
+
+        it('should error on wrong arity for time predicates', () => {
+            expectError('foo(T) :- time(T), :time:lt(T).', 'E006');
+        });
+
+        it('should error on unbound arguments for time predicates', () => {
+            expectError('foo(T) :- :time:lt(T, T2).', 'E007');
+        });
+    });
+
+    describe('Time/duration built-in functions', () => {
+        it('should allow fn:time:now', () => {
+            expectNoErrors('result(T) :- input(X), T = fn:time:now().');
+        });
+
+        it('should allow fn:time:add', () => {
+            expectNoErrors('result(T) :- time(T1), dur(D), T = fn:time:add(T1, D).');
+        });
+
+        it('should allow fn:time:sub', () => {
+            expectNoErrors('result(T) :- time(T1), dur(D), T = fn:time:sub(T1, D).');
+        });
+
+        it('should allow fn:time:year', () => {
+            expectNoErrors('result(Y) :- time(T), Y = fn:time:year(T).');
+        });
+
+        it('should allow fn:time:format', () => {
+            expectNoErrors('result(S) :- time(T), S = fn:time:format(T, /second).');
+        });
+
+        it('should allow fn:time:parse_rfc3339', () => {
+            expectNoErrors('result(T) :- str(S), T = fn:time:parse_rfc3339(S).');
+        });
+
+        it('should allow fn:time:from_unix_nanos', () => {
+            expectNoErrors('result(T) :- num(N), T = fn:time:from_unix_nanos(N).');
+        });
+
+        it('should allow fn:time:to_unix_nanos', () => {
+            expectNoErrors('result(N) :- time(T), N = fn:time:to_unix_nanos(T).');
+        });
+
+        it('should allow fn:duration:add', () => {
+            expectNoErrors('result(D) :- dur(D1), dur(D2), D = fn:duration:add(D1, D2).');
+        });
+
+        it('should allow fn:duration:mult', () => {
+            expectNoErrors('result(D) :- dur(D1), num(N), D = fn:duration:mult(D1, N).');
+        });
+
+        it('should allow fn:duration:hours', () => {
+            expectNoErrors('result(H) :- dur(D), H = fn:duration:hours(D).');
+        });
+
+        it('should allow fn:duration:from_nanos', () => {
+            expectNoErrors('result(D) :- num(N), D = fn:duration:from_nanos(N).');
+        });
+
+        it('should allow fn:duration:from_hours', () => {
+            expectNoErrors('result(D) :- num(N), D = fn:duration:from_hours(N).');
+        });
+
+        it('should allow fn:duration:from_seconds', () => {
+            expectNoErrors('result(D) :- num(N), D = fn:duration:from_seconds(N).');
         });
     });
 });

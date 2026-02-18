@@ -29,10 +29,12 @@ function calculatePredicateNameRange(atom) {
  * Symbol table for a Mangle source file.
  */
 class SymbolTable {
-    /** Map from predicate name to predicate info */
-    predicates = new Map();
-    /** Map from clause range (serialized) to variable info map */
-    clauseVariables = new Map();
+    constructor() {
+        /** Map from predicate name to predicate info */
+        this.predicates = new Map();
+        /** Map from clause range (serialized) to variable info map */
+        this.clauseVariables = new Map();
+    }
     /**
      * Build a symbol table from a parsed source unit.
      */

@@ -13,6 +13,7 @@ import {
     checkLateFiltering,
     checkLateNegation,
     checkMultipleIndependentVars,
+    checkTemporalRecursion,
     SemanticError,
     StratificationError,
 } from '../../analysis/index';
@@ -176,6 +177,15 @@ function checkFile(filePath: string, source: string, options: CheckOptions): Fil
         // Multiple independent variables
         const multiIndepWarnings = checkMultipleIndependentVars(parseResult.unit);
         for (const warning of multiIndepWarnings) {
+            const diag = stratificationErrorToDiagnostic(warning, lines);
+            if (shouldInclude(diag.severity, options.severity)) {
+                diagnostics.push(diag);
+            }
+        }
+
+        // Temporal recursion warnings (DatalogMTL)
+        const temporalWarnings = checkTemporalRecursion(parseResult.unit);
+        for (const warning of temporalWarnings) {
             const diag = stratificationErrorToDiagnostic(warning, lines);
             if (shouldInclude(diag.severity, options.severity)) {
                 diagnostics.push(diag);

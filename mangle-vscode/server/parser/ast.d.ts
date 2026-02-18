@@ -49,7 +49,7 @@ export interface LocatedNode {
 /**
  * Constant type enumeration (mirrors Go ConstantType).
  */
-export type ConstantType = 'name' | 'string' | 'bytes' | 'number' | 'float64' | 'pair' | 'list' | 'map' | 'struct';
+export type ConstantType = 'name' | 'string' | 'bytes' | 'number' | 'float64' | 'time' | 'duration' | 'pair' | 'list' | 'map' | 'struct';
 /**
  * A constant value in Mangle.
  */
@@ -204,7 +204,7 @@ export interface Ge extends LocatedNode {
  * but the parser now generates Atom nodes with :lt, :le, :gt, :ge predicates
  * for comparison operators.
  */
-export type Term = BaseTerm | Atom | NegAtom | Eq | Ineq | Lt | Le | Gt | Ge;
+export type Term = BaseTerm | Atom | NegAtom | Eq | Ineq | Lt | Le | Gt | Ge | TemporalLiteral;
 /**
  * A single transform statement (either "do fn:..." or "let X = fn:...").
  */
@@ -223,6 +223,52 @@ export interface Transform extends LocatedNode {
     next: Transform | null;
 }
 /**
+ * Temporal operator type.
+ * Matches upstream Go ast.TemporalOperatorType enum.
+ */
+export type TemporalOperatorType = 'diamond_minus' | 'diamond_plus' | 'box_minus' | 'box_plus' | 'since' | 'until';
+/**
+ * Type for temporal interval bounds.
+ */
+export type TemporalBoundType = 'constant' | 'variable' | 'duration' | 'infinity';
+/**
+ * A temporal interval bound.
+ */
+export interface TemporalBound extends LocatedNode {
+    readonly boundType: TemporalBoundType;
+    /** For constant/duration bounds */
+    readonly value?: number;
+    /** For variable bounds */
+    readonly variable?: Variable;
+}
+/**
+ * A temporal interval [start, end].
+ */
+export interface TemporalInterval extends LocatedNode {
+    readonly start: TemporalBound;
+    readonly end: TemporalBound;
+}
+/**
+ * A temporal operator with optional interval.
+ */
+export interface TemporalOperator extends LocatedNode {
+    readonly operatorType: TemporalOperatorType;
+    readonly interval: TemporalInterval | null;
+}
+/**
+ * A temporal literal wrapping an atom/literal with temporal annotations.
+ * Matches upstream Go ast.TemporalLiteral.
+ */
+export interface TemporalLiteral extends LocatedNode {
+    readonly type: 'TemporalLiteral';
+    /** The inner literal (Atom or NegAtom) */
+    readonly literal: Atom | NegAtom;
+    /** Optional temporal operator (<->, <+>, [-], [+], S, U) */
+    readonly operator: TemporalOperator | null;
+    /** Optional explicit interval annotation */
+    readonly interval: TemporalInterval | null;
+}
+/**
  * A clause (rule or fact).
  * - Fact: head only, premises is null
  * - Rule: head with premises (and optional transform)
@@ -234,6 +280,8 @@ export interface Clause extends LocatedNode {
     readonly premises: Term[] | null;
     /** Optional transform (aggregation) */
     readonly transform: Transform | null;
+    /** Optional temporal annotation on the head (DatalogMTL) */
+    readonly headTime: TemporalInterval | null;
 }
 /**
  * Argument mode for built-in predicates.
@@ -313,6 +361,14 @@ export declare function createNumber(value: number, range: SourceRange): Constan
  */
 export declare function createFloat64(value: number, range: SourceRange): Constant;
 /**
+ * Create a time constant (nanoseconds since Unix epoch).
+ */
+export declare function createTime(nanos: number, range: SourceRange): Constant;
+/**
+ * Create a duration constant (nanoseconds).
+ */
+export declare function createDuration(nanos: number, range: SourceRange): Constant;
+/**
  * Create a list constant.
  */
 export declare function createList(items: Constant[], range: SourceRange): Constant;
@@ -351,7 +407,7 @@ export declare function createApplyFn(fn: FunctionSym, args: BaseTerm[], range: 
 /**
  * Create a clause.
  */
-export declare function createClause(head: Atom, premises: Term[] | null, transform: Transform | null, range: SourceRange): Clause;
+export declare function createClause(head: Atom, premises: Term[] | null, transform: Transform | null, range: SourceRange, headTime?: TemporalInterval | null): Clause;
 /**
  * Create a declaration.
  */
@@ -393,9 +449,55 @@ export declare function isNegAtom(term: Term): term is NegAtom;
  */
 export declare function isApplyFn(term: Term): term is ApplyFn;
 /**
+ * Check if a term is a temporal literal.
+ */
+export declare function isTemporalLiteral(term: Term): term is TemporalLiteral;
+/**
+ * Check if a declaration has the external() descriptor.
+ */
+export declare function isDeclExternal(decl: Decl): boolean;
+/**
+ * Check if a declaration has the temporal() descriptor.
+ */
+export declare function isDeclTemporal(decl: Decl): boolean;
+/**
+ * Get modes from a declaration's descriptor atoms.
+ */
+export declare function getDeclModes(decl: Decl): Atom[];
+/**
  * Comparison builtin predicate symbols.
  */
 export declare const COMPARISON_PREDICATES: readonly [":lt", ":le", ":gt", ":ge"];
+/** Well-known type bound name constants matching upstream. */
+export declare const TYPE_BOUNDS: {
+    readonly ANY: "/any";
+    readonly BOT: "/bot";
+    readonly NUMBER: "/number";
+    readonly FLOAT64: "/float64";
+    readonly STRING: "/string";
+    readonly BYTES: "/bytes";
+    readonly NAME: "/name";
+    readonly TIME: "/time";
+    readonly DURATION: "/duration";
+    readonly BOOL: "/bool";
+};
+/** Well-known descriptor names matching upstream decl.go constants. */
+export declare const DESCRIPTORS: {
+    readonly EXTERNAL: "external";
+    readonly EXTENSIONAL: "extensional";
+    readonly MODE: "mode";
+    readonly REFLECTS: "reflects";
+    readonly SYNTHETIC: "synthetic";
+    readonly PRIVATE: "private";
+    readonly DOC: "doc";
+    readonly ARG: "arg";
+    readonly NAME: "name";
+    readonly DESUGARED: "desugared";
+    readonly FUNDEP: "fundep";
+    readonly MERGE_PREDICATE: "merge";
+    readonly DEFERRED_PREDICATE: "deferred";
+    readonly TEMPORAL: "temporal";
+};
 /**
  * Check if an atom is a comparison builtin (:lt, :le, :gt, :ge).
  * These are now generated by the parser for <, <=, >, >= operators.

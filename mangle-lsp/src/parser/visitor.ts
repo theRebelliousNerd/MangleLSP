@@ -505,6 +505,7 @@ export class MangleASTVisitor extends AbstractParseTreeVisitor<any> {
             head,
             premises,
             transform,
+            headTime: null,
             range: getRangeFromContext(ctx),
         };
     }

@@ -143,6 +143,15 @@ function findBuiltinInTerm(term, line, column) {
     if (term.type === 'ApplyFn') {
         return findBuiltinInApplyFn(term, line, column);
     }
+    if (term.type === 'TemporalLiteral') {
+        const temporal = term;
+        if (temporal.literal.type === 'Atom') {
+            return findBuiltinInAtom(temporal.literal, line, column);
+        }
+        if (temporal.literal.type === 'NegAtom') {
+            return findBuiltinInAtom(temporal.literal.atom, line, column);
+        }
+    }
     return null;
 }
 /**

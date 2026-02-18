@@ -19,8 +19,11 @@ const visitor_1 = require("./visitor");
  * Custom error listener that collects errors.
  */
 class MangleErrorListener extends antlr4ng_1.BaseErrorListener {
-    errors = [];
-    source = 'parser';
+    constructor() {
+        super(...arguments);
+        this.errors = [];
+        this.source = 'parser';
+    }
     syntaxError(_recognizer, offendingSymbol, line, charPositionInLine, msg, _e) {
         let length = 1;
         // Try to get length from offending symbol

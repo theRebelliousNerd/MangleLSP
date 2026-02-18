@@ -46,4 +46,14 @@ export declare function checkLateNegation(unit: SourceUnit): StratificationError
  * Detects when 3+ predicates have no shared variables, creating huge Cartesian products.
  */
 export declare function checkMultipleIndependentVars(unit: SourceUnit): StratificationError[];
+/**
+ * Check for problematic temporal recursion patterns.
+ * Matches upstream CheckTemporalRecursion from analysis/temporal.go.
+ *
+ * Returns warnings about:
+ * - Self-recursive temporal predicates (interval explosion risk)
+ * - Mutual recursion through temporal predicates (non-termination risk)
+ * - Future operators in recursive temporal rules (unbounded fact generation)
+ */
+export declare function checkTemporalRecursion(unit: SourceUnit): StratificationError[];
 //# sourceMappingURL=stratification.d.ts.map

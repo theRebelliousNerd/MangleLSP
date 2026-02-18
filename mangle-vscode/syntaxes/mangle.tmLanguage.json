@@ -31,7 +31,7 @@
         },
         {
           "name": "keyword.other.mangle",
-          "match": "\\b(descr|bound|inclusion|opt|private|external|mode|doc|arg|fundep|merge|deferred)\\b"
+          "match": "\\b(descr|bound|inclusion|opt|private|external|temporal|mode|doc|arg|fundep|merge|deferred)\\b"
         },
         {
           "name": "keyword.operator.mangle",
@@ -129,6 +129,11 @@
     },
     "operators": {
       "patterns": [
+        {
+          "comment": "DatalogMTL temporal operators: diamond_minus <->, diamond_plus <+>, box_minus [-], box_plus [+]",
+          "name": "keyword.operator.temporal.mangle",
+          "match": "<->|<\\+>|\\[-\\]|\\[\\+\\]"
+        },
         {
           "name": "keyword.operator.comparison.mangle",
           "match": "!=|<=|>=|<|>|="

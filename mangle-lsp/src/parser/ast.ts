@@ -99,6 +99,8 @@ export type ConstantType =
     | 'bytes'     // Byte strings (b"...")
     | 'number'    // int64 values
     | 'float64'   // float64 values
+    | 'time'      // Time instant constants (nanoseconds since Unix epoch UTC)
+    | 'duration'  // Duration constants (nanoseconds)
     | 'pair'      // (X, Y) pairs
     | 'list'      // [X, Y, Z] lists
     | 'map'       // [k1: v1, k2: v2] maps
@@ -276,7 +278,7 @@ export interface Ge extends LocatedNode {
  * but the parser now generates Atom nodes with :lt, :le, :gt, :ge predicates
  * for comparison operators.
  */
-export type Term = BaseTerm | Atom | NegAtom | Eq | Ineq | Lt | Le | Gt | Ge;
+export type Term = BaseTerm | Atom | NegAtom | Eq | Ineq | Lt | Le | Gt | Ge | TemporalLiteral;
 
 // ============================================================================
 // Transform Types
@@ -302,6 +304,72 @@ export interface Transform extends LocatedNode {
 }
 
 // ============================================================================
+// Temporal Types (DatalogMTL)
+// ============================================================================
+
+/**
+ * Temporal operator type.
+ * Matches upstream Go ast.TemporalOperatorType enum.
+ */
+export type TemporalOperatorType =
+    | 'diamond_minus'  // <-> (eventually in the past)
+    | 'diamond_plus'   // <+> (eventually in the future)
+    | 'box_minus'      // [-] (always in the past)
+    | 'box_plus'       // [+] (always in the future)
+    | 'since'          // S   (since)
+    | 'until';         // U   (until)
+
+/**
+ * Type for temporal interval bounds.
+ */
+export type TemporalBoundType =
+    | 'constant'    // A concrete numeric or time bound
+    | 'variable'    // A variable bound
+    | 'duration'    // A relative duration bound
+    | 'infinity';   // Unbounded
+
+/**
+ * A temporal interval bound.
+ */
+export interface TemporalBound extends LocatedNode {
+    readonly boundType: TemporalBoundType;
+    /** For constant/duration bounds */
+    readonly value?: number;
+    /** For variable bounds */
+    readonly variable?: Variable;
+}
+
+/**
+ * A temporal interval [start, end].
+ */
+export interface TemporalInterval extends LocatedNode {
+    readonly start: TemporalBound;
+    readonly end: TemporalBound;
+}
+
+/**
+ * A temporal operator with optional interval.
+ */
+export interface TemporalOperator extends LocatedNode {
+    readonly operatorType: TemporalOperatorType;
+    readonly interval: TemporalInterval | null;
+}
+
+/**
+ * A temporal literal wrapping an atom/literal with temporal annotations.
+ * Matches upstream Go ast.TemporalLiteral.
+ */
+export interface TemporalLiteral extends LocatedNode {
+    readonly type: 'TemporalLiteral';
+    /** The inner literal (Atom or NegAtom) */
+    readonly literal: Atom | NegAtom;
+    /** Optional temporal operator (<->, <+>, [-], [+], S, U) */
+    readonly operator: TemporalOperator | null;
+    /** Optional explicit interval annotation */
+    readonly interval: TemporalInterval | null;
+}
+
+// ============================================================================
 // Clause Types
 // ============================================================================
 
@@ -317,6 +385,8 @@ export interface Clause extends LocatedNode {
     readonly premises: Term[] | null;
     /** Optional transform (aggregation) */
     readonly transform: Transform | null;
+    /** Optional temporal annotation on the head (DatalogMTL) */
+    readonly headTime: TemporalInterval | null;
 }
 
 // ============================================================================
@@ -438,6 +508,20 @@ export function createFloat64(value: number, range: SourceRange): Constant {
 }
 
 /**
+ * Create a time constant (nanoseconds since Unix epoch).
+ */
+export function createTime(nanos: number, range: SourceRange): Constant {
+    return { type: 'Constant', constantType: 'time', numValue: nanos, range };
+}
+
+/**
+ * Create a duration constant (nanoseconds).
+ */
+export function createDuration(nanos: number, range: SourceRange): Constant {
+    return { type: 'Constant', constantType: 'duration', numValue: nanos, range };
+}
+
+/**
  * Create a list constant.
  */
 export function createList(items: Constant[], range: SourceRange): Constant {
@@ -515,9 +599,10 @@ export function createClause(
     head: Atom,
     premises: Term[] | null,
     transform: Transform | null,
-    range: SourceRange
+    range: SourceRange,
+    headTime: TemporalInterval | null = null
 ): Clause {
-    return { type: 'Clause', head, premises, transform, range };
+    return { type: 'Clause', head, premises, transform, headTime, range };
 }
 
 /**
@@ -601,9 +686,77 @@ export function isApplyFn(term: Term): term is ApplyFn {
 }
 
 /**
+ * Check if a term is a temporal literal.
+ */
+export function isTemporalLiteral(term: Term): term is TemporalLiteral {
+    return 'type' in term && term.type === 'TemporalLiteral';
+}
+
+/**
+ * Check if a declaration has the external() descriptor.
+ */
+export function isDeclExternal(decl: Decl): boolean {
+    return decl.descr?.some(d => d.predicate.symbol === DESCRIPTORS.EXTERNAL) ?? false;
+}
+
+/**
+ * Check if a declaration has the temporal() descriptor.
+ */
+export function isDeclTemporal(decl: Decl): boolean {
+    return decl.descr?.some(d => d.predicate.symbol === DESCRIPTORS.TEMPORAL) ?? false;
+}
+
+/**
+ * Get modes from a declaration's descriptor atoms.
+ */
+export function getDeclModes(decl: Decl): Atom[] {
+    return decl.descr?.filter(d => d.predicate.symbol === DESCRIPTORS.MODE) ?? [];
+}
+
+/**
  * Comparison builtin predicate symbols.
  */
 export const COMPARISON_PREDICATES = [':lt', ':le', ':gt', ':ge'] as const;
+
+// ============================================================================
+// Type Bound Constants (upstream ast.go)
+// ============================================================================
+
+/** Well-known type bound name constants matching upstream. */
+export const TYPE_BOUNDS = {
+    ANY: '/any',
+    BOT: '/bot',
+    NUMBER: '/number',
+    FLOAT64: '/float64',
+    STRING: '/string',
+    BYTES: '/bytes',
+    NAME: '/name',
+    TIME: '/time',
+    DURATION: '/duration',
+    BOOL: '/bool',
+} as const;
+
+// ============================================================================
+// Descriptor Constants (upstream decl.go)
+// ============================================================================
+
+/** Well-known descriptor names matching upstream decl.go constants. */
+export const DESCRIPTORS = {
+    EXTERNAL: 'external',
+    EXTENSIONAL: 'extensional',
+    MODE: 'mode',
+    REFLECTS: 'reflects',
+    SYNTHETIC: 'synthetic',
+    PRIVATE: 'private',
+    DOC: 'doc',
+    ARG: 'arg',
+    NAME: 'name',
+    DESUGARED: 'desugared',
+    FUNDEP: 'fundep',
+    MERGE_PREDICATE: 'merge',
+    DEFERRED_PREDICATE: 'deferred',
+    TEMPORAL: 'temporal',
+} as const;
 
 /**
  * Check if an atom is a comparison builtin (:lt, :le, :gt, :ge).
@@ -654,6 +807,13 @@ export function collectVariables(term: Term): Set<string> {
             t.args.forEach(visit);
         } else if (isNegAtom(t)) {
             visit(t.atom);
+        } else if (isTemporalLiteral(t)) {
+            visit(t.literal);
+            // Collect variables from interval bounds
+            if (t.interval) {
+                if (t.interval.start.variable) vars.add(t.interval.start.variable.symbol);
+                if (t.interval.end.variable) vars.add(t.interval.end.variable.symbol);
+            }
         } else if (isApplyFn(t)) {
             t.args.forEach(visit);
         } else if ('left' in t && 'right' in t) {
@@ -679,6 +839,12 @@ export function collectClauseVariables(clause: Clause): Set<string> {
             vars.add(v);
         }
     });
+
+    // HeadTime variables (DatalogMTL)
+    if (clause.headTime) {
+        if (clause.headTime.start.variable) vars.add(clause.headTime.start.variable.symbol);
+        if (clause.headTime.end.variable) vars.add(clause.headTime.end.variable.symbol);
+    }
 
     // Premise variables
     if (clause.premises) {
@@ -724,6 +890,10 @@ export function termToString(term: Term): string {
                 return String(term.numValue ?? 0);
             case 'float64':
                 return String(term.floatValue ?? 0);
+            case 'time':
+                return `time(${term.numValue ?? 0})`;
+            case 'duration':
+                return `duration(${term.numValue ?? 0})`;
             case 'list':
                 if (!term.fst) return '[]';
                 // Collect list elements
@@ -754,6 +924,14 @@ export function termToString(term: Term): string {
 
     if (isNegAtom(term)) {
         return `!${termToString(term.atom)}`;
+    }
+
+    if (isTemporalLiteral(term)) {
+        const inner = termToString(term.literal);
+        if (term.operator) {
+            return `${term.operator.operatorType}(${inner})`;
+        }
+        return inner;
     }
 
     if (isApplyFn(term)) {

@@ -187,10 +187,13 @@ function unescapeByteString(s) {
  * even when there are errors, enabling LSP features to work on broken code.
  */
 class MangleASTVisitor extends antlr4ng_1.AbstractParseTreeVisitor {
-    /** Collected visitor errors during AST construction */
-    errors = [];
-    /** Partial unit built so far (for error recovery) */
-    partialUnit = null;
+    constructor() {
+        super(...arguments);
+        /** Collected visitor errors during AST construction */
+        this.errors = [];
+        /** Partial unit built so far (for error recovery) */
+        this.partialUnit = null;
+    }
     defaultResult() {
         return null;
     }
@@ -388,6 +391,7 @@ class MangleASTVisitor extends antlr4ng_1.AbstractParseTreeVisitor {
             head,
             premises,
             transform,
+            headTime: null,
             range: getRangeFromContext(ctx),
         };
     }

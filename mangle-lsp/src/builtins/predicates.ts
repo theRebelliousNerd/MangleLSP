@@ -139,6 +139,58 @@ export const BUILTIN_PREDICATES: BuiltinPredicate[] = [
         mode: ['input', 'input', 'output'],
         doc: 'Matches a field in a struct. Usage: :match_field(Struct, FieldName, Value)',
     },
+
+    // Time comparison predicates
+    {
+        name: ':time:lt',
+        arity: 2,
+        mode: ['input', 'input'],
+        doc: 'Less-than relation on time instants. Usage: :time:lt(T1, T2) means T1 < T2',
+    },
+    {
+        name: ':time:le',
+        arity: 2,
+        mode: ['input', 'input'],
+        doc: 'Less-than-or-equal relation on time instants. Usage: :time:le(T1, T2) means T1 <= T2',
+    },
+    {
+        name: ':time:gt',
+        arity: 2,
+        mode: ['input', 'input'],
+        doc: 'Greater-than relation on time instants. Usage: :time:gt(T1, T2) means T1 > T2',
+    },
+    {
+        name: ':time:ge',
+        arity: 2,
+        mode: ['input', 'input'],
+        doc: 'Greater-than-or-equal relation on time instants. Usage: :time:ge(T1, T2) means T1 >= T2',
+    },
+
+    // Duration comparison predicates
+    {
+        name: ':duration:lt',
+        arity: 2,
+        mode: ['input', 'input'],
+        doc: 'Less-than relation on durations. Usage: :duration:lt(D1, D2) means D1 < D2',
+    },
+    {
+        name: ':duration:le',
+        arity: 2,
+        mode: ['input', 'input'],
+        doc: 'Less-than-or-equal relation on durations. Usage: :duration:le(D1, D2) means D1 <= D2',
+    },
+    {
+        name: ':duration:gt',
+        arity: 2,
+        mode: ['input', 'input'],
+        doc: 'Greater-than relation on durations. Usage: :duration:gt(D1, D2) means D1 > D2',
+    },
+    {
+        name: ':duration:ge',
+        arity: 2,
+        mode: ['input', 'input'],
+        doc: 'Greater-than-or-equal relation on durations. Usage: :duration:ge(D1, D2) means D1 >= D2',
+    },
 ];
 
 /**

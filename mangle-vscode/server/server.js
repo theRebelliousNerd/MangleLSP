@@ -243,6 +243,14 @@ async function validateDocument(document) {
             }
             diagnostics.push(stratificationErrorToDiagnostic(warning));
         }
+        // Temporal recursion warnings (DatalogMTL)
+        const temporalWarnings = (0, index_2.checkTemporalRecursion)(parseResult.unit);
+        for (const warning of temporalWarnings) {
+            if (diagnostics.length >= settings.maxNumberOfProblems) {
+                break;
+            }
+            diagnostics.push(stratificationErrorToDiagnostic(warning));
+        }
     }
     // Send diagnostics
     connection.sendDiagnostics({ uri: document.uri, diagnostics });
@@ -491,6 +499,468 @@ connection.onRenameRequest((params) => {
         connection.console.error(`Rename error: ${e}`);
         return null;
     }
+});
+// ============================================================================
+// Custom LSP Request Handlers for CLI/Agent Integration
+// ============================================================================
+/**
+ * Custom request: Get all diagnostics for a file.
+ * Request: 'mangle/getDiagnostics'
+ * Params: { uri: string }
+ * Returns: { uri, parseErrors, semanticErrors, stratificationErrors }
+ */
+connection.onRequest('mangle/getDiagnostics', (params) => {
+    try {
+        const state = documentStates.get(params.uri);
+        if (!state) {
+            return {
+                uri: params.uri,
+                parseErrors: [],
+                semanticErrors: [],
+                stratificationErrors: [],
+            };
+        }
+        // Collect parse errors
+        const parseErrors = state.parseResult.errors.map(e => ({
+            code: 'P001',
+            source: e.source === 'lexer' ? 'mangle-lexer' : 'mangle-parse',
+            message: e.message,
+            range: {
+                start: { line: e.line, column: e.column },
+                end: { line: e.line, column: e.column + e.length },
+            },
+        }));
+        // Collect semantic errors
+        const semanticErrors = state.validationResult?.errors.map(e => ({
+            code: e.code,
+            source: 'mangle-semantic',
+            severity: e.severity,
+            message: e.message,
+            range: {
+                start: { line: e.range.start.line, column: e.range.start.column },
+                end: { line: e.range.end.line, column: e.range.end.column },
+            },
+        })) || [];
+        // Collect stratification errors
+        let stratificationErrors = [];
+        if (state.parseResult.unit) {
+            const stratErrors = (0, index_2.checkStratification)(state.parseResult.unit);
+            stratificationErrors = stratErrors.map(e => ({
+                code: e.code,
+                source: 'mangle-stratification',
+                severity: e.severity,
+                message: e.message,
+                range: {
+                    start: { line: e.range.start.line, column: e.range.start.column },
+                    end: { line: e.range.end.line, column: e.range.end.column },
+                },
+                cycle: e.cycle,
+            }));
+        }
+        return {
+            uri: params.uri,
+            parseErrors,
+            semanticErrors,
+            stratificationErrors,
+        };
+    }
+    catch (e) {
+        connection.console.error(`mangle/getDiagnostics error: ${e}`);
+        return {
+            uri: params.uri,
+            parseErrors: [],
+            semanticErrors: [],
+            stratificationErrors: [],
+            error: String(e),
+        };
+    }
+});
+/**
+ * Custom request: Check multiple files.
+ * Request: 'mangle/checkFiles'
+ * Params: { uris: string[] }
+ * Returns: { files: [{ uri, diagnostics }] }
+ */
+connection.onRequest('mangle/checkFiles', async (params) => {
+    const results = [];
+    for (const uri of params.uris) {
+        const state = documentStates.get(uri);
+        if (state) {
+            const diagnostics = await connection.sendRequest('mangle/getDiagnostics', { uri });
+            results.push({ uri, ...diagnostics });
+        }
+    }
+    return { files: results };
+});
+/**
+ * Custom request: Get structured symbol information.
+ * Request: 'mangle/getStructuredSymbols'
+ * Params: { uri: string }
+ * Returns: { uri, predicates, declarations, clauses }
+ */
+connection.onRequest('mangle/getStructuredSymbols', (params) => {
+    try {
+        const state = documentStates.get(params.uri);
+        if (!state || !state.parseResult.unit) {
+            return {
+                uri: params.uri,
+                predicates: [],
+                declarations: [],
+                clauses: [],
+            };
+        }
+        const symbolTable = getSymbolTable(state);
+        if (!symbolTable) {
+            return {
+                uri: params.uri,
+                predicates: [],
+                declarations: [],
+                clauses: [],
+            };
+        }
+        // Get predicate info
+        const predicates = symbolTable.getAllPredicates().map(info => ({
+            name: info.symbol.symbol,
+            arity: info.symbol.arity,
+            isExternal: info.isExternal,
+            isPrivate: info.isPrivate,
+            declLocation: info.declLocation ? {
+                start: { line: info.declLocation.start.line, column: info.declLocation.start.column },
+                end: { line: info.declLocation.end.line, column: info.declLocation.end.column },
+            } : null,
+            definitionCount: info.definitions.length,
+            referenceCount: info.references.length,
+        }));
+        // Get declaration info
+        const declarations = state.parseResult.unit.decls.map(d => ({
+            predicate: `${d.declaredAtom.predicate.symbol}/${d.declaredAtom.predicate.arity}`,
+            range: {
+                start: { line: d.range.start.line, column: d.range.start.column },
+                end: { line: d.range.end.line, column: d.range.end.column },
+            },
+        }));
+        // Get clause info
+        const clauses = state.parseResult.unit.clauses.map(c => ({
+            head: `${c.head.predicate.symbol}/${c.head.predicate.arity}`,
+            isFact: !c.premises || c.premises.length === 0,
+            hasTransform: !!c.transform,
+            range: {
+                start: { line: c.head.range.start.line, column: c.head.range.start.column },
+                end: { line: c.head.range.end.line, column: c.head.range.end.column },
+            },
+        }));
+        return {
+            uri: params.uri,
+            predicates,
+            declarations,
+            clauses,
+        };
+    }
+    catch (e) {
+        connection.console.error(`mangle/getStructuredSymbols error: ${e}`);
+        return {
+            uri: params.uri,
+            predicates: [],
+            declarations: [],
+            clauses: [],
+            error: String(e),
+        };
+    }
+});
+/**
+ * Custom request: Get AST for a file.
+ * Request: 'mangle/getAST'
+ * Params: { uri: string }
+ * Returns: { uri, ast } where ast is the parsed SourceUnit
+ */
+connection.onRequest('mangle/getAST', (params) => {
+    try {
+        const state = documentStates.get(params.uri);
+        if (!state || !state.parseResult.unit) {
+            return {
+                uri: params.uri,
+                ast: null,
+                error: state ? 'Parse errors present' : 'Document not found',
+            };
+        }
+        // Return a simplified AST (to avoid circular references)
+        const unit = state.parseResult.unit;
+        return {
+            uri: params.uri,
+            ast: {
+                packageDecl: unit.packageDecl,
+                useDecls: unit.useDecls,
+                declCount: unit.decls.length,
+                clauseCount: unit.clauses.length,
+            },
+        };
+    }
+    catch (e) {
+        connection.console.error(`mangle/getAST error: ${e}`);
+        return {
+            uri: params.uri,
+            ast: null,
+            error: String(e),
+        };
+    }
+});
+/**
+ * Custom request: Batch lookup - perform multiple queries in one request.
+ * Request: 'mangle/batchLookup'
+ * Params: { queries: BatchQuery[] }
+ * Returns: { results: BatchResult[] }
+ */
+connection.onRequest('mangle/batchLookup', async (params) => {
+    const results = [];
+    for (const query of params.queries) {
+        const result = {
+            id: query.id,
+            type: query.type,
+            uri: query.uri,
+            result: null,
+        };
+        try {
+            const state = documentStates.get(query.uri);
+            const document = documents.get(query.uri);
+            switch (query.type) {
+                case 'hover': {
+                    if (!state?.parseResult.unit || query.line === undefined || query.column === undefined) {
+                        result.result = null;
+                        break;
+                    }
+                    const symbolTable = getSymbolTable(state);
+                    if (!symbolTable) {
+                        result.result = null;
+                        break;
+                    }
+                    const position = { line: query.line - 1, character: query.column };
+                    result.result = (0, index_3.getHover)(state.parseResult.unit, symbolTable, position);
+                    break;
+                }
+                case 'definition': {
+                    if (!state?.parseResult.unit || query.line === undefined || query.column === undefined) {
+                        result.result = { locations: [] };
+                        break;
+                    }
+                    const symbolTable = getSymbolTable(state);
+                    if (!symbolTable) {
+                        result.result = { locations: [] };
+                        break;
+                    }
+                    const position = { line: query.line - 1, character: query.column };
+                    const def = (0, index_3.getDefinition)(query.uri, symbolTable, position);
+                    result.result = { locations: def ? (Array.isArray(def) ? def : [def]) : [] };
+                    break;
+                }
+                case 'references': {
+                    if (!state?.parseResult.unit || query.line === undefined || query.column === undefined) {
+                        result.result = { locations: [] };
+                        break;
+                    }
+                    const symbolTable = getSymbolTable(state);
+                    if (!symbolTable) {
+                        result.result = { locations: [] };
+                        break;
+                    }
+                    const position = { line: query.line - 1, character: query.column };
+                    const refs = (0, index_3.findReferences)(query.uri, symbolTable, position, { includeDeclaration: query.includeDeclaration ?? true });
+                    result.result = { locations: refs };
+                    break;
+                }
+                case 'completion': {
+                    if (!document || query.line === undefined || query.column === undefined) {
+                        result.result = { items: [] };
+                        break;
+                    }
+                    const symbolTable = state ? getSymbolTable(state) : null;
+                    const unit = state?.parseResult.unit || null;
+                    const position = { line: query.line - 1, character: query.column };
+                    const items = (0, index_3.getCompletions)(document, unit, symbolTable, position);
+                    result.result = { items };
+                    break;
+                }
+                case 'symbols': {
+                    if (!state?.parseResult.unit) {
+                        result.result = { symbols: [] };
+                        break;
+                    }
+                    const symbols = (0, index_3.getDocumentSymbols)(state.parseResult.unit);
+                    result.result = { symbols };
+                    break;
+                }
+                case 'diagnostics': {
+                    const diagResult = await connection.sendRequest('mangle/getDiagnostics', { uri: query.uri });
+                    result.result = diagResult;
+                    break;
+                }
+                case 'format': {
+                    if (!state?.parseResult.unit || !document) {
+                        result.result = { edits: [] };
+                        break;
+                    }
+                    const edits = (0, index_3.formatDocument)(document, state.parseResult.unit, { tabSize: 4, insertSpaces: true });
+                    result.result = { edits };
+                    break;
+                }
+                default:
+                    result.error = `Unknown query type: ${query.type}`;
+            }
+        }
+        catch (e) {
+            result.error = String(e);
+        }
+        results.push(result);
+    }
+    return { results };
+});
+/**
+ * Custom request: Get all information about a file.
+ * Request: 'mangle/getFileInfo'
+ * Params: { uri: string }
+ * Returns: Complete file analysis including diagnostics, symbols, predicates
+ */
+connection.onRequest('mangle/getFileInfo', async (params) => {
+    try {
+        const state = documentStates.get(params.uri);
+        const document = documents.get(params.uri);
+        if (!state) {
+            return {
+                uri: params.uri,
+                exists: false,
+                error: 'Document not found in cache',
+            };
+        }
+        // Get diagnostics
+        const diagResult = await connection.sendRequest('mangle/getDiagnostics', { uri: params.uri });
+        // Get symbols
+        const symbols = state.parseResult.unit ? (0, index_3.getDocumentSymbols)(state.parseResult.unit) : [];
+        // Get structured symbols
+        const symbolTable = getSymbolTable(state);
+        const predicates = symbolTable ? symbolTable.getAllPredicates().map(info => ({
+            name: info.symbol.symbol,
+            arity: info.symbol.arity,
+            isExternal: info.isExternal,
+            isPrivate: info.isPrivate,
+            definitionCount: info.definitions.length,
+            referenceCount: info.references.length,
+        })) : [];
+        // Get AST info
+        const ast = state.parseResult.unit ? {
+            packageDecl: state.parseResult.unit.packageDecl,
+            useDecls: state.parseResult.unit.useDecls,
+            declCount: state.parseResult.unit.decls.length,
+            clauseCount: state.parseResult.unit.clauses.length,
+        } : null;
+        return {
+            uri: params.uri,
+            exists: true,
+            version: state.version,
+            hasSyntaxErrors: state.parseResult.errors.length > 0,
+            hasSemanticErrors: (state.validationResult?.errors.length ?? 0) > 0,
+            diagnostics: diagResult,
+            symbols,
+            predicates,
+            ast,
+            lineCount: document?.lineCount ?? 0,
+        };
+    }
+    catch (e) {
+        return {
+            uri: params.uri,
+            exists: false,
+            error: String(e),
+        };
+    }
+});
+/**
+ * Custom request: Check all open documents.
+ * Request: 'mangle/checkAll'
+ * Params: {}
+ * Returns: { files: [...], summary: {...} }
+ */
+connection.onRequest('mangle/checkAll', async () => {
+    const files = [];
+    let totalErrors = 0;
+    let totalWarnings = 0;
+    let totalInfo = 0;
+    for (const [uri, state] of documentStates) {
+        const diagResult = await connection.sendRequest('mangle/getDiagnostics', { uri });
+        const fileResult = {
+            uri,
+            ...diagResult,
+        };
+        files.push(fileResult);
+        // Count diagnostics
+        const parseErrors = diagResult.parseErrors?.length ?? 0;
+        const semanticErrors = diagResult.semanticErrors?.filter((e) => e.severity === 'error')?.length ?? 0;
+        const semanticWarnings = diagResult.semanticErrors?.filter((e) => e.severity === 'warning')?.length ?? 0;
+        const semanticInfo = diagResult.semanticErrors?.filter((e) => e.severity === 'info')?.length ?? 0;
+        const stratErrors = diagResult.stratificationErrors?.filter((e) => e.severity === 'error')?.length ?? 0;
+        const stratWarnings = diagResult.stratificationErrors?.filter((e) => e.severity === 'warning')?.length ?? 0;
+        totalErrors += parseErrors + semanticErrors + stratErrors;
+        totalWarnings += semanticWarnings + stratWarnings;
+        totalInfo += semanticInfo;
+    }
+    return {
+        files,
+        summary: {
+            totalFiles: files.length,
+            totalErrors,
+            totalWarnings,
+            totalInfo,
+        },
+    };
+});
+/**
+ * Custom request: Get workspace summary.
+ * Request: 'mangle/getWorkspaceSummary'
+ * Params: {}
+ * Returns: Summary of all predicates, files, and diagnostics in workspace
+ */
+connection.onRequest('mangle/getWorkspaceSummary', async () => {
+    const allPredicates = new Map();
+    const fileInfos = [];
+    for (const [uri, state] of documentStates) {
+        const symbolTable = getSymbolTable(state);
+        if (symbolTable) {
+            for (const pred of symbolTable.getAllPredicates()) {
+                const key = `${pred.symbol.symbol}/${pred.symbol.arity}`;
+                if (!allPredicates.has(key)) {
+                    allPredicates.set(key, {
+                        arity: pred.symbol.arity,
+                        definedIn: [],
+                        referencedIn: [],
+                    });
+                }
+                const info = allPredicates.get(key);
+                if (pred.definitions.length > 0) {
+                    info.definedIn.push(uri);
+                }
+                if (pred.references.length > 0) {
+                    info.referencedIn.push(uri);
+                }
+            }
+        }
+        fileInfos.push({
+            uri,
+            hasSyntaxErrors: state.parseResult.errors.length > 0,
+            hasSemanticErrors: (state.validationResult?.errors.length ?? 0) > 0,
+            declCount: state.parseResult.unit?.decls.length ?? 0,
+            clauseCount: state.parseResult.unit?.clauses.length ?? 0,
+        });
+    }
+    const predicates = Array.from(allPredicates.entries()).map(([name, info]) => ({
+        name,
+        arity: info.arity,
+        definedIn: info.definedIn,
+        referencedIn: info.referencedIn,
+    }));
+    return {
+        files: fileInfos,
+        predicates,
+        totalFiles: fileInfos.length,
+        totalPredicates: predicates.length,
+    };
 });
 /**
  * Shutdown handler.

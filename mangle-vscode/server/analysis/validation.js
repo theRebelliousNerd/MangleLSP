@@ -306,6 +306,22 @@ function validatePremise(premise, boundVars, symbolTable, errors) {
             break;
         }
         default:
+            // Handle TemporalLiteral
+            if ((0, ast_1.isTemporalLiteral)(premise)) {
+                const temporal = premise;
+                // Validate the inner literal
+                validatePremise(temporal.literal, boundVars, symbolTable, errors);
+                // Temporal interval variables become bound
+                if (temporal.interval) {
+                    if (temporal.interval.start.variable) {
+                        boundVars.add(temporal.interval.start.variable.symbol);
+                    }
+                    if (temporal.interval.end.variable) {
+                        boundVars.add(temporal.interval.end.variable.symbol);
+                    }
+                }
+                break;
+            }
             // Other term types (Variable, Constant, etc.) are not valid premises by themselves
             // This would be a parse error, so we don't report it here
             break;
@@ -694,12 +710,52 @@ function validateTransform(transform, boundVars, errors, bodyVars) {
                 if (stmt.variable.symbol !== '_') {
                     boundVars.add(stmt.variable.symbol);
                 }
-                // Check that the function is a reducer if in a let-transform after group_by
+                // After group_by, non-reducer functions are allowed if their variables
+                // are from the group_by key or defined by earlier transform statements.
+                // This matches upstream behavior from commit a77833b.
                 const fnName = stmt.fn.function.symbol;
+                if (hasGroupBy && !(0, functions_1.isReducerFunction)(fnName) && fnName !== 'fn:group_by') {
+                    // Check that all variables used in this function are either
+                    // in the group_by key or defined by previous let-statements in the transform.
+                    const groupByVars = new Set();
+                    // Find group_by vars from first statement
+                    for (const s of current.statements) {
+                        if (s.variable === null && s.fn.function.symbol === 'fn:group_by') {
+                            for (const arg of s.fn.args) {
+                                if (arg.type === 'Variable') {
+                                    groupByVars.add(arg.symbol);
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    // Collect transform-defined variables (before this statement)
+                    const transformDefs = new Set();
+                    for (const s of current.statements) {
+                        if (s === stmt)
+                            break;
+                        if (s.variable && s.variable.symbol !== '_') {
+                            transformDefs.add(s.variable.symbol);
+                        }
+                    }
+                    // Check all variables used in this function application
+                    const usedVars = new Set();
+                    collectTermVariables(stmt.fn, usedVars);
+                    for (const v of usedVars) {
+                        if (!groupByVars.has(v) && !transformDefs.has(v)) {
+                            errors.push({
+                                code: 'E047',
+                                message: `Variable '${v}' in function '${fnName}' must be either part of group_by or defined in the transform`,
+                                range: stmt.fn.range,
+                                severity: 'error',
+                            });
+                        }
+                    }
+                }
                 if (hasGroupBy && !fnName.startsWith('fn:')) {
                     errors.push({
                         code: 'E013',
-                        message: `Function '${fnName}' in let-statement must be a reducer function`,
+                        message: `Function '${fnName}' in let-statement must be a built-in function (fn:...)`,
                         range: stmt.fn.range,
                         severity: 'warning',
                     });
@@ -955,6 +1011,20 @@ function collectPremiseVariables(premise, vars) {
             break;
         }
         default:
+            // Handle TemporalLiteral
+            if ((0, ast_1.isTemporalLiteral)(premise)) {
+                const temporal = premise;
+                collectPremiseVariables(temporal.literal, vars);
+                if (temporal.interval) {
+                    if (temporal.interval.start.variable) {
+                        vars.add(temporal.interval.start.variable.symbol);
+                    }
+                    if (temporal.interval.end.variable) {
+                        vars.add(temporal.interval.end.variable.symbol);
+                    }
+                }
+                break;
+            }
             // For other term types, try to collect from them directly
             collectTermVariables(premise, vars);
             break;

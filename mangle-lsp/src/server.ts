@@ -31,7 +31,7 @@ import {
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
 import { parse, ParseError, ParseResult } from './parser/index';
-import { validate, SemanticError, ValidationResult, checkStratification, checkUnboundedRecursion, checkCartesianExplosion, checkLateFiltering, checkLateNegation, checkMultipleIndependentVars, StratificationError } from './analysis/index';
+import { validate, SemanticError, ValidationResult, checkStratification, checkUnboundedRecursion, checkCartesianExplosion, checkLateFiltering, checkLateNegation, checkMultipleIndependentVars, checkTemporalRecursion, StratificationError } from './analysis/index';
 import { SymbolTable, buildSymbolTable } from './analysis/symbols';
 import {
     getHover,
@@ -325,6 +325,15 @@ async function validateDocument(document: TextDocument): Promise<void> {
         // Multiple independent variables (massive Cartesian)
         const multiIndepWarnings = checkMultipleIndependentVars(parseResult.unit);
         for (const warning of multiIndepWarnings) {
+            if (diagnostics.length >= settings.maxNumberOfProblems) {
+                break;
+            }
+            diagnostics.push(stratificationErrorToDiagnostic(warning));
+        }
+
+        // Temporal recursion warnings (DatalogMTL)
+        const temporalWarnings = checkTemporalRecursion(parseResult.unit);
+        for (const warning of temporalWarnings) {
             if (diagnostics.length >= settings.maxNumberOfProblems) {
                 break;
             }

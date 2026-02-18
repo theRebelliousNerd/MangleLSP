@@ -14,6 +14,7 @@ import {
     ApplyFn,
     Term,
     Transform,
+    TemporalLiteral,
 } from '../parser/ast';
 import { SymbolTable, PredicateInfo, VariableInfo } from '../analysis/symbols';
 import { getBuiltinPredicate, BUILTIN_PREDICATES } from '../builtins/predicates';
@@ -181,6 +182,15 @@ function findBuiltinInTerm(term: Term, line: number, column: number): Hover | nu
     }
     if (term.type === 'ApplyFn') {
         return findBuiltinInApplyFn(term as ApplyFn, line, column);
+    }
+    if (term.type === 'TemporalLiteral') {
+        const temporal = term as TemporalLiteral;
+        if (temporal.literal.type === 'Atom') {
+            return findBuiltinInAtom(temporal.literal, line, column);
+        }
+        if (temporal.literal.type === 'NegAtom') {
+            return findBuiltinInAtom((temporal.literal as { atom: Atom }).atom, line, column);
+        }
     }
     return null;
 }

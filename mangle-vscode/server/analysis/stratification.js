@@ -12,6 +12,7 @@ exports.checkCartesianExplosion = checkCartesianExplosion;
 exports.checkLateFiltering = checkLateFiltering;
 exports.checkLateNegation = checkLateNegation;
 exports.checkMultipleIndependentVars = checkMultipleIndependentVars;
+exports.checkTemporalRecursion = checkTemporalRecursion;
 const ast_1 = require("../parser/ast");
 /**
  * Check stratification of a source unit.
@@ -114,6 +115,15 @@ function addEdgesFromPremise(headPred, premise, range, edges, clause) {
                     isNegative: true,
                     range: negAtom.range,
                 });
+            }
+            break;
+        }
+        default: {
+            // Handle TemporalLiteral premises
+            if ((0, ast_1.isTemporalLiteral)(premise)) {
+                const temporal = premise;
+                // Extract the inner literal and recurse
+                addEdgesFromPremise(headPred, temporal.literal, range, edges, clause);
             }
             break;
         }
@@ -540,5 +550,123 @@ function checkMultipleIndependentVars(unit) {
         }
     }
     return warnings;
+}
+/**
+ * Check for problematic temporal recursion patterns.
+ * Matches upstream CheckTemporalRecursion from analysis/temporal.go.
+ *
+ * Returns warnings about:
+ * - Self-recursive temporal predicates (interval explosion risk)
+ * - Mutual recursion through temporal predicates (non-termination risk)
+ * - Future operators in recursive temporal rules (unbounded fact generation)
+ */
+function checkTemporalRecursion(unit) {
+    const warnings = [];
+    // Build set of temporal predicates (predicates with temporal() descriptor)
+    const temporalPreds = new Set();
+    for (const decl of unit.decls) {
+        if (decl.descr?.some(d => d.predicate.symbol === ast_1.DESCRIPTORS.TEMPORAL)) {
+            temporalPreds.add(predicateKey(decl.declaredAtom.predicate));
+        }
+    }
+    // Also check clauses with headTime annotation
+    for (const clause of unit.clauses) {
+        if (clause.headTime) {
+            temporalPreds.add(predicateKey(clause.head.predicate));
+        }
+    }
+    if (temporalPreds.size === 0) {
+        return warnings;
+    }
+    // Build dependency graph
+    const edges = buildDependencyGraph(unit);
+    const sccs = findSCCs(edges);
+    // Check each SCC for problematic temporal patterns
+    for (const scc of sccs) {
+        if (scc.length === 1) {
+            const pred = scc[0];
+            // Self-recursive temporal predicate
+            if (temporalPreds.has(pred) && hasSelfLoop(pred, edges)) {
+                warnings.push({
+                    code: 'E048',
+                    message: `Self-recursive temporal predicate '${pred}' may cause interval explosion; ensure coalescing or use interval limits`,
+                    range: findPredicateRange(unit, pred),
+                    severity: 'warning',
+                    cycle: [pred],
+                });
+            }
+        }
+        else {
+            // Multi-predicate SCC - check for mutual recursion through temporal predicates
+            const hasTemporalPred = scc.some(p => temporalPreds.has(p));
+            if (hasTemporalPred) {
+                const temporalPredInScc = scc.find(p => temporalPreds.has(p)) ?? scc[0];
+                warnings.push({
+                    code: 'E049',
+                    message: `Mutual recursion through temporal predicates may cause non-termination; ${scc.length} predicates in cycle: ${scc.join(' -> ')}`,
+                    range: findPredicateRange(unit, temporalPredInScc),
+                    severity: 'error',
+                    cycle: scc,
+                });
+            }
+        }
+    }
+    // Check for future operators in recursive temporal rules
+    for (const clause of unit.clauses) {
+        const headKey = predicateKey(clause.head.predicate);
+        if (!temporalPreds.has(headKey) || !clause.premises)
+            continue;
+        for (const premise of clause.premises) {
+            if ((0, ast_1.isTemporalLiteral)(premise)) {
+                const temporal = premise;
+                if (temporal.operator) {
+                    const opType = temporal.operator.operatorType;
+                    if (opType === 'diamond_plus' || opType === 'box_plus') {
+                        // Check if this references a predicate in the same SCC
+                        let litPredKey = null;
+                        if (temporal.literal.type === 'Atom') {
+                            litPredKey = predicateKey(temporal.literal.predicate);
+                        }
+                        else if (temporal.literal.type === 'NegAtom') {
+                            litPredKey = predicateKey(temporal.literal.atom.predicate);
+                        }
+                        if (litPredKey && isInSameSCC(headKey, litPredKey, sccs)) {
+                            warnings.push({
+                                code: 'E050',
+                                message: `Future operator in recursive temporal rule may cause unbounded fact generation`,
+                                range: temporal.range,
+                                severity: 'error',
+                                cycle: [headKey, litPredKey],
+                            });
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return warnings;
+}
+/**
+ * Check if two predicates are in the same SCC.
+ */
+function isInSameSCC(pred1, pred2, sccs) {
+    for (const scc of sccs) {
+        if (scc.includes(pred1) && scc.includes(pred2)) {
+            return true;
+        }
+    }
+    return false;
+}
+/**
+ * Find the source range of the first clause defining a predicate.
+ */
+function findPredicateRange(unit, predKey) {
+    for (const clause of unit.clauses) {
+        if (predicateKey(clause.head.predicate) === predKey) {
+            return clause.head.range;
+        }
+    }
+    // Fallback
+    return { start: { line: 1, column: 0, offset: 0 }, end: { line: 1, column: 0, offset: 0 } };
 }
 //# sourceMappingURL=stratification.js.map

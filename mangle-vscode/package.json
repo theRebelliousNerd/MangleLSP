@@ -67,6 +67,14 @@
         "language": "mangle",
         "scopeName": "source.mangle",
         "path": "./syntaxes/mangle.tmLanguage.json"
+      },
+      {
+        "scopeName": "markdown.mangle.codeblock",
+        "path": "./syntaxes/mangle.markdown.tmLanguage.json",
+        "injectTo": ["text.html.markdown"],
+        "embeddedLanguages": {
+          "meta.embedded.block.mangle": "mangle"
+        }
       }
     ],
     "configuration": {

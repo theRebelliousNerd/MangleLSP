@@ -72,9 +72,9 @@ export class MangleParser extends antlr.Parser {
 
     public static readonly literalNames = [
         null, "'.'", "'descr'", "'inclusion'", "':'", "'{'", "'}'", "'opt'", 
-        null, null, "'\\u00E2\\u0178\\u00B8'", "'Package'", "'Use'", "'Decl'", 
-        "'bound'", "'let'", "'do'", "'('", "')'", "'['", "']'", "'='", "'!='", 
-        "','", "'!'", "'<'", "'<='", "'>'", "'>='", "':-'", "'\\n'", "'|>'"
+        null, null, "'\\u27F8'", "'Package'", "'Use'", "'Decl'", "'bound'", 
+        "'let'", "'do'", "'('", "')'", "'['", "']'", "'='", "'!='", "','", 
+        "'!'", "'<'", "'<='", "'>'", "'>='", "':-'", "'\\n'", "'|>'"
     ];
 
     public static readonly symbolicNames = [

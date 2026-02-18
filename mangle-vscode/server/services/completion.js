@@ -391,12 +391,20 @@ function getKeywordCompletions(replaceRange) {
             sortText: '308',
         },
         {
+            label: 'temporal',
+            kind: node_1.CompletionItemKind.Keyword,
+            detail: 'Mark predicate as temporal',
+            textEdit: node_1.TextEdit.replace(replaceRange, 'temporal'),
+            insertTextFormat: node_1.InsertTextFormat.PlainText,
+            sortText: '309',
+        },
+        {
             label: 'mode',
             kind: node_1.CompletionItemKind.Keyword,
             detail: 'Mode declaration for predicate',
             textEdit: node_1.TextEdit.replace(replaceRange, 'mode(${1:+,-})'),
             insertTextFormat: node_1.InsertTextFormat.Snippet,
-            sortText: '309',
+            sortText: '310',
         },
         {
             label: 'doc',
@@ -404,7 +412,7 @@ function getKeywordCompletions(replaceRange) {
             detail: 'Documentation string',
             textEdit: node_1.TextEdit.replace(replaceRange, 'doc("${1:description}")'),
             insertTextFormat: node_1.InsertTextFormat.Snippet,
-            sortText: '310',
+            sortText: '311',
         },
         {
             label: 'arg',
@@ -412,7 +420,7 @@ function getKeywordCompletions(replaceRange) {
             detail: 'Argument documentation',
             textEdit: node_1.TextEdit.replace(replaceRange, 'arg("${1:name}", "${2:description}")'),
             insertTextFormat: node_1.InsertTextFormat.Snippet,
-            sortText: '311',
+            sortText: '312',
         },
     ];
 }
