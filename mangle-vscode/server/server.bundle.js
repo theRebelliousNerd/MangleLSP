@@ -39160,8 +39160,9 @@ var require_functions = __commonJS({
   "server/builtins/functions.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.BUILTIN_FUNCTION_MAP = exports2.ALL_BUILTIN_FUNCTIONS = exports2.REDUCER_FUNCTIONS = exports2.BUILTIN_FUNCTIONS = void 0;
+    exports2.BUILTIN_FUNCTION_MAP = exports2.ALL_BUILTIN_FUNCTIONS = exports2.TYPE_CONSTRUCTOR_FUNCTIONS = exports2.REDUCER_FUNCTIONS = exports2.BUILTIN_FUNCTIONS = void 0;
     exports2.isBuiltinFunction = isBuiltinFunction;
+    exports2.isTypeConstructor = isTypeConstructor;
     exports2.isReducerFunction = isReducerFunction;
     exports2.getBuiltinFunction = getBuiltinFunction;
     exports2.getBuiltinFunctionNames = getBuiltinFunctionNames;
@@ -39619,13 +39620,85 @@ var require_functions = __commonJS({
         doc: "Returns the average of a set of numbers."
       }
     ];
+    exports2.TYPE_CONSTRUCTOR_FUNCTIONS = [
+      {
+        name: "fn:Fun",
+        arity: -1,
+        isReducer: false,
+        doc: "Type constructor for function types. fn:Fun(Res, Arg1, ..., ArgN) represents Res <= Arg1, ..., ArgN."
+      },
+      {
+        name: "fn:Rel",
+        arity: -1,
+        isReducer: false,
+        doc: "Type constructor for relation types."
+      },
+      {
+        name: "fn:Singleton",
+        arity: 1,
+        isReducer: false,
+        doc: "Type constructor for singleton types."
+      },
+      {
+        name: "fn:Pair",
+        arity: 2,
+        isReducer: false,
+        doc: "Type constructor for pair types. fn:Pair(T1, T2) is the type of fn:pair(x, y) where x:T1, y:T2."
+      },
+      {
+        name: "fn:Tuple",
+        arity: -1,
+        isReducer: false,
+        doc: "Type constructor for tuple types (more than 2 elements)."
+      },
+      {
+        name: "fn:Option",
+        arity: 1,
+        isReducer: false,
+        doc: "Type constructor for option types. A value of fn:Option(T) is either fn:some(c) for c:T, or fn:none()."
+      },
+      {
+        name: "fn:List",
+        arity: 1,
+        isReducer: false,
+        doc: "Type constructor for list types. fn:List(T) is the type of lists with elements of type T."
+      },
+      {
+        name: "fn:Map",
+        arity: 2,
+        isReducer: false,
+        doc: "Type constructor for map types. fn:Map(K, V) is the type of maps with keys K and values V."
+      },
+      {
+        name: "fn:Struct",
+        arity: -1,
+        isReducer: false,
+        doc: "Type constructor for struct types. fn:Struct(/field1, Type1, /field2, Type2, ...) defines a struct type."
+      },
+      {
+        name: "fn:Union",
+        arity: -1,
+        isReducer: false,
+        doc: "Type constructor for union types. fn:Union(T1, T2, ...) is the union of types T1, T2, ..."
+      },
+      {
+        name: "fn:opt",
+        arity: -1,
+        isReducer: false,
+        doc: "Marks a field as optional inside a struct type expression."
+      }
+    ];
     exports2.ALL_BUILTIN_FUNCTIONS = [
       ...exports2.BUILTIN_FUNCTIONS,
-      ...exports2.REDUCER_FUNCTIONS
+      ...exports2.REDUCER_FUNCTIONS,
+      ...exports2.TYPE_CONSTRUCTOR_FUNCTIONS
     ];
     exports2.BUILTIN_FUNCTION_MAP = new Map(exports2.ALL_BUILTIN_FUNCTIONS.map((f) => [f.name, f]));
     function isBuiltinFunction(name) {
       return exports2.BUILTIN_FUNCTION_MAP.has(name);
+    }
+    function isTypeConstructor(name) {
+      return exports2.TYPE_CONSTRUCTOR_FUNCTIONS.some((f) => f.name === name);
     }
     function isReducerFunction(name) {
       const fn = exports2.BUILTIN_FUNCTION_MAP.get(name);
@@ -40117,6 +40190,21 @@ var require_validation = __commonJS({
               severity: "error"
             });
           }
+          for (let i = 0; i < boundDecl.bounds.length; i++) {
+            const bound = boundDecl.bounds[i];
+            if (bound && bound.type === "ApplyFn") {
+              const applyFn = bound;
+              const fnSym = applyFn.function.symbol;
+              if (!(0, functions_1.isTypeConstructor)(fnSym)) {
+                errors.push({
+                  code: "E061",
+                  message: `In bound declaration: '${fnSym}' is not a valid type constructor`,
+                  range: bound.range,
+                  severity: "error"
+                });
+              }
+            }
+          }
         }
       }
       let seenDoc = false;
@@ -40289,7 +40377,15 @@ var require_validation = __commonJS({
         collectPremiseVariables(premise, bodyVars);
       }
       if (rewritten.transform) {
-        validateTransform(rewritten.transform, boundVars, errors, bodyVars);
+        if (rewritten.transform.next) {
+          errors.push({
+            code: "E048",
+            message: "Composing multiple transforms is not supported",
+            range: rewritten.transform.next.range,
+            severity: "error"
+          });
+        }
+        validateTransform(rewritten.transform, boundVars, errors, bodyVars, headVars);
       }
       for (const v of headVars) {
         if (v === "_")
@@ -40558,11 +40654,7 @@ var require_validation = __commonJS({
       ["fn:Div", "fn:div"],
       ["fn:Collect", "fn:collect"],
       ["fn:Group_by", "fn:group_by"],
-      ["fn:GROUP_BY", "fn:group_by"],
-      ["fn:Pair", "fn:pair"],
-      ["fn:List", "fn:list"],
-      ["fn:Map", "fn:map"],
-      ["fn:Struct", "fn:struct"]
+      ["fn:GROUP_BY", "fn:group_by"]
     ]);
     var HALLUCINATED_FUNCTIONS = /* @__PURE__ */ new Map([
       // String functions that don't exist
@@ -40662,6 +40754,15 @@ var require_validation = __commonJS({
         }
       }
       if ((0, functions_1.isReducerFunction)(fnName)) {
+        const reducerDef = (0, functions_1.getBuiltinFunction)(fnName);
+        if (reducerDef && reducerDef.arity === -1 && applyFn.args.length === 0) {
+          errors.push({
+            code: "E060",
+            message: `Reducer function '${fnName}' expects at least one argument`,
+            range: applyFn.range,
+            severity: "error"
+          });
+        }
       }
       for (const arg of applyFn.args) {
         const argVars = /* @__PURE__ */ new Set();
@@ -40686,7 +40787,7 @@ var require_validation = __commonJS({
         }
       }
     }
-    function validateTransform(transform, boundVars, errors, bodyVars) {
+    function validateTransform(transform, boundVars, errors, bodyVars, headVars) {
       if (bodyVars) {
         let checkTransform = transform;
         while (checkTransform) {
@@ -40805,6 +40906,55 @@ var require_validation = __commonJS({
           }
         }
         current = current.next;
+      }
+      if (hasGroupBy && headVars) {
+        const groupByVarSet = /* @__PURE__ */ new Set();
+        const transformDefSet = /* @__PURE__ */ new Set();
+        for (const stmt of transform.statements) {
+          if (stmt.variable === null && stmt.fn.function.symbol === "fn:group_by") {
+            for (const arg of stmt.fn.args) {
+              if (arg.type === "Variable") {
+                groupByVarSet.add(arg.symbol);
+              }
+            }
+          }
+          if (stmt.variable && stmt.variable.symbol !== "_") {
+            transformDefSet.add(stmt.variable.symbol);
+          }
+        }
+        for (const v of headVars) {
+          if (v === "_")
+            continue;
+          if (groupByVarSet.has(v))
+            continue;
+          if (transformDefSet.has(v))
+            continue;
+          errors.push({
+            code: "E049",
+            message: `Head variable '${v}' is neither part of group_by nor defined in the transform`,
+            range: transform.range,
+            severity: "error"
+          });
+        }
+      }
+      if (!hasGroupBy && transform.statements.length > 0 && transform.statements[0].variable !== null) {
+        for (const stmt of transform.statements.slice(1)) {
+          if (stmt.variable === null) {
+            errors.push({
+              code: "E050",
+              message: "All statements in a let-transform must be let-statements",
+              range: stmt.fn.range,
+              severity: "error"
+            });
+          } else if ((0, functions_1.isReducerFunction)(stmt.fn.function.symbol)) {
+            errors.push({
+              code: "E050",
+              message: `Reducer function '${stmt.fn.function.symbol}' is not allowed in a let-transform`,
+              range: stmt.fn.range,
+              severity: "error"
+            });
+          }
+        }
       }
     }
     function handleEquality(left, right, boundVars, errors, range, uf) {

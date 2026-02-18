@@ -631,8 +631,8 @@ describe('Validation Module', () => {
             expectNoErrors('result(Y) :- input(X) |> let Y = fn:plus(X, 1).');
         });
 
-        it('should allow transform to redefine its own variables', () => {
-            expectNoErrors('result(Z) :- input(X) |> let Y = fn:plus(X, 1) |> let Z = fn:mult(Y, 2).');
+        it('should error when composing multiple transforms (E048)', () => {
+            expectError('result(Z) :- input(X) |> let Y = fn:plus(X, 1) |> let Z = fn:mult(Y, 2).', 'E048');
         });
     });
 
@@ -875,13 +875,13 @@ describe('Validation Module', () => {
             expectNoErrors('result(fn:plus(fn:mult(fn:plus(1, 2), 3), 4)).');
         });
 
-        it('should handle multiple transforms in chain', () => {
+        it('should reject multiple transforms in chain (E048)', () => {
             const source = `
                 result(Z) :- input(X)
                     |> let Y = fn:plus(X, 1)
                     |> let Z = fn:mult(Y, 2).
             `;
-            expectNoErrors(source);
+            expectError(source, 'E048');
         });
 
         it('should validate wildcard does not count as binding', () => {
@@ -1551,4 +1551,185 @@ describe('Validation Module', () => {
             expectNoErrors('result(D) :- num(N), D = fn:duration:from_seconds(N).');
         });
     });
+
+    // =========================================================================
+    // Phase 4: New validation checks from upstream gap analysis
+    // =========================================================================
+
+    describe('Type constructor functions (P0 fix)', () => {
+        it('should NOT flag fn:Pair as casing error (it is a type constructor)', () => {
+            // fn:Pair is a legitimate uppercase type constructor, not a casing mistake
+            expectNoErrors('result(P) :- x(A), y(B), P = fn:Pair(A, B).');
+        });
+
+        it('should NOT flag fn:List as casing error', () => {
+            expectNoErrors('result(L) :- x(A), L = fn:List(A).');
+        });
+
+        it('should NOT flag fn:Map as casing error', () => {
+            expectNoErrors('result(M) :- x(A), y(B), M = fn:Map(A, B).');
+        });
+
+        it('should NOT flag fn:Struct as casing error', () => {
+            expectNoErrors('result(S) :- x(V), S = fn:Struct(/field, V).');
+        });
+
+        it('should recognize fn:Fun type constructor', () => {
+            expectNoErrors('result(F) :- x(A), F = fn:Fun(A).');
+        });
+
+        it('should recognize fn:Rel type constructor', () => {
+            expectNoErrors('result(R) :- x(A), R = fn:Rel(A).');
+        });
+
+        it('should recognize fn:Singleton type constructor', () => {
+            expectNoErrors('result(S) :- x(A), S = fn:Singleton(A).');
+        });
+
+        it('should recognize fn:Tuple type constructor', () => {
+            expectNoErrors('result(T) :- x(A), y(B), z(C), T = fn:Tuple(A, B, C).');
+        });
+
+        it('should recognize fn:Option type constructor', () => {
+            expectNoErrors('result(O) :- x(A), O = fn:Option(A).');
+        });
+
+        it('should recognize fn:Union type constructor', () => {
+            expectNoErrors('result(U) :- x(A), y(B), U = fn:Union(A, B).');
+        });
+
+        it('should recognize fn:opt (optional field marker)', () => {
+            expectNoErrors('result(O) :- x(A), O = fn:opt(A).');
+        });
+
+        it('should still flag fn:Sum as casing error (not a type constructor)', () => {
+            expectError('result(S) :- x(A), S = fn:Sum(A).', 'E018');
+        });
+
+        it('should still flag fn:Count as casing error', () => {
+            expectError('result(C) :- x(A), C = fn:Count(A).', 'E018');
+        });
+    });
+
+    describe('E048: Multiple transforms rejection', () => {
+        it('should reject chained transforms with |>', () => {
+            expectError('result(Z) :- input(X) |> let Y = fn:plus(X, 1) |> let Z = fn:mult(Y, 2).', 'E048');
+        });
+
+        it('should allow single transform', () => {
+            expectNoErrors('result(Y) :- input(X) |> let Y = fn:plus(X, 1).');
+        });
+
+        it('should allow single do-transform with group_by', () => {
+            const source = `
+                Decl result(K, S).
+                result(K, S) :- data(K, V) |> do fn:group_by(K), let S = fn:sum(V).
+            `;
+            expectNoErrors(source);
+        });
+    });
+
+    describe('E049: Head variable vs group_by completeness', () => {
+        it('should error when head variable not in group_by or transform', () => {
+            const source = `
+                Decl result(K, V).
+                result(K, V) :- data(K, V) |> do fn:group_by(K), let S = fn:sum(V).
+            `;
+            // V is in head but not in group_by key (K) and not defined by transform (S is)
+            // But V is used as arg to fn:sum, not as a head variable from transform
+            // Actually V IS in the head and NOT in group_by(K) and NOT a transform-def
+            expectError(source, 'E049');
+        });
+
+        it('should allow head variable that is in group_by key', () => {
+            const source = `
+                Decl result(K, S).
+                result(K, S) :- data(K, V) |> do fn:group_by(K), let S = fn:sum(V).
+            `;
+            // K is in group_by, S is defined by let-statement
+            expectNoErrors(source);
+        });
+
+        it('should allow head variable defined by transform let-statement', () => {
+            const source = `
+                Decl total_count(C).
+                total_count(C) :- data(K, V) |> do fn:group_by(), let C = fn:count().
+            `;
+            // C is defined by let-statement
+            expectNoErrors(source);
+        });
+    });
+
+    describe('E050: Reducer in let-transform rejection', () => {
+        it('should reject reducer function in multi-statement let-transform', () => {
+            const source = `
+                Decl result(X, Y, S).
+                result(X, Y, S) :- data(X, V) |> let Y = fn:plus(X, 1), let S = fn:sum(V).
+            `;
+            expectError(source, 'E050');
+        });
+
+        it('should allow regular function in let-transform', () => {
+            expectNoErrors('result(Y) :- input(X) |> let Y = fn:plus(X, 1).');
+        });
+
+        it('should reject fn:collect in multi-statement let-transform', () => {
+            const source = `
+                Decl result(X, Y, L).
+                result(X, Y, L) :- data(X, V) |> let Y = fn:plus(X, 1), let L = fn:collect(V).
+            `;
+            expectError(source, 'E050');
+        });
+
+        it('should allow reducer after group_by (not a let-transform)', () => {
+            const source = `
+                Decl result(K, S).
+                result(K, S) :- data(K, V) |> do fn:group_by(K), let S = fn:sum(V).
+            `;
+            expectNoErrors(source);
+        });
+    });
+
+    describe('E060: Var-arity reducer min-args check', () => {
+        it('should error when fn:collect has zero arguments', () => {
+            const source = `
+                Decl result(K, L).
+                result(K, L) :- data(K, V) |> do fn:group_by(K), let L = fn:collect().
+            `;
+            expectError(source, 'E060');
+        });
+
+        it('should allow fn:collect with one argument', () => {
+            const source = `
+                Decl result(K, L).
+                result(K, L) :- data(K, V) |> do fn:group_by(K), let L = fn:collect(V).
+            `;
+            expectNoErrors(source);
+        });
+
+        it('should allow fn:count with zero arguments (fixed arity)', () => {
+            const source = `
+                Decl result(K, C).
+                result(K, C) :- data(K, V) |> do fn:group_by(K), let C = fn:count().
+            `;
+            expectNoErrors(source);
+        });
+    });
+
+    describe('E061: Well-formed bound expression checking', () => {
+        it('should allow valid bound with base type', () => {
+            const source = `
+                Decl foo(X) bound [/number].
+            `;
+            expectNoErrors(source);
+        });
+
+        it('should allow valid bound with name type', () => {
+            const source = `
+                Decl bar(X) bound [/name].
+            `;
+            expectNoErrors(source);
+        });
+    });
+
 });

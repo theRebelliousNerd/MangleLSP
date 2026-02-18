@@ -490,11 +490,89 @@ export const REDUCER_FUNCTIONS: BuiltinFunction[] = [
 ];
 
 /**
+ * Type constructor functions (used in bound declarations and type expressions).
+ *
+ * These are uppercase type-level constructors from upstream symbols/symbols.go (lines 205-310).
+ * They differ from their lowercase runtime counterparts:
+ * - fn:pair(X, Y) constructs a runtime pair value
+ * - fn:Pair(T1, T2) constructs a pair TYPE (used in bound [...] declarations)
+ */
+export const TYPE_CONSTRUCTOR_FUNCTIONS: BuiltinFunction[] = [
+    {
+        name: 'fn:Fun',
+        arity: -1,
+        isReducer: false,
+        doc: 'Type constructor for function types. fn:Fun(Res, Arg1, ..., ArgN) represents Res <= Arg1, ..., ArgN.',
+    },
+    {
+        name: 'fn:Rel',
+        arity: -1,
+        isReducer: false,
+        doc: 'Type constructor for relation types.',
+    },
+    {
+        name: 'fn:Singleton',
+        arity: 1,
+        isReducer: false,
+        doc: 'Type constructor for singleton types.',
+    },
+    {
+        name: 'fn:Pair',
+        arity: 2,
+        isReducer: false,
+        doc: 'Type constructor for pair types. fn:Pair(T1, T2) is the type of fn:pair(x, y) where x:T1, y:T2.',
+    },
+    {
+        name: 'fn:Tuple',
+        arity: -1,
+        isReducer: false,
+        doc: 'Type constructor for tuple types (more than 2 elements).',
+    },
+    {
+        name: 'fn:Option',
+        arity: 1,
+        isReducer: false,
+        doc: 'Type constructor for option types. A value of fn:Option(T) is either fn:some(c) for c:T, or fn:none().',
+    },
+    {
+        name: 'fn:List',
+        arity: 1,
+        isReducer: false,
+        doc: 'Type constructor for list types. fn:List(T) is the type of lists with elements of type T.',
+    },
+    {
+        name: 'fn:Map',
+        arity: 2,
+        isReducer: false,
+        doc: 'Type constructor for map types. fn:Map(K, V) is the type of maps with keys K and values V.',
+    },
+    {
+        name: 'fn:Struct',
+        arity: -1,
+        isReducer: false,
+        doc: 'Type constructor for struct types. fn:Struct(/field1, Type1, /field2, Type2, ...) defines a struct type.',
+    },
+    {
+        name: 'fn:Union',
+        arity: -1,
+        isReducer: false,
+        doc: 'Type constructor for union types. fn:Union(T1, T2, ...) is the union of types T1, T2, ...',
+    },
+    {
+        name: 'fn:opt',
+        arity: -1,
+        isReducer: false,
+        doc: 'Marks a field as optional inside a struct type expression.',
+    },
+];
+
+/**
  * All built-in functions (both regular and reducer).
  */
 export const ALL_BUILTIN_FUNCTIONS: BuiltinFunction[] = [
     ...BUILTIN_FUNCTIONS,
     ...REDUCER_FUNCTIONS,
+    ...TYPE_CONSTRUCTOR_FUNCTIONS,
 ];
 
 /**
@@ -509,6 +587,13 @@ export const BUILTIN_FUNCTION_MAP = new Map<string, BuiltinFunction>(
  */
 export function isBuiltinFunction(name: string): boolean {
     return BUILTIN_FUNCTION_MAP.has(name);
+}
+
+/**
+ * Check if a function name is a type constructor (uppercase, used in bound declarations).
+ */
+export function isTypeConstructor(name: string): boolean {
+    return TYPE_CONSTRUCTOR_FUNCTIONS.some(f => f.name === name);
 }
 
 /**

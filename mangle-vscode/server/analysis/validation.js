@@ -136,6 +136,25 @@ function validateDeclaration(decl, errors) {
                     severity: 'error',
                 });
             }
+            // E061: Well-formed bound expression checking (upstream declcheck.go:110-114)
+            // Each bound must be a well-formed type expression (a base type like /number, /string,
+            // /name, or a type constructor like fn:List, fn:Pair, etc.)
+            for (let i = 0; i < boundDecl.bounds.length; i++) {
+                const bound = boundDecl.bounds[i];
+                if (bound && bound.type === 'ApplyFn') {
+                    const applyFn = bound;
+                    const fnSym = applyFn.function.symbol;
+                    // Must be a known type constructor
+                    if (!(0, functions_1.isTypeConstructor)(fnSym)) {
+                        errors.push({
+                            code: 'E061',
+                            message: `In bound declaration: '${fnSym}' is not a valid type constructor`,
+                            range: bound.range,
+                            severity: 'error',
+                        });
+                    }
+                }
+            }
         }
     }
     // Validate doc() and arg() descriptor atoms (Feature G)
@@ -339,7 +358,16 @@ function validateClause(clause, symbolTable, errors, declaredPredicates) {
     }
     // Validate transform if present (this also binds let-variables)
     if (rewritten.transform) {
-        validateTransform(rewritten.transform, boundVars, errors, bodyVars);
+        // E048: Reject multiple transforms (upstream validation.go:720-721)
+        if (rewritten.transform.next) {
+            errors.push({
+                code: 'E048',
+                message: 'Composing multiple transforms is not supported',
+                range: rewritten.transform.next.range,
+                severity: 'error',
+            });
+        }
+        validateTransform(rewritten.transform, boundVars, errors, bodyVars, headVars);
     }
     // Check that all head variables are bound (after processing transform)
     // Upstream: uses union-find to resolve variable equivalences
@@ -664,10 +692,6 @@ const COMMON_FUNCTION_CASING_ERRORS = new Map([
     ['fn:Collect', 'fn:collect'],
     ['fn:Group_by', 'fn:group_by'],
     ['fn:GROUP_BY', 'fn:group_by'],
-    ['fn:Pair', 'fn:pair'],
-    ['fn:List', 'fn:list'],
-    ['fn:Map', 'fn:map'],
-    ['fn:Struct', 'fn:struct'],
 ]);
 /**
  * Commonly hallucinated functions that DO NOT EXIST in Mangle.
@@ -777,8 +801,17 @@ function validateApplyFn(applyFn, boundVars, errors) {
     // Check that reducer functions are only used in appropriate contexts
     // (This is a warning since context detection is imperfect here)
     if ((0, functions_1.isReducerFunction)(fnName)) {
-        // We'll mark this but the actual context check happens in transform validation
-        // Here we just note that reducers require aggregation context
+        // E060: Var-arity reducer min-args check (upstream validation.go:942-944)
+        // Variable-arity reducers like fn:collect must have at least one argument.
+        const reducerDef = (0, functions_1.getBuiltinFunction)(fnName);
+        if (reducerDef && reducerDef.arity === -1 && applyFn.args.length === 0) {
+            errors.push({
+                code: 'E060',
+                message: `Reducer function '${fnName}' expects at least one argument`,
+                range: applyFn.range,
+                severity: 'error',
+            });
+        }
     }
     // All variables in function arguments must be bound
     for (const arg of applyFn.args) {
@@ -808,7 +841,7 @@ function validateApplyFn(applyFn, boundVars, errors) {
 /**
  * Validate a transform.
  */
-function validateTransform(transform, boundVars, errors, bodyVars) {
+function validateTransform(transform, boundVars, errors, bodyVars, headVars) {
     // E043: Check transform doesn't redefine body variables
     if (bodyVars) {
         let checkTransform = transform;
@@ -945,6 +978,63 @@ function validateTransform(transform, boundVars, errors, bodyVars) {
             }
         }
         current = current.next;
+    }
+    // E049: Head variable vs group_by completeness check (upstream validation.go:750-758)
+    // After group_by, all head variables must be in group_by key or defined by transform let-statements.
+    if (hasGroupBy && headVars) {
+        const groupByVarSet = new Set();
+        const transformDefSet = new Set();
+        // Collect group_by vars
+        for (const stmt of transform.statements) {
+            if (stmt.variable === null && stmt.fn.function.symbol === 'fn:group_by') {
+                for (const arg of stmt.fn.args) {
+                    if (arg.type === 'Variable') {
+                        groupByVarSet.add(arg.symbol);
+                    }
+                }
+            }
+            // Collect transform-defined variables
+            if (stmt.variable && stmt.variable.symbol !== '_') {
+                transformDefSet.add(stmt.variable.symbol);
+            }
+        }
+        for (const v of headVars) {
+            if (v === '_')
+                continue;
+            if (groupByVarSet.has(v))
+                continue;
+            if (transformDefSet.has(v))
+                continue;
+            errors.push({
+                code: 'E049',
+                message: `Head variable '${v}' is neither part of group_by nor defined in the transform`,
+                range: transform.range,
+                severity: 'error',
+            });
+        }
+    }
+    // E050: Reducer in let-transform rejection (upstream validation.go:761-768)
+    // A let-transform is one where the first statement has a variable (not a do-statement).
+    // Reducer functions are not allowed in let-transforms.
+    if (!hasGroupBy && transform.statements.length > 0 && transform.statements[0].variable !== null) {
+        for (const stmt of transform.statements.slice(1)) {
+            if (stmt.variable === null) {
+                errors.push({
+                    code: 'E050',
+                    message: 'All statements in a let-transform must be let-statements',
+                    range: stmt.fn.range,
+                    severity: 'error',
+                });
+            }
+            else if ((0, functions_1.isReducerFunction)(stmt.fn.function.symbol)) {
+                errors.push({
+                    code: 'E050',
+                    message: `Reducer function '${stmt.fn.function.symbol}' is not allowed in a let-transform`,
+                    range: stmt.fn.range,
+                    severity: 'error',
+                });
+            }
+        }
     }
 }
 /**

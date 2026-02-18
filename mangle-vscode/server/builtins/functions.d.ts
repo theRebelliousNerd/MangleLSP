@@ -25,6 +25,15 @@ export declare const BUILTIN_FUNCTIONS: BuiltinFunction[];
  */
 export declare const REDUCER_FUNCTIONS: BuiltinFunction[];
 /**
+ * Type constructor functions (used in bound declarations and type expressions).
+ *
+ * These are uppercase type-level constructors from upstream symbols/symbols.go (lines 205-310).
+ * They differ from their lowercase runtime counterparts:
+ * - fn:pair(X, Y) constructs a runtime pair value
+ * - fn:Pair(T1, T2) constructs a pair TYPE (used in bound [...] declarations)
+ */
+export declare const TYPE_CONSTRUCTOR_FUNCTIONS: BuiltinFunction[];
+/**
  * All built-in functions (both regular and reducer).
  */
 export declare const ALL_BUILTIN_FUNCTIONS: BuiltinFunction[];
@@ -36,6 +45,10 @@ export declare const BUILTIN_FUNCTION_MAP: Map<string, BuiltinFunction>;
  * Check if a function name is a built-in function.
  */
 export declare function isBuiltinFunction(name: string): boolean;
+/**
+ * Check if a function name is a type constructor (uppercase, used in bound declarations).
+ */
+export declare function isTypeConstructor(name: string): boolean;
 /**
  * Check if a function name is a reducer function.
  */
