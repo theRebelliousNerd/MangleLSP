@@ -87,24 +87,6 @@ const FIELD_SELECTOR_PREDICATES = new Set([
 ]);
 
 /**
- * Reducer functions that can only appear in transforms.
- */
-const REDUCER_FUNCTIONS = new Set([
-    'fn:sum',
-    'fn:count',
-    'fn:max',
-    'fn:min',
-    'fn:avg',
-    'fn:collect',
-    'fn:collect_distinct',
-    'fn:collect_to_map',
-    'fn:pick_any',
-    'fn:float:sum',
-    'fn:float:max',
-    'fn:float:min',
-]);
-
-/**
  * Valid string escape sequences.
  */
 const VALID_ESCAPES = new Set(['n', 't', 'r', '\\', '"', "'"]);
@@ -923,7 +905,7 @@ function validateApplyFn(
 
     // Check that reducer functions are only used in appropriate contexts
     // (This is a warning since context detection is imperfect here)
-    if (REDUCER_FUNCTIONS.has(fnName)) {
+    if (isReducerFunction(fnName)) {
         // We'll mark this but the actual context check happens in transform validation
         // Here we just note that reducers require aggregation context
     }
@@ -1089,10 +1071,10 @@ function validateTransform(
                     }
                 }
 
-                if (hasGroupBy && !fnName.startsWith('fn:')) {
+                if (hasGroupBy && !isReducerFunction(fnName) && fnName !== 'fn:group_by') {
                     errors.push({
                         code: 'E013',
-                        message: `Function '${fnName}' in let-statement must be a built-in function (fn:...)`,
+                        message: `Function '${fnName}' is not a reducer function; after group_by, use a reducer (e.g. fn:sum, fn:collect, fn:max)`,
                         range: stmt.fn.range,
                         severity: 'warning',
                     });

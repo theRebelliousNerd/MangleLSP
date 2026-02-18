@@ -367,13 +367,13 @@ describe('Validation Module', () => {
             expectError('Decl foo(X) descr [external()].', 'E026');
         });
 
-        // TODO: Grammar doesn't support +/- as descriptor arguments
-        it.todo('should error when external predicate has multiple modes', () => {
-            expectError('Decl foo(X) descr [external(), mode(+), mode(-)].', 'E026');
+        it('should error when external predicate has multiple modes', () => {
+            // Upstream uses string literals for mode args: mode('+'), mode('-')
+            expectError("Decl foo(X) descr [external(), mode('+'), mode('-')].", 'E026');
         });
 
         it('should allow external predicate with exactly one mode', () => {
-            expectNoErrors('Decl foo(X) descr [external(), mode(+)].');
+            expectNoErrors("Decl foo(X) descr [external(), mode('+')].");
         });
     });
 
@@ -1081,15 +1081,10 @@ describe('Validation Module', () => {
     });
 
     describe('E013: Let statement function validation', () => {
-        // Note: The current validation implementation checks if the function starts with 'fn:'
-        // rather than checking if it's actually a reducer. Tests reflect actual behavior.
-        // TODO: E013 currently only checks for fn: prefix, not actual reducer status
-        it.todo('should warn when non-reducer used after group_by', () => {
-            // This test documents expected behavior that is not yet implemented.
-            // The validation currently only checks for fn: prefix, not reducer status.
+        it('should warn when non-reducer used after group_by', () => {
+            // fn:plus is not a reducer, so after group_by it should warn
             const parseResult = parse('result(Y) :- input(X) |> do fn:group_by(), let Y = fn:plus(X, 1).');
             const result = validate(parseResult.unit!);
-            // fn:plus is not a reducer, so after group_by it should warn
             const warning = result.errors.find(e => e.code === 'E013' && e.severity === 'warning');
             expect(warning).toBeDefined();
         });
@@ -1101,9 +1096,9 @@ describe('Validation Module', () => {
             expect(e013).toHaveLength(0);
         });
 
-        it('should not warn when any fn: function used after group_by', () => {
-            // Current behavior: any fn: function is accepted
-            const parseResult = parse('result(Y) :- input(X) |> do fn:group_by(), let Y = fn:plus(X, 1).');
+        it('should not warn when another reducer fn: function used after group_by', () => {
+            // Reducer functions like fn:collect should not trigger E013
+            const parseResult = parse('result(Y) :- input(X) |> do fn:group_by(), let Y = fn:collect(X).');
             const result = validate(parseResult.unit!);
             const e013 = result.errors.filter(e => e.code === 'E013');
             expect(e013).toHaveLength(0);
@@ -1393,25 +1388,33 @@ describe('Validation Module', () => {
 
     describe('E047: Non-reducer functions after group_by', () => {
         it('should allow normal function using group_by key variables', () => {
-            // fn:plus uses G which is a group_by key - this is OK
+            // fn:plus uses G which is a group_by key - this is OK for scoping (E047)
+            // Note: E013 warning is expected since fn:plus is not a reducer
             const source = `
                 result(G, V) :- data(G, X)
                     |> do fn:group_by(G),
                        let S = fn:sum(X),
                        let V = fn:plus(G, S).
             `;
-            expectNoErrors(source);
+            const parseResult = parse(source);
+            const result = validate(parseResult.unit!);
+            const e047 = result.errors.filter(e => e.code === 'E047');
+            expect(e047).toHaveLength(0);
         });
 
         it('should allow normal function using earlier transform-defined variables', () => {
             // fn:mult uses S which was defined by an earlier let statement
+            // Note: E013 warning is expected since fn:mult is not a reducer
             const source = `
                 result(V) :- data(X)
                     |> do fn:group_by(),
                        let S = fn:sum(X),
                        let V = fn:mult(S, 2).
             `;
-            expectNoErrors(source);
+            const parseResult = parse(source);
+            const result = validate(parseResult.unit!);
+            const e047 = result.errors.filter(e => e.code === 'E047');
+            expect(e047).toHaveLength(0);
         });
 
         it('should error when normal function uses body-only variable after group_by', () => {

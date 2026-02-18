@@ -40039,20 +40039,6 @@ var require_validation = __commonJS({
       ":match_field",
       ":match_entry"
     ]);
-    var REDUCER_FUNCTIONS = /* @__PURE__ */ new Set([
-      "fn:sum",
-      "fn:count",
-      "fn:max",
-      "fn:min",
-      "fn:avg",
-      "fn:collect",
-      "fn:collect_distinct",
-      "fn:collect_to_map",
-      "fn:pick_any",
-      "fn:float:sum",
-      "fn:float:max",
-      "fn:float:min"
-    ]);
     var VALID_ESCAPES = /* @__PURE__ */ new Set(["n", "t", "r", "\\", '"', "'"]);
     function validate(unit) {
       const errors = [];
@@ -40675,7 +40661,7 @@ var require_validation = __commonJS({
           }
         }
       }
-      if (REDUCER_FUNCTIONS.has(fnName)) {
+      if ((0, functions_1.isReducerFunction)(fnName)) {
       }
       for (const arg of applyFn.args) {
         const argVars = /* @__PURE__ */ new Set();
@@ -40807,10 +40793,10 @@ var require_validation = __commonJS({
                 }
               }
             }
-            if (hasGroupBy && !fnName.startsWith("fn:")) {
+            if (hasGroupBy && !(0, functions_1.isReducerFunction)(fnName) && fnName !== "fn:group_by") {
               errors.push({
                 code: "E013",
-                message: `Function '${fnName}' in let-statement must be a built-in function (fn:...)`,
+                message: `Function '${fnName}' is not a reducer function; after group_by, use a reducer (e.g. fn:sum, fn:collect, fn:max)`,
                 range: stmt.fn.range,
                 severity: "warning"
               });
