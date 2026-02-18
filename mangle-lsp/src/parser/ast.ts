@@ -710,6 +710,22 @@ export function isTemporalLiteral(term: Term): term is TemporalLiteral {
 }
 
 /**
+ * Check if a term is a temporal atom.
+ */
+export function isTemporalAtom(term: Term): term is TemporalAtom {
+    return 'type' in term && term.type === 'TemporalAtom';
+}
+
+/**
+ * Check if a temporal interval is "eternal" (unbounded past to unbounded future).
+ * Matches upstream Go Interval.IsEternal().
+ */
+export function isEternalInterval(interval: TemporalInterval): boolean {
+    return interval.start.boundType === 'negativeInfinity' &&
+           interval.end.boundType === 'positiveInfinity';
+}
+
+/**
  * Check if a declaration has the external() descriptor.
  */
 export function isDeclExternal(decl: Decl): boolean {
@@ -952,11 +968,23 @@ export function termToString(term: Term): string {
     }
 
     if (isTemporalLiteral(term)) {
-        const inner = termToString(term.literal);
+        let result = '';
         if (term.operator) {
-            return `${term.operator.operatorType}(${inner})`;
+            result += temporalOperatorToString(term.operator) + ' ';
         }
-        return inner;
+        result += termToString(term.literal);
+        if (term.interval && !isEternalInterval(term.interval)) {
+            result += temporalIntervalToString(term.interval);
+        }
+        return result;
+    }
+
+    if (isTemporalAtom(term)) {
+        let result = termToString(term.atom);
+        if (term.interval && !isEternalInterval(term.interval)) {
+            result += temporalIntervalToString(term.interval);
+        }
+        return result;
     }
 
     if (isApplyFn(term)) {
@@ -984,7 +1012,12 @@ export function termToString(term: Term): string {
  * Get string representation of a clause.
  */
 export function clauseToString(clause: Clause): string {
-    const head = termToString(clause.head);
+    let head = termToString(clause.head);
+
+    // Append temporal annotation on head if present
+    if (clause.headTime && !isEternalInterval(clause.headTime)) {
+        head += temporalIntervalToString(clause.headTime);
+    }
 
     if (!clause.premises) {
         return `${head}.`;
@@ -1012,4 +1045,101 @@ export function clauseToString(clause: Clause): string {
     }
 
     return `${head} :- ${premises} |> ${transformParts.join(' |> ')}.`;
+}
+
+// ============================================================================
+// Temporal String Helpers
+// ============================================================================
+
+/**
+ * Map temporal operator type to its syntax symbol.
+ */
+const TEMPORAL_OP_SYMBOLS: Record<TemporalOperatorType, string> = {
+    'diamondMinus': '<-',
+    'diamondPlus': '<+',
+    'boxMinus': '[-',
+    'boxPlus': '[+',
+};
+
+/**
+ * Format a temporal bound to string.
+ * Matches upstream Go TemporalBound.String().
+ */
+export function temporalBoundToString(bound: TemporalBound): string {
+    switch (bound.boundType) {
+        case 'variable':
+            return bound.variable?.symbol ?? '_';
+        case 'negativeInfinity':
+        case 'positiveInfinity':
+            return '_';
+        case 'now':
+            return 'now';
+        case 'timestamp':
+            if (bound.rawText) return bound.rawText;
+            // Format nanos as ISO 8601 if possible
+            if (bound.value !== undefined) {
+                const ms = bound.value / 1_000_000;
+                return new Date(ms).toISOString();
+            }
+            return '?';
+        case 'duration':
+            if (bound.rawText) return bound.rawText;
+            if (bound.value !== undefined) {
+                return formatDurationNanos(bound.value);
+            }
+            return '?';
+        default:
+            return '?';
+    }
+}
+
+/**
+ * Format nanosecond duration to human-readable string.
+ */
+function formatDurationNanos(nanos: number): string {
+    const ms = 1_000_000;
+    const sec = 1_000_000_000;
+    const min = sec * 60;
+    const hour = min * 60;
+    const day = hour * 24;
+
+    if (nanos === 0) return '0s';
+    if (nanos % day === 0) return `${nanos / day}d`;
+    if (nanos % hour === 0) return `${nanos / hour}h`;
+    if (nanos % min === 0) return `${nanos / min}m`;
+    if (nanos % sec === 0) return `${nanos / sec}s`;
+    if (nanos % ms === 0) return `${nanos / ms}ms`;
+    return `${nanos}ns`;
+}
+
+/**
+ * Format a temporal interval to string (the @[start, end] annotation).
+ * Matches upstream Go Interval.String().
+ */
+export function temporalIntervalToString(interval: TemporalInterval): string {
+    if (isEternalInterval(interval)) return '';
+
+    const startStr = temporalBoundToString(interval.start);
+    const endStr = temporalBoundToString(interval.end);
+
+    // Point interval: start == end => @[T]
+    if (startStr === endStr) {
+        return `@[${startStr}]`;
+    }
+
+    return `@[${startStr}, ${endStr}]`;
+}
+
+/**
+ * Format a temporal operator to string (e.g., <-[0, 5d]).
+ * Matches upstream Go TemporalOperator.String().
+ */
+export function temporalOperatorToString(op: TemporalOperator): string {
+    const symbol = TEMPORAL_OP_SYMBOLS[op.operatorType];
+    if (op.interval) {
+        const startStr = temporalBoundToString(op.interval.start);
+        const endStr = temporalBoundToString(op.interval.end);
+        return `${symbol}[${startStr}, ${endStr}]`;
+    }
+    return symbol;
 }

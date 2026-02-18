@@ -39,6 +39,8 @@ exports.isAtom = isAtom;
 exports.isNegAtom = isNegAtom;
 exports.isApplyFn = isApplyFn;
 exports.isTemporalLiteral = isTemporalLiteral;
+exports.isTemporalAtom = isTemporalAtom;
+exports.isEternalInterval = isEternalInterval;
 exports.isDeclExternal = isDeclExternal;
 exports.isDeclTemporal = isDeclTemporal;
 exports.isDeclMaybeTemporal = isDeclMaybeTemporal;
@@ -52,6 +54,9 @@ exports.collectVariables = collectVariables;
 exports.collectClauseVariables = collectClauseVariables;
 exports.termToString = termToString;
 exports.clauseToString = clauseToString;
+exports.temporalBoundToString = temporalBoundToString;
+exports.temporalIntervalToString = temporalIntervalToString;
+exports.temporalOperatorToString = temporalOperatorToString;
 /**
  * Create a zero-width range at a position.
  */
@@ -286,6 +291,20 @@ function isTemporalLiteral(term) {
     return 'type' in term && term.type === 'TemporalLiteral';
 }
 /**
+ * Check if a term is a temporal atom.
+ */
+function isTemporalAtom(term) {
+    return 'type' in term && term.type === 'TemporalAtom';
+}
+/**
+ * Check if a temporal interval is "eternal" (unbounded past to unbounded future).
+ * Matches upstream Go Interval.IsEternal().
+ */
+function isEternalInterval(interval) {
+    return interval.start.boundType === 'negativeInfinity' &&
+        interval.end.boundType === 'positiveInfinity';
+}
+/**
  * Check if a declaration has the external() descriptor.
  */
 function isDeclExternal(decl) {
@@ -511,11 +530,22 @@ function termToString(term) {
         return `!${termToString(term.atom)}`;
     }
     if (isTemporalLiteral(term)) {
-        const inner = termToString(term.literal);
+        let result = '';
         if (term.operator) {
-            return `${term.operator.operatorType}(${inner})`;
+            result += temporalOperatorToString(term.operator) + ' ';
         }
-        return inner;
+        result += termToString(term.literal);
+        if (term.interval && !isEternalInterval(term.interval)) {
+            result += temporalIntervalToString(term.interval);
+        }
+        return result;
+    }
+    if (isTemporalAtom(term)) {
+        let result = termToString(term.atom);
+        if (term.interval && !isEternalInterval(term.interval)) {
+            result += temporalIntervalToString(term.interval);
+        }
+        return result;
     }
     if (isApplyFn(term)) {
         const args = term.args.map(termToString).join(', ');
@@ -539,7 +569,11 @@ function termToString(term) {
  * Get string representation of a clause.
  */
 function clauseToString(clause) {
-    const head = termToString(clause.head);
+    let head = termToString(clause.head);
+    // Append temporal annotation on head if present
+    if (clause.headTime && !isEternalInterval(clause.headTime)) {
+        head += temporalIntervalToString(clause.headTime);
+    }
     if (!clause.premises) {
         return `${head}.`;
     }
@@ -563,5 +597,101 @@ function clauseToString(clause) {
         transform = transform.next;
     }
     return `${head} :- ${premises} |> ${transformParts.join(' |> ')}.`;
+}
+// ============================================================================
+// Temporal String Helpers
+// ============================================================================
+/**
+ * Map temporal operator type to its syntax symbol.
+ */
+const TEMPORAL_OP_SYMBOLS = {
+    'diamondMinus': '<-',
+    'diamondPlus': '<+',
+    'boxMinus': '[-',
+    'boxPlus': '[+',
+};
+/**
+ * Format a temporal bound to string.
+ * Matches upstream Go TemporalBound.String().
+ */
+function temporalBoundToString(bound) {
+    switch (bound.boundType) {
+        case 'variable':
+            return bound.variable?.symbol ?? '_';
+        case 'negativeInfinity':
+        case 'positiveInfinity':
+            return '_';
+        case 'now':
+            return 'now';
+        case 'timestamp':
+            if (bound.rawText)
+                return bound.rawText;
+            // Format nanos as ISO 8601 if possible
+            if (bound.value !== undefined) {
+                const ms = bound.value / 1000000;
+                return new Date(ms).toISOString();
+            }
+            return '?';
+        case 'duration':
+            if (bound.rawText)
+                return bound.rawText;
+            if (bound.value !== undefined) {
+                return formatDurationNanos(bound.value);
+            }
+            return '?';
+        default:
+            return '?';
+    }
+}
+/**
+ * Format nanosecond duration to human-readable string.
+ */
+function formatDurationNanos(nanos) {
+    const ms = 1000000;
+    const sec = 1000000000;
+    const min = sec * 60;
+    const hour = min * 60;
+    const day = hour * 24;
+    if (nanos === 0)
+        return '0s';
+    if (nanos % day === 0)
+        return `${nanos / day}d`;
+    if (nanos % hour === 0)
+        return `${nanos / hour}h`;
+    if (nanos % min === 0)
+        return `${nanos / min}m`;
+    if (nanos % sec === 0)
+        return `${nanos / sec}s`;
+    if (nanos % ms === 0)
+        return `${nanos / ms}ms`;
+    return `${nanos}ns`;
+}
+/**
+ * Format a temporal interval to string (the @[start, end] annotation).
+ * Matches upstream Go Interval.String().
+ */
+function temporalIntervalToString(interval) {
+    if (isEternalInterval(interval))
+        return '';
+    const startStr = temporalBoundToString(interval.start);
+    const endStr = temporalBoundToString(interval.end);
+    // Point interval: start == end => @[T]
+    if (startStr === endStr) {
+        return `@[${startStr}]`;
+    }
+    return `@[${startStr}, ${endStr}]`;
+}
+/**
+ * Format a temporal operator to string (e.g., <-[0, 5d]).
+ * Matches upstream Go TemporalOperator.String().
+ */
+function temporalOperatorToString(op) {
+    const symbol = TEMPORAL_OP_SYMBOLS[op.operatorType];
+    if (op.interval) {
+        const startStr = temporalBoundToString(op.interval.start);
+        const endStr = temporalBoundToString(op.interval.end);
+        return `${symbol}[${startStr}, ${endStr}]`;
+    }
+    return symbol;
 }
 //# sourceMappingURL=ast.js.map

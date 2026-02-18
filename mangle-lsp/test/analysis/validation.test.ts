@@ -182,8 +182,7 @@ describe('Validation Module', () => {
             expectError('foo(X) :- bar(X), :match_cons(X).', 'E006');
         });
 
-        // TODO: Parser may not handle extra arguments in some predicates correctly
-        it.todo('should error when built-in has too many args', () => {
+        it('should error when built-in has too many args', () => {
             // Note: :lt expects 2 args, but this has 3
             expectError('foo(X) :- bar(X), bar(Y), bar(Z), :lt(X, Y, Z).', 'E006');
         });
@@ -205,12 +204,11 @@ describe('Validation Module', () => {
     });
 
     describe('E008: Unknown built-in functions', () => {
-        // TODO: Function validation in equality contexts not fully implemented
-        it.todo('should error on unknown function', () => {
+        it('should error on unknown function', () => {
             expectError('result(Y) :- input(X), Y = fn:unknown(1, 2).', 'E008');
         });
 
-        it.todo('should error on misspelled function', () => {
+        it('should error on misspelled function', () => {
             expectError('result(Y) :- input(X), Y = fn:plu(1, 2).', 'E008');
         });
 
@@ -220,13 +218,12 @@ describe('Validation Module', () => {
     });
 
     describe('E009: Built-in function arity mismatch', () => {
-        // TODO: Function arity validation in equality contexts not fully implemented
-        it.todo('should error when function has wrong arity', () => {
+        it('should error when function has wrong arity', () => {
             // fn:sqrt expects 1 argument
             expectError('result(Y) :- input(X), Y = fn:sqrt(1, 2).', 'E009');
         });
 
-        it.todo('should error when function has too many args', () => {
+        it('should error when function has too many args', () => {
             // fn:sqrt expects 1 argument
             expectError('result(Y) :- input(X), Y = fn:sqrt(X, Y, Z).', 'E009');
         });
@@ -288,20 +285,19 @@ describe('Validation Module', () => {
     });
 
     describe('E018: Function name casing errors', () => {
-        // TODO: Function name validation in all contexts not fully implemented
-        it.todo('should error on capitalized Sum', () => {
+        it('should error on capitalized Sum', () => {
             expectError('sum(S) :- values(X) |> do fn:group_by(), let S = fn:Sum(X).', 'E018');
         });
 
-        it.todo('should error on capitalized Count', () => {
+        it('should error on capitalized Count', () => {
             expectError('count(C) :- values(X) |> do fn:group_by(), let C = fn:Count().', 'E018');
         });
 
-        it.todo('should error on capitalized Plus', () => {
+        it('should error on capitalized Plus', () => {
             expectError('result(Y) :- input(X), Y = fn:Plus(1, 2).', 'E018');
         });
 
-        it.todo('should suggest correct casing', () => {
+        it('should suggest correct casing', () => {
             const parseResult = parse('result(Y) :- input(X), Y = fn:Sum(1, 2).');
             const result = validate(parseResult.unit!);
             const error = result.errors.find(e => e.code === 'E018');
@@ -311,20 +307,19 @@ describe('Validation Module', () => {
     });
 
     describe('E020: Hallucinated functions', () => {
-        // TODO: Hallucination detection in equality contexts not fully implemented
-        it.todo('should error on non-existent fn:substring', () => {
+        it('should error on non-existent fn:substring', () => {
             expectError('result(Y) :- input(X), Y = fn:substring("hello", 0, 2).', 'E020');
         });
 
-        it.todo('should error on non-existent fn:contains', () => {
+        it('should error on non-existent fn:contains', () => {
             expectError('result(Y) :- input(X), Y = fn:contains(X, "test").', 'E020');
         });
 
-        it.todo('should error on non-existent fn:split', () => {
+        it('should error on non-existent fn:split', () => {
             expectError('result(Y) :- input(X), Y = fn:split("a,b", ",").', 'E020');
         });
 
-        it.todo('should provide helpful suggestion', () => {
+        it('should provide helpful suggestion', () => {
             const parseResult = parse('result(Y) :- input(X), Y = fn:contains("test").');
             const result = validate(parseResult.unit!);
             const error = result.errors.find(e => e.code === 'E020');
@@ -372,7 +367,7 @@ describe('Validation Module', () => {
             expectError('Decl foo(X) descr [external()].', 'E026');
         });
 
-        // TODO: Multiple mode detection not fully implemented
+        // TODO: Grammar doesn't support +/- as descriptor arguments
         it.todo('should error when external predicate has multiple modes', () => {
             expectError('Decl foo(X) descr [external(), mode(+), mode(-)].', 'E026');
         });
@@ -383,13 +378,12 @@ describe('Validation Module', () => {
     });
 
     describe('E027: Struct and map require even arguments', () => {
-        // TODO: Even argument validation in equality contexts not fully implemented
-        it.todo('should error when fn:struct has odd number of arguments', () => {
+        it('should error when fn:struct has odd number of arguments', () => {
             // Using fn:struct directly to test
             expectError('result(Y) :- input(X), Y = fn:struct(/a, 1, /b).', 'E027');
         });
 
-        it.todo('should error when fn:map has odd number of arguments', () => {
+        it('should error when fn:map has odd number of arguments', () => {
             // Using fn:map directly to test
             expectError('result(Y) :- input(X), Y = fn:map(/a, 1, /b).', 'E027');
         });
@@ -426,13 +420,13 @@ describe('Validation Module', () => {
     });
 
     describe('E031: Package names must be lowercase', () => {
-        // TODO: Package name case validation not fully implemented
-        it.todo('should error on uppercase package name', () => {
-            expectError('Decl Package(X) descr [name("MyPackage")].', 'E031');
+        it('should error on uppercase package name', () => {
+            // Note: Mangle predicate names start with lowercase letter
+            expectError('Decl mypackage(X) descr [name("MyPackage")].', 'E031');
         });
 
-        it.todo('should error on mixed case package name', () => {
-            expectError('Decl Package(X) descr [name("myPackage")].', 'E031');
+        it('should error on mixed case package name', () => {
+            expectError('Decl mypackage(X) descr [name("myPackage")].', 'E031');
         });
 
         it('should allow lowercase package name', () => {
@@ -441,7 +435,7 @@ describe('Validation Module', () => {
     });
 
     describe('E032: Name constant validation', () => {
-        // TODO: Name constant validation in equality contexts not fully implemented
+        // TODO: Parser treats // as comment start, /a/b/ and / don't parse as name constants
         it.todo('should error on name with empty part (double slash)', () => {
             // Parser may handle this, so test in a rule context
             expectError('result(Y) :- input(X), Y = /a//b.', 'E032');
@@ -501,12 +495,11 @@ describe('Validation Module', () => {
     });
 
     describe('E035: Division by zero', () => {
-        // TODO: Division by zero detection in equality contexts not fully implemented
-        it.todo('should error when dividing by constant zero', () => {
+        it('should error when dividing by constant zero', () => {
             expectError('result(Y) :- input(X), Y = fn:div(10, 0).', 'E035');
         });
 
-        it.todo('should error when dividing by float zero', () => {
+        it('should error when dividing by float zero', () => {
             expectError('result(Y) :- input(X), Y = fn:float:div(10.0, 0.0).', 'E035');
         });
 
@@ -548,7 +541,7 @@ describe('Validation Module', () => {
     });
 
     describe('E038: Invalid string escape sequences', () => {
-        // TODO: String escape validation causes parse errors, need better error recovery
+        // TODO: Invalid escape sequences cause parse errors or null args in the AST
         it.todo('should error on invalid escape sequence', () => {
             expectError('result(Y) :- input(X), Y = "hello\\qworld".', 'E038');
         });
@@ -584,8 +577,7 @@ describe('Validation Module', () => {
     });
 
     describe('E040: Predicate arity suggestions', () => {
-        // TODO: Arity mismatch detection not fully implemented
-        it.todo('should error when predicate called with wrong arity', () => {
+        it('should error when predicate called with wrong arity', () => {
             const source = `
                 parent(/alice, /bob).
                 foo(X, Y, Z) :- parent(X, Y, Z).
@@ -593,7 +585,7 @@ describe('Validation Module', () => {
             expectError(source, 'E040');
         });
 
-        it.todo('should suggest available arities', () => {
+        it('should suggest available arities', () => {
             const source = `
                 parent(/alice, /bob).
                 foo(X, Y, Z) :- parent(X, Y, Z).
@@ -680,7 +672,7 @@ describe('Validation Module', () => {
     });
 
     describe('E045: Transform without body', () => {
-        // TODO: Transform parsing without body may cause parse errors
+        // TODO: Parser doesn't parse fact + transform correctly (foo(/a) |> ...)
         it.todo('should error when fact with constants has transform', () => {
             // This tests a fact (no body) with a transform
             expectError('foo(/a) |> let X = fn:plus(1, 2).', 'E045');
@@ -1091,6 +1083,7 @@ describe('Validation Module', () => {
     describe('E013: Let statement function validation', () => {
         // Note: The current validation implementation checks if the function starts with 'fn:'
         // rather than checking if it's actually a reducer. Tests reflect actual behavior.
+        // TODO: E013 currently only checks for fn: prefix, not actual reducer status
         it.todo('should warn when non-reducer used after group_by', () => {
             // This test documents expected behavior that is not yet implemented.
             // The validation currently only checks for fn: prefix, not reducer status.

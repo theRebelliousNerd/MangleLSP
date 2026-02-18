@@ -469,6 +469,15 @@ export declare function isApplyFn(term: Term): term is ApplyFn;
  */
 export declare function isTemporalLiteral(term: Term): term is TemporalLiteral;
 /**
+ * Check if a term is a temporal atom.
+ */
+export declare function isTemporalAtom(term: Term): term is TemporalAtom;
+/**
+ * Check if a temporal interval is "eternal" (unbounded past to unbounded future).
+ * Matches upstream Go Interval.IsEternal().
+ */
+export declare function isEternalInterval(interval: TemporalInterval): boolean;
+/**
  * Check if a declaration has the external() descriptor.
  */
 export declare function isDeclExternal(decl: Decl): boolean;
@@ -556,4 +565,19 @@ export declare function termToString(term: Term): string;
  * Get string representation of a clause.
  */
 export declare function clauseToString(clause: Clause): string;
+/**
+ * Format a temporal bound to string.
+ * Matches upstream Go TemporalBound.String().
+ */
+export declare function temporalBoundToString(bound: TemporalBound): string;
+/**
+ * Format a temporal interval to string (the @[start, end] annotation).
+ * Matches upstream Go Interval.String().
+ */
+export declare function temporalIntervalToString(interval: TemporalInterval): string;
+/**
+ * Format a temporal operator to string (e.g., <-[0, 5d]).
+ * Matches upstream Go TemporalOperator.String().
+ */
+export declare function temporalOperatorToString(op: TemporalOperator): string;
 //# sourceMappingURL=ast.d.ts.map

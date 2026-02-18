@@ -9144,6 +9144,8 @@ var require_ast = __commonJS({
     exports2.isNegAtom = isNegAtom;
     exports2.isApplyFn = isApplyFn;
     exports2.isTemporalLiteral = isTemporalLiteral;
+    exports2.isTemporalAtom = isTemporalAtom;
+    exports2.isEternalInterval = isEternalInterval;
     exports2.isDeclExternal = isDeclExternal;
     exports2.isDeclTemporal = isDeclTemporal;
     exports2.isDeclMaybeTemporal = isDeclMaybeTemporal;
@@ -9157,6 +9159,9 @@ var require_ast = __commonJS({
     exports2.collectClauseVariables = collectClauseVariables;
     exports2.termToString = termToString;
     exports2.clauseToString = clauseToString;
+    exports2.temporalBoundToString = temporalBoundToString;
+    exports2.temporalIntervalToString = temporalIntervalToString;
+    exports2.temporalOperatorToString = temporalOperatorToString;
     function pointRange(pos) {
       return { start: pos, end: pos };
     }
@@ -9280,6 +9285,12 @@ var require_ast = __commonJS({
     }
     function isTemporalLiteral(term) {
       return "type" in term && term.type === "TemporalLiteral";
+    }
+    function isTemporalAtom(term) {
+      return "type" in term && term.type === "TemporalAtom";
+    }
+    function isEternalInterval(interval) {
+      return interval.start.boundType === "negativeInfinity" && interval.end.boundType === "positiveInfinity";
     }
     function isDeclExternal(decl) {
       return decl.descr?.some((d) => d.predicate.symbol === exports2.DESCRIPTORS.EXTERNAL) ?? false;
@@ -9446,11 +9457,22 @@ var require_ast = __commonJS({
         return `!${termToString(term.atom)}`;
       }
       if (isTemporalLiteral(term)) {
-        const inner = termToString(term.literal);
+        let result = "";
         if (term.operator) {
-          return `${term.operator.operatorType}(${inner})`;
+          result += temporalOperatorToString(term.operator) + " ";
         }
-        return inner;
+        result += termToString(term.literal);
+        if (term.interval && !isEternalInterval(term.interval)) {
+          result += temporalIntervalToString(term.interval);
+        }
+        return result;
+      }
+      if (isTemporalAtom(term)) {
+        let result = termToString(term.atom);
+        if (term.interval && !isEternalInterval(term.interval)) {
+          result += temporalIntervalToString(term.interval);
+        }
+        return result;
       }
       if (isApplyFn(term)) {
         const args = term.args.map(termToString).join(", ");
@@ -9477,7 +9499,10 @@ var require_ast = __commonJS({
       return "?";
     }
     function clauseToString(clause) {
-      const head = termToString(clause.head);
+      let head = termToString(clause.head);
+      if (clause.headTime && !isEternalInterval(clause.headTime)) {
+        head += temporalIntervalToString(clause.headTime);
+      }
       if (!clause.premises) {
         return `${head}.`;
       }
@@ -9499,6 +9524,79 @@ var require_ast = __commonJS({
         transform = transform.next;
       }
       return `${head} :- ${premises} |> ${transformParts.join(" |> ")}.`;
+    }
+    var TEMPORAL_OP_SYMBOLS = {
+      "diamondMinus": "<-",
+      "diamondPlus": "<+",
+      "boxMinus": "[-",
+      "boxPlus": "[+"
+    };
+    function temporalBoundToString(bound) {
+      switch (bound.boundType) {
+        case "variable":
+          return bound.variable?.symbol ?? "_";
+        case "negativeInfinity":
+        case "positiveInfinity":
+          return "_";
+        case "now":
+          return "now";
+        case "timestamp":
+          if (bound.rawText)
+            return bound.rawText;
+          if (bound.value !== void 0) {
+            const ms = bound.value / 1e6;
+            return new Date(ms).toISOString();
+          }
+          return "?";
+        case "duration":
+          if (bound.rawText)
+            return bound.rawText;
+          if (bound.value !== void 0) {
+            return formatDurationNanos(bound.value);
+          }
+          return "?";
+        default:
+          return "?";
+      }
+    }
+    function formatDurationNanos(nanos) {
+      const ms = 1e6;
+      const sec = 1e9;
+      const min = sec * 60;
+      const hour = min * 60;
+      const day = hour * 24;
+      if (nanos === 0)
+        return "0s";
+      if (nanos % day === 0)
+        return `${nanos / day}d`;
+      if (nanos % hour === 0)
+        return `${nanos / hour}h`;
+      if (nanos % min === 0)
+        return `${nanos / min}m`;
+      if (nanos % sec === 0)
+        return `${nanos / sec}s`;
+      if (nanos % ms === 0)
+        return `${nanos / ms}ms`;
+      return `${nanos}ns`;
+    }
+    function temporalIntervalToString(interval) {
+      if (isEternalInterval(interval))
+        return "";
+      const startStr = temporalBoundToString(interval.start);
+      const endStr = temporalBoundToString(interval.end);
+      if (startStr === endStr) {
+        return `@[${startStr}]`;
+      }
+      return `@[${startStr}, ${endStr}]`;
+    }
+    function temporalOperatorToString(op) {
+      const symbol = TEMPORAL_OP_SYMBOLS[op.operatorType];
+      if (op.interval) {
+        const startStr = temporalBoundToString(op.interval.start);
+        const endStr = temporalBoundToString(op.interval.end);
+        return `${symbol}[${startStr}, ${endStr}]`;
+      }
+      return symbol;
     }
   }
 });
@@ -39976,7 +40074,32 @@ var require_validation = __commonJS({
         validateDeclaration(decl, errors);
       }
       for (const clause of unit.clauses) {
-        validateClause(clause, symbolTable, errors);
+        validateClause(clause, symbolTable, errors, declaredPredicates);
+      }
+      for (const clause of unit.clauses) {
+        const pred = clause.head.predicate;
+        const predKey = `${pred.symbol}/${pred.arity}`;
+        const decl = declaredPredicates.get(predKey);
+        if (decl && clause.headTime && !(0, ast_1.isEternalInterval)(clause.headTime)) {
+          if (!(0, ast_1.isDeclTemporal)(decl) && !(0, ast_1.isDeclMaybeTemporal)(decl)) {
+            errors.push({
+              code: "E058",
+              message: `Predicate '${pred.symbol}' is not declared temporal but used with temporal annotation`,
+              range: clause.head.range,
+              severity: "error"
+            });
+          }
+        }
+        if (decl && ((0, ast_1.isDeclTemporal)(decl) || (0, ast_1.isDeclMaybeTemporal)(decl))) {
+          if (!clause.headTime && clause.premises && clause.premises.length > 0) {
+            errors.push({
+              code: "E059",
+              message: `Temporal predicate '${pred.symbol}' defined without temporal annotation`,
+              range: clause.head.range,
+              severity: "error"
+            });
+          }
+        }
       }
       validateArityConsistency(unit, errors);
       return { errors, symbolTable };
@@ -40111,13 +40234,36 @@ var require_validation = __commonJS({
           severity: "warning"
         });
       }
+      const nameDescr = descriptors.find((d) => d.predicate.symbol === "name");
+      if (nameDescr && nameDescr.args.length > 0) {
+        const nameArg = nameDescr.args[0];
+        if (nameArg && nameArg.type === "Constant") {
+          const nameVal = nameArg.symbol ?? "";
+          if (nameVal !== nameVal.toLowerCase()) {
+            errors.push({
+              code: "E031",
+              message: `Package name '${nameVal}' must be lowercase`,
+              range: nameArg.range,
+              severity: "error"
+            });
+          }
+        }
+      }
     }
-    function validateClause(clause, symbolTable, errors) {
+    function validateClause(clause, symbolTable, errors, declaredPredicates) {
       const rewritten = (0, rewrite_1.rewriteClause)(clause);
       const boundVars = /* @__PURE__ */ new Set();
       const headVars = /* @__PURE__ */ new Set();
       const uf = unionfind_1.UnionFind.create();
       collectAtomVariables(rewritten.head, headVars);
+      if (rewritten.headTime) {
+        if (rewritten.headTime.start.boundType === "variable" && rewritten.headTime.start.variable) {
+          headVars.add(rewritten.headTime.start.variable.symbol);
+        }
+        if (rewritten.headTime.end.boundType === "variable" && rewritten.headTime.end.variable) {
+          headVars.add(rewritten.headTime.end.variable.symbol);
+        }
+      }
       for (const arg of rewritten.head.args) {
         if (arg.type === "Variable" && arg.symbol === "_") {
           errors.push({
@@ -40194,6 +40340,7 @@ var require_validation = __commonJS({
                 }
               }
             }
+            validateAtom(atom, boundVars, symbolTable, errors);
           } else {
             validateAtom(atom, boundVars, symbolTable, errors);
             collectAtomVariables(atom, boundVars);
@@ -40255,11 +40402,34 @@ var require_validation = __commonJS({
             const temporal = premise;
             validatePremise(temporal.literal, boundVars, symbolTable, errors);
             if (temporal.interval) {
-              if (temporal.interval.start.variable) {
+              if (temporal.interval.start.boundType === "variable" && temporal.interval.start.variable) {
                 boundVars.add(temporal.interval.start.variable.symbol);
               }
-              if (temporal.interval.end.variable) {
+              if (temporal.interval.end.boundType === "variable" && temporal.interval.end.variable) {
                 boundVars.add(temporal.interval.end.variable.symbol);
+              }
+            }
+            if (temporal.operator && temporal.operator.interval) {
+              if (temporal.operator.interval.start.boundType === "variable" && temporal.operator.interval.start.variable) {
+                boundVars.add(temporal.operator.interval.start.variable.symbol);
+              }
+              if (temporal.operator.interval.end.boundType === "variable" && temporal.operator.interval.end.variable) {
+                boundVars.add(temporal.operator.interval.end.variable.symbol);
+              }
+            }
+            break;
+          }
+          if ((0, ast_1.isTemporalAtom)(premise)) {
+            const ta = premise;
+            if (!ta.interval) {
+              validatePremise(ta.atom, boundVars, symbolTable, errors);
+            } else {
+              validatePremise(ta.atom, boundVars, symbolTable, errors);
+              if (ta.interval.start.boundType === "variable" && ta.interval.start.variable) {
+                boundVars.add(ta.interval.start.variable.symbol);
+              }
+              if (ta.interval.end.boundType === "variable" && ta.interval.end.variable) {
+                boundVars.add(ta.interval.end.variable.symbol);
               }
             }
             break;
@@ -40355,12 +40525,17 @@ var require_validation = __commonJS({
       if (!predName.startsWith(":") && !predName.startsWith("fn:")) {
         const predKey = `${predName}/${arity}`;
         const predInfo = symbolTable.getPredicateInfo(predKey);
-        if (!predInfo) {
+        const hasDefs = predInfo && (predInfo.definitions.length > 0 || predInfo.declLocation);
+        if (!hasDefs) {
           const availableArities = symbolTable.getPredicateArities(predName);
-          if (availableArities && availableArities.length > 0 && !availableArities.includes(arity)) {
+          const definedArities = availableArities?.filter((a) => {
+            const info = symbolTable.getPredicateInfo(`${predName}/${a}`);
+            return info && (info.definitions.length > 0 || info.declLocation);
+          });
+          if (definedArities && definedArities.length > 0 && !definedArities.includes(arity)) {
             errors.push({
               code: "E040",
-              message: `Predicate '${predName}' called with ${arity} arguments, but available arities are: ${availableArities.join(", ")}`,
+              message: `Predicate '${predName}' called with ${arity} arguments, but available arities are: ${definedArities.join(", ")}`,
               range: atom.range,
               severity: "error"
             });
@@ -40486,7 +40661,7 @@ var require_validation = __commonJS({
           });
         }
       }
-      if (fnName === "fn:div" && applyFn.args.length >= 2) {
+      if ((fnName === "fn:div" || fnName === "fn:float:div") && applyFn.args.length >= 2) {
         const divisor = applyFn.args[1];
         if (divisor && divisor.type === "Constant") {
           const constant = divisor;
@@ -40672,6 +40847,7 @@ var require_validation = __commonJS({
             });
           }
         }
+        validateApplyFn(left, boundVars, errors);
         if (right.type === "Variable" && right.symbol !== "_") {
           boundVars.add(right.symbol);
         }
@@ -40689,9 +40865,16 @@ var require_validation = __commonJS({
             });
           }
         }
+        validateApplyFn(right, boundVars, errors);
         if (left.type === "Variable" && left.symbol !== "_") {
           boundVars.add(left.symbol);
         }
+      }
+      if (left.type === "Constant") {
+        validateNameConstant(left, errors);
+      }
+      if (right.type === "Constant") {
+        validateNameConstant(right, errors);
       }
       if (uf && left.type === "Variable" && right.type === "Variable") {
         const leftVar = left;
@@ -40867,6 +41050,27 @@ var require_validation = __commonJS({
               }
               if (temporal.interval.end.variable) {
                 vars.add(temporal.interval.end.variable.symbol);
+              }
+            }
+            if (temporal.operator && temporal.operator.interval) {
+              if (temporal.operator.interval.start.variable) {
+                vars.add(temporal.operator.interval.start.variable.symbol);
+              }
+              if (temporal.operator.interval.end.variable) {
+                vars.add(temporal.operator.interval.end.variable.symbol);
+              }
+            }
+            break;
+          }
+          if ((0, ast_1.isTemporalAtom)(premise)) {
+            const ta = premise;
+            collectAtomVariables(ta.atom, vars);
+            if (ta.interval) {
+              if (ta.interval.start.variable) {
+                vars.add(ta.interval.start.variable.symbol);
+              }
+              if (ta.interval.end.variable) {
+                vars.add(ta.interval.end.variable.symbol);
               }
             }
             break;
@@ -41993,6 +42197,59 @@ var require_completion = __commonJS({
           sortText: "309"
         },
         {
+          label: "now",
+          kind: node_12.CompletionItemKind.Keyword,
+          detail: "Current evaluation time (temporal bound)",
+          textEdit: node_12.TextEdit.replace(replaceRange, "now"),
+          insertTextFormat: node_12.InsertTextFormat.PlainText,
+          sortText: "309a"
+        },
+        {
+          label: "@[",
+          kind: node_12.CompletionItemKind.Snippet,
+          detail: "Temporal interval annotation",
+          documentation: "Temporal annotation: @[start, end] or @[T] for a point interval",
+          textEdit: node_12.TextEdit.replace(replaceRange, "@[${1:Start}, ${2:End}]"),
+          insertTextFormat: node_12.InsertTextFormat.Snippet,
+          sortText: "309b"
+        },
+        {
+          label: "<-[",
+          kind: node_12.CompletionItemKind.Snippet,
+          detail: "Diamond minus (eventually in the past)",
+          documentation: "Temporal operator: <-[start, end] - there exists a time in the past interval where the predicate holds",
+          textEdit: node_12.TextEdit.replace(replaceRange, "<-[${1:0s}, ${2:duration}] ${3:predicate}(${4:args})"),
+          insertTextFormat: node_12.InsertTextFormat.Snippet,
+          sortText: "309c"
+        },
+        {
+          label: "[-[",
+          kind: node_12.CompletionItemKind.Snippet,
+          detail: "Box minus (always in the past)",
+          documentation: "Temporal operator: [-[start, end] - for all times in the past interval, the predicate holds",
+          textEdit: node_12.TextEdit.replace(replaceRange, "[-[${1:0s}, ${2:duration}] ${3:predicate}(${4:args})"),
+          insertTextFormat: node_12.InsertTextFormat.Snippet,
+          sortText: "309d"
+        },
+        {
+          label: "<+[",
+          kind: node_12.CompletionItemKind.Snippet,
+          detail: "Diamond plus (eventually in the future)",
+          documentation: "Temporal operator: <+[start, end] - there exists a time in the future interval where the predicate holds",
+          textEdit: node_12.TextEdit.replace(replaceRange, "<+[${1:0s}, ${2:duration}] ${3:predicate}(${4:args})"),
+          insertTextFormat: node_12.InsertTextFormat.Snippet,
+          sortText: "309e"
+        },
+        {
+          label: "[+[",
+          kind: node_12.CompletionItemKind.Snippet,
+          detail: "Box plus (always in the future)",
+          documentation: "Temporal operator: [+[start, end] - for all times in the future interval, the predicate holds",
+          textEdit: node_12.TextEdit.replace(replaceRange, "[+[${1:0s}, ${2:duration}] ${3:predicate}(${4:args})"),
+          insertTextFormat: node_12.InsertTextFormat.Snippet,
+          sortText: "309f"
+        },
+        {
           label: "mode",
           kind: node_12.CompletionItemKind.Keyword,
           detail: "Mode declaration for predicate",
@@ -42401,7 +42658,10 @@ ${indent}bound [${boundsStr}]`;
       return result;
     }
     function formatClause(clause, indent) {
-      const head = formatAtom(clause.head);
+      let head = formatAtom(clause.head);
+      if (clause.headTime && !(0, ast_1.isEternalInterval)(clause.headTime)) {
+        head += (0, ast_1.temporalIntervalToString)(clause.headTime);
+      }
       if (!clause.premises || clause.premises.length === 0) {
         if (clause.transform) {
           return `${head} |> ${formatTransform(clause.transform, indent)}.`;
@@ -42475,6 +42735,21 @@ ${indent}bound [${boundsStr}]`;
               const sndStr = c.snd ? formatTerm(c.snd) : "";
               return `fn:pair(${fstStr}, ${sndStr})`;
             }
+            case "time": {
+              if (c.numValue !== void 0) {
+                const ms = c.numValue / 1e6;
+                const iso = new Date(ms).toISOString();
+                return `fn:time:parse_rfc3339("${iso}")`;
+              }
+              return 'fn:time:parse_rfc3339("?")';
+            }
+            case "duration": {
+              if (c.symbol)
+                return `fn:duration:parse("${c.symbol}")`;
+              if (c.numValue !== void 0)
+                return `fn:duration:parse("${c.numValue}ns")`;
+              return 'fn:duration:parse("?")';
+            }
             default:
               return c.symbol ?? "";
           }
@@ -42546,6 +42821,30 @@ ${indent}bound [${boundsStr}]`;
         case "NegAtom": {
           const neg = term;
           return `!${formatAtom(neg.atom)}`;
+        }
+        case "TemporalLiteral": {
+          const tl = term;
+          let result = "";
+          if (tl.operator) {
+            result += (0, ast_1.temporalOperatorToString)(tl.operator) + " ";
+          }
+          if (tl.literal.type === "NegAtom") {
+            result += `!${formatAtom(tl.literal.atom)}`;
+          } else {
+            result += formatAtom(tl.literal);
+          }
+          if (tl.interval && !(0, ast_1.isEternalInterval)(tl.interval)) {
+            result += (0, ast_1.temporalIntervalToString)(tl.interval);
+          }
+          return result;
+        }
+        case "TemporalAtom": {
+          const ta = term;
+          let result = formatAtom(ta.atom);
+          if (ta.interval && !(0, ast_1.isEternalInterval)(ta.interval)) {
+            result += (0, ast_1.temporalIntervalToString)(ta.interval);
+          }
+          return result;
         }
         case "Eq": {
           const eq = term;

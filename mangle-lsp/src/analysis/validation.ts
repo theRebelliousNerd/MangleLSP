@@ -19,9 +19,16 @@ import {
     Constant,
     Decl,
     TemporalLiteral,
+    TemporalAtom,
+    TemporalInterval,
     BaseTerm,
     isComparisonAtom,
     isTemporalLiteral,
+    isTemporalAtom,
+    isEternalInterval,
+    isDeclTemporal,
+    isDeclMaybeTemporal,
+    DESCRIPTORS,
 } from '../parser/ast';
 import { isBuiltinPredicate, getBuiltinPredicate } from '../builtins/predicates';
 import { isBuiltinFunction, getBuiltinFunction, isReducerFunction } from '../builtins/functions';
@@ -131,7 +138,39 @@ export function validate(unit: SourceUnit): ValidationResult {
 
     // Validate each clause
     for (const clause of unit.clauses) {
-        validateClause(clause, symbolTable, errors);
+        validateClause(clause, symbolTable, errors, declaredPredicates);
+    }
+
+    // EnsureDecl temporal consistency (upstream validation.go:239-270)
+    // Check that temporal annotations match declarations
+    for (const clause of unit.clauses) {
+        const pred = clause.head.predicate;
+        const predKey = `${pred.symbol}/${pred.arity}`;
+        const decl = declaredPredicates.get(predKey);
+
+        if (decl && clause.headTime && !isEternalInterval(clause.headTime)) {
+            // Clause uses temporal annotation on head, but decl is not temporal
+            if (!isDeclTemporal(decl) && !isDeclMaybeTemporal(decl)) {
+                errors.push({
+                    code: 'E058',
+                    message: `Predicate '${pred.symbol}' is not declared temporal but used with temporal annotation`,
+                    range: clause.head.range,
+                    severity: 'error',
+                });
+            }
+        }
+
+        if (decl && (isDeclTemporal(decl) || isDeclMaybeTemporal(decl))) {
+            // Temporal predicate but clause doesn't have headTime
+            if (!clause.headTime && clause.premises && clause.premises.length > 0) {
+                errors.push({
+                    code: 'E059',
+                    message: `Temporal predicate '${pred.symbol}' defined without temporal annotation`,
+                    range: clause.head.range,
+                    severity: 'error',
+                });
+            }
+        }
     }
 
     // E046: Check arity mismatches between declarations and clauses
@@ -310,6 +349,23 @@ function validateDeclaration(
             severity: 'warning',
         });
     }
+
+    // E031: Package name must be lowercase (upstream: name descriptor validation)
+    const nameDescr = descriptors.find(d => d.predicate.symbol === 'name');
+    if (nameDescr && nameDescr.args.length > 0) {
+        const nameArg = nameDescr.args[0];
+        if (nameArg && nameArg.type === 'Constant') {
+            const nameVal = (nameArg as Constant).symbol ?? '';
+            if (nameVal !== nameVal.toLowerCase()) {
+                errors.push({
+                    code: 'E031',
+                    message: `Package name '${nameVal}' must be lowercase`,
+                    range: nameArg.range,
+                    severity: 'error',
+                });
+            }
+        }
+    }
 }
 
 /**
@@ -318,7 +374,8 @@ function validateDeclaration(
 function validateClause(
     clause: Clause,
     symbolTable: SymbolTable,
-    errors: SemanticError[]
+    errors: SemanticError[],
+    declaredPredicates?: Map<string, Decl>
 ): void {
     // Apply clause rewriting (negation delay) before validation
     // Upstream: RewriteClause is called before CheckRule
@@ -333,6 +390,17 @@ function validateClause(
 
     // Collect variables from head
     collectAtomVariables(rewritten.head, headVars);
+
+    // Collect variables from headTime (temporal annotation on head)
+    // Upstream: headTime variables are treated as head variables that must be bound
+    if (rewritten.headTime) {
+        if (rewritten.headTime.start.boundType === 'variable' && rewritten.headTime.start.variable) {
+            headVars.add(rewritten.headTime.start.variable.symbol);
+        }
+        if (rewritten.headTime.end.boundType === 'variable' && rewritten.headTime.end.variable) {
+            headVars.add(rewritten.headTime.end.variable.symbol);
+        }
+    }
 
     // Warn about wildcards in head (unusual, usually a mistake)
     for (const arg of rewritten.head.args) {
@@ -437,6 +505,8 @@ function validatePremise(
                         }
                     }
                 }
+                // Also validate arity and other builtin checks (E006, etc.)
+                validateAtom(atom, boundVars, symbolTable, errors);
             } else {
                 // Regular atom - validate and bind variables
                 validateAtom(atom, boundVars, symbolTable, errors);
@@ -506,11 +576,39 @@ function validatePremise(
                 validatePremise(temporal.literal, boundVars, symbolTable, errors);
                 // Temporal interval variables become bound
                 if (temporal.interval) {
-                    if (temporal.interval.start.variable) {
+                    if (temporal.interval.start.boundType === 'variable' && temporal.interval.start.variable) {
                         boundVars.add(temporal.interval.start.variable.symbol);
                     }
-                    if (temporal.interval.end.variable) {
+                    if (temporal.interval.end.boundType === 'variable' && temporal.interval.end.variable) {
                         boundVars.add(temporal.interval.end.variable.symbol);
+                    }
+                }
+                // Temporal operator interval variables also become bound
+                if (temporal.operator && temporal.operator.interval) {
+                    if (temporal.operator.interval.start.boundType === 'variable' && temporal.operator.interval.start.variable) {
+                        boundVars.add(temporal.operator.interval.start.variable.symbol);
+                    }
+                    if (temporal.operator.interval.end.boundType === 'variable' && temporal.operator.interval.end.variable) {
+                        boundVars.add(temporal.operator.interval.end.variable.symbol);
+                    }
+                }
+                break;
+            }
+            // Handle TemporalAtom - normalize to TemporalLiteral or bare Atom
+            // Upstream: validation.go lines 323-337
+            if (isTemporalAtom(premise)) {
+                const ta = premise as TemporalAtom;
+                if (!ta.interval) {
+                    // Demote to bare Atom
+                    validatePremise(ta.atom, boundVars, symbolTable, errors);
+                } else {
+                    // Wrap as TemporalLiteral equivalent
+                    validatePremise(ta.atom, boundVars, symbolTable, errors);
+                    if (ta.interval.start.boundType === 'variable' && ta.interval.start.variable) {
+                        boundVars.add(ta.interval.start.variable.symbol);
+                    }
+                    if (ta.interval.end.boundType === 'variable' && ta.interval.end.variable) {
+                        boundVars.add(ta.interval.end.variable.symbol);
                     }
                 }
                 break;
@@ -633,13 +731,20 @@ function validateAtom(
         const predKey = `${predName}/${arity}`;
         // Check if predicate exists in symbol table
         const predInfo = symbolTable.getPredicateInfo(predKey);
-        if (!predInfo) {
+        // Check if the predicate has actual definitions or a declaration (not just references)
+        const hasDefs = predInfo && (predInfo.definitions.length > 0 || predInfo.declLocation);
+        if (!hasDefs) {
             // Check if there's a predicate with same name but different arity
             const availableArities = symbolTable.getPredicateArities(predName);
-            if (availableArities && availableArities.length > 0 && !availableArities.includes(arity)) {
+            // Filter to only arities that have definitions or declarations
+            const definedArities = availableArities?.filter(a => {
+                const info = symbolTable.getPredicateInfo(`${predName}/${a}`);
+                return info && (info.definitions.length > 0 || info.declLocation);
+            });
+            if (definedArities && definedArities.length > 0 && !definedArities.includes(arity)) {
                 errors.push({
                     code: 'E040',
-                    message: `Predicate '${predName}' called with ${arity} arguments, but available arities are: ${availableArities.join(', ')}`,
+                    message: `Predicate '${predName}' called with ${arity} arguments, but available arities are: ${definedArities.join(', ')}`,
                     range: atom.range,
                     severity: 'error',
                 });
@@ -801,7 +906,7 @@ function validateApplyFn(
     }
 
     // Check for division by zero
-    if (fnName === 'fn:div' && applyFn.args.length >= 2) {
+    if ((fnName === 'fn:div' || fnName === 'fn:float:div') && applyFn.args.length >= 2) {
         const divisor = applyFn.args[1];
         if (divisor && divisor.type === 'Constant') {
             const constant = divisor as Constant;
@@ -1043,6 +1148,8 @@ function handleEquality(
                 });
             }
         }
+        // Validate the function application itself (E008, E009, E018, E020, E027, E035)
+        validateApplyFn(left as ApplyFn, boundVars, errors);
         // The right side variable becomes bound
         if (right.type === 'Variable' && (right as Variable).symbol !== '_') {
             boundVars.add((right as Variable).symbol);
@@ -1063,10 +1170,20 @@ function handleEquality(
                 });
             }
         }
+        // Validate the function application itself (E008, E009, E018, E020, E027, E035)
+        validateApplyFn(right as ApplyFn, boundVars, errors);
         // The left side variable becomes bound
         if (left.type === 'Variable' && (left as Variable).symbol !== '_') {
             boundVars.add((left as Variable).symbol);
         }
+    }
+
+    // Validate name constants in equality contexts (E032)
+    if (left.type === 'Constant') {
+        validateNameConstant(left as Constant, errors);
+    }
+    if (right.type === 'Constant') {
+        validateNameConstant(right as Constant, errors);
     }
 
     // Feature E: If both sides are variables and neither is bound yet,
@@ -1285,6 +1402,28 @@ function collectPremiseVariables(premise: Term, vars: Set<string>): void {
                     }
                     if (temporal.interval.end.variable) {
                         vars.add(temporal.interval.end.variable.symbol);
+                    }
+                }
+                if (temporal.operator && temporal.operator.interval) {
+                    if (temporal.operator.interval.start.variable) {
+                        vars.add(temporal.operator.interval.start.variable.symbol);
+                    }
+                    if (temporal.operator.interval.end.variable) {
+                        vars.add(temporal.operator.interval.end.variable.symbol);
+                    }
+                }
+                break;
+            }
+            // Handle TemporalAtom
+            if (isTemporalAtom(premise)) {
+                const ta = premise as TemporalAtom;
+                collectAtomVariables(ta.atom, vars);
+                if (ta.interval) {
+                    if (ta.interval.start.variable) {
+                        vars.add(ta.interval.start.variable.symbol);
+                    }
+                    if (ta.interval.end.variable) {
+                        vars.add(ta.interval.end.variable.symbol);
                     }
                 }
                 break;

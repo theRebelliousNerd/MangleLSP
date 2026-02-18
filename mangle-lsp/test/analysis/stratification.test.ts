@@ -1289,10 +1289,51 @@ describe('Temporal Recursion Detection (E048, E049, E050)', () => {
         expect(warnings).toHaveLength(0);
     });
 
-    it.todo('E048: should warn on self-recursive temporal predicate');
+    it('E048: should warn on self-recursive temporal predicate', () => {
+        const source = `
+            Decl temp(X) temporal.
+            temp(X) :- temp(X).
+        `;
+        const result = parse(source);
+        expect(result.unit).not.toBeNull();
 
-    it.todo('E049: should error on mutual recursion through temporal predicates');
+        const warnings = checkTemporalRecursion(result.unit!);
+        const e048 = warnings.find(w => w.code === 'E048');
+        expect(e048).toBeDefined();
+        expect(e048?.severity).toBe('warning');
+        expect(e048?.message).toContain('Self-recursive temporal predicate');
+    });
 
-    it.todo('E050: should error on future operator in recursive temporal rule');
+    it('E049: should error on mutual recursion through temporal predicates', () => {
+        const source = `
+            Decl temp_a(X) temporal.
+            Decl temp_b(X) temporal.
+            temp_a(X) :- temp_b(X).
+            temp_b(X) :- temp_a(X).
+        `;
+        const result = parse(source);
+        expect(result.unit).not.toBeNull();
+
+        const warnings = checkTemporalRecursion(result.unit!);
+        const e049 = warnings.find(w => w.code === 'E049');
+        expect(e049).toBeDefined();
+        expect(e049?.severity).toBe('error');
+        expect(e049?.message).toContain('Mutual recursion through temporal predicates');
+    });
+
+    it('E050: should error on future operator in recursive temporal rule', () => {
+        const source = `
+            Decl temp(X) temporal.
+            temp(X) :- <+[0s, 7d] temp(X).
+        `;
+        const result = parse(source);
+        expect(result.unit).not.toBeNull();
+
+        const warnings = checkTemporalRecursion(result.unit!);
+        const e050 = warnings.find(w => w.code === 'E050');
+        expect(e050).toBeDefined();
+        expect(e050?.severity).toBe('error');
+        expect(e050?.message).toContain('Future operator in recursive temporal rule');
+    });
 });
 

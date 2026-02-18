@@ -168,7 +168,11 @@ function formatDecl(decl, indent) {
  * Format a clause.
  */
 function formatClause(clause, indent) {
-    const head = formatAtom(clause.head);
+    let head = formatAtom(clause.head);
+    // Append temporal annotation on head if present and not eternal
+    if (clause.headTime && !(0, ast_1.isEternalInterval)(clause.headTime)) {
+        head += (0, ast_1.temporalIntervalToString)(clause.headTime);
+    }
     // Fact (no body)
     if (!clause.premises || clause.premises.length === 0) {
         if (clause.transform) {
@@ -255,6 +259,22 @@ function formatTerm(term) {
                     const sndStr = c.snd ? formatTerm(c.snd) : '';
                     return `fn:pair(${fstStr}, ${sndStr})`;
                 }
+                case 'time': {
+                    // Format as timestamp string or nanos
+                    if (c.numValue !== undefined) {
+                        const ms = c.numValue / 1000000;
+                        const iso = new Date(ms).toISOString();
+                        return `fn:time:parse_rfc3339("${iso}")`;
+                    }
+                    return 'fn:time:parse_rfc3339("?")';
+                }
+                case 'duration': {
+                    if (c.symbol)
+                        return `fn:duration:parse("${c.symbol}")`;
+                    if (c.numValue !== undefined)
+                        return `fn:duration:parse("${c.numValue}ns")`;
+                    return 'fn:duration:parse("?")';
+                }
                 default:
                     return c.symbol ?? '';
             }
@@ -330,6 +350,33 @@ function formatTerm(term) {
         case 'NegAtom': {
             const neg = term;
             return `!${formatAtom(neg.atom)}`;
+        }
+        case 'TemporalLiteral': {
+            const tl = term;
+            let result = '';
+            if (tl.operator) {
+                result += (0, ast_1.temporalOperatorToString)(tl.operator) + ' ';
+            }
+            // Format the inner literal (Atom or NegAtom)
+            if (tl.literal.type === 'NegAtom') {
+                result += `!${formatAtom(tl.literal.atom)}`;
+            }
+            else {
+                result += formatAtom(tl.literal);
+            }
+            // Append interval annotation if present
+            if (tl.interval && !(0, ast_1.isEternalInterval)(tl.interval)) {
+                result += (0, ast_1.temporalIntervalToString)(tl.interval);
+            }
+            return result;
+        }
+        case 'TemporalAtom': {
+            const ta = term;
+            let result = formatAtom(ta.atom);
+            if (ta.interval && !(0, ast_1.isEternalInterval)(ta.interval)) {
+                result += (0, ast_1.temporalIntervalToString)(ta.interval);
+            }
+            return result;
         }
         case 'Eq': {
             const eq = term;

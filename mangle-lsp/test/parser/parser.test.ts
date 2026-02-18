@@ -643,4 +643,125 @@ describe('Mangle Parser', () => {
             expect(bounds?.[0]?.bounds[0]?.type).toBe('Constant');
         });
     });
+
+    describe('Temporal syntax (DatalogMTL)', () => {
+        it('should parse a temporal declaration', () => {
+            const result = parse('Decl sensor_reading(X, Y) temporal.');
+            expect(hasErrors(result)).toBe(false);
+            expect(result.unit?.decls.length).toBe(1);
+            const decl = result.unit!.decls[0]!;
+            // temporal keyword should produce a 'temporal' descriptor atom
+            const hasTemporal = decl.descr?.some(d => d.predicate.symbol === 'temporal');
+            expect(hasTemporal).toBe(true);
+        });
+
+        it('should parse a temporal fact with timestamp annotation', () => {
+            const result = parse('event(/a) @[2024-01-15T00:00:00Z].');
+            expect(hasErrors(result)).toBe(false);
+            expect(result.unit?.clauses.length).toBe(1);
+            const clause = result.unit!.clauses[0]!;
+            expect(clause.headTime).not.toBeNull();
+            expect(clause.headTime!.start.boundType).toBe('timestamp');
+        });
+
+        it('should parse a temporal fact with interval annotation', () => {
+            const result = parse('event(/a) @[2024-01-15T00:00:00Z, 2024-06-30T00:00:00Z].');
+            expect(hasErrors(result)).toBe(false);
+            const clause = result.unit!.clauses[0]!;
+            expect(clause.headTime).not.toBeNull();
+            expect(clause.headTime!.start.boundType).toBe('timestamp');
+            expect(clause.headTime!.end.boundType).toBe('timestamp');
+        });
+
+        it('should parse a temporal fact with variable bound', () => {
+            const result = parse('foo(/a) @[T].');
+            // This may or may not parse depending on how the parser handles variable-only facts
+            // At minimum, it should not crash
+            expect(result).not.toBeNull();
+        });
+
+        it('should parse a temporal rule with diamond minus operator', () => {
+            const result = parse('result(X) :- <-[0s, 7d] sensor(X).');
+            expect(hasErrors(result)).toBe(false);
+            const clause = result.unit!.clauses[0]!;
+            expect(clause.premises?.length).toBe(1);
+            const premise = clause.premises![0]!;
+            expect(premise.type).toBe('TemporalLiteral');
+            if (premise.type === 'TemporalLiteral') {
+                expect(premise.operator).not.toBeNull();
+                expect(premise.operator!.operatorType).toBe('diamondMinus');
+            }
+        });
+
+        it('should parse a temporal rule with box minus operator', () => {
+            const result = parse('always_on(X) :- [-[0s, 7d] sensor(X).');
+            expect(hasErrors(result)).toBe(false);
+            const premise = result.unit!.clauses[0]!.premises![0]!;
+            expect(premise.type).toBe('TemporalLiteral');
+            if (premise.type === 'TemporalLiteral') {
+                expect(premise.operator!.operatorType).toBe('boxMinus');
+            }
+        });
+
+        it('should parse a temporal rule with diamond plus operator', () => {
+            const result = parse('will_happen(X) :- <+[0s, 7d] predicted(X).');
+            expect(hasErrors(result)).toBe(false);
+            const premise = result.unit!.clauses[0]!.premises![0]!;
+            expect(premise.type).toBe('TemporalLiteral');
+            if (premise.type === 'TemporalLiteral') {
+                expect(premise.operator!.operatorType).toBe('diamondPlus');
+            }
+        });
+
+        it('should parse a temporal rule with box plus operator', () => {
+            const result = parse('always_will(X) :- [+[0s, 7d] predicted(X).');
+            expect(hasErrors(result)).toBe(false);
+            const premise = result.unit!.clauses[0]!.premises![0]!;
+            expect(premise.type).toBe('TemporalLiteral');
+            if (premise.type === 'TemporalLiteral') {
+                expect(premise.operator!.operatorType).toBe('boxPlus');
+            }
+        });
+
+        it('should parse combined temporal operator and annotation', () => {
+            const result = parse('result(X) :- <-[0s, 7d] sensor(X) @[T1, T2].');
+            expect(hasErrors(result)).toBe(false);
+            const premise = result.unit!.clauses[0]!.premises![0]!;
+            expect(premise.type).toBe('TemporalLiteral');
+            if (premise.type === 'TemporalLiteral') {
+                expect(premise.operator).not.toBeNull();
+                expect(premise.interval).not.toBeNull();
+                // The interval annotation has variable bounds
+                expect(premise.interval!.start.boundType).toBe('variable');
+                expect(premise.interval!.end.boundType).toBe('variable');
+            }
+        });
+
+        it('should parse temporal head annotation with rule', () => {
+            const result = parse('result(X) @[T] :- sensor(X) @[T].');
+            // T in head should be parsed as headTime
+            expect(hasErrors(result)).toBe(false);
+            const clause = result.unit!.clauses[0]!;
+            expect(clause.headTime).not.toBeNull();
+        });
+
+        it('should parse duration literals in temporal bounds', () => {
+            const result = parse('result(X) :- <-[0s, 24h] sensor(X).');
+            expect(hasErrors(result)).toBe(false);
+            const premise = result.unit!.clauses[0]!.premises![0]!;
+            expect(premise.type).toBe('TemporalLiteral');
+            if (premise.type === 'TemporalLiteral') {
+                expect(premise.operator!.interval!.end.boundType).toBe('duration');
+            }
+        });
+
+        it('should parse multiple temporal premises', () => {
+            const result = parse('correlated(X, Y) :- <-[0s, 1d] sensor_a(X), <-[0s, 1d] sensor_b(Y).');
+            expect(hasErrors(result)).toBe(false);
+            const premises = result.unit!.clauses[0]!.premises!;
+            expect(premises.length).toBe(2);
+            expect(premises[0]!.type).toBe('TemporalLiteral');
+            expect(premises[1]!.type).toBe('TemporalLiteral');
+        });
+    });
 });
