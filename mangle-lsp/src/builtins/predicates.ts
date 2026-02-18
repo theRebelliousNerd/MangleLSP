@@ -191,6 +191,62 @@ export const BUILTIN_PREDICATES: BuiltinPredicate[] = [
         mode: ['input', 'input'],
         doc: 'Greater-than-or-equal relation on durations. Usage: :duration:ge(D1, D2) means D1 >= D2',
     },
+
+    // Allen's interval algebra predicates (upstream symbols/symbols.go, builtin/temporal.go)
+    {
+        name: ':interval:before',
+        arity: 2,
+        mode: ['input', 'input'],
+        doc: "Allen's interval relation: interval A ends before interval B starts. Usage: :interval:before(A, B)",
+    },
+    {
+        name: ':interval:after',
+        arity: 2,
+        mode: ['input', 'input'],
+        doc: "Allen's interval relation: interval A starts after interval B ends. Usage: :interval:after(A, B)",
+    },
+    {
+        name: ':interval:meets',
+        arity: 2,
+        mode: ['input', 'input'],
+        doc: "Allen's interval relation: interval A ends exactly when interval B starts. Usage: :interval:meets(A, B)",
+    },
+    {
+        name: ':interval:overlaps',
+        arity: 2,
+        mode: ['input', 'input'],
+        doc: "Allen's interval relation: interval A overlaps with interval B. Usage: :interval:overlaps(A, B)",
+    },
+    {
+        name: ':interval:during',
+        arity: 2,
+        mode: ['input', 'input'],
+        doc: "Allen's interval relation: interval A is contained within interval B. Usage: :interval:during(A, B)",
+    },
+    {
+        name: ':interval:contains',
+        arity: 2,
+        mode: ['input', 'input'],
+        doc: "Allen's interval relation: interval A contains interval B. Usage: :interval:contains(A, B)",
+    },
+    {
+        name: ':interval:starts',
+        arity: 2,
+        mode: ['input', 'input'],
+        doc: "Allen's interval relation: interval A starts at the same time as B. Usage: :interval:starts(A, B)",
+    },
+    {
+        name: ':interval:finishes',
+        arity: 2,
+        mode: ['input', 'input'],
+        doc: "Allen's interval relation: interval A finishes at the same time as B. Usage: :interval:finishes(A, B)",
+    },
+    {
+        name: ':interval:equals',
+        arity: 2,
+        mode: ['input', 'input'],
+        doc: "Allen's interval relation: interval A equals interval B. Usage: :interval:equals(A, B)",
+    },
 ];
 
 /**

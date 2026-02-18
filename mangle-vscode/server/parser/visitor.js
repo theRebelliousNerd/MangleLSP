@@ -293,6 +293,10 @@ class MangleASTVisitor extends antlr4ng_1.AbstractParseTreeVisitor {
     }
     visitPackageDecl(ctx) {
         const name = ctx.NAME().getText();
+        // Upstream Go (parse.go:244-246): package names must be lower-case
+        if (name !== name.toLowerCase()) {
+            this.addError(`package names have to be lower-case: ${name}`, ctx);
+        }
         const atomsCtx = ctx.atoms();
         const atoms = atomsCtx ? this.visitAtoms(atomsCtx) : null;
         return {
@@ -317,7 +321,28 @@ class MangleASTVisitor extends antlr4ng_1.AbstractParseTreeVisitor {
         const atomCtx = ctx.atom();
         const declaredAtom = this.visitAtom(atomCtx);
         const descrCtx = ctx.descrBlock();
-        const descr = descrCtx ? this.visitDescrBlock(descrCtx) : null;
+        let descr = descrCtx ? this.visitDescrBlock(descrCtx) : null;
+        // Check for 'temporal' keyword — upstream parse.go:280-282
+        // The keyword 'temporal' in grammar is T__0 (first inline string token)
+        // We check the text of the context for the 'temporal' keyword
+        const ctxText = ctx.getText();
+        if (ctxText.includes('temporal')) {
+            // Look for the 'temporal' token between atom and descrBlock/boundsBlock
+            // The grammar is: 'Decl' atom 'temporal'? descrBlock? boundsBlock* constraintsBlock? '.'
+            const children = ctx.children ?? [];
+            for (const child of children) {
+                if ('getText' in child && child.getText() === 'temporal') {
+                    const temporalAtom = (0, ast_1.createAtom)((0, ast_1.createPredicateSym)(ast_1.DESCRIPTORS.TEMPORAL, 0), [], getRangeFromContext(ctx));
+                    if (descr) {
+                        descr = [...descr, temporalAtom];
+                    }
+                    else {
+                        descr = [temporalAtom];
+                    }
+                    break;
+                }
+            }
+        }
         const boundsCtxs = ctx.boundsBlock();
         const bounds = boundsCtxs.length > 0
             ? boundsCtxs.map(b => this.visitBoundsBlock(b))
@@ -378,6 +403,12 @@ class MangleASTVisitor extends antlr4ng_1.AbstractParseTreeVisitor {
     visitClause(ctx) {
         const atomCtx = ctx.atom();
         const head = this.visitAtom(atomCtx);
+        // Check for temporal annotation on head — upstream parse.go:331-334
+        let headTime = null;
+        const tempAnnotCtx = ctx.temporalAnnotation();
+        if (tempAnnotCtx) {
+            headTime = this.visitTemporalAnnotation(tempAnnotCtx);
+        }
         const bodyCtx = ctx.clauseBody();
         let premises = null;
         let transform = null;
@@ -391,7 +422,7 @@ class MangleASTVisitor extends antlr4ng_1.AbstractParseTreeVisitor {
             head,
             premises,
             transform,
-            headTime: null,
+            headTime,
             range: getRangeFromContext(ctx),
         };
     }
@@ -476,11 +507,15 @@ class MangleASTVisitor extends antlr4ng_1.AbstractParseTreeVisitor {
             }
             const term = this.visitTerm(termCtx);
             if (term && term.type === 'Atom') {
-                return {
+                const negAtom = {
                     type: 'NegAtom',
                     atom: term,
                     range: getRangeFromContext(ctx),
                 };
+                // Wrap in TemporalLiteral if temporal annotations present
+                // (negated atoms can't have temporal operators in the grammar, but
+                // they can't have annotations either per upstream — just return NegAtom)
+                return negAtom;
             }
             // Negation applied to non-atom; wrap in NegAtom with error atom
             this.addError('Negation must be applied to an atom', ctx);
@@ -490,16 +525,40 @@ class MangleASTVisitor extends antlr4ng_1.AbstractParseTreeVisitor {
                 range: getRangeFromContext(ctx),
             };
         }
+        // Check for temporal operator — upstream parse.go:411-414
+        let tempOp = null;
+        const tempOpCtx = ctx.temporalOperator();
+        if (tempOpCtx) {
+            tempOp = this.visitTemporalOperator(tempOpCtx);
+        }
+        // Check for temporal annotation — upstream parse.go:417-420
+        let tempAnnot = null;
+        const tempAnnotCtx = ctx.temporalAnnotation();
+        if (tempAnnotCtx) {
+            tempAnnot = this.visitTemporalAnnotation(tempAnnotCtx);
+        }
         // Get the terms
         const termCtxs = ctx.term();
+        // If there's only one term (no comparison operator)
         if (termCtxs.length === 1) {
             const termCtx = termCtxs[0];
             if (!termCtx) {
                 this.addError('Expected term', ctx);
                 return this.createErrorVariable(ctx);
             }
-            // Just a single term (atom, variable, etc.)
-            return this.visitTerm(termCtx);
+            const term = this.visitTerm(termCtx);
+            // If temporal operator or annotation is present, wrap in TemporalLiteral
+            // upstream parse.go:424-434
+            if (term && term.type === 'Atom' && (tempOp !== null || tempAnnot !== null)) {
+                return {
+                    type: 'TemporalLiteral',
+                    literal: term,
+                    operator: tempOp,
+                    interval: tempAnnot,
+                    range: getRangeFromContext(ctx),
+                };
+            }
+            return term;
         }
         // Binary comparison: term op term
         const leftCtx = termCtxs[0];
@@ -520,7 +579,7 @@ class MangleASTVisitor extends antlr4ng_1.AbstractParseTreeVisitor {
             return { type: 'Ineq', left, right, range };
         }
         // Comparison operators are converted to Atoms with builtin predicates
-        // to match upstream Go behavior (parse.go lines 413-422)
+        // to match upstream Go behavior (parse.go lines 457-466)
         if (ctx.LESS()) {
             return (0, ast_1.createAtom)((0, ast_1.createPredicateSym)(':lt', 2), [left, right], range);
         }
@@ -687,7 +746,7 @@ class MangleASTVisitor extends antlr4ng_1.AbstractParseTreeVisitor {
         return (0, ast_1.createApplyFn)((0, ast_1.createFunctionSym)('fn:' + typeName, -1), args, getRangeFromContext(ctx));
     }
     visitMember(ctx) {
-        // Upstream Go (parse.go:598-609) returns []ast.BaseTerm from a member context
+        // Upstream Go (parse.go:598-614) returns []ast.BaseTerm from a member context
         const termCtxs = ctx.term();
         const baseterms = [];
         for (const termCtx of termCtxs) {
@@ -695,6 +754,10 @@ class MangleASTVisitor extends antlr4ng_1.AbstractParseTreeVisitor {
             if (term && (term.type === 'Constant' || term.type === 'Variable' || term.type === 'ApplyFn')) {
                 baseterms.push(term);
             }
+        }
+        // Upstream Go (parse.go:610-612): opt prefix wraps member in fn:opt ApplyFn
+        if (ctx.getText().startsWith('opt')) {
+            return [(0, ast_1.createApplyFn)((0, ast_1.createFunctionSym)('fn:opt', -1), baseterms, getRangeFromContext(ctx))];
         }
         return baseterms;
     }
@@ -721,6 +784,200 @@ class MangleASTVisitor extends antlr4ng_1.AbstractParseTreeVisitor {
             range,
         };
     }
+    // ========================================================================
+    // Temporal Visitor Methods (upstream parse.go:786-896)
+    // ========================================================================
+    /**
+     * Visit a temporal annotation: @[bound] or @[bound, bound]
+     * Returns a TemporalInterval.
+     * Upstream: parse.go:786-812
+     */
+    visitTemporalAnnotation(ctx) {
+        const boundCtxs = ctx.temporalBound();
+        if (boundCtxs.length === 0) {
+            this.addError('temporal annotation requires at least one bound', ctx);
+            // Return a default eternal interval
+            return {
+                start: { boundType: 'negativeInfinity', range: getRangeFromContext(ctx) },
+                end: { boundType: 'positiveInfinity', range: getRangeFromContext(ctx) },
+                range: getRangeFromContext(ctx),
+            };
+        }
+        let start = this.visitTemporalBound(boundCtxs[0]);
+        let end;
+        if (boundCtxs.length > 1) {
+            end = this.visitTemporalBound(boundCtxs[1]);
+        }
+        else {
+            // Point interval: @[t] means @[t, t]
+            end = { ...start };
+        }
+        // Upstream parse.go:803-808: _ variable means infinity
+        if (start.boundType === 'variable' && start.variable?.symbol === '_') {
+            start = { boundType: 'negativeInfinity', range: start.range };
+        }
+        if (end.boundType === 'variable' && end.variable?.symbol === '_') {
+            end = { boundType: 'positiveInfinity', range: end.range };
+        }
+        return {
+            start,
+            end,
+            range: getRangeFromContext(ctx),
+        };
+    }
+    /**
+     * Visit a temporal bound: TIMESTAMP | DURATION | VARIABLE | 'now'
+     * Returns a TemporalBound.
+     * Upstream: parse.go:816-849
+     */
+    visitTemporalBound(ctx) {
+        const range = getRangeFromContext(ctx);
+        // Check TIMESTAMP
+        const tsToken = ctx.TIMESTAMP();
+        if (tsToken) {
+            const text = tsToken.getText();
+            const nanos = parseTimestamp(text);
+            if (nanos === null) {
+                this.addError(`invalid timestamp "${text}"`, ctx);
+                return { boundType: 'timestamp', value: 0, rawText: text, range };
+            }
+            return { boundType: 'timestamp', value: nanos, rawText: text, range };
+        }
+        // Check DURATION
+        const durToken = ctx.DURATION();
+        if (durToken) {
+            const text = durToken.getText();
+            const nanos = parseDuration(text);
+            if (nanos === null) {
+                this.addError(`invalid duration "${text}"`, ctx);
+                return { boundType: 'duration', value: 0, rawText: text, range };
+            }
+            return { boundType: 'duration', value: nanos, rawText: text, range };
+        }
+        // Check VARIABLE
+        const varToken = ctx.VARIABLE();
+        if (varToken) {
+            const text = varToken.getText();
+            const variable = {
+                type: 'Variable',
+                symbol: text,
+                range: getRangeFromToken(varToken.symbol),
+            };
+            return { boundType: 'variable', variable, range };
+        }
+        // Check 'now'
+        if (ctx.getText() === 'now') {
+            return { boundType: 'now', range };
+        }
+        this.addError('unknown temporal bound', ctx);
+        return { boundType: 'timestamp', value: 0, range };
+    }
+    /**
+     * Visit a temporal operator: <-[b,b] | [-[b,b] | <+[b,b] | [+[b,b]
+     * Returns a TemporalOperator.
+     * Upstream: parse.go:853-896
+     */
+    visitTemporalOperator(ctx) {
+        const boundCtxs = ctx.temporalBound();
+        if (boundCtxs.length !== 2) {
+            this.addError('temporal operator requires exactly two bounds', ctx);
+            return {
+                operatorType: 'diamondMinus',
+                interval: {
+                    start: { boundType: 'duration', value: 0, range: getRangeFromContext(ctx) },
+                    end: { boundType: 'duration', value: 0, range: getRangeFromContext(ctx) },
+                    range: getRangeFromContext(ctx),
+                },
+                range: getRangeFromContext(ctx),
+            };
+        }
+        const start = this.visitTemporalBound(boundCtxs[0]);
+        const end = this.visitTemporalBound(boundCtxs[1]);
+        const interval = {
+            start,
+            end,
+            range: getRangeFromContext(ctx),
+        };
+        // Determine operator type
+        let operatorType;
+        if (ctx.DIAMONDMINUS()) {
+            operatorType = 'diamondMinus';
+        }
+        else if (ctx.BOXMINUS()) {
+            operatorType = 'boxMinus';
+        }
+        else if (ctx.DIAMONDPLUS()) {
+            operatorType = 'diamondPlus';
+        }
+        else if (ctx.BOXPLUS()) {
+            operatorType = 'boxPlus';
+        }
+        else {
+            this.addError('unknown temporal operator', ctx);
+            operatorType = 'diamondMinus';
+        }
+        return {
+            operatorType,
+            interval,
+            range: getRangeFromContext(ctx),
+        };
+    }
 }
 exports.MangleASTVisitor = MangleASTVisitor;
+// ============================================================================
+// Temporal Parsing Helpers (upstream parse.go:898-935)
+// ============================================================================
+/**
+ * Parse a timestamp string in ISO 8601 format.
+ * Returns nanoseconds since Unix epoch, or null on error.
+ * Upstream: parse.go:898-914
+ */
+function parseTimestamp(s) {
+    // Try various formats
+    // 2024-01-15T10:30:00Z
+    // 2024-01-15T10:30:00
+    // 2024-01-15
+    const date = new Date(s);
+    if (!isNaN(date.getTime())) {
+        // Convert to nanoseconds (JS Date is milliseconds)
+        return date.getTime() * 1000000;
+    }
+    // Try date-only format more carefully
+    const dateMatch = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+    if (dateMatch) {
+        const d = new Date(Date.UTC(parseInt(dateMatch[1], 10), parseInt(dateMatch[2], 10) - 1, parseInt(dateMatch[3], 10)));
+        if (!isNaN(d.getTime())) {
+            return d.getTime() * 1000000;
+        }
+    }
+    return null;
+}
+/**
+ * Parse a duration string like "7d", "24h", "30m", "1s", "500ms".
+ * Returns nanoseconds, or null on error.
+ * Upstream: parse.go:921-935
+ */
+function parseDuration(s) {
+    if (!s)
+        return null;
+    // Match duration pattern: digits followed by unit
+    const match = /^(-?\d+)(ms|d|h|m|s)$/.exec(s);
+    if (!match)
+        return null;
+    const value = parseInt(match[1], 10);
+    const unit = match[2];
+    const NS_PER_MS = 1000000;
+    const NS_PER_SEC = 1000000000;
+    const NS_PER_MIN = 60 * NS_PER_SEC;
+    const NS_PER_HOUR = 60 * NS_PER_MIN;
+    const NS_PER_DAY = 24 * NS_PER_HOUR;
+    switch (unit) {
+        case 'ms': return value * NS_PER_MS;
+        case 's': return value * NS_PER_SEC;
+        case 'm': return value * NS_PER_MIN;
+        case 'h': return value * NS_PER_HOUR;
+        case 'd': return value * NS_PER_DAY;
+        default: return null;
+    }
+}
 //# sourceMappingURL=visitor.js.map

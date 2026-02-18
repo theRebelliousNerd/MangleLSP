@@ -204,7 +204,7 @@ export interface Ge extends LocatedNode {
  * but the parser now generates Atom nodes with :lt, :le, :gt, :ge predicates
  * for comparison operators.
  */
-export type Term = BaseTerm | Atom | NegAtom | Eq | Ineq | Lt | Le | Gt | Ge | TemporalLiteral;
+export type Term = BaseTerm | Atom | NegAtom | Eq | Ineq | Lt | Le | Gt | Ge | TemporalLiteral | TemporalAtom;
 /**
  * A single transform statement (either "do fn:..." or "let X = fn:...").
  */
@@ -226,20 +226,24 @@ export interface Transform extends LocatedNode {
  * Temporal operator type.
  * Matches upstream Go ast.TemporalOperatorType enum.
  */
-export type TemporalOperatorType = 'diamond_minus' | 'diamond_plus' | 'box_minus' | 'box_plus' | 'since' | 'until';
+export type TemporalOperatorType = 'diamondMinus' | 'diamondPlus' | 'boxMinus' | 'boxPlus';
 /**
  * Type for temporal interval bounds.
+ * Matches upstream Go ast.TemporalBoundType enum (6 variants).
  */
-export type TemporalBoundType = 'constant' | 'variable' | 'duration' | 'infinity';
+export type TemporalBoundType = 'timestamp' | 'variable' | 'negativeInfinity' | 'positiveInfinity' | 'now' | 'duration';
 /**
  * A temporal interval bound.
+ * Matches upstream Go ast.TemporalBound struct.
  */
 export interface TemporalBound extends LocatedNode {
     readonly boundType: TemporalBoundType;
-    /** For constant/duration bounds */
+    /** For timestamp bounds: Unix nanos. For duration bounds: nanos. */
     readonly value?: number;
     /** For variable bounds */
     readonly variable?: Variable;
+    /** Original text from source (e.g., "2024-01-15", "7d") for display */
+    readonly rawText?: string;
 }
 /**
  * A temporal interval [start, end].
@@ -258,14 +262,26 @@ export interface TemporalOperator extends LocatedNode {
 /**
  * A temporal literal wrapping an atom/literal with temporal annotations.
  * Matches upstream Go ast.TemporalLiteral.
+ * Used in clause premises for temporally-qualified literals.
  */
 export interface TemporalLiteral extends LocatedNode {
     readonly type: 'TemporalLiteral';
     /** The inner literal (Atom or NegAtom) */
     readonly literal: Atom | NegAtom;
-    /** Optional temporal operator (<->, <+>, [-], [+], S, U) */
+    /** Optional temporal operator (<-, <+, [-, [+) */
     readonly operator: TemporalOperator | null;
-    /** Optional explicit interval annotation */
+    /** Optional explicit interval annotation @[start, end] */
+    readonly interval: TemporalInterval | null;
+}
+/**
+ * A temporal atom: an atom with an optional temporal interval annotation.
+ * Matches upstream Go ast.TemporalAtom.
+ * Used in clause heads and initial facts.
+ */
+export interface TemporalAtom extends LocatedNode {
+    readonly type: 'TemporalAtom';
+    readonly atom: Atom;
+    /** Temporal interval annotation (null means eternal / no annotation) */
     readonly interval: TemporalInterval | null;
 }
 /**
@@ -461,6 +477,10 @@ export declare function isDeclExternal(decl: Decl): boolean;
  */
 export declare function isDeclTemporal(decl: Decl): boolean;
 /**
+ * Check if a declaration has the internal:maybe_temporal() descriptor.
+ */
+export declare function isDeclMaybeTemporal(decl: Decl): boolean;
+/**
  * Get modes from a declaration's descriptor atoms.
  */
 export declare function getDeclModes(decl: Decl): Atom[];
@@ -497,6 +517,7 @@ export declare const DESCRIPTORS: {
     readonly MERGE_PREDICATE: "merge";
     readonly DEFERRED_PREDICATE: "deferred";
     readonly TEMPORAL: "temporal";
+    readonly MAYBE_TEMPORAL: "internal:maybe_temporal";
 };
 /**
  * Check if an atom is a comparison builtin (:lt, :le, :gt, :ge).

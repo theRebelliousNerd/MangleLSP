@@ -8,10 +8,13 @@ import { DescrBlockContext } from "./MangleParser.js";
 import { BoundsBlockContext } from "./MangleParser.js";
 import { ConstraintsBlockContext } from "./MangleParser.js";
 import { ClauseContext } from "./MangleParser.js";
+import { TemporalAnnotationContext } from "./MangleParser.js";
+import { TemporalBoundContext } from "./MangleParser.js";
 import { ClauseBodyContext } from "./MangleParser.js";
 import { TransformContext } from "./MangleParser.js";
 import { LetStmtContext } from "./MangleParser.js";
 import { LiteralOrFmlContext } from "./MangleParser.js";
+import { TemporalOperatorContext } from "./MangleParser.js";
 import { VarContext } from "./MangleParser.js";
 import { ConstContext } from "./MangleParser.js";
 import { NumContext } from "./MangleParser.js";
@@ -89,6 +92,18 @@ export declare class MangleVisitor<Result> extends AbstractParseTreeVisitor<Resu
      */
     visitClause?: (ctx: ClauseContext) => Result;
     /**
+     * Visit a parse tree produced by `MangleParser.temporalAnnotation`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitTemporalAnnotation?: (ctx: TemporalAnnotationContext) => Result;
+    /**
+     * Visit a parse tree produced by `MangleParser.temporalBound`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitTemporalBound?: (ctx: TemporalBoundContext) => Result;
+    /**
      * Visit a parse tree produced by `MangleParser.clauseBody`.
      * @param ctx the parse tree
      * @return the visitor result
@@ -112,6 +127,12 @@ export declare class MangleVisitor<Result> extends AbstractParseTreeVisitor<Resu
      * @return the visitor result
      */
     visitLiteralOrFml?: (ctx: LiteralOrFmlContext) => Result;
+    /**
+     * Visit a parse tree produced by `MangleParser.temporalOperator`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitTemporalOperator?: (ctx: TemporalOperatorContext) => Result;
     /**
      * Visit a parse tree produced by the `Var`
      * labeled alternative in `MangleParser.term`.

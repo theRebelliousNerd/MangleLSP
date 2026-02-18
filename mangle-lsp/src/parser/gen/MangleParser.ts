@@ -32,26 +32,35 @@ export class MangleParser extends antlr.Parser {
     public static readonly RPAREN = 18;
     public static readonly LBRACKET = 19;
     public static readonly RBRACKET = 20;
-    public static readonly EQ = 21;
-    public static readonly BANGEQ = 22;
-    public static readonly COMMA = 23;
-    public static readonly BANG = 24;
-    public static readonly LESS = 25;
-    public static readonly LESSEQ = 26;
-    public static readonly GREATER = 27;
-    public static readonly GREATEREQ = 28;
-    public static readonly COLONDASH = 29;
-    public static readonly NEWLINE = 30;
-    public static readonly PIPEGREATER = 31;
-    public static readonly NUMBER = 32;
-    public static readonly FLOAT = 33;
-    public static readonly VARIABLE = 34;
-    public static readonly NAME = 35;
-    public static readonly TYPENAME = 36;
-    public static readonly DOT_TYPE = 37;
-    public static readonly CONSTANT = 38;
-    public static readonly STRING = 39;
-    public static readonly BYTESTRING = 40;
+    public static readonly LBRACE = 21;
+    public static readonly RBRACE = 22;
+    public static readonly EQ = 23;
+    public static readonly BANGEQ = 24;
+    public static readonly COMMA = 25;
+    public static readonly BANG = 26;
+    public static readonly LESSEQ = 27;
+    public static readonly LESS = 28;
+    public static readonly GREATEREQ = 29;
+    public static readonly GREATER = 30;
+    public static readonly COLONDASH = 31;
+    public static readonly NEWLINE = 32;
+    public static readonly PIPEGREATER = 33;
+    public static readonly AT = 34;
+    public static readonly DIAMONDMINUS = 35;
+    public static readonly DIAMONDPLUS = 36;
+    public static readonly BOXMINUS = 37;
+    public static readonly BOXPLUS = 38;
+    public static readonly TIMESTAMP = 39;
+    public static readonly DURATION = 40;
+    public static readonly NUMBER = 41;
+    public static readonly FLOAT = 42;
+    public static readonly VARIABLE = 43;
+    public static readonly NAME = 44;
+    public static readonly TYPENAME = 45;
+    public static readonly DOT_TYPE = 46;
+    public static readonly CONSTANT = 47;
+    public static readonly STRING = 48;
+    public static readonly BYTESTRING = 49;
     public static readonly RULE_start = 0;
     public static readonly RULE_program = 1;
     public static readonly RULE_packageDecl = 2;
@@ -61,34 +70,41 @@ export class MangleParser extends antlr.Parser {
     public static readonly RULE_boundsBlock = 6;
     public static readonly RULE_constraintsBlock = 7;
     public static readonly RULE_clause = 8;
-    public static readonly RULE_clauseBody = 9;
-    public static readonly RULE_transform = 10;
-    public static readonly RULE_letStmt = 11;
-    public static readonly RULE_literalOrFml = 12;
-    public static readonly RULE_term = 13;
-    public static readonly RULE_member = 14;
-    public static readonly RULE_atom = 15;
-    public static readonly RULE_atoms = 16;
+    public static readonly RULE_temporalAnnotation = 9;
+    public static readonly RULE_temporalBound = 10;
+    public static readonly RULE_clauseBody = 11;
+    public static readonly RULE_transform = 12;
+    public static readonly RULE_letStmt = 13;
+    public static readonly RULE_literalOrFml = 14;
+    public static readonly RULE_temporalOperator = 15;
+    public static readonly RULE_term = 16;
+    public static readonly RULE_member = 17;
+    public static readonly RULE_atom = 18;
+    public static readonly RULE_atoms = 19;
 
     public static readonly literalNames = [
-        null, "'.'", "'descr'", "'inclusion'", "':'", "'{'", "'}'", "'opt'", 
-        null, null, "'\\u27F8'", "'Package'", "'Use'", "'Decl'", "'bound'", 
-        "'let'", "'do'", "'('", "')'", "'['", "']'", "'='", "'!='", "','", 
-        "'!'", "'<'", "'<='", "'>'", "'>='", "':-'", "'\\n'", "'|>'"
+        null, "'temporal'", "'.'", "'descr'", "'inclusion'", "'now'", "':'", 
+        "'opt'", null, null, "'\\u27F8'", "'Package'", "'Use'", "'Decl'", 
+        "'bound'", "'let'", "'do'", "'('", "')'", "'['", "']'", "'{'", "'}'", 
+        "'='", "'!='", "','", "'!'", "'<='", "'<'", "'>='", "'>'", "':-'", 
+        "'\\n'", "'|>'", "'@'", "'<-'", "'<+'", "'[-'", "'[+'"
     ];
 
     public static readonly symbolicNames = [
         null, null, null, null, null, null, null, null, "WHITESPACE", "COMMENT", 
         "LONGLEFTDOUBLEARROW", "PACKAGE", "USE", "DECL", "BOUND", "LET", 
-        "DO", "LPAREN", "RPAREN", "LBRACKET", "RBRACKET", "EQ", "BANGEQ", 
-        "COMMA", "BANG", "LESS", "LESSEQ", "GREATER", "GREATEREQ", "COLONDASH", 
-        "NEWLINE", "PIPEGREATER", "NUMBER", "FLOAT", "VARIABLE", "NAME", 
-        "TYPENAME", "DOT_TYPE", "CONSTANT", "STRING", "BYTESTRING"
+        "DO", "LPAREN", "RPAREN", "LBRACKET", "RBRACKET", "LBRACE", "RBRACE", 
+        "EQ", "BANGEQ", "COMMA", "BANG", "LESSEQ", "LESS", "GREATEREQ", 
+        "GREATER", "COLONDASH", "NEWLINE", "PIPEGREATER", "AT", "DIAMONDMINUS", 
+        "DIAMONDPLUS", "BOXMINUS", "BOXPLUS", "TIMESTAMP", "DURATION", "NUMBER", 
+        "FLOAT", "VARIABLE", "NAME", "TYPENAME", "DOT_TYPE", "CONSTANT", 
+        "STRING", "BYTESTRING"
     ];
     public static readonly ruleNames = [
         "start", "program", "packageDecl", "useDecl", "decl", "descrBlock", 
-        "boundsBlock", "constraintsBlock", "clause", "clauseBody", "transform", 
-        "letStmt", "literalOrFml", "term", "member", "atom", "atoms",
+        "boundsBlock", "constraintsBlock", "clause", "temporalAnnotation", 
+        "temporalBound", "clauseBody", "transform", "letStmt", "literalOrFml", 
+        "temporalOperator", "term", "member", "atom", "atoms",
     ];
 
     public get grammarFileName(): string { return "Mangle.g4"; }
@@ -111,9 +127,9 @@ export class MangleParser extends antlr.Parser {
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 34;
+            this.state = 40;
             this.program();
-            this.state = 35;
+            this.state = 41;
             this.match(MangleParser.EOF);
             }
         }
@@ -137,46 +153,46 @@ export class MangleParser extends antlr.Parser {
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 38;
+            this.state = 44;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
             if (_la === 11) {
                 {
-                this.state = 37;
+                this.state = 43;
                 this.packageDecl();
                 }
             }
 
-            this.state = 43;
+            this.state = 49;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
             while (_la === 12) {
                 {
                 {
-                this.state = 40;
+                this.state = 46;
                 this.useDecl();
                 }
                 }
-                this.state = 45;
+                this.state = 51;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
             }
-            this.state = 50;
+            this.state = 56;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            while ((((_la) & ~0x1F) === 0 && ((1 << _la) & 532512) !== 0) || ((((_la - 32)) & ~0x1F) === 0 && ((1 << (_la - 32)) & 495) !== 0)) {
+            while ((((_la) & ~0x1F) === 0 && ((1 << _la) & 2629632) !== 0) || ((((_la - 41)) & ~0x1F) === 0 && ((1 << (_la - 41)) & 495) !== 0)) {
                 {
-                this.state = 48;
+                this.state = 54;
                 this.errorHandler.sync(this);
                 switch (this.tokenStream.LA(1)) {
                 case MangleParser.DECL:
                     {
-                    this.state = 46;
+                    this.state = 52;
                     this.decl();
                     }
                     break;
-                case MangleParser.T__4:
                 case MangleParser.LBRACKET:
+                case MangleParser.LBRACE:
                 case MangleParser.NUMBER:
                 case MangleParser.FLOAT:
                 case MangleParser.VARIABLE:
@@ -186,7 +202,7 @@ export class MangleParser extends antlr.Parser {
                 case MangleParser.STRING:
                 case MangleParser.BYTESTRING:
                     {
-                    this.state = 47;
+                    this.state = 53;
                     this.clause();
                     }
                     break;
@@ -194,7 +210,7 @@ export class MangleParser extends antlr.Parser {
                     throw new antlr.NoViableAltException(this);
                 }
                 }
-                this.state = 52;
+                this.state = 58;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
             }
@@ -220,21 +236,21 @@ export class MangleParser extends antlr.Parser {
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 53;
+            this.state = 59;
             this.match(MangleParser.PACKAGE);
-            this.state = 54;
+            this.state = 60;
             this.match(MangleParser.NAME);
-            this.state = 56;
+            this.state = 62;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
             if (_la === 19) {
                 {
-                this.state = 55;
+                this.state = 61;
                 this.atoms();
                 }
             }
 
-            this.state = 58;
+            this.state = 64;
             this.match(MangleParser.BANG);
             }
         }
@@ -258,21 +274,21 @@ export class MangleParser extends antlr.Parser {
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 60;
+            this.state = 66;
             this.match(MangleParser.USE);
-            this.state = 61;
+            this.state = 67;
             this.match(MangleParser.NAME);
-            this.state = 63;
+            this.state = 69;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
             if (_la === 19) {
                 {
-                this.state = 62;
+                this.state = 68;
                 this.atoms();
                 }
             }
 
-            this.state = 65;
+            this.state = 71;
             this.match(MangleParser.BANG);
             }
         }
@@ -296,46 +312,56 @@ export class MangleParser extends antlr.Parser {
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 67;
+            this.state = 73;
             this.match(MangleParser.DECL);
-            this.state = 68;
+            this.state = 74;
             this.atom();
-            this.state = 70;
+            this.state = 76;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if (_la === 2) {
+            if (_la === 1) {
                 {
-                this.state = 69;
-                this.descrBlock();
+                this.state = 75;
+                this.match(MangleParser.T__0);
                 }
             }
 
-            this.state = 75;
-            this.errorHandler.sync(this);
-            _la = this.tokenStream.LA(1);
-            while (_la === 14) {
-                {
-                {
-                this.state = 72;
-                this.boundsBlock();
-                }
-                }
-                this.state = 77;
-                this.errorHandler.sync(this);
-                _la = this.tokenStream.LA(1);
-            }
             this.state = 79;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
             if (_la === 3) {
                 {
                 this.state = 78;
+                this.descrBlock();
+                }
+            }
+
+            this.state = 84;
+            this.errorHandler.sync(this);
+            _la = this.tokenStream.LA(1);
+            while (_la === 14) {
+                {
+                {
+                this.state = 81;
+                this.boundsBlock();
+                }
+                }
+                this.state = 86;
+                this.errorHandler.sync(this);
+                _la = this.tokenStream.LA(1);
+            }
+            this.state = 88;
+            this.errorHandler.sync(this);
+            _la = this.tokenStream.LA(1);
+            if (_la === 4) {
+                {
+                this.state = 87;
                 this.constraintsBlock();
                 }
             }
 
-            this.state = 81;
-            this.match(MangleParser.T__0);
+            this.state = 90;
+            this.match(MangleParser.T__1);
             }
         }
         catch (re) {
@@ -357,9 +383,9 @@ export class MangleParser extends antlr.Parser {
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 83;
-            this.match(MangleParser.T__1);
-            this.state = 84;
+            this.state = 92;
+            this.match(MangleParser.T__2);
+            this.state = 93;
             this.atoms();
             }
         }
@@ -384,39 +410,39 @@ export class MangleParser extends antlr.Parser {
             let alternative: number;
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 86;
+            this.state = 95;
             this.match(MangleParser.BOUND);
-            this.state = 87;
+            this.state = 96;
             this.match(MangleParser.LBRACKET);
-            this.state = 93;
+            this.state = 102;
             this.errorHandler.sync(this);
-            alternative = this.interpreter.adaptivePredict(this.tokenStream, 9, this.context);
+            alternative = this.interpreter.adaptivePredict(this.tokenStream, 10, this.context);
             while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
                 if (alternative === 1) {
                     {
                     {
-                    this.state = 88;
+                    this.state = 97;
                     this.term();
-                    this.state = 89;
+                    this.state = 98;
                     this.match(MangleParser.COMMA);
                     }
                     }
                 }
-                this.state = 95;
+                this.state = 104;
                 this.errorHandler.sync(this);
-                alternative = this.interpreter.adaptivePredict(this.tokenStream, 9, this.context);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 10, this.context);
             }
-            this.state = 97;
+            this.state = 106;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if (_la === 5 || _la === 19 || ((((_la - 32)) & ~0x1F) === 0 && ((1 << (_la - 32)) & 495) !== 0)) {
+            if (((((_la - 19)) & ~0x1F) === 0 && ((1 << (_la - 19)) & 2076180485) !== 0)) {
                 {
-                this.state = 96;
+                this.state = 105;
                 this.term();
                 }
             }
 
-            this.state = 99;
+            this.state = 108;
             this.match(MangleParser.RBRACKET);
             }
         }
@@ -439,9 +465,9 @@ export class MangleParser extends antlr.Parser {
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 101;
-            this.match(MangleParser.T__2);
-            this.state = 102;
+            this.state = 110;
+            this.match(MangleParser.T__3);
+            this.state = 111;
             this.atoms();
             }
         }
@@ -465,29 +491,112 @@ export class MangleParser extends antlr.Parser {
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 104;
+            this.state = 113;
             this.atom();
-            this.state = 107;
+            this.state = 115;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if (_la === 10 || _la === 29) {
+            if (_la === 34) {
                 {
-                this.state = 105;
+                this.state = 114;
+                this.temporalAnnotation();
+                }
+            }
+
+            this.state = 119;
+            this.errorHandler.sync(this);
+            _la = this.tokenStream.LA(1);
+            if (_la === 10 || _la === 31) {
+                {
+                this.state = 117;
                 _la = this.tokenStream.LA(1);
-                if(!(_la === 10 || _la === 29)) {
+                if(!(_la === 10 || _la === 31)) {
                 this.errorHandler.recoverInline(this);
                 }
                 else {
                     this.errorHandler.reportMatch(this);
                     this.consume();
                 }
-                this.state = 106;
+                this.state = 118;
                 this.clauseBody();
                 }
             }
 
-            this.state = 109;
-            this.match(MangleParser.T__0);
+            this.state = 121;
+            this.match(MangleParser.T__1);
+            }
+        }
+        catch (re) {
+            if (re instanceof antlr.RecognitionException) {
+                this.errorHandler.reportError(this, re);
+                this.errorHandler.recover(this, re);
+            } else {
+                throw re;
+            }
+        }
+        finally {
+            this.exitRule();
+        }
+        return localContext;
+    }
+    public temporalAnnotation(): TemporalAnnotationContext {
+        let localContext = new TemporalAnnotationContext(this.context, this.state);
+        this.enterRule(localContext, 18, MangleParser.RULE_temporalAnnotation);
+        let _la: number;
+        try {
+            this.enterOuterAlt(localContext, 1);
+            {
+            this.state = 123;
+            this.match(MangleParser.AT);
+            this.state = 124;
+            this.match(MangleParser.LBRACKET);
+            this.state = 125;
+            this.temporalBound();
+            this.state = 128;
+            this.errorHandler.sync(this);
+            _la = this.tokenStream.LA(1);
+            if (_la === 25) {
+                {
+                this.state = 126;
+                this.match(MangleParser.COMMA);
+                this.state = 127;
+                this.temporalBound();
+                }
+            }
+
+            this.state = 130;
+            this.match(MangleParser.RBRACKET);
+            }
+        }
+        catch (re) {
+            if (re instanceof antlr.RecognitionException) {
+                this.errorHandler.reportError(this, re);
+                this.errorHandler.recover(this, re);
+            } else {
+                throw re;
+            }
+        }
+        finally {
+            this.exitRule();
+        }
+        return localContext;
+    }
+    public temporalBound(): TemporalBoundContext {
+        let localContext = new TemporalBoundContext(this.context, this.state);
+        this.enterRule(localContext, 20, MangleParser.RULE_temporalBound);
+        let _la: number;
+        try {
+            this.enterOuterAlt(localContext, 1);
+            {
+            this.state = 132;
+            _la = this.tokenStream.LA(1);
+            if(!(_la === 5 || ((((_la - 39)) & ~0x1F) === 0 && ((1 << (_la - 39)) & 19) !== 0))) {
+            this.errorHandler.recoverInline(this);
+            }
+            else {
+                this.errorHandler.reportMatch(this);
+                this.consume();
+            }
             }
         }
         catch (re) {
@@ -505,55 +614,55 @@ export class MangleParser extends antlr.Parser {
     }
     public clauseBody(): ClauseBodyContext {
         let localContext = new ClauseBodyContext(this.context, this.state);
-        this.enterRule(localContext, 18, MangleParser.RULE_clauseBody);
+        this.enterRule(localContext, 22, MangleParser.RULE_clauseBody);
         let _la: number;
         try {
             let alternative: number;
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 111;
+            this.state = 134;
             this.literalOrFml();
-            this.state = 116;
+            this.state = 139;
             this.errorHandler.sync(this);
-            alternative = this.interpreter.adaptivePredict(this.tokenStream, 12, this.context);
+            alternative = this.interpreter.adaptivePredict(this.tokenStream, 15, this.context);
             while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
                 if (alternative === 1) {
                     {
                     {
-                    this.state = 112;
+                    this.state = 135;
                     this.match(MangleParser.COMMA);
-                    this.state = 113;
+                    this.state = 136;
                     this.literalOrFml();
                     }
                     }
                 }
-                this.state = 118;
+                this.state = 141;
                 this.errorHandler.sync(this);
-                alternative = this.interpreter.adaptivePredict(this.tokenStream, 12, this.context);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 15, this.context);
             }
-            this.state = 120;
+            this.state = 143;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if (_la === 23) {
+            if (_la === 25) {
                 {
-                this.state = 119;
+                this.state = 142;
                 this.match(MangleParser.COMMA);
                 }
             }
 
-            this.state = 126;
+            this.state = 149;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            while (_la === 31) {
+            while (_la === 33) {
                 {
                 {
-                this.state = 122;
+                this.state = 145;
                 this.match(MangleParser.PIPEGREATER);
-                this.state = 123;
+                this.state = 146;
                 this.transform();
                 }
                 }
-                this.state = 128;
+                this.state = 151;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
             }
@@ -574,41 +683,41 @@ export class MangleParser extends antlr.Parser {
     }
     public transform(): TransformContext {
         let localContext = new TransformContext(this.context, this.state);
-        this.enterRule(localContext, 20, MangleParser.RULE_transform);
+        this.enterRule(localContext, 24, MangleParser.RULE_transform);
         let _la: number;
         try {
-            this.state = 150;
+            this.state = 173;
             this.errorHandler.sync(this);
             switch (this.tokenStream.LA(1)) {
             case MangleParser.DO:
                 this.enterOuterAlt(localContext, 1);
                 {
-                this.state = 129;
+                this.state = 152;
                 this.match(MangleParser.DO);
-                this.state = 130;
+                this.state = 153;
                 this.term();
-                this.state = 140;
+                this.state = 163;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                if (_la === 23) {
+                if (_la === 25) {
                     {
-                    this.state = 131;
+                    this.state = 154;
                     this.match(MangleParser.COMMA);
-                    this.state = 132;
+                    this.state = 155;
                     this.letStmt();
-                    this.state = 137;
+                    this.state = 160;
                     this.errorHandler.sync(this);
                     _la = this.tokenStream.LA(1);
-                    while (_la === 23) {
+                    while (_la === 25) {
                         {
                         {
-                        this.state = 133;
+                        this.state = 156;
                         this.match(MangleParser.COMMA);
-                        this.state = 134;
+                        this.state = 157;
                         this.letStmt();
                         }
                         }
-                        this.state = 139;
+                        this.state = 162;
                         this.errorHandler.sync(this);
                         _la = this.tokenStream.LA(1);
                     }
@@ -620,21 +729,21 @@ export class MangleParser extends antlr.Parser {
             case MangleParser.LET:
                 this.enterOuterAlt(localContext, 2);
                 {
-                this.state = 142;
+                this.state = 165;
                 this.letStmt();
-                this.state = 147;
+                this.state = 170;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                while (_la === 23) {
+                while (_la === 25) {
                     {
                     {
-                    this.state = 143;
+                    this.state = 166;
                     this.match(MangleParser.COMMA);
-                    this.state = 144;
+                    this.state = 167;
                     this.letStmt();
                     }
                     }
-                    this.state = 149;
+                    this.state = 172;
                     this.errorHandler.sync(this);
                     _la = this.tokenStream.LA(1);
                 }
@@ -659,17 +768,17 @@ export class MangleParser extends antlr.Parser {
     }
     public letStmt(): LetStmtContext {
         let localContext = new LetStmtContext(this.context, this.state);
-        this.enterRule(localContext, 22, MangleParser.RULE_letStmt);
+        this.enterRule(localContext, 26, MangleParser.RULE_letStmt);
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 152;
+            this.state = 175;
             this.match(MangleParser.LET);
-            this.state = 153;
+            this.state = 176;
             this.match(MangleParser.VARIABLE);
-            this.state = 154;
+            this.state = 177;
             this.match(MangleParser.EQ);
-            this.state = 155;
+            this.state = 178;
             this.term();
             }
         }
@@ -688,14 +797,18 @@ export class MangleParser extends antlr.Parser {
     }
     public literalOrFml(): LiteralOrFmlContext {
         let localContext = new LiteralOrFmlContext(this.context, this.state);
-        this.enterRule(localContext, 24, MangleParser.RULE_literalOrFml);
+        this.enterRule(localContext, 28, MangleParser.RULE_literalOrFml);
         let _la: number;
         try {
-            this.state = 164;
+            this.state = 193;
             this.errorHandler.sync(this);
             switch (this.tokenStream.LA(1)) {
-            case MangleParser.T__4:
             case MangleParser.LBRACKET:
+            case MangleParser.LBRACE:
+            case MangleParser.DIAMONDMINUS:
+            case MangleParser.DIAMONDPLUS:
+            case MangleParser.BOXMINUS:
+            case MangleParser.BOXPLUS:
             case MangleParser.NUMBER:
             case MangleParser.FLOAT:
             case MangleParser.VARIABLE:
@@ -706,23 +819,43 @@ export class MangleParser extends antlr.Parser {
             case MangleParser.BYTESTRING:
                 this.enterOuterAlt(localContext, 1);
                 {
-                this.state = 157;
-                this.term();
-                this.state = 160;
+                this.state = 181;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                if ((((_la) & ~0x1F) === 0 && ((1 << _la) & 509607936) !== 0)) {
+                if (((((_la - 35)) & ~0x1F) === 0 && ((1 << (_la - 35)) & 15) !== 0)) {
                     {
-                    this.state = 158;
+                    this.state = 180;
+                    this.temporalOperator();
+                    }
+                }
+
+                this.state = 183;
+                this.term();
+                this.state = 185;
+                this.errorHandler.sync(this);
+                _la = this.tokenStream.LA(1);
+                if (_la === 34) {
+                    {
+                    this.state = 184;
+                    this.temporalAnnotation();
+                    }
+                }
+
+                this.state = 189;
+                this.errorHandler.sync(this);
+                _la = this.tokenStream.LA(1);
+                if ((((_la) & ~0x1F) === 0 && ((1 << _la) & 2038431744) !== 0)) {
+                    {
+                    this.state = 187;
                     _la = this.tokenStream.LA(1);
-                    if(!((((_la) & ~0x1F) === 0 && ((1 << _la) & 509607936) !== 0))) {
+                    if(!((((_la) & ~0x1F) === 0 && ((1 << _la) & 2038431744) !== 0))) {
                     this.errorHandler.recoverInline(this);
                     }
                     else {
                         this.errorHandler.reportMatch(this);
                         this.consume();
                     }
-                    this.state = 159;
+                    this.state = 188;
                     this.term();
                     }
                 }
@@ -732,10 +865,102 @@ export class MangleParser extends antlr.Parser {
             case MangleParser.BANG:
                 this.enterOuterAlt(localContext, 2);
                 {
-                this.state = 162;
+                this.state = 191;
                 this.match(MangleParser.BANG);
-                this.state = 163;
+                this.state = 192;
                 this.term();
+                }
+                break;
+            default:
+                throw new antlr.NoViableAltException(this);
+            }
+        }
+        catch (re) {
+            if (re instanceof antlr.RecognitionException) {
+                this.errorHandler.reportError(this, re);
+                this.errorHandler.recover(this, re);
+            } else {
+                throw re;
+            }
+        }
+        finally {
+            this.exitRule();
+        }
+        return localContext;
+    }
+    public temporalOperator(): TemporalOperatorContext {
+        let localContext = new TemporalOperatorContext(this.context, this.state);
+        this.enterRule(localContext, 30, MangleParser.RULE_temporalOperator);
+        try {
+            this.state = 223;
+            this.errorHandler.sync(this);
+            switch (this.tokenStream.LA(1)) {
+            case MangleParser.DIAMONDMINUS:
+                this.enterOuterAlt(localContext, 1);
+                {
+                this.state = 195;
+                this.match(MangleParser.DIAMONDMINUS);
+                this.state = 196;
+                this.match(MangleParser.LBRACKET);
+                this.state = 197;
+                this.temporalBound();
+                this.state = 198;
+                this.match(MangleParser.COMMA);
+                this.state = 199;
+                this.temporalBound();
+                this.state = 200;
+                this.match(MangleParser.RBRACKET);
+                }
+                break;
+            case MangleParser.BOXMINUS:
+                this.enterOuterAlt(localContext, 2);
+                {
+                this.state = 202;
+                this.match(MangleParser.BOXMINUS);
+                this.state = 203;
+                this.match(MangleParser.LBRACKET);
+                this.state = 204;
+                this.temporalBound();
+                this.state = 205;
+                this.match(MangleParser.COMMA);
+                this.state = 206;
+                this.temporalBound();
+                this.state = 207;
+                this.match(MangleParser.RBRACKET);
+                }
+                break;
+            case MangleParser.DIAMONDPLUS:
+                this.enterOuterAlt(localContext, 3);
+                {
+                this.state = 209;
+                this.match(MangleParser.DIAMONDPLUS);
+                this.state = 210;
+                this.match(MangleParser.LBRACKET);
+                this.state = 211;
+                this.temporalBound();
+                this.state = 212;
+                this.match(MangleParser.COMMA);
+                this.state = 213;
+                this.temporalBound();
+                this.state = 214;
+                this.match(MangleParser.RBRACKET);
+                }
+                break;
+            case MangleParser.BOXPLUS:
+                this.enterOuterAlt(localContext, 4);
+                {
+                this.state = 216;
+                this.match(MangleParser.BOXPLUS);
+                this.state = 217;
+                this.match(MangleParser.LBRACKET);
+                this.state = 218;
+                this.temporalBound();
+                this.state = 219;
+                this.match(MangleParser.COMMA);
+                this.state = 220;
+                this.temporalBound();
+                this.state = 221;
+                this.match(MangleParser.RBRACKET);
                 }
                 break;
             default:
@@ -757,18 +982,18 @@ export class MangleParser extends antlr.Parser {
     }
     public term(): TermContext {
         let localContext = new TermContext(this.context, this.state);
-        this.enterRule(localContext, 26, MangleParser.RULE_term);
+        this.enterRule(localContext, 32, MangleParser.RULE_term);
         let _la: number;
         try {
             let alternative: number;
-            this.state = 252;
+            this.state = 311;
             this.errorHandler.sync(this);
-            switch (this.interpreter.adaptivePredict(this.tokenStream, 32, this.context) ) {
+            switch (this.interpreter.adaptivePredict(this.tokenStream, 38, this.context) ) {
             case 1:
                 localContext = new VarContext(localContext);
                 this.enterOuterAlt(localContext, 1);
                 {
-                this.state = 166;
+                this.state = 225;
                 this.match(MangleParser.VARIABLE);
                 }
                 break;
@@ -776,7 +1001,7 @@ export class MangleParser extends antlr.Parser {
                 localContext = new ConstContext(localContext);
                 this.enterOuterAlt(localContext, 2);
                 {
-                this.state = 167;
+                this.state = 226;
                 this.match(MangleParser.CONSTANT);
                 }
                 break;
@@ -784,7 +1009,7 @@ export class MangleParser extends antlr.Parser {
                 localContext = new NumContext(localContext);
                 this.enterOuterAlt(localContext, 3);
                 {
-                this.state = 168;
+                this.state = 227;
                 this.match(MangleParser.NUMBER);
                 }
                 break;
@@ -792,7 +1017,7 @@ export class MangleParser extends antlr.Parser {
                 localContext = new FloatContext(localContext);
                 this.enterOuterAlt(localContext, 4);
                 {
-                this.state = 169;
+                this.state = 228;
                 this.match(MangleParser.FLOAT);
                 }
                 break;
@@ -800,7 +1025,7 @@ export class MangleParser extends antlr.Parser {
                 localContext = new StrContext(localContext);
                 this.enterOuterAlt(localContext, 5);
                 {
-                this.state = 170;
+                this.state = 229;
                 this.match(MangleParser.STRING);
                 }
                 break;
@@ -808,7 +1033,7 @@ export class MangleParser extends antlr.Parser {
                 localContext = new BStrContext(localContext);
                 this.enterOuterAlt(localContext, 6);
                 {
-                this.state = 171;
+                this.state = 230;
                 this.match(MangleParser.BYTESTRING);
                 }
                 break;
@@ -816,37 +1041,37 @@ export class MangleParser extends antlr.Parser {
                 localContext = new ListContext(localContext);
                 this.enterOuterAlt(localContext, 7);
                 {
-                this.state = 172;
+                this.state = 231;
                 this.match(MangleParser.LBRACKET);
-                this.state = 178;
+                this.state = 237;
                 this.errorHandler.sync(this);
-                alternative = this.interpreter.adaptivePredict(this.tokenStream, 21, this.context);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 27, this.context);
                 while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
                     if (alternative === 1) {
                         {
                         {
-                        this.state = 173;
+                        this.state = 232;
                         this.term();
-                        this.state = 174;
+                        this.state = 233;
                         this.match(MangleParser.COMMA);
                         }
                         }
                     }
-                    this.state = 180;
+                    this.state = 239;
                     this.errorHandler.sync(this);
-                    alternative = this.interpreter.adaptivePredict(this.tokenStream, 21, this.context);
+                    alternative = this.interpreter.adaptivePredict(this.tokenStream, 27, this.context);
                 }
-                this.state = 182;
+                this.state = 241;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                if (_la === 5 || _la === 19 || ((((_la - 32)) & ~0x1F) === 0 && ((1 << (_la - 32)) & 495) !== 0)) {
+                if (((((_la - 19)) & ~0x1F) === 0 && ((1 << (_la - 19)) & 2076180485) !== 0)) {
                     {
-                    this.state = 181;
+                    this.state = 240;
                     this.term();
                     }
                 }
 
-                this.state = 184;
+                this.state = 243;
                 this.match(MangleParser.RBRACKET);
                 }
                 break;
@@ -854,45 +1079,45 @@ export class MangleParser extends antlr.Parser {
                 localContext = new MapContext(localContext);
                 this.enterOuterAlt(localContext, 8);
                 {
-                this.state = 185;
+                this.state = 244;
                 this.match(MangleParser.LBRACKET);
-                this.state = 193;
+                this.state = 252;
                 this.errorHandler.sync(this);
-                alternative = this.interpreter.adaptivePredict(this.tokenStream, 23, this.context);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 29, this.context);
                 while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
                     if (alternative === 1) {
                         {
                         {
-                        this.state = 186;
+                        this.state = 245;
                         this.term();
-                        this.state = 187;
-                        this.match(MangleParser.T__3);
-                        this.state = 188;
+                        this.state = 246;
+                        this.match(MangleParser.T__5);
+                        this.state = 247;
                         this.term();
-                        this.state = 189;
+                        this.state = 248;
                         this.match(MangleParser.COMMA);
                         }
                         }
                     }
-                    this.state = 195;
+                    this.state = 254;
                     this.errorHandler.sync(this);
-                    alternative = this.interpreter.adaptivePredict(this.tokenStream, 23, this.context);
+                    alternative = this.interpreter.adaptivePredict(this.tokenStream, 29, this.context);
                 }
-                this.state = 200;
+                this.state = 259;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                if (_la === 5 || _la === 19 || ((((_la - 32)) & ~0x1F) === 0 && ((1 << (_la - 32)) & 495) !== 0)) {
+                if (((((_la - 19)) & ~0x1F) === 0 && ((1 << (_la - 19)) & 2076180485) !== 0)) {
                     {
-                    this.state = 196;
+                    this.state = 255;
                     this.term();
-                    this.state = 197;
-                    this.match(MangleParser.T__3);
-                    this.state = 198;
+                    this.state = 256;
+                    this.match(MangleParser.T__5);
+                    this.state = 257;
                     this.term();
                     }
                 }
 
-                this.state = 202;
+                this.state = 261;
                 this.match(MangleParser.RBRACKET);
                 }
                 break;
@@ -900,87 +1125,87 @@ export class MangleParser extends antlr.Parser {
                 localContext = new StructContext(localContext);
                 this.enterOuterAlt(localContext, 9);
                 {
-                this.state = 203;
-                this.match(MangleParser.T__4);
-                this.state = 211;
+                this.state = 262;
+                this.match(MangleParser.LBRACE);
+                this.state = 270;
                 this.errorHandler.sync(this);
-                alternative = this.interpreter.adaptivePredict(this.tokenStream, 25, this.context);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 31, this.context);
                 while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
                     if (alternative === 1) {
                         {
                         {
-                        this.state = 204;
+                        this.state = 263;
                         this.term();
-                        this.state = 205;
-                        this.match(MangleParser.T__3);
-                        this.state = 206;
+                        this.state = 264;
+                        this.match(MangleParser.T__5);
+                        this.state = 265;
                         this.term();
-                        this.state = 207;
+                        this.state = 266;
                         this.match(MangleParser.COMMA);
                         }
                         }
                     }
-                    this.state = 213;
+                    this.state = 272;
                     this.errorHandler.sync(this);
-                    alternative = this.interpreter.adaptivePredict(this.tokenStream, 25, this.context);
+                    alternative = this.interpreter.adaptivePredict(this.tokenStream, 31, this.context);
                 }
-                this.state = 218;
+                this.state = 277;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                if (_la === 5 || _la === 19 || ((((_la - 32)) & ~0x1F) === 0 && ((1 << (_la - 32)) & 495) !== 0)) {
+                if (((((_la - 19)) & ~0x1F) === 0 && ((1 << (_la - 19)) & 2076180485) !== 0)) {
                     {
-                    this.state = 214;
+                    this.state = 273;
                     this.term();
-                    this.state = 215;
-                    this.match(MangleParser.T__3);
-                    this.state = 216;
+                    this.state = 274;
+                    this.match(MangleParser.T__5);
+                    this.state = 275;
                     this.term();
                     }
                 }
 
-                this.state = 220;
-                this.match(MangleParser.T__5);
+                this.state = 279;
+                this.match(MangleParser.RBRACE);
                 }
                 break;
             case 10:
                 localContext = new DotTypeContext(localContext);
                 this.enterOuterAlt(localContext, 10);
                 {
-                this.state = 221;
+                this.state = 280;
                 this.match(MangleParser.DOT_TYPE);
-                this.state = 222;
+                this.state = 281;
                 this.match(MangleParser.LESS);
-                this.state = 228;
+                this.state = 287;
                 this.errorHandler.sync(this);
-                alternative = this.interpreter.adaptivePredict(this.tokenStream, 27, this.context);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 33, this.context);
                 while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
                     if (alternative === 1) {
                         {
                         {
-                        this.state = 223;
+                        this.state = 282;
                         this.member();
-                        this.state = 224;
+                        this.state = 283;
                         this.match(MangleParser.COMMA);
                         }
                         }
                     }
-                    this.state = 230;
+                    this.state = 289;
                     this.errorHandler.sync(this);
-                    alternative = this.interpreter.adaptivePredict(this.tokenStream, 27, this.context);
+                    alternative = this.interpreter.adaptivePredict(this.tokenStream, 33, this.context);
                 }
-                this.state = 235;
+                this.state = 294;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                if ((((_la) & ~0x1F) === 0 && ((1 << _la) & 524448) !== 0) || ((((_la - 32)) & ~0x1F) === 0 && ((1 << (_la - 32)) & 495) !== 0)) {
+                if ((((_la) & ~0x1F) === 0 && ((1 << _la) & 2621568) !== 0) || ((((_la - 41)) & ~0x1F) === 0 && ((1 << (_la - 41)) & 495) !== 0)) {
                     {
-                    this.state = 231;
+                    this.state = 290;
                     this.member();
-                    this.state = 233;
+                    this.state = 292;
                     this.errorHandler.sync(this);
                     _la = this.tokenStream.LA(1);
-                    if (_la === 23) {
+                    if (_la === 25) {
                         {
-                        this.state = 232;
+                        this.state = 291;
                         this.match(MangleParser.COMMA);
                         }
                     }
@@ -988,7 +1213,7 @@ export class MangleParser extends antlr.Parser {
                     }
                 }
 
-                this.state = 237;
+                this.state = 296;
                 this.match(MangleParser.GREATER);
                 }
                 break;
@@ -996,39 +1221,39 @@ export class MangleParser extends antlr.Parser {
                 localContext = new ApplContext(localContext);
                 this.enterOuterAlt(localContext, 11);
                 {
-                this.state = 238;
+                this.state = 297;
                 this.match(MangleParser.NAME);
-                this.state = 239;
+                this.state = 298;
                 this.match(MangleParser.LPAREN);
-                this.state = 245;
+                this.state = 304;
                 this.errorHandler.sync(this);
-                alternative = this.interpreter.adaptivePredict(this.tokenStream, 30, this.context);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 36, this.context);
                 while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
                     if (alternative === 1) {
                         {
                         {
-                        this.state = 240;
+                        this.state = 299;
                         this.term();
-                        this.state = 241;
+                        this.state = 300;
                         this.match(MangleParser.COMMA);
                         }
                         }
                     }
-                    this.state = 247;
+                    this.state = 306;
                     this.errorHandler.sync(this);
-                    alternative = this.interpreter.adaptivePredict(this.tokenStream, 30, this.context);
+                    alternative = this.interpreter.adaptivePredict(this.tokenStream, 36, this.context);
                 }
-                this.state = 249;
+                this.state = 308;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                if (_la === 5 || _la === 19 || ((((_la - 32)) & ~0x1F) === 0 && ((1 << (_la - 32)) & 495) !== 0)) {
+                if (((((_la - 19)) & ~0x1F) === 0 && ((1 << (_la - 19)) & 2076180485) !== 0)) {
                     {
-                    this.state = 248;
+                    this.state = 307;
                     this.term();
                     }
                 }
 
-                this.state = 251;
+                this.state = 310;
                 this.match(MangleParser.RPAREN);
                 }
                 break;
@@ -1049,14 +1274,14 @@ export class MangleParser extends antlr.Parser {
     }
     public member(): MemberContext {
         let localContext = new MemberContext(this.context, this.state);
-        this.enterRule(localContext, 28, MangleParser.RULE_member);
+        this.enterRule(localContext, 34, MangleParser.RULE_member);
         let _la: number;
         try {
-            this.state = 264;
+            this.state = 323;
             this.errorHandler.sync(this);
             switch (this.tokenStream.LA(1)) {
-            case MangleParser.T__4:
             case MangleParser.LBRACKET:
+            case MangleParser.LBRACE:
             case MangleParser.NUMBER:
             case MangleParser.FLOAT:
             case MangleParser.VARIABLE:
@@ -1067,16 +1292,16 @@ export class MangleParser extends antlr.Parser {
             case MangleParser.BYTESTRING:
                 this.enterOuterAlt(localContext, 1);
                 {
-                this.state = 254;
+                this.state = 313;
                 this.term();
-                this.state = 257;
+                this.state = 316;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                if (_la === 4) {
+                if (_la === 6) {
                     {
-                    this.state = 255;
-                    this.match(MangleParser.T__3);
-                    this.state = 256;
+                    this.state = 314;
+                    this.match(MangleParser.T__5);
+                    this.state = 315;
                     this.term();
                     }
                 }
@@ -1086,13 +1311,13 @@ export class MangleParser extends antlr.Parser {
             case MangleParser.T__6:
                 this.enterOuterAlt(localContext, 2);
                 {
-                this.state = 259;
+                this.state = 318;
                 this.match(MangleParser.T__6);
-                this.state = 260;
+                this.state = 319;
                 this.term();
-                this.state = 261;
-                this.match(MangleParser.T__3);
-                this.state = 262;
+                this.state = 320;
+                this.match(MangleParser.T__5);
+                this.state = 321;
                 this.term();
                 }
                 break;
@@ -1115,11 +1340,11 @@ export class MangleParser extends antlr.Parser {
     }
     public atom(): AtomContext {
         let localContext = new AtomContext(this.context, this.state);
-        this.enterRule(localContext, 30, MangleParser.RULE_atom);
+        this.enterRule(localContext, 36, MangleParser.RULE_atom);
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 266;
+            this.state = 325;
             this.term();
             }
         }
@@ -1138,43 +1363,43 @@ export class MangleParser extends antlr.Parser {
     }
     public atoms(): AtomsContext {
         let localContext = new AtomsContext(this.context, this.state);
-        this.enterRule(localContext, 32, MangleParser.RULE_atoms);
+        this.enterRule(localContext, 38, MangleParser.RULE_atoms);
         let _la: number;
         try {
             let alternative: number;
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 268;
+            this.state = 327;
             this.match(MangleParser.LBRACKET);
-            this.state = 274;
+            this.state = 333;
             this.errorHandler.sync(this);
-            alternative = this.interpreter.adaptivePredict(this.tokenStream, 35, this.context);
+            alternative = this.interpreter.adaptivePredict(this.tokenStream, 41, this.context);
             while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
                 if (alternative === 1) {
                     {
                     {
-                    this.state = 269;
+                    this.state = 328;
                     this.atom();
-                    this.state = 270;
+                    this.state = 329;
                     this.match(MangleParser.COMMA);
                     }
                     }
                 }
-                this.state = 276;
+                this.state = 335;
                 this.errorHandler.sync(this);
-                alternative = this.interpreter.adaptivePredict(this.tokenStream, 35, this.context);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 41, this.context);
             }
-            this.state = 278;
+            this.state = 337;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if (_la === 5 || _la === 19 || ((((_la - 32)) & ~0x1F) === 0 && ((1 << (_la - 32)) & 495) !== 0)) {
+            if (((((_la - 19)) & ~0x1F) === 0 && ((1 << (_la - 19)) & 2076180485) !== 0)) {
                 {
-                this.state = 277;
+                this.state = 336;
                 this.atom();
                 }
             }
 
-            this.state = 280;
+            this.state = 339;
             this.match(MangleParser.RBRACKET);
             }
         }
@@ -1193,109 +1418,132 @@ export class MangleParser extends antlr.Parser {
     }
 
     public static readonly _serializedATN: number[] = [
-        4,1,40,283,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        4,1,49,342,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
         6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,
-        2,14,7,14,2,15,7,15,2,16,7,16,1,0,1,0,1,0,1,1,3,1,39,8,1,1,1,5,1,
-        42,8,1,10,1,12,1,45,9,1,1,1,1,1,5,1,49,8,1,10,1,12,1,52,9,1,1,2,
-        1,2,1,2,3,2,57,8,2,1,2,1,2,1,3,1,3,1,3,3,3,64,8,3,1,3,1,3,1,4,1,
-        4,1,4,3,4,71,8,4,1,4,5,4,74,8,4,10,4,12,4,77,9,4,1,4,3,4,80,8,4,
-        1,4,1,4,1,5,1,5,1,5,1,6,1,6,1,6,1,6,1,6,5,6,92,8,6,10,6,12,6,95,
-        9,6,1,6,3,6,98,8,6,1,6,1,6,1,7,1,7,1,7,1,8,1,8,1,8,3,8,108,8,8,1,
-        8,1,8,1,9,1,9,1,9,5,9,115,8,9,10,9,12,9,118,9,9,1,9,3,9,121,8,9,
-        1,9,1,9,5,9,125,8,9,10,9,12,9,128,9,9,1,10,1,10,1,10,1,10,1,10,1,
-        10,5,10,136,8,10,10,10,12,10,139,9,10,3,10,141,8,10,1,10,1,10,1,
-        10,5,10,146,8,10,10,10,12,10,149,9,10,3,10,151,8,10,1,11,1,11,1,
-        11,1,11,1,11,1,12,1,12,1,12,3,12,161,8,12,1,12,1,12,3,12,165,8,12,
-        1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,5,13,177,8,13,
-        10,13,12,13,180,9,13,1,13,3,13,183,8,13,1,13,1,13,1,13,1,13,1,13,
-        1,13,1,13,5,13,192,8,13,10,13,12,13,195,9,13,1,13,1,13,1,13,1,13,
-        3,13,201,8,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,5,13,210,8,13,10,
-        13,12,13,213,9,13,1,13,1,13,1,13,1,13,3,13,219,8,13,1,13,1,13,1,
-        13,1,13,1,13,1,13,5,13,227,8,13,10,13,12,13,230,9,13,1,13,1,13,3,
-        13,234,8,13,3,13,236,8,13,1,13,1,13,1,13,1,13,1,13,1,13,5,13,244,
-        8,13,10,13,12,13,247,9,13,1,13,3,13,250,8,13,1,13,3,13,253,8,13,
-        1,14,1,14,1,14,3,14,258,8,14,1,14,1,14,1,14,1,14,1,14,3,14,265,8,
-        14,1,15,1,15,1,16,1,16,1,16,1,16,5,16,273,8,16,10,16,12,16,276,9,
-        16,1,16,3,16,279,8,16,1,16,1,16,1,16,0,0,17,0,2,4,6,8,10,12,14,16,
-        18,20,22,24,26,28,30,32,0,2,2,0,10,10,29,29,2,0,21,22,25,28,311,
-        0,34,1,0,0,0,2,38,1,0,0,0,4,53,1,0,0,0,6,60,1,0,0,0,8,67,1,0,0,0,
-        10,83,1,0,0,0,12,86,1,0,0,0,14,101,1,0,0,0,16,104,1,0,0,0,18,111,
-        1,0,0,0,20,150,1,0,0,0,22,152,1,0,0,0,24,164,1,0,0,0,26,252,1,0,
-        0,0,28,264,1,0,0,0,30,266,1,0,0,0,32,268,1,0,0,0,34,35,3,2,1,0,35,
-        36,5,0,0,1,36,1,1,0,0,0,37,39,3,4,2,0,38,37,1,0,0,0,38,39,1,0,0,
-        0,39,43,1,0,0,0,40,42,3,6,3,0,41,40,1,0,0,0,42,45,1,0,0,0,43,41,
-        1,0,0,0,43,44,1,0,0,0,44,50,1,0,0,0,45,43,1,0,0,0,46,49,3,8,4,0,
-        47,49,3,16,8,0,48,46,1,0,0,0,48,47,1,0,0,0,49,52,1,0,0,0,50,48,1,
-        0,0,0,50,51,1,0,0,0,51,3,1,0,0,0,52,50,1,0,0,0,53,54,5,11,0,0,54,
-        56,5,35,0,0,55,57,3,32,16,0,56,55,1,0,0,0,56,57,1,0,0,0,57,58,1,
-        0,0,0,58,59,5,24,0,0,59,5,1,0,0,0,60,61,5,12,0,0,61,63,5,35,0,0,
-        62,64,3,32,16,0,63,62,1,0,0,0,63,64,1,0,0,0,64,65,1,0,0,0,65,66,
-        5,24,0,0,66,7,1,0,0,0,67,68,5,13,0,0,68,70,3,30,15,0,69,71,3,10,
-        5,0,70,69,1,0,0,0,70,71,1,0,0,0,71,75,1,0,0,0,72,74,3,12,6,0,73,
-        72,1,0,0,0,74,77,1,0,0,0,75,73,1,0,0,0,75,76,1,0,0,0,76,79,1,0,0,
-        0,77,75,1,0,0,0,78,80,3,14,7,0,79,78,1,0,0,0,79,80,1,0,0,0,80,81,
-        1,0,0,0,81,82,5,1,0,0,82,9,1,0,0,0,83,84,5,2,0,0,84,85,3,32,16,0,
-        85,11,1,0,0,0,86,87,5,14,0,0,87,93,5,19,0,0,88,89,3,26,13,0,89,90,
-        5,23,0,0,90,92,1,0,0,0,91,88,1,0,0,0,92,95,1,0,0,0,93,91,1,0,0,0,
-        93,94,1,0,0,0,94,97,1,0,0,0,95,93,1,0,0,0,96,98,3,26,13,0,97,96,
-        1,0,0,0,97,98,1,0,0,0,98,99,1,0,0,0,99,100,5,20,0,0,100,13,1,0,0,
-        0,101,102,5,3,0,0,102,103,3,32,16,0,103,15,1,0,0,0,104,107,3,30,
-        15,0,105,106,7,0,0,0,106,108,3,18,9,0,107,105,1,0,0,0,107,108,1,
-        0,0,0,108,109,1,0,0,0,109,110,5,1,0,0,110,17,1,0,0,0,111,116,3,24,
-        12,0,112,113,5,23,0,0,113,115,3,24,12,0,114,112,1,0,0,0,115,118,
-        1,0,0,0,116,114,1,0,0,0,116,117,1,0,0,0,117,120,1,0,0,0,118,116,
-        1,0,0,0,119,121,5,23,0,0,120,119,1,0,0,0,120,121,1,0,0,0,121,126,
-        1,0,0,0,122,123,5,31,0,0,123,125,3,20,10,0,124,122,1,0,0,0,125,128,
-        1,0,0,0,126,124,1,0,0,0,126,127,1,0,0,0,127,19,1,0,0,0,128,126,1,
-        0,0,0,129,130,5,16,0,0,130,140,3,26,13,0,131,132,5,23,0,0,132,137,
-        3,22,11,0,133,134,5,23,0,0,134,136,3,22,11,0,135,133,1,0,0,0,136,
-        139,1,0,0,0,137,135,1,0,0,0,137,138,1,0,0,0,138,141,1,0,0,0,139,
-        137,1,0,0,0,140,131,1,0,0,0,140,141,1,0,0,0,141,151,1,0,0,0,142,
-        147,3,22,11,0,143,144,5,23,0,0,144,146,3,22,11,0,145,143,1,0,0,0,
-        146,149,1,0,0,0,147,145,1,0,0,0,147,148,1,0,0,0,148,151,1,0,0,0,
-        149,147,1,0,0,0,150,129,1,0,0,0,150,142,1,0,0,0,151,21,1,0,0,0,152,
-        153,5,15,0,0,153,154,5,34,0,0,154,155,5,21,0,0,155,156,3,26,13,0,
-        156,23,1,0,0,0,157,160,3,26,13,0,158,159,7,1,0,0,159,161,3,26,13,
-        0,160,158,1,0,0,0,160,161,1,0,0,0,161,165,1,0,0,0,162,163,5,24,0,
-        0,163,165,3,26,13,0,164,157,1,0,0,0,164,162,1,0,0,0,165,25,1,0,0,
-        0,166,253,5,34,0,0,167,253,5,38,0,0,168,253,5,32,0,0,169,253,5,33,
-        0,0,170,253,5,39,0,0,171,253,5,40,0,0,172,178,5,19,0,0,173,174,3,
-        26,13,0,174,175,5,23,0,0,175,177,1,0,0,0,176,173,1,0,0,0,177,180,
-        1,0,0,0,178,176,1,0,0,0,178,179,1,0,0,0,179,182,1,0,0,0,180,178,
-        1,0,0,0,181,183,3,26,13,0,182,181,1,0,0,0,182,183,1,0,0,0,183,184,
-        1,0,0,0,184,253,5,20,0,0,185,193,5,19,0,0,186,187,3,26,13,0,187,
-        188,5,4,0,0,188,189,3,26,13,0,189,190,5,23,0,0,190,192,1,0,0,0,191,
-        186,1,0,0,0,192,195,1,0,0,0,193,191,1,0,0,0,193,194,1,0,0,0,194,
-        200,1,0,0,0,195,193,1,0,0,0,196,197,3,26,13,0,197,198,5,4,0,0,198,
-        199,3,26,13,0,199,201,1,0,0,0,200,196,1,0,0,0,200,201,1,0,0,0,201,
-        202,1,0,0,0,202,253,5,20,0,0,203,211,5,5,0,0,204,205,3,26,13,0,205,
-        206,5,4,0,0,206,207,3,26,13,0,207,208,5,23,0,0,208,210,1,0,0,0,209,
-        204,1,0,0,0,210,213,1,0,0,0,211,209,1,0,0,0,211,212,1,0,0,0,212,
-        218,1,0,0,0,213,211,1,0,0,0,214,215,3,26,13,0,215,216,5,4,0,0,216,
-        217,3,26,13,0,217,219,1,0,0,0,218,214,1,0,0,0,218,219,1,0,0,0,219,
-        220,1,0,0,0,220,253,5,6,0,0,221,222,5,37,0,0,222,228,5,25,0,0,223,
-        224,3,28,14,0,224,225,5,23,0,0,225,227,1,0,0,0,226,223,1,0,0,0,227,
-        230,1,0,0,0,228,226,1,0,0,0,228,229,1,0,0,0,229,235,1,0,0,0,230,
-        228,1,0,0,0,231,233,3,28,14,0,232,234,5,23,0,0,233,232,1,0,0,0,233,
-        234,1,0,0,0,234,236,1,0,0,0,235,231,1,0,0,0,235,236,1,0,0,0,236,
-        237,1,0,0,0,237,253,5,27,0,0,238,239,5,35,0,0,239,245,5,17,0,0,240,
-        241,3,26,13,0,241,242,5,23,0,0,242,244,1,0,0,0,243,240,1,0,0,0,244,
-        247,1,0,0,0,245,243,1,0,0,0,245,246,1,0,0,0,246,249,1,0,0,0,247,
-        245,1,0,0,0,248,250,3,26,13,0,249,248,1,0,0,0,249,250,1,0,0,0,250,
-        251,1,0,0,0,251,253,5,18,0,0,252,166,1,0,0,0,252,167,1,0,0,0,252,
-        168,1,0,0,0,252,169,1,0,0,0,252,170,1,0,0,0,252,171,1,0,0,0,252,
-        172,1,0,0,0,252,185,1,0,0,0,252,203,1,0,0,0,252,221,1,0,0,0,252,
-        238,1,0,0,0,253,27,1,0,0,0,254,257,3,26,13,0,255,256,5,4,0,0,256,
-        258,3,26,13,0,257,255,1,0,0,0,257,258,1,0,0,0,258,265,1,0,0,0,259,
-        260,5,7,0,0,260,261,3,26,13,0,261,262,5,4,0,0,262,263,3,26,13,0,
-        263,265,1,0,0,0,264,254,1,0,0,0,264,259,1,0,0,0,265,29,1,0,0,0,266,
-        267,3,26,13,0,267,31,1,0,0,0,268,274,5,19,0,0,269,270,3,30,15,0,
-        270,271,5,23,0,0,271,273,1,0,0,0,272,269,1,0,0,0,273,276,1,0,0,0,
-        274,272,1,0,0,0,274,275,1,0,0,0,275,278,1,0,0,0,276,274,1,0,0,0,
-        277,279,3,30,15,0,278,277,1,0,0,0,278,279,1,0,0,0,279,280,1,0,0,
-        0,280,281,5,20,0,0,281,33,1,0,0,0,37,38,43,48,50,56,63,70,75,79,
-        93,97,107,116,120,126,137,140,147,150,160,164,178,182,193,200,211,
-        218,228,233,235,245,249,252,257,264,274,278
+        2,14,7,14,2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,1,0,
+        1,0,1,0,1,1,3,1,45,8,1,1,1,5,1,48,8,1,10,1,12,1,51,9,1,1,1,1,1,5,
+        1,55,8,1,10,1,12,1,58,9,1,1,2,1,2,1,2,3,2,63,8,2,1,2,1,2,1,3,1,3,
+        1,3,3,3,70,8,3,1,3,1,3,1,4,1,4,1,4,3,4,77,8,4,1,4,3,4,80,8,4,1,4,
+        5,4,83,8,4,10,4,12,4,86,9,4,1,4,3,4,89,8,4,1,4,1,4,1,5,1,5,1,5,1,
+        6,1,6,1,6,1,6,1,6,5,6,101,8,6,10,6,12,6,104,9,6,1,6,3,6,107,8,6,
+        1,6,1,6,1,7,1,7,1,7,1,8,1,8,3,8,116,8,8,1,8,1,8,3,8,120,8,8,1,8,
+        1,8,1,9,1,9,1,9,1,9,1,9,3,9,129,8,9,1,9,1,9,1,10,1,10,1,11,1,11,
+        1,11,5,11,138,8,11,10,11,12,11,141,9,11,1,11,3,11,144,8,11,1,11,
+        1,11,5,11,148,8,11,10,11,12,11,151,9,11,1,12,1,12,1,12,1,12,1,12,
+        1,12,5,12,159,8,12,10,12,12,12,162,9,12,3,12,164,8,12,1,12,1,12,
+        1,12,5,12,169,8,12,10,12,12,12,172,9,12,3,12,174,8,12,1,13,1,13,
+        1,13,1,13,1,13,1,14,3,14,182,8,14,1,14,1,14,3,14,186,8,14,1,14,1,
+        14,3,14,190,8,14,1,14,1,14,3,14,194,8,14,1,15,1,15,1,15,1,15,1,15,
+        1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,
+        1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,3,15,224,8,15,
+        1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,5,16,236,8,16,
+        10,16,12,16,239,9,16,1,16,3,16,242,8,16,1,16,1,16,1,16,1,16,1,16,
+        1,16,1,16,5,16,251,8,16,10,16,12,16,254,9,16,1,16,1,16,1,16,1,16,
+        3,16,260,8,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,5,16,269,8,16,10,
+        16,12,16,272,9,16,1,16,1,16,1,16,1,16,3,16,278,8,16,1,16,1,16,1,
+        16,1,16,1,16,1,16,5,16,286,8,16,10,16,12,16,289,9,16,1,16,1,16,3,
+        16,293,8,16,3,16,295,8,16,1,16,1,16,1,16,1,16,1,16,1,16,5,16,303,
+        8,16,10,16,12,16,306,9,16,1,16,3,16,309,8,16,1,16,3,16,312,8,16,
+        1,17,1,17,1,17,3,17,317,8,17,1,17,1,17,1,17,1,17,1,17,3,17,324,8,
+        17,1,18,1,18,1,19,1,19,1,19,1,19,5,19,332,8,19,10,19,12,19,335,9,
+        19,1,19,3,19,338,8,19,1,19,1,19,1,19,0,0,20,0,2,4,6,8,10,12,14,16,
+        18,20,22,24,26,28,30,32,34,36,38,0,3,2,0,10,10,31,31,3,0,5,5,39,
+        40,43,43,2,0,23,24,27,30,375,0,40,1,0,0,0,2,44,1,0,0,0,4,59,1,0,
+        0,0,6,66,1,0,0,0,8,73,1,0,0,0,10,92,1,0,0,0,12,95,1,0,0,0,14,110,
+        1,0,0,0,16,113,1,0,0,0,18,123,1,0,0,0,20,132,1,0,0,0,22,134,1,0,
+        0,0,24,173,1,0,0,0,26,175,1,0,0,0,28,193,1,0,0,0,30,223,1,0,0,0,
+        32,311,1,0,0,0,34,323,1,0,0,0,36,325,1,0,0,0,38,327,1,0,0,0,40,41,
+        3,2,1,0,41,42,5,0,0,1,42,1,1,0,0,0,43,45,3,4,2,0,44,43,1,0,0,0,44,
+        45,1,0,0,0,45,49,1,0,0,0,46,48,3,6,3,0,47,46,1,0,0,0,48,51,1,0,0,
+        0,49,47,1,0,0,0,49,50,1,0,0,0,50,56,1,0,0,0,51,49,1,0,0,0,52,55,
+        3,8,4,0,53,55,3,16,8,0,54,52,1,0,0,0,54,53,1,0,0,0,55,58,1,0,0,0,
+        56,54,1,0,0,0,56,57,1,0,0,0,57,3,1,0,0,0,58,56,1,0,0,0,59,60,5,11,
+        0,0,60,62,5,44,0,0,61,63,3,38,19,0,62,61,1,0,0,0,62,63,1,0,0,0,63,
+        64,1,0,0,0,64,65,5,26,0,0,65,5,1,0,0,0,66,67,5,12,0,0,67,69,5,44,
+        0,0,68,70,3,38,19,0,69,68,1,0,0,0,69,70,1,0,0,0,70,71,1,0,0,0,71,
+        72,5,26,0,0,72,7,1,0,0,0,73,74,5,13,0,0,74,76,3,36,18,0,75,77,5,
+        1,0,0,76,75,1,0,0,0,76,77,1,0,0,0,77,79,1,0,0,0,78,80,3,10,5,0,79,
+        78,1,0,0,0,79,80,1,0,0,0,80,84,1,0,0,0,81,83,3,12,6,0,82,81,1,0,
+        0,0,83,86,1,0,0,0,84,82,1,0,0,0,84,85,1,0,0,0,85,88,1,0,0,0,86,84,
+        1,0,0,0,87,89,3,14,7,0,88,87,1,0,0,0,88,89,1,0,0,0,89,90,1,0,0,0,
+        90,91,5,2,0,0,91,9,1,0,0,0,92,93,5,3,0,0,93,94,3,38,19,0,94,11,1,
+        0,0,0,95,96,5,14,0,0,96,102,5,19,0,0,97,98,3,32,16,0,98,99,5,25,
+        0,0,99,101,1,0,0,0,100,97,1,0,0,0,101,104,1,0,0,0,102,100,1,0,0,
+        0,102,103,1,0,0,0,103,106,1,0,0,0,104,102,1,0,0,0,105,107,3,32,16,
+        0,106,105,1,0,0,0,106,107,1,0,0,0,107,108,1,0,0,0,108,109,5,20,0,
+        0,109,13,1,0,0,0,110,111,5,4,0,0,111,112,3,38,19,0,112,15,1,0,0,
+        0,113,115,3,36,18,0,114,116,3,18,9,0,115,114,1,0,0,0,115,116,1,0,
+        0,0,116,119,1,0,0,0,117,118,7,0,0,0,118,120,3,22,11,0,119,117,1,
+        0,0,0,119,120,1,0,0,0,120,121,1,0,0,0,121,122,5,2,0,0,122,17,1,0,
+        0,0,123,124,5,34,0,0,124,125,5,19,0,0,125,128,3,20,10,0,126,127,
+        5,25,0,0,127,129,3,20,10,0,128,126,1,0,0,0,128,129,1,0,0,0,129,130,
+        1,0,0,0,130,131,5,20,0,0,131,19,1,0,0,0,132,133,7,1,0,0,133,21,1,
+        0,0,0,134,139,3,28,14,0,135,136,5,25,0,0,136,138,3,28,14,0,137,135,
+        1,0,0,0,138,141,1,0,0,0,139,137,1,0,0,0,139,140,1,0,0,0,140,143,
+        1,0,0,0,141,139,1,0,0,0,142,144,5,25,0,0,143,142,1,0,0,0,143,144,
+        1,0,0,0,144,149,1,0,0,0,145,146,5,33,0,0,146,148,3,24,12,0,147,145,
+        1,0,0,0,148,151,1,0,0,0,149,147,1,0,0,0,149,150,1,0,0,0,150,23,1,
+        0,0,0,151,149,1,0,0,0,152,153,5,16,0,0,153,163,3,32,16,0,154,155,
+        5,25,0,0,155,160,3,26,13,0,156,157,5,25,0,0,157,159,3,26,13,0,158,
+        156,1,0,0,0,159,162,1,0,0,0,160,158,1,0,0,0,160,161,1,0,0,0,161,
+        164,1,0,0,0,162,160,1,0,0,0,163,154,1,0,0,0,163,164,1,0,0,0,164,
+        174,1,0,0,0,165,170,3,26,13,0,166,167,5,25,0,0,167,169,3,26,13,0,
+        168,166,1,0,0,0,169,172,1,0,0,0,170,168,1,0,0,0,170,171,1,0,0,0,
+        171,174,1,0,0,0,172,170,1,0,0,0,173,152,1,0,0,0,173,165,1,0,0,0,
+        174,25,1,0,0,0,175,176,5,15,0,0,176,177,5,43,0,0,177,178,5,23,0,
+        0,178,179,3,32,16,0,179,27,1,0,0,0,180,182,3,30,15,0,181,180,1,0,
+        0,0,181,182,1,0,0,0,182,183,1,0,0,0,183,185,3,32,16,0,184,186,3,
+        18,9,0,185,184,1,0,0,0,185,186,1,0,0,0,186,189,1,0,0,0,187,188,7,
+        2,0,0,188,190,3,32,16,0,189,187,1,0,0,0,189,190,1,0,0,0,190,194,
+        1,0,0,0,191,192,5,26,0,0,192,194,3,32,16,0,193,181,1,0,0,0,193,191,
+        1,0,0,0,194,29,1,0,0,0,195,196,5,35,0,0,196,197,5,19,0,0,197,198,
+        3,20,10,0,198,199,5,25,0,0,199,200,3,20,10,0,200,201,5,20,0,0,201,
+        224,1,0,0,0,202,203,5,37,0,0,203,204,5,19,0,0,204,205,3,20,10,0,
+        205,206,5,25,0,0,206,207,3,20,10,0,207,208,5,20,0,0,208,224,1,0,
+        0,0,209,210,5,36,0,0,210,211,5,19,0,0,211,212,3,20,10,0,212,213,
+        5,25,0,0,213,214,3,20,10,0,214,215,5,20,0,0,215,224,1,0,0,0,216,
+        217,5,38,0,0,217,218,5,19,0,0,218,219,3,20,10,0,219,220,5,25,0,0,
+        220,221,3,20,10,0,221,222,5,20,0,0,222,224,1,0,0,0,223,195,1,0,0,
+        0,223,202,1,0,0,0,223,209,1,0,0,0,223,216,1,0,0,0,224,31,1,0,0,0,
+        225,312,5,43,0,0,226,312,5,47,0,0,227,312,5,41,0,0,228,312,5,42,
+        0,0,229,312,5,48,0,0,230,312,5,49,0,0,231,237,5,19,0,0,232,233,3,
+        32,16,0,233,234,5,25,0,0,234,236,1,0,0,0,235,232,1,0,0,0,236,239,
+        1,0,0,0,237,235,1,0,0,0,237,238,1,0,0,0,238,241,1,0,0,0,239,237,
+        1,0,0,0,240,242,3,32,16,0,241,240,1,0,0,0,241,242,1,0,0,0,242,243,
+        1,0,0,0,243,312,5,20,0,0,244,252,5,19,0,0,245,246,3,32,16,0,246,
+        247,5,6,0,0,247,248,3,32,16,0,248,249,5,25,0,0,249,251,1,0,0,0,250,
+        245,1,0,0,0,251,254,1,0,0,0,252,250,1,0,0,0,252,253,1,0,0,0,253,
+        259,1,0,0,0,254,252,1,0,0,0,255,256,3,32,16,0,256,257,5,6,0,0,257,
+        258,3,32,16,0,258,260,1,0,0,0,259,255,1,0,0,0,259,260,1,0,0,0,260,
+        261,1,0,0,0,261,312,5,20,0,0,262,270,5,21,0,0,263,264,3,32,16,0,
+        264,265,5,6,0,0,265,266,3,32,16,0,266,267,5,25,0,0,267,269,1,0,0,
+        0,268,263,1,0,0,0,269,272,1,0,0,0,270,268,1,0,0,0,270,271,1,0,0,
+        0,271,277,1,0,0,0,272,270,1,0,0,0,273,274,3,32,16,0,274,275,5,6,
+        0,0,275,276,3,32,16,0,276,278,1,0,0,0,277,273,1,0,0,0,277,278,1,
+        0,0,0,278,279,1,0,0,0,279,312,5,22,0,0,280,281,5,46,0,0,281,287,
+        5,28,0,0,282,283,3,34,17,0,283,284,5,25,0,0,284,286,1,0,0,0,285,
+        282,1,0,0,0,286,289,1,0,0,0,287,285,1,0,0,0,287,288,1,0,0,0,288,
+        294,1,0,0,0,289,287,1,0,0,0,290,292,3,34,17,0,291,293,5,25,0,0,292,
+        291,1,0,0,0,292,293,1,0,0,0,293,295,1,0,0,0,294,290,1,0,0,0,294,
+        295,1,0,0,0,295,296,1,0,0,0,296,312,5,30,0,0,297,298,5,44,0,0,298,
+        304,5,17,0,0,299,300,3,32,16,0,300,301,5,25,0,0,301,303,1,0,0,0,
+        302,299,1,0,0,0,303,306,1,0,0,0,304,302,1,0,0,0,304,305,1,0,0,0,
+        305,308,1,0,0,0,306,304,1,0,0,0,307,309,3,32,16,0,308,307,1,0,0,
+        0,308,309,1,0,0,0,309,310,1,0,0,0,310,312,5,18,0,0,311,225,1,0,0,
+        0,311,226,1,0,0,0,311,227,1,0,0,0,311,228,1,0,0,0,311,229,1,0,0,
+        0,311,230,1,0,0,0,311,231,1,0,0,0,311,244,1,0,0,0,311,262,1,0,0,
+        0,311,280,1,0,0,0,311,297,1,0,0,0,312,33,1,0,0,0,313,316,3,32,16,
+        0,314,315,5,6,0,0,315,317,3,32,16,0,316,314,1,0,0,0,316,317,1,0,
+        0,0,317,324,1,0,0,0,318,319,5,7,0,0,319,320,3,32,16,0,320,321,5,
+        6,0,0,321,322,3,32,16,0,322,324,1,0,0,0,323,313,1,0,0,0,323,318,
+        1,0,0,0,324,35,1,0,0,0,325,326,3,32,16,0,326,37,1,0,0,0,327,333,
+        5,19,0,0,328,329,3,36,18,0,329,330,5,25,0,0,330,332,1,0,0,0,331,
+        328,1,0,0,0,332,335,1,0,0,0,333,331,1,0,0,0,333,334,1,0,0,0,334,
+        337,1,0,0,0,335,333,1,0,0,0,336,338,3,36,18,0,337,336,1,0,0,0,337,
+        338,1,0,0,0,338,339,1,0,0,0,339,340,5,20,0,0,340,39,1,0,0,0,43,44,
+        49,54,56,62,69,76,79,84,88,102,106,115,119,128,139,143,149,160,163,
+        170,173,181,185,189,193,223,237,241,252,259,270,277,287,292,294,
+        304,308,311,316,323,333,337
     ];
 
     private static __ATN: antlr.ATN;
@@ -1654,6 +1902,9 @@ export class ClauseContext extends antlr.ParserRuleContext {
     public atom(): AtomContext {
         return this.getRuleContext(0, AtomContext)!;
     }
+    public temporalAnnotation(): TemporalAnnotationContext | null {
+        return this.getRuleContext(0, TemporalAnnotationContext);
+    }
     public clauseBody(): ClauseBodyContext | null {
         return this.getRuleContext(0, ClauseBodyContext);
     }
@@ -1679,6 +1930,90 @@ export class ClauseContext extends antlr.ParserRuleContext {
     public override accept<Result>(visitor: MangleVisitor<Result>): Result | null {
         if (visitor.visitClause) {
             return visitor.visitClause(this);
+        } else {
+            return visitor.visitChildren(this);
+        }
+    }
+}
+
+
+export class TemporalAnnotationContext extends antlr.ParserRuleContext {
+    public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
+        super(parent, invokingState);
+    }
+    public AT(): antlr.TerminalNode {
+        return this.getToken(MangleParser.AT, 0)!;
+    }
+    public LBRACKET(): antlr.TerminalNode {
+        return this.getToken(MangleParser.LBRACKET, 0)!;
+    }
+    public temporalBound(): TemporalBoundContext[];
+    public temporalBound(i: number): TemporalBoundContext | null;
+    public temporalBound(i?: number): TemporalBoundContext[] | TemporalBoundContext | null {
+        if (i === undefined) {
+            return this.getRuleContexts(TemporalBoundContext);
+        }
+
+        return this.getRuleContext(i, TemporalBoundContext);
+    }
+    public RBRACKET(): antlr.TerminalNode {
+        return this.getToken(MangleParser.RBRACKET, 0)!;
+    }
+    public COMMA(): antlr.TerminalNode | null {
+        return this.getToken(MangleParser.COMMA, 0);
+    }
+    public override get ruleIndex(): number {
+        return MangleParser.RULE_temporalAnnotation;
+    }
+    public override enterRule(listener: MangleListener): void {
+        if(listener.enterTemporalAnnotation) {
+             listener.enterTemporalAnnotation(this);
+        }
+    }
+    public override exitRule(listener: MangleListener): void {
+        if(listener.exitTemporalAnnotation) {
+             listener.exitTemporalAnnotation(this);
+        }
+    }
+    public override accept<Result>(visitor: MangleVisitor<Result>): Result | null {
+        if (visitor.visitTemporalAnnotation) {
+            return visitor.visitTemporalAnnotation(this);
+        } else {
+            return visitor.visitChildren(this);
+        }
+    }
+}
+
+
+export class TemporalBoundContext extends antlr.ParserRuleContext {
+    public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
+        super(parent, invokingState);
+    }
+    public TIMESTAMP(): antlr.TerminalNode | null {
+        return this.getToken(MangleParser.TIMESTAMP, 0);
+    }
+    public DURATION(): antlr.TerminalNode | null {
+        return this.getToken(MangleParser.DURATION, 0);
+    }
+    public VARIABLE(): antlr.TerminalNode | null {
+        return this.getToken(MangleParser.VARIABLE, 0);
+    }
+    public override get ruleIndex(): number {
+        return MangleParser.RULE_temporalBound;
+    }
+    public override enterRule(listener: MangleListener): void {
+        if(listener.enterTemporalBound) {
+             listener.enterTemporalBound(this);
+        }
+    }
+    public override exitRule(listener: MangleListener): void {
+        if(listener.exitTemporalBound) {
+             listener.exitTemporalBound(this);
+        }
+    }
+    public override accept<Result>(visitor: MangleVisitor<Result>): Result | null {
+        if (visitor.visitTemporalBound) {
+            return visitor.visitTemporalBound(this);
         } else {
             return visitor.visitChildren(this);
         }
@@ -1852,6 +2187,12 @@ export class LiteralOrFmlContext extends antlr.ParserRuleContext {
 
         return this.getRuleContext(i, TermContext);
     }
+    public temporalOperator(): TemporalOperatorContext | null {
+        return this.getRuleContext(0, TemporalOperatorContext);
+    }
+    public temporalAnnotation(): TemporalAnnotationContext | null {
+        return this.getRuleContext(0, TemporalAnnotationContext);
+    }
     public EQ(): antlr.TerminalNode | null {
         return this.getToken(MangleParser.EQ, 0);
     }
@@ -1889,6 +2230,63 @@ export class LiteralOrFmlContext extends antlr.ParserRuleContext {
     public override accept<Result>(visitor: MangleVisitor<Result>): Result | null {
         if (visitor.visitLiteralOrFml) {
             return visitor.visitLiteralOrFml(this);
+        } else {
+            return visitor.visitChildren(this);
+        }
+    }
+}
+
+
+export class TemporalOperatorContext extends antlr.ParserRuleContext {
+    public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
+        super(parent, invokingState);
+    }
+    public DIAMONDMINUS(): antlr.TerminalNode | null {
+        return this.getToken(MangleParser.DIAMONDMINUS, 0);
+    }
+    public LBRACKET(): antlr.TerminalNode {
+        return this.getToken(MangleParser.LBRACKET, 0)!;
+    }
+    public temporalBound(): TemporalBoundContext[];
+    public temporalBound(i: number): TemporalBoundContext | null;
+    public temporalBound(i?: number): TemporalBoundContext[] | TemporalBoundContext | null {
+        if (i === undefined) {
+            return this.getRuleContexts(TemporalBoundContext);
+        }
+
+        return this.getRuleContext(i, TemporalBoundContext);
+    }
+    public COMMA(): antlr.TerminalNode {
+        return this.getToken(MangleParser.COMMA, 0)!;
+    }
+    public RBRACKET(): antlr.TerminalNode {
+        return this.getToken(MangleParser.RBRACKET, 0)!;
+    }
+    public BOXMINUS(): antlr.TerminalNode | null {
+        return this.getToken(MangleParser.BOXMINUS, 0);
+    }
+    public DIAMONDPLUS(): antlr.TerminalNode | null {
+        return this.getToken(MangleParser.DIAMONDPLUS, 0);
+    }
+    public BOXPLUS(): antlr.TerminalNode | null {
+        return this.getToken(MangleParser.BOXPLUS, 0);
+    }
+    public override get ruleIndex(): number {
+        return MangleParser.RULE_temporalOperator;
+    }
+    public override enterRule(listener: MangleListener): void {
+        if(listener.enterTemporalOperator) {
+             listener.enterTemporalOperator(this);
+        }
+    }
+    public override exitRule(listener: MangleListener): void {
+        if(listener.exitTemporalOperator) {
+             listener.exitTemporalOperator(this);
+        }
+    }
+    public override accept<Result>(visitor: MangleVisitor<Result>): Result | null {
+        if (visitor.visitTemporalOperator) {
+            return visitor.visitTemporalOperator(this);
         } else {
             return visitor.visitChildren(this);
         }
@@ -2211,6 +2609,12 @@ export class StructContext extends TermContext {
     public constructor(ctx: TermContext) {
         super(ctx.parent, ctx.invokingState);
         super.copyFrom(ctx);
+    }
+    public LBRACE(): antlr.TerminalNode {
+        return this.getToken(MangleParser.LBRACE, 0)!;
+    }
+    public RBRACE(): antlr.TerminalNode {
+        return this.getToken(MangleParser.RBRACE, 0)!;
     }
     public term(): TermContext[];
     public term(i: number): TermContext | null;

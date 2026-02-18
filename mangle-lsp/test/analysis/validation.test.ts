@@ -102,8 +102,11 @@ describe('Validation Module', () => {
     });
 
     describe('E003: Variables in negation must be bound', () => {
-        it('should error when negated atom has unbound variable', () => {
-            expectError('orphan(X) :- person(X), !parent(Y, X).', 'E003');
+        it('should silently handle negated atom with variable not bound elsewhere (negation delay drops it)', () => {
+            // Upstream behavior: RewriteClause delays negated atoms until their variables are bound.
+            // If variables never get bound, the negated atom is silently dropped.
+            // Y is never bound by any positive atom, so !parent(Y, X) is dropped.
+            expectNoErrors('orphan(X) :- person(X), !parent(Y, X).');
         });
 
         it('should allow negation with all variables bound', () => {
@@ -114,8 +117,15 @@ describe('Validation Module', () => {
             expectNoErrors('different(X, Y) :- item(X), item(Y), !same(X, Y).');
         });
 
-        it('should error on multiple unbound variables in negation', () => {
-            expectError('foo(X) :- bar(X), !baz(Y, Z).', 'E003');
+        it('should silently handle negation with variables never bound (negation delay drops it)', () => {
+            // Y, Z are never bound by any positive atom, so !baz(Y, Z) is dropped.
+            expectNoErrors('foo(X) :- bar(X), !baz(Y, Z).');
+        });
+
+        it('should error when negated atom has unbound variable and no rewrite possible', () => {
+            // This is a case where the negated atom variable also appears in the head,
+            // so even though negation is dropped, Y is still unbound in head -> E002
+            expectError('foo(X, Y) :- bar(X), !baz(Y).', 'E002');
         });
     });
 
@@ -342,12 +352,14 @@ describe('Validation Module', () => {
             expectError('Decl foo(X, Y) bound [/string].', 'E025');
         });
 
-        it('should error when too many bounds', () => {
-            expectError('Decl foo(X) bound [/string] bound [/number].', 'E025');
+        it('should allow multiple bound blocks when each matches arity', () => {
+            // Per-BoundDecl checking: each bound block has 1 element, arity is 1 → valid
+            expectNoErrors('Decl foo(X) bound [/string] bound [/number].');
         });
 
-        it('should allow matching bounds count', () => {
-            expectNoErrors('Decl foo(X, Y) bound [/string] bound [/number].');
+        it('should error when bound block count does not match arity', () => {
+            // Per-BoundDecl checking: each bound block has 1 element, but arity is 2 → E025
+            expectError('Decl foo(X, Y) bound [/string] bound [/number].', 'E025');
         });
 
         it('should allow declaration without bounds', () => {
@@ -931,12 +943,13 @@ describe('Validation Module', () => {
             expect(error?.message).toContain('Missing');
         });
 
-        it('E003 message should mention variable in negation', () => {
+        it('E003 message: negation delay drops atoms with never-bound vars', () => {
+            // With negation delay rewriting, !baz(Unbound) is silently dropped
+            // because Unbound is never bound by any premise. No E003 is emitted.
             const parseResult = parse('foo(X) :- bar(X), !baz(Unbound).');
             const result = validate(parseResult.unit!);
             const error = result.errors.find(e => e.code === 'E003');
-            expect(error).toBeDefined();
-            expect(error?.message).toContain('Unbound');
+            expect(error).toBeUndefined();
         });
 
         it('E005 message should mention unknown predicate', () => {
@@ -997,17 +1010,20 @@ describe('Validation Module', () => {
     });
 
     describe('Additional E003 edge cases', () => {
-        it('should error when negated atom uses variable from later premise', () => {
-            // Y is bound after the negation - should still error
-            expectError('foo(X) :- bar(X), !uses(Y), source(Y).', 'E003');
+        it('negation delay should reorder negated atom after binding premise', () => {
+            // With negation delay, !uses(Y) is delayed until source(Y) binds Y,
+            // then emitted after. No error — the clause is valid after rewriting.
+            expectNoErrors('foo(X) :- bar(X), !uses(Y), source(Y).');
         });
 
         it('should allow negation with wildcard only', () => {
             expectNoErrors('orphan(X) :- person(X), !parent(_, _).');
         });
 
-        it('should error on deeply nested negation variable', () => {
-            expectError('foo(X) :- bar(X), !complex(fn:plus(Y, 1)).', 'E003');
+        it('negation delay should drop negated atom with never-bound nested var', () => {
+            // With negation delay, !complex(fn:plus(Y, 1)) is dropped because
+            // Y is never bound by any premise. Silently dropped, no error.
+            expectNoErrors('foo(X) :- bar(X), !complex(fn:plus(Y, 1)).');
         });
     });
 

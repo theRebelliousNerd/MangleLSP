@@ -20,4 +20,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./symbols"), exports);
 __exportStar(require("./validation"), exports);
 __exportStar(require("./stratification"), exports);
+__exportStar(require("./unionfind"), exports);
+__exportStar(require("./rewrite"), exports);
 //# sourceMappingURL=index.js.map

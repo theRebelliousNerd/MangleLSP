@@ -621,7 +621,7 @@ function checkTemporalRecursion(unit) {
                 const temporal = premise;
                 if (temporal.operator) {
                     const opType = temporal.operator.operatorType;
-                    if (opType === 'diamond_plus' || opType === 'box_plus') {
+                    if (opType === 'diamondPlus' || opType === 'boxPlus') {
                         // Check if this references a predicate in the same SCC
                         let litPredKey = null;
                         if (temporal.literal.type === 'Atom') {

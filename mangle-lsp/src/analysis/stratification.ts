@@ -732,7 +732,7 @@ export function checkTemporalRecursion(unit: SourceUnit): StratificationError[] 
                 const temporal = premise as TemporalLiteral;
                 if (temporal.operator) {
                     const opType = temporal.operator.operatorType;
-                    if (opType === 'diamond_plus' || opType === 'box_plus') {
+                    if (opType === 'diamondPlus' || opType === 'boxPlus') {
                         // Check if this references a predicate in the same SCC
                         let litPredKey: string | null = null;
                         if (temporal.literal.type === 'Atom') {

@@ -31,7 +31,7 @@
         },
         {
           "name": "keyword.other.mangle",
-          "match": "\\b(descr|bound|inclusion|opt|private|external|temporal|mode|doc|arg|fundep|merge|deferred)\\b"
+          "match": "\\b(descr|bound|inclusion|opt|private|external|temporal|mode|doc|arg|fundep|merge|deferred|now)\\b"
         },
         {
           "name": "keyword.operator.mangle",
@@ -98,6 +98,16 @@
     "numbers": {
       "patterns": [
         {
+          "comment": "ISO 8601 timestamps: 2024-01-15 or 2024-01-15T10:30:00Z",
+          "name": "constant.numeric.timestamp.mangle",
+          "match": "\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z?)?"
+        },
+        {
+          "comment": "Duration literals: 7d, 24h, 30m, 1s, 500ms",
+          "name": "constant.numeric.duration.mangle",
+          "match": "\\d+(ms|d|h|m|s)\\b"
+        },
+        {
           "name": "constant.numeric.float.mangle",
           "match": "-?\\d+\\.\\d+([eE][+-]?\\d+)?"
         },
@@ -130,9 +140,14 @@
     "operators": {
       "patterns": [
         {
-          "comment": "DatalogMTL temporal operators: diamond_minus <->, diamond_plus <+>, box_minus [-], box_plus [+]",
+          "comment": "DatalogMTL temporal operators: <-[...] (diamondMinus), [-[...] (boxMinus), <+[...] (diamondPlus), [+[...] (boxPlus)",
           "name": "keyword.operator.temporal.mangle",
-          "match": "<->|<\\+>|\\[-\\]|\\[\\+\\]"
+          "match": "<-(?=\\[)|<\\+(?=\\[)|\\[-(?=\\[)|\\[\\+(?=\\[)"
+        },
+        {
+          "comment": "Temporal annotation marker @[",
+          "name": "keyword.operator.temporal.annotation.mangle",
+          "match": "@(?=\\[)"
         },
         {
           "name": "keyword.operator.comparison.mangle",

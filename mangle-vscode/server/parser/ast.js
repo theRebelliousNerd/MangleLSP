@@ -41,6 +41,7 @@ exports.isApplyFn = isApplyFn;
 exports.isTemporalLiteral = isTemporalLiteral;
 exports.isDeclExternal = isDeclExternal;
 exports.isDeclTemporal = isDeclTemporal;
+exports.isDeclMaybeTemporal = isDeclMaybeTemporal;
 exports.getDeclModes = getDeclModes;
 exports.isComparisonAtom = isComparisonAtom;
 exports.isLtAtom = isLtAtom;
@@ -297,6 +298,12 @@ function isDeclTemporal(decl) {
     return decl.descr?.some(d => d.predicate.symbol === exports.DESCRIPTORS.TEMPORAL) ?? false;
 }
 /**
+ * Check if a declaration has the internal:maybe_temporal() descriptor.
+ */
+function isDeclMaybeTemporal(decl) {
+    return decl.descr?.some(d => d.predicate.symbol === exports.DESCRIPTORS.MAYBE_TEMPORAL) ?? false;
+}
+/**
  * Get modes from a declaration's descriptor atoms.
  */
 function getDeclModes(decl) {
@@ -341,6 +348,7 @@ exports.DESCRIPTORS = {
     MERGE_PREDICATE: 'merge',
     DEFERRED_PREDICATE: 'deferred',
     TEMPORAL: 'temporal',
+    MAYBE_TEMPORAL: 'internal:maybe_temporal',
 };
 /**
  * Check if an atom is a comparison builtin (:lt, :le, :gt, :ge).

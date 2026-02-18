@@ -278,7 +278,7 @@ export interface Ge extends LocatedNode {
  * but the parser now generates Atom nodes with :lt, :le, :gt, :ge predicates
  * for comparison operators.
  */
-export type Term = BaseTerm | Atom | NegAtom | Eq | Ineq | Lt | Le | Gt | Ge | TemporalLiteral;
+export type Term = BaseTerm | Atom | NegAtom | Eq | Ineq | Lt | Le | Gt | Ge | TemporalLiteral | TemporalAtom;
 
 // ============================================================================
 // Transform Types
@@ -312,31 +312,35 @@ export interface Transform extends LocatedNode {
  * Matches upstream Go ast.TemporalOperatorType enum.
  */
 export type TemporalOperatorType =
-    | 'diamond_minus'  // <-> (eventually in the past)
-    | 'diamond_plus'   // <+> (eventually in the future)
-    | 'box_minus'      // [-] (always in the past)
-    | 'box_plus'       // [+] (always in the future)
-    | 'since'          // S   (since)
-    | 'until';         // U   (until)
+    | 'diamondMinus'  // <- (eventually in the past)
+    | 'diamondPlus'   // <+ (eventually in the future)
+    | 'boxMinus'      // [- (always in the past)
+    | 'boxPlus';      // [+ (always in the future)
 
 /**
  * Type for temporal interval bounds.
+ * Matches upstream Go ast.TemporalBoundType enum (6 variants).
  */
 export type TemporalBoundType =
-    | 'constant'    // A concrete numeric or time bound
-    | 'variable'    // A variable bound
-    | 'duration'    // A relative duration bound
-    | 'infinity';   // Unbounded
+    | 'timestamp'         // A concrete point in time (Unix nanos)
+    | 'variable'          // A variable to be bound during evaluation
+    | 'negativeInfinity'  // Negative infinity (unbounded past)
+    | 'positiveInfinity'  // Positive infinity (unbounded future)
+    | 'now'               // Current evaluation time
+    | 'duration';         // A relative duration (nanoseconds)
 
 /**
  * A temporal interval bound.
+ * Matches upstream Go ast.TemporalBound struct.
  */
 export interface TemporalBound extends LocatedNode {
     readonly boundType: TemporalBoundType;
-    /** For constant/duration bounds */
+    /** For timestamp bounds: Unix nanos. For duration bounds: nanos. */
     readonly value?: number;
     /** For variable bounds */
     readonly variable?: Variable;
+    /** Original text from source (e.g., "2024-01-15", "7d") for display */
+    readonly rawText?: string;
 }
 
 /**
@@ -358,14 +362,27 @@ export interface TemporalOperator extends LocatedNode {
 /**
  * A temporal literal wrapping an atom/literal with temporal annotations.
  * Matches upstream Go ast.TemporalLiteral.
+ * Used in clause premises for temporally-qualified literals.
  */
 export interface TemporalLiteral extends LocatedNode {
     readonly type: 'TemporalLiteral';
     /** The inner literal (Atom or NegAtom) */
     readonly literal: Atom | NegAtom;
-    /** Optional temporal operator (<->, <+>, [-], [+], S, U) */
+    /** Optional temporal operator (<-, <+, [-, [+) */
     readonly operator: TemporalOperator | null;
-    /** Optional explicit interval annotation */
+    /** Optional explicit interval annotation @[start, end] */
+    readonly interval: TemporalInterval | null;
+}
+
+/**
+ * A temporal atom: an atom with an optional temporal interval annotation.
+ * Matches upstream Go ast.TemporalAtom.
+ * Used in clause heads and initial facts.
+ */
+export interface TemporalAtom extends LocatedNode {
+    readonly type: 'TemporalAtom';
+    readonly atom: Atom;
+    /** Temporal interval annotation (null means eternal / no annotation) */
     readonly interval: TemporalInterval | null;
 }
 
@@ -707,6 +724,13 @@ export function isDeclTemporal(decl: Decl): boolean {
 }
 
 /**
+ * Check if a declaration has the internal:maybe_temporal() descriptor.
+ */
+export function isDeclMaybeTemporal(decl: Decl): boolean {
+    return decl.descr?.some(d => d.predicate.symbol === DESCRIPTORS.MAYBE_TEMPORAL) ?? false;
+}
+
+/**
  * Get modes from a declaration's descriptor atoms.
  */
 export function getDeclModes(decl: Decl): Atom[] {
@@ -756,6 +780,7 @@ export const DESCRIPTORS = {
     MERGE_PREDICATE: 'merge',
     DEFERRED_PREDICATE: 'deferred',
     TEMPORAL: 'temporal',
+    MAYBE_TEMPORAL: 'internal:maybe_temporal',
 } as const;
 
 /**

@@ -23,9 +23,9 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// ../node_modules/vscode-languageserver/lib/common/utils/is.js
+// node_modules/vscode-languageserver/lib/common/utils/is.js
 var require_is = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/utils/is.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/utils/is.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.thenable = exports2.typedArray = exports2.stringArray = exports2.array = exports2.func = exports2.error = exports2.number = exports2.string = exports2.boolean = void 0;
@@ -68,9 +68,9 @@ var require_is = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/is.js
+// node_modules/vscode-jsonrpc/lib/common/is.js
 var require_is2 = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/is.js"(exports2) {
+  "node_modules/vscode-jsonrpc/lib/common/is.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.stringArray = exports2.array = exports2.func = exports2.error = exports2.number = exports2.string = exports2.boolean = void 0;
@@ -105,9 +105,9 @@ var require_is2 = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/messages.js
+// node_modules/vscode-jsonrpc/lib/common/messages.js
 var require_messages = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/messages.js"(exports2) {
+  "node_modules/vscode-jsonrpc/lib/common/messages.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.Message = exports2.NotificationType9 = exports2.NotificationType8 = exports2.NotificationType7 = exports2.NotificationType6 = exports2.NotificationType5 = exports2.NotificationType4 = exports2.NotificationType3 = exports2.NotificationType2 = exports2.NotificationType1 = exports2.NotificationType0 = exports2.NotificationType = exports2.RequestType9 = exports2.RequestType8 = exports2.RequestType7 = exports2.RequestType6 = exports2.RequestType5 = exports2.RequestType4 = exports2.RequestType3 = exports2.RequestType2 = exports2.RequestType1 = exports2.RequestType = exports2.RequestType0 = exports2.AbstractMessageSignature = exports2.ParameterStructures = exports2.ResponseError = exports2.ErrorCodes = void 0;
@@ -343,9 +343,9 @@ var require_messages = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/linkedMap.js
+// node_modules/vscode-jsonrpc/lib/common/linkedMap.js
 var require_linkedMap = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/linkedMap.js"(exports2) {
+  "node_modules/vscode-jsonrpc/lib/common/linkedMap.js"(exports2) {
     "use strict";
     var _a;
     Object.defineProperty(exports2, "__esModule", { value: true });
@@ -713,9 +713,9 @@ var require_linkedMap = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/disposable.js
+// node_modules/vscode-jsonrpc/lib/common/disposable.js
 var require_disposable = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/disposable.js"(exports2) {
+  "node_modules/vscode-jsonrpc/lib/common/disposable.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.Disposable = void 0;
@@ -731,9 +731,9 @@ var require_disposable = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/ral.js
+// node_modules/vscode-jsonrpc/lib/common/ral.js
 var require_ral = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/ral.js"(exports2) {
+  "node_modules/vscode-jsonrpc/lib/common/ral.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     var _ral;
@@ -756,9 +756,9 @@ var require_ral = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/events.js
+// node_modules/vscode-jsonrpc/lib/common/events.js
 var require_events = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/events.js"(exports2) {
+  "node_modules/vscode-jsonrpc/lib/common/events.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.Emitter = exports2.Event = void 0;
@@ -885,9 +885,9 @@ var require_events = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/cancellation.js
+// node_modules/vscode-jsonrpc/lib/common/cancellation.js
 var require_cancellation = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/cancellation.js"(exports2) {
+  "node_modules/vscode-jsonrpc/lib/common/cancellation.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.CancellationTokenSource = exports2.CancellationToken = void 0;
@@ -974,9 +974,9 @@ var require_cancellation = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/sharedArrayCancellation.js
+// node_modules/vscode-jsonrpc/lib/common/sharedArrayCancellation.js
 var require_sharedArrayCancellation = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/sharedArrayCancellation.js"(exports2) {
+  "node_modules/vscode-jsonrpc/lib/common/sharedArrayCancellation.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.SharedArrayReceiverStrategy = exports2.SharedArraySenderStrategy = void 0;
@@ -1052,9 +1052,9 @@ var require_sharedArrayCancellation = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/semaphore.js
+// node_modules/vscode-jsonrpc/lib/common/semaphore.js
 var require_semaphore = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/semaphore.js"(exports2) {
+  "node_modules/vscode-jsonrpc/lib/common/semaphore.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.Semaphore = void 0;
@@ -1120,9 +1120,9 @@ var require_semaphore = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/messageReader.js
+// node_modules/vscode-jsonrpc/lib/common/messageReader.js
 var require_messageReader = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/messageReader.js"(exports2) {
+  "node_modules/vscode-jsonrpc/lib/common/messageReader.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ReadableStreamMessageReader = exports2.AbstractMessageReader = exports2.MessageReader = void 0;
@@ -1309,9 +1309,9 @@ ${JSON.stringify(Object.fromEntries(headers))}`));
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/messageWriter.js
+// node_modules/vscode-jsonrpc/lib/common/messageWriter.js
 var require_messageWriter = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/messageWriter.js"(exports2) {
+  "node_modules/vscode-jsonrpc/lib/common/messageWriter.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.WriteableStreamMessageWriter = exports2.AbstractMessageWriter = exports2.MessageWriter = void 0;
@@ -1421,9 +1421,9 @@ var require_messageWriter = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/messageBuffer.js
+// node_modules/vscode-jsonrpc/lib/common/messageBuffer.js
 var require_messageBuffer = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/messageBuffer.js"(exports2) {
+  "node_modules/vscode-jsonrpc/lib/common/messageBuffer.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.AbstractMessageBuffer = void 0;
@@ -1569,9 +1569,9 @@ ${header}`);
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/connection.js
+// node_modules/vscode-jsonrpc/lib/common/connection.js
 var require_connection = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/connection.js"(exports2) {
+  "node_modules/vscode-jsonrpc/lib/common/connection.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.createMessageConnection = exports2.ConnectionOptions = exports2.MessageStrategy = exports2.CancellationStrategy = exports2.CancellationSenderStrategy = exports2.CancellationReceiverStrategy = exports2.RequestCancellationReceiverStrategy = exports2.IdCancellationReceiverStrategy = exports2.ConnectionStrategy = exports2.ConnectionError = exports2.ConnectionErrors = exports2.LogTraceNotification = exports2.SetTraceNotification = exports2.TraceFormat = exports2.TraceValues = exports2.Trace = exports2.NullLogger = exports2.ProgressType = exports2.ProgressToken = void 0;
@@ -2697,9 +2697,9 @@ ${JSON.stringify(message, null, 4)}`);
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/api.js
+// node_modules/vscode-jsonrpc/lib/common/api.js
 var require_api = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/api.js"(exports2) {
+  "node_modules/vscode-jsonrpc/lib/common/api.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ProgressType = exports2.ProgressToken = exports2.createMessageConnection = exports2.NullLogger = exports2.ConnectionOptions = exports2.ConnectionStrategy = exports2.AbstractMessageBuffer = exports2.WriteableStreamMessageWriter = exports2.AbstractMessageWriter = exports2.MessageWriter = exports2.ReadableStreamMessageReader = exports2.AbstractMessageReader = exports2.MessageReader = exports2.SharedArrayReceiverStrategy = exports2.SharedArraySenderStrategy = exports2.CancellationToken = exports2.CancellationTokenSource = exports2.Emitter = exports2.Event = exports2.Disposable = exports2.LRUCache = exports2.Touch = exports2.LinkedMap = exports2.ParameterStructures = exports2.NotificationType9 = exports2.NotificationType8 = exports2.NotificationType7 = exports2.NotificationType6 = exports2.NotificationType5 = exports2.NotificationType4 = exports2.NotificationType3 = exports2.NotificationType2 = exports2.NotificationType1 = exports2.NotificationType0 = exports2.NotificationType = exports2.ErrorCodes = exports2.ResponseError = exports2.RequestType9 = exports2.RequestType8 = exports2.RequestType7 = exports2.RequestType6 = exports2.RequestType5 = exports2.RequestType4 = exports2.RequestType3 = exports2.RequestType2 = exports2.RequestType1 = exports2.RequestType0 = exports2.RequestType = exports2.Message = exports2.RAL = void 0;
@@ -2899,9 +2899,9 @@ var require_api = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/node/ril.js
+// node_modules/vscode-jsonrpc/lib/node/ril.js
 var require_ril = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/node/ril.js"(exports2) {
+  "node_modules/vscode-jsonrpc/lib/node/ril.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     var util_1 = require("util");
@@ -3055,9 +3055,9 @@ var require_ril = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/node/main.js
+// node_modules/vscode-jsonrpc/lib/node/main.js
 var require_main = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/node/main.js"(exports2) {
+  "node_modules/vscode-jsonrpc/lib/node/main.js"(exports2) {
     "use strict";
     var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -3315,17 +3315,17 @@ var require_main = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/node.js
+// node_modules/vscode-jsonrpc/node.js
 var require_node = __commonJS({
-  "../node_modules/vscode-jsonrpc/node.js"(exports2, module2) {
+  "node_modules/vscode-jsonrpc/node.js"(exports2, module2) {
     "use strict";
     module2.exports = require_main();
   }
 });
 
-// ../node_modules/vscode-languageserver-types/lib/umd/main.js
+// node_modules/vscode-languageserver-types/lib/umd/main.js
 var require_main2 = __commonJS({
-  "../node_modules/vscode-languageserver-types/lib/umd/main.js"(exports2, module2) {
+  "node_modules/vscode-languageserver-types/lib/umd/main.js"(exports2, module2) {
     (function(factory) {
       if (typeof module2 === "object" && typeof module2.exports === "object") {
         var v = factory(require, exports2);
@@ -4840,9 +4840,9 @@ var require_main2 = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/messages.js
+// node_modules/vscode-languageserver-protocol/lib/common/messages.js
 var require_messages2 = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/messages.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/messages.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ProtocolNotificationType = exports2.ProtocolNotificationType0 = exports2.ProtocolRequestType = exports2.ProtocolRequestType0 = exports2.RegistrationType = exports2.MessageDirection = void 0;
@@ -4886,9 +4886,9 @@ var require_messages2 = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/utils/is.js
+// node_modules/vscode-languageserver-protocol/lib/common/utils/is.js
 var require_is3 = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/utils/is.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/utils/is.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.objectLiteral = exports2.typedArray = exports2.stringArray = exports2.array = exports2.func = exports2.error = exports2.number = exports2.string = exports2.boolean = void 0;
@@ -4931,9 +4931,9 @@ var require_is3 = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.implementation.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.implementation.js
 var require_protocol_implementation = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.implementation.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.implementation.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ImplementationRequest = void 0;
@@ -4947,9 +4947,9 @@ var require_protocol_implementation = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.typeDefinition.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.typeDefinition.js
 var require_protocol_typeDefinition = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.typeDefinition.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.typeDefinition.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.TypeDefinitionRequest = void 0;
@@ -4963,9 +4963,9 @@ var require_protocol_typeDefinition = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.workspaceFolder.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.workspaceFolder.js
 var require_protocol_workspaceFolder = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.workspaceFolder.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.workspaceFolder.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.DidChangeWorkspaceFoldersNotification = exports2.WorkspaceFoldersRequest = void 0;
@@ -4985,9 +4985,9 @@ var require_protocol_workspaceFolder = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.configuration.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.configuration.js
 var require_protocol_configuration = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.configuration.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.configuration.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ConfigurationRequest = void 0;
@@ -5001,9 +5001,9 @@ var require_protocol_configuration = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.colorProvider.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.colorProvider.js
 var require_protocol_colorProvider = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.colorProvider.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.colorProvider.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ColorPresentationRequest = exports2.DocumentColorRequest = void 0;
@@ -5023,9 +5023,9 @@ var require_protocol_colorProvider = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.foldingRange.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.foldingRange.js
 var require_protocol_foldingRange = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.foldingRange.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.foldingRange.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.FoldingRangeRefreshRequest = exports2.FoldingRangeRequest = void 0;
@@ -5045,9 +5045,9 @@ var require_protocol_foldingRange = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.declaration.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.declaration.js
 var require_protocol_declaration = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.declaration.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.declaration.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.DeclarationRequest = void 0;
@@ -5061,9 +5061,9 @@ var require_protocol_declaration = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.selectionRange.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.selectionRange.js
 var require_protocol_selectionRange = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.selectionRange.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.selectionRange.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.SelectionRangeRequest = void 0;
@@ -5077,9 +5077,9 @@ var require_protocol_selectionRange = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.progress.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.progress.js
 var require_protocol_progress = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.progress.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.progress.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.WorkDoneProgressCancelNotification = exports2.WorkDoneProgressCreateRequest = exports2.WorkDoneProgress = void 0;
@@ -5108,9 +5108,9 @@ var require_protocol_progress = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.callHierarchy.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.callHierarchy.js
 var require_protocol_callHierarchy = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.callHierarchy.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.callHierarchy.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.CallHierarchyOutgoingCallsRequest = exports2.CallHierarchyIncomingCallsRequest = exports2.CallHierarchyPrepareRequest = void 0;
@@ -5136,9 +5136,9 @@ var require_protocol_callHierarchy = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.semanticTokens.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.semanticTokens.js
 var require_protocol_semanticTokens = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.semanticTokens.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.semanticTokens.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.SemanticTokensRefreshRequest = exports2.SemanticTokensRangeRequest = exports2.SemanticTokensDeltaRequest = exports2.SemanticTokensRequest = exports2.SemanticTokensRegistrationType = exports2.TokenFormat = void 0;
@@ -5182,9 +5182,9 @@ var require_protocol_semanticTokens = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.showDocument.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.showDocument.js
 var require_protocol_showDocument = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.showDocument.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.showDocument.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ShowDocumentRequest = void 0;
@@ -5198,9 +5198,9 @@ var require_protocol_showDocument = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.linkedEditingRange.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.linkedEditingRange.js
 var require_protocol_linkedEditingRange = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.linkedEditingRange.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.linkedEditingRange.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.LinkedEditingRangeRequest = void 0;
@@ -5214,9 +5214,9 @@ var require_protocol_linkedEditingRange = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.fileOperations.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.fileOperations.js
 var require_protocol_fileOperations = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.fileOperations.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.fileOperations.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.WillDeleteFilesRequest = exports2.DidDeleteFilesNotification = exports2.DidRenameFilesNotification = exports2.WillRenameFilesRequest = exports2.DidCreateFilesNotification = exports2.WillCreateFilesRequest = exports2.FileOperationPatternKind = void 0;
@@ -5265,9 +5265,9 @@ var require_protocol_fileOperations = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.moniker.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.moniker.js
 var require_protocol_moniker = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.moniker.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.moniker.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.MonikerRequest = exports2.MonikerKind = exports2.UniquenessLevel = void 0;
@@ -5295,9 +5295,9 @@ var require_protocol_moniker = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.typeHierarchy.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.typeHierarchy.js
 var require_protocol_typeHierarchy = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.typeHierarchy.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.typeHierarchy.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.TypeHierarchySubtypesRequest = exports2.TypeHierarchySupertypesRequest = exports2.TypeHierarchyPrepareRequest = void 0;
@@ -5323,9 +5323,9 @@ var require_protocol_typeHierarchy = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineValue.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineValue.js
 var require_protocol_inlineValue = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineValue.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineValue.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.InlineValueRefreshRequest = exports2.InlineValueRequest = void 0;
@@ -5345,9 +5345,9 @@ var require_protocol_inlineValue = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.inlayHint.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.inlayHint.js
 var require_protocol_inlayHint = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.inlayHint.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.inlayHint.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.InlayHintRefreshRequest = exports2.InlayHintResolveRequest = exports2.InlayHintRequest = void 0;
@@ -5373,9 +5373,9 @@ var require_protocol_inlayHint = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.diagnostic.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.diagnostic.js
 var require_protocol_diagnostic = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.diagnostic.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.diagnostic.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.DiagnosticRefreshRequest = exports2.WorkspaceDiagnosticRequest = exports2.DocumentDiagnosticRequest = exports2.DocumentDiagnosticReportKind = exports2.DiagnosticServerCancellationData = void 0;
@@ -5418,9 +5418,9 @@ var require_protocol_diagnostic = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.notebook.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.notebook.js
 var require_protocol_notebook = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.notebook.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.notebook.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.DidCloseNotebookDocumentNotification = exports2.DidSaveNotebookDocumentNotification = exports2.DidChangeNotebookDocumentNotification = exports2.NotebookCellArrayChange = exports2.DidOpenNotebookDocumentNotification = exports2.NotebookDocumentSyncRegistrationType = exports2.NotebookDocument = exports2.NotebookCell = exports2.ExecutionSummary = exports2.NotebookCellKind = void 0;
@@ -5607,9 +5607,9 @@ var require_protocol_notebook = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineCompletion.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineCompletion.js
 var require_protocol_inlineCompletion = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineCompletion.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineCompletion.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.InlineCompletionRequest = void 0;
@@ -5623,9 +5623,9 @@ var require_protocol_inlineCompletion = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.js
+// node_modules/vscode-languageserver-protocol/lib/common/protocol.js
 var require_protocol = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/protocol.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.WorkspaceSymbolRequest = exports2.CodeActionResolveRequest = exports2.CodeActionRequest = exports2.DocumentSymbolRequest = exports2.DocumentHighlightRequest = exports2.ReferencesRequest = exports2.DefinitionRequest = exports2.SignatureHelpRequest = exports2.SignatureHelpTriggerKind = exports2.HoverRequest = exports2.CompletionResolveRequest = exports2.CompletionRequest = exports2.CompletionTriggerKind = exports2.PublishDiagnosticsNotification = exports2.WatchKind = exports2.RelativePattern = exports2.FileChangeType = exports2.DidChangeWatchedFilesNotification = exports2.WillSaveTextDocumentWaitUntilRequest = exports2.WillSaveTextDocumentNotification = exports2.TextDocumentSaveReason = exports2.DidSaveTextDocumentNotification = exports2.DidCloseTextDocumentNotification = exports2.DidChangeTextDocumentNotification = exports2.TextDocumentContentChangeEvent = exports2.DidOpenTextDocumentNotification = exports2.TextDocumentSyncKind = exports2.TelemetryEventNotification = exports2.LogMessageNotification = exports2.ShowMessageRequest = exports2.ShowMessageNotification = exports2.MessageType = exports2.DidChangeConfigurationNotification = exports2.ExitNotification = exports2.ShutdownRequest = exports2.InitializedNotification = exports2.InitializeErrorCodes = exports2.InitializeRequest = exports2.WorkDoneProgressOptions = exports2.TextDocumentRegistrationOptions = exports2.StaticRegistrationOptions = exports2.PositionEncodingKind = exports2.FailureHandlingKind = exports2.ResourceOperationKind = exports2.UnregistrationRequest = exports2.RegistrationRequest = exports2.DocumentSelector = exports2.NotebookCellTextDocumentFilter = exports2.NotebookDocumentFilter = exports2.TextDocumentFilter = void 0;
@@ -6259,9 +6259,9 @@ var require_protocol = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/connection.js
+// node_modules/vscode-languageserver-protocol/lib/common/connection.js
 var require_connection2 = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/connection.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/connection.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.createProtocolConnection = void 0;
@@ -6276,9 +6276,9 @@ var require_connection2 = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/api.js
+// node_modules/vscode-languageserver-protocol/lib/common/api.js
 var require_api2 = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/api.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/common/api.js"(exports2) {
     "use strict";
     var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -6318,9 +6318,9 @@ var require_api2 = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/node/main.js
+// node_modules/vscode-languageserver-protocol/lib/node/main.js
 var require_main3 = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/node/main.js"(exports2) {
+  "node_modules/vscode-languageserver-protocol/lib/node/main.js"(exports2) {
     "use strict";
     var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -6350,9 +6350,9 @@ var require_main3 = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/utils/uuid.js
+// node_modules/vscode-languageserver/lib/common/utils/uuid.js
 var require_uuid = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/utils/uuid.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/utils/uuid.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.generateUuid = exports2.parse = exports2.isUUID = exports2.v4 = exports2.empty = void 0;
@@ -6441,9 +6441,9 @@ var require_uuid = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/progress.js
+// node_modules/vscode-languageserver/lib/common/progress.js
 var require_progress = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/progress.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/progress.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.attachPartialResult = exports2.ProgressFeature = exports2.attachWorkDone = void 0;
@@ -6599,9 +6599,9 @@ var require_progress = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/configuration.js
+// node_modules/vscode-languageserver/lib/common/configuration.js
 var require_configuration = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/configuration.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/configuration.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ConfigurationFeature = void 0;
@@ -6636,9 +6636,9 @@ var require_configuration = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/workspaceFolder.js
+// node_modules/vscode-languageserver/lib/common/workspaceFolder.js
 var require_workspaceFolder = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/workspaceFolder.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/workspaceFolder.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.WorkspaceFoldersFeature = void 0;
@@ -6682,9 +6682,9 @@ var require_workspaceFolder = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/callHierarchy.js
+// node_modules/vscode-languageserver/lib/common/callHierarchy.js
 var require_callHierarchy = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/callHierarchy.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/callHierarchy.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.CallHierarchyFeature = void 0;
@@ -6718,9 +6718,9 @@ var require_callHierarchy = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/semanticTokens.js
+// node_modules/vscode-languageserver/lib/common/semanticTokens.js
 var require_semanticTokens = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/semanticTokens.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/semanticTokens.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.SemanticTokensBuilder = exports2.SemanticTokensDiff = exports2.SemanticTokensFeature = void 0;
@@ -6866,9 +6866,9 @@ var require_semanticTokens = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/showDocument.js
+// node_modules/vscode-languageserver/lib/common/showDocument.js
 var require_showDocument = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/showDocument.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/showDocument.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ShowDocumentFeature = void 0;
@@ -6884,9 +6884,9 @@ var require_showDocument = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/fileOperations.js
+// node_modules/vscode-languageserver/lib/common/fileOperations.js
 var require_fileOperations = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/fileOperations.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/fileOperations.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.FileOperationsFeature = void 0;
@@ -6929,9 +6929,9 @@ var require_fileOperations = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/linkedEditingRange.js
+// node_modules/vscode-languageserver/lib/common/linkedEditingRange.js
 var require_linkedEditingRange = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/linkedEditingRange.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/linkedEditingRange.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.LinkedEditingRangeFeature = void 0;
@@ -6949,9 +6949,9 @@ var require_linkedEditingRange = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/typeHierarchy.js
+// node_modules/vscode-languageserver/lib/common/typeHierarchy.js
 var require_typeHierarchy = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/typeHierarchy.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/typeHierarchy.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.TypeHierarchyFeature = void 0;
@@ -6985,9 +6985,9 @@ var require_typeHierarchy = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/inlineValue.js
+// node_modules/vscode-languageserver/lib/common/inlineValue.js
 var require_inlineValue = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/inlineValue.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/inlineValue.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.InlineValueFeature = void 0;
@@ -7012,9 +7012,9 @@ var require_inlineValue = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/foldingRange.js
+// node_modules/vscode-languageserver/lib/common/foldingRange.js
 var require_foldingRange = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/foldingRange.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/foldingRange.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.FoldingRangeFeature = void 0;
@@ -7040,9 +7040,9 @@ var require_foldingRange = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/inlayHint.js
+// node_modules/vscode-languageserver/lib/common/inlayHint.js
 var require_inlayHint = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/inlayHint.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/inlayHint.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.InlayHintFeature = void 0;
@@ -7072,9 +7072,9 @@ var require_inlayHint = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/diagnostic.js
+// node_modules/vscode-languageserver/lib/common/diagnostic.js
 var require_diagnostic = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/diagnostic.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/diagnostic.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.DiagnosticFeature = void 0;
@@ -7104,9 +7104,9 @@ var require_diagnostic = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/textDocuments.js
+// node_modules/vscode-languageserver/lib/common/textDocuments.js
 var require_textDocuments = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/textDocuments.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/textDocuments.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.TextDocuments = void 0;
@@ -7269,9 +7269,9 @@ var require_textDocuments = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/notebook.js
+// node_modules/vscode-languageserver/lib/common/notebook.js
 var require_notebook = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/notebook.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/notebook.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.NotebookDocuments = exports2.NotebookSyncFeature = void 0;
@@ -7528,9 +7528,9 @@ var require_notebook = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/moniker.js
+// node_modules/vscode-languageserver/lib/common/moniker.js
 var require_moniker = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/moniker.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/moniker.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.MonikerFeature = void 0;
@@ -7553,9 +7553,9 @@ var require_moniker = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/server.js
+// node_modules/vscode-languageserver/lib/common/server.js
 var require_server = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/server.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/server.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.createConnection = exports2.combineFeatures = exports2.combineNotebooksFeatures = exports2.combineLanguagesFeatures = exports2.combineWorkspaceFeatures = exports2.combineWindowFeatures = exports2.combineClientFeatures = exports2.combineTracerFeatures = exports2.combineTelemetryFeatures = exports2.combineConsoleFeatures = exports2._NotebooksImpl = exports2._LanguagesImpl = exports2.BulkUnregistration = exports2.BulkRegistration = exports2.ErrorMessageTracker = void 0;
@@ -8300,9 +8300,9 @@ var require_server = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/node/files.js
+// node_modules/vscode-languageserver/lib/node/files.js
 var require_files = __commonJS({
-  "../node_modules/vscode-languageserver/lib/node/files.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/node/files.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.resolveModulePath = exports2.FileSystem = exports2.resolveGlobalYarnPath = exports2.resolveGlobalNodePath = exports2.resolve = exports2.uriToFilePath = void 0;
@@ -8531,17 +8531,17 @@ var require_files = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/node.js
+// node_modules/vscode-languageserver-protocol/node.js
 var require_node2 = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/node.js"(exports2, module2) {
+  "node_modules/vscode-languageserver-protocol/node.js"(exports2, module2) {
     "use strict";
     module2.exports = require_main3();
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/inlineCompletion.proposed.js
+// node_modules/vscode-languageserver/lib/common/inlineCompletion.proposed.js
 var require_inlineCompletion_proposed = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/inlineCompletion.proposed.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/inlineCompletion.proposed.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.InlineCompletionFeature = void 0;
@@ -8563,9 +8563,9 @@ var require_inlineCompletion_proposed = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/api.js
+// node_modules/vscode-languageserver/lib/common/api.js
 var require_api3 = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/api.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/common/api.js"(exports2) {
     "use strict";
     var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -8610,9 +8610,9 @@ var require_api3 = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/node/main.js
+// node_modules/vscode-languageserver/lib/node/main.js
 var require_main4 = __commonJS({
-  "../node_modules/vscode-languageserver/lib/node/main.js"(exports2) {
+  "node_modules/vscode-languageserver/lib/node/main.js"(exports2) {
     "use strict";
     var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -8865,15 +8865,15 @@ ${stack}`);
   }
 });
 
-// ../node_modules/vscode-languageserver/node.js
+// node_modules/vscode-languageserver/node.js
 var require_node3 = __commonJS({
-  "../node_modules/vscode-languageserver/node.js"(exports2, module2) {
+  "node_modules/vscode-languageserver/node.js"(exports2, module2) {
     "use strict";
     module2.exports = require_main4();
   }
 });
 
-// ../node_modules/vscode-languageserver-textdocument/lib/esm/main.js
+// node_modules/vscode-languageserver-textdocument/lib/esm/main.js
 var main_exports = {};
 __export(main_exports, {
   TextDocument: () => TextDocument
@@ -8939,7 +8939,7 @@ function getWellformedEdit(textEdit) {
 }
 var FullTextDocument, TextDocument;
 var init_main = __esm({
-  "../node_modules/vscode-languageserver-textdocument/lib/esm/main.js"() {
+  "node_modules/vscode-languageserver-textdocument/lib/esm/main.js"() {
     "use strict";
     FullTextDocument = class _FullTextDocument {
       constructor(uri, languageId, version, content) {
@@ -9146,6 +9146,7 @@ var require_ast = __commonJS({
     exports2.isTemporalLiteral = isTemporalLiteral;
     exports2.isDeclExternal = isDeclExternal;
     exports2.isDeclTemporal = isDeclTemporal;
+    exports2.isDeclMaybeTemporal = isDeclMaybeTemporal;
     exports2.getDeclModes = getDeclModes;
     exports2.isComparisonAtom = isComparisonAtom;
     exports2.isLtAtom = isLtAtom;
@@ -9286,6 +9287,9 @@ var require_ast = __commonJS({
     function isDeclTemporal(decl) {
       return decl.descr?.some((d) => d.predicate.symbol === exports2.DESCRIPTORS.TEMPORAL) ?? false;
     }
+    function isDeclMaybeTemporal(decl) {
+      return decl.descr?.some((d) => d.predicate.symbol === exports2.DESCRIPTORS.MAYBE_TEMPORAL) ?? false;
+    }
     function getDeclModes(decl) {
       return decl.descr?.filter((d) => d.predicate.symbol === exports2.DESCRIPTORS.MODE) ?? [];
     }
@@ -9316,7 +9320,8 @@ var require_ast = __commonJS({
       FUNDEP: "fundep",
       MERGE_PREDICATE: "merge",
       DEFERRED_PREDICATE: "deferred",
-      TEMPORAL: "temporal"
+      TEMPORAL: "temporal",
+      MAYBE_TEMPORAL: "internal:maybe_temporal"
     };
     function isComparisonAtom(term) {
       return isAtom(term) && exports2.COMPARISON_PREDICATES.includes(term.predicate.symbol);
@@ -9498,9 +9503,9 @@ var require_ast = __commonJS({
   }
 });
 
-// ../node_modules/antlr4ng/dist/index.cjs
+// node_modules/antlr4ng/dist/index.cjs
 var require_dist = __commonJS({
-  "../node_modules/antlr4ng/dist/index.cjs"(exports2, module2) {
+  "node_modules/antlr4ng/dist/index.cjs"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -26824,38 +26829,47 @@ var require_MangleLexer = __commonJS({
     MangleLexer.RPAREN = 18;
     MangleLexer.LBRACKET = 19;
     MangleLexer.RBRACKET = 20;
-    MangleLexer.EQ = 21;
-    MangleLexer.BANGEQ = 22;
-    MangleLexer.COMMA = 23;
-    MangleLexer.BANG = 24;
-    MangleLexer.LESS = 25;
-    MangleLexer.LESSEQ = 26;
-    MangleLexer.GREATER = 27;
-    MangleLexer.GREATEREQ = 28;
-    MangleLexer.COLONDASH = 29;
-    MangleLexer.NEWLINE = 30;
-    MangleLexer.PIPEGREATER = 31;
-    MangleLexer.NUMBER = 32;
-    MangleLexer.FLOAT = 33;
-    MangleLexer.VARIABLE = 34;
-    MangleLexer.NAME = 35;
-    MangleLexer.TYPENAME = 36;
-    MangleLexer.DOT_TYPE = 37;
-    MangleLexer.CONSTANT = 38;
-    MangleLexer.STRING = 39;
-    MangleLexer.BYTESTRING = 40;
+    MangleLexer.LBRACE = 21;
+    MangleLexer.RBRACE = 22;
+    MangleLexer.EQ = 23;
+    MangleLexer.BANGEQ = 24;
+    MangleLexer.COMMA = 25;
+    MangleLexer.BANG = 26;
+    MangleLexer.LESSEQ = 27;
+    MangleLexer.LESS = 28;
+    MangleLexer.GREATEREQ = 29;
+    MangleLexer.GREATER = 30;
+    MangleLexer.COLONDASH = 31;
+    MangleLexer.NEWLINE = 32;
+    MangleLexer.PIPEGREATER = 33;
+    MangleLexer.AT = 34;
+    MangleLexer.DIAMONDMINUS = 35;
+    MangleLexer.DIAMONDPLUS = 36;
+    MangleLexer.BOXMINUS = 37;
+    MangleLexer.BOXPLUS = 38;
+    MangleLexer.TIMESTAMP = 39;
+    MangleLexer.DURATION = 40;
+    MangleLexer.NUMBER = 41;
+    MangleLexer.FLOAT = 42;
+    MangleLexer.VARIABLE = 43;
+    MangleLexer.NAME = 44;
+    MangleLexer.TYPENAME = 45;
+    MangleLexer.DOT_TYPE = 46;
+    MangleLexer.CONSTANT = 47;
+    MangleLexer.STRING = 48;
+    MangleLexer.BYTESTRING = 49;
     MangleLexer.channelNames = [
       "DEFAULT_TOKEN_CHANNEL",
       "HIDDEN"
     ];
     MangleLexer.literalNames = [
       null,
+      "'temporal'",
       "'.'",
       "'descr'",
       "'inclusion'",
+      "'now'",
       "':'",
-      "'{'",
-      "'}'",
       "'opt'",
       null,
       null,
@@ -26870,17 +26884,24 @@ var require_MangleLexer = __commonJS({
       "')'",
       "'['",
       "']'",
+      "'{'",
+      "'}'",
       "'='",
       "'!='",
       "','",
       "'!'",
-      "'<'",
       "'<='",
-      "'>'",
+      "'<'",
       "'>='",
+      "'>'",
       "':-'",
       "'\\n'",
-      "'|>'"
+      "'|>'",
+      "'@'",
+      "'<-'",
+      "'<+'",
+      "'[-'",
+      "'[+'"
     ];
     MangleLexer.symbolicNames = [
       null,
@@ -26904,17 +26925,26 @@ var require_MangleLexer = __commonJS({
       "RPAREN",
       "LBRACKET",
       "RBRACKET",
+      "LBRACE",
+      "RBRACE",
       "EQ",
       "BANGEQ",
       "COMMA",
       "BANG",
-      "LESS",
       "LESSEQ",
-      "GREATER",
+      "LESS",
       "GREATEREQ",
+      "GREATER",
       "COLONDASH",
       "NEWLINE",
       "PIPEGREATER",
+      "AT",
+      "DIAMONDMINUS",
+      "DIAMONDPLUS",
+      "BOXMINUS",
+      "BOXPLUS",
+      "TIMESTAMP",
+      "DURATION",
       "NUMBER",
       "FLOAT",
       "VARIABLE",
@@ -26949,19 +26979,28 @@ var require_MangleLexer = __commonJS({
       "RPAREN",
       "LBRACKET",
       "RBRACKET",
+      "LBRACE",
+      "RBRACE",
       "EQ",
       "BANGEQ",
       "COMMA",
       "BANG",
-      "LESS",
       "LESSEQ",
-      "GREATER",
+      "LESS",
       "GREATEREQ",
+      "GREATER",
       "COLONDASH",
       "NEWLINE",
       "PIPEGREATER",
+      "AT",
+      "DIAMONDMINUS",
+      "DIAMONDPLUS",
+      "BOXMINUS",
+      "BOXPLUS",
       "LETTER",
       "DIGIT",
+      "TIMESTAMP",
+      "DURATION",
       "NUMBER",
       "FLOAT",
       "EXPONENT",
@@ -26986,8 +27025,8 @@ var require_MangleLexer = __commonJS({
     MangleLexer._serializedATN = [
       4,
       0,
-      40,
-      417,
+      49,
+      504,
       6,
       -1,
       2,
@@ -27202,30 +27241,64 @@ var require_MangleLexer = __commonJS({
       52,
       7,
       52,
+      2,
+      53,
+      7,
+      53,
+      2,
+      54,
+      7,
+      54,
+      2,
+      55,
+      7,
+      55,
+      2,
+      56,
+      7,
+      56,
+      2,
+      57,
+      7,
+      57,
+      2,
+      58,
+      7,
+      58,
+      2,
+      59,
+      7,
+      59,
+      2,
+      60,
+      7,
+      60,
+      2,
+      61,
+      7,
+      61,
       1,
       0,
       1,
       0,
       1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
       1,
       1,
       1,
       1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      2,
-      1,
-      2,
-      1,
-      2,
-      1,
-      2,
       1,
       2,
       1,
@@ -27242,6 +27315,26 @@ var require_MangleLexer = __commonJS({
       3,
       1,
       3,
+      1,
+      3,
+      1,
+      3,
+      1,
+      3,
+      1,
+      3,
+      1,
+      3,
+      1,
+      3,
+      1,
+      3,
+      1,
+      3,
+      1,
+      4,
+      1,
+      4,
       1,
       4,
       1,
@@ -27262,14 +27355,14 @@ var require_MangleLexer = __commonJS({
       7,
       4,
       7,
-      137,
+      164,
       8,
       7,
       11,
       7,
       12,
       7,
-      138,
+      165,
       1,
       7,
       1,
@@ -27280,14 +27373,14 @@ var require_MangleLexer = __commonJS({
       8,
       5,
       8,
-      145,
+      172,
       8,
       8,
       10,
       8,
       12,
       8,
-      148,
+      175,
       9,
       8,
       1,
@@ -27383,11 +27476,11 @@ var require_MangleLexer = __commonJS({
       1,
       21,
       1,
-      21,
-      1,
       22,
       1,
       22,
+      1,
+      23,
       1,
       23,
       1,
@@ -27401,13 +27494,11 @@ var require_MangleLexer = __commonJS({
       1,
       25,
       1,
-      25,
-      1,
       26,
       1,
       26,
       1,
-      27,
+      26,
       1,
       27,
       1,
@@ -27437,122 +27528,25 @@ var require_MangleLexer = __commonJS({
       1,
       32,
       1,
-      33,
-      3,
-      33,
-      224,
-      8,
-      33,
+      32,
       1,
       33,
       1,
       33,
-      5,
-      33,
-      228,
-      8,
-      33,
-      10,
-      33,
-      12,
-      33,
-      231,
-      9,
-      33,
-      1,
-      34,
-      3,
-      34,
-      234,
-      8,
-      34,
-      1,
-      34,
-      4,
-      34,
-      237,
-      8,
-      34,
-      11,
-      34,
-      12,
-      34,
-      238,
       1,
       34,
       1,
       34,
-      4,
-      34,
-      243,
-      8,
-      34,
-      11,
-      34,
-      12,
-      34,
-      244,
       1,
-      34,
-      3,
-      34,
-      248,
-      8,
-      34,
-      1,
-      34,
-      3,
-      34,
-      251,
-      8,
-      34,
-      1,
-      34,
-      1,
-      34,
-      4,
-      34,
-      255,
-      8,
-      34,
-      11,
-      34,
-      12,
-      34,
-      256,
-      1,
-      34,
-      3,
-      34,
-      260,
-      8,
-      34,
-      3,
-      34,
-      262,
-      8,
       34,
       1,
       35,
       1,
       35,
-      3,
-      35,
-      266,
-      8,
-      35,
       1,
       35,
-      4,
-      35,
-      269,
-      8,
-      35,
-      11,
-      35,
-      12,
-      35,
-      270,
+      1,
+      36,
       1,
       36,
       1,
@@ -27561,102 +27555,131 @@ var require_MangleLexer = __commonJS({
       37,
       1,
       37,
-      3,
-      37,
-      277,
-      8,
+      1,
       37,
       1,
       38,
       1,
       38,
       1,
-      38,
-      5,
-      38,
-      282,
+      39,
+      1,
+      39,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      4,
+      40,
+      289,
       8,
-      38,
-      10,
-      38,
+      40,
+      11,
+      40,
       12,
-      38,
-      285,
-      9,
-      38,
-      3,
-      38,
-      287,
-      8,
-      38,
-      1,
-      39,
-      1,
-      39,
-      1,
-      39,
-      3,
-      39,
-      292,
-      8,
-      39,
-      1,
       40,
+      290,
       3,
       40,
-      295,
+      293,
       8,
       40,
       1,
       40,
-      1,
+      3,
+      40,
+      296,
+      8,
+      40,
+      3,
+      40,
+      298,
+      8,
       40,
       1,
-      40,
-      1,
-      40,
-      5,
-      40,
+      41,
+      4,
+      41,
       301,
       8,
-      40,
-      10,
-      40,
+      41,
+      11,
+      41,
       12,
-      40,
-      304,
-      9,
-      40,
+      41,
+      302,
       1,
       41,
       1,
       41,
       1,
       41,
-      1,
+      3,
       41,
-      5,
-      41,
-      310,
+      308,
       8,
       41,
+      1,
+      42,
+      3,
+      42,
+      311,
+      8,
+      42,
+      1,
+      42,
+      1,
+      42,
+      5,
+      42,
+      315,
+      8,
+      42,
       10,
-      41,
+      42,
       12,
-      41,
-      313,
+      42,
+      318,
       9,
-      41,
-      1,
       42,
-      1,
-      42,
-      1,
-      42,
-      1,
-      43,
-      1,
-      43,
       1,
       43,
       3,
@@ -27665,59 +27688,104 @@ var require_MangleLexer = __commonJS({
       8,
       43,
       1,
-      44,
-      1,
-      44,
+      43,
       4,
-      44,
+      43,
+      324,
+      8,
+      43,
+      11,
+      43,
+      12,
+      43,
       325,
-      8,
-      44,
-      11,
-      44,
-      12,
-      44,
-      326,
       1,
-      44,
+      43,
       1,
-      44,
+      43,
       4,
-      44,
-      331,
+      43,
+      330,
       8,
-      44,
+      43,
       11,
-      44,
+      43,
       12,
-      44,
-      332,
-      5,
-      44,
+      43,
+      331,
+      1,
+      43,
+      3,
+      43,
       335,
       8,
-      44,
-      10,
-      44,
-      12,
-      44,
-      338,
-      9,
-      44,
+      43,
       1,
-      45,
-      1,
-      45,
+      43,
       3,
-      45,
+      43,
+      338,
+      8,
+      43,
+      1,
+      43,
+      1,
+      43,
+      4,
+      43,
       342,
       8,
+      43,
+      11,
+      43,
+      12,
+      43,
+      343,
+      1,
+      43,
+      3,
+      43,
+      347,
+      8,
+      43,
+      3,
+      43,
+      349,
+      8,
+      43,
+      1,
+      44,
+      1,
+      44,
+      3,
+      44,
+      353,
+      8,
+      44,
+      1,
+      44,
+      4,
+      44,
+      356,
+      8,
+      44,
+      11,
+      44,
+      12,
+      44,
+      357,
+      1,
+      45,
+      1,
       45,
       1,
       46,
       1,
       46,
-      1,
+      3,
+      46,
+      364,
+      8,
       46,
       1,
       47,
@@ -27727,155 +27795,308 @@ var require_MangleLexer = __commonJS({
       47,
       5,
       47,
-      350,
-      8,
-      47,
-      10,
-      47,
-      12,
-      47,
-      353,
-      9,
-      47,
-      1,
-      47,
-      1,
-      47,
-      1,
-      47,
-      1,
-      47,
-      5,
-      47,
-      359,
-      8,
-      47,
-      10,
-      47,
-      12,
-      47,
-      362,
-      9,
-      47,
-      1,
-      47,
-      3,
-      47,
-      365,
-      8,
-      47,
-      1,
-      48,
-      1,
-      48,
-      5,
-      48,
       369,
       8,
-      48,
+      47,
       10,
-      48,
+      47,
       12,
-      48,
+      47,
       372,
       9,
-      48,
+      47,
+      3,
+      47,
+      374,
+      8,
+      47,
       1,
       48,
       1,
       48,
       1,
-      49,
+      48,
+      3,
+      48,
+      379,
+      8,
+      48,
       1,
       49,
       3,
       49,
-      378,
+      382,
       8,
+      49,
+      1,
+      49,
+      1,
+      49,
+      1,
+      49,
+      1,
+      49,
+      5,
+      49,
+      388,
+      8,
+      49,
+      10,
+      49,
+      12,
+      49,
+      391,
+      9,
       49,
       1,
       50,
       1,
       50,
       1,
-      51,
+      50,
       1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      3,
-      51,
-      405,
+      50,
+      5,
+      50,
+      397,
       8,
+      50,
+      10,
+      50,
+      12,
+      50,
+      400,
+      9,
+      50,
+      1,
       51,
       1,
       51,
-      3,
+      1,
       51,
+      1,
+      52,
+      1,
+      52,
+      1,
+      52,
+      3,
+      52,
       408,
       8,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      3,
-      51,
-      414,
-      8,
-      51,
-      1,
       52,
       1,
-      52,
-      1,
-      370,
-      0,
       53,
+      1,
+      53,
+      4,
+      53,
+      412,
+      8,
+      53,
+      11,
+      53,
+      12,
+      53,
+      413,
+      1,
+      53,
+      1,
+      53,
+      4,
+      53,
+      418,
+      8,
+      53,
+      11,
+      53,
+      12,
+      53,
+      419,
+      5,
+      53,
+      422,
+      8,
+      53,
+      10,
+      53,
+      12,
+      53,
+      425,
+      9,
+      53,
+      1,
+      54,
+      1,
+      54,
+      3,
+      54,
+      429,
+      8,
+      54,
+      1,
+      55,
+      1,
+      55,
+      1,
+      55,
+      1,
+      56,
+      1,
+      56,
+      1,
+      56,
+      5,
+      56,
+      437,
+      8,
+      56,
+      10,
+      56,
+      12,
+      56,
+      440,
+      9,
+      56,
+      1,
+      56,
+      1,
+      56,
+      1,
+      56,
+      1,
+      56,
+      5,
+      56,
+      446,
+      8,
+      56,
+      10,
+      56,
+      12,
+      56,
+      449,
+      9,
+      56,
+      1,
+      56,
+      3,
+      56,
+      452,
+      8,
+      56,
+      1,
+      57,
+      1,
+      57,
+      5,
+      57,
+      456,
+      8,
+      57,
+      10,
+      57,
+      12,
+      57,
+      459,
+      9,
+      57,
+      1,
+      57,
+      1,
+      57,
+      1,
+      58,
+      1,
+      58,
+      3,
+      58,
+      465,
+      8,
+      58,
+      1,
+      59,
+      1,
+      59,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      3,
+      60,
+      492,
+      8,
+      60,
+      1,
+      60,
+      3,
+      60,
+      495,
+      8,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      3,
+      60,
+      501,
+      8,
+      60,
+      1,
+      61,
+      1,
+      61,
+      1,
+      457,
+      0,
+      62,
       1,
       1,
       3,
@@ -27939,52 +28160,70 @@ var require_MangleLexer = __commonJS({
       61,
       31,
       63,
-      0,
-      65,
-      0,
-      67,
       32,
-      69,
+      65,
       33,
-      71,
-      0,
-      73,
-      0,
-      75,
-      0,
-      77,
+      67,
       34,
+      69,
+      35,
+      71,
+      36,
+      73,
+      37,
+      75,
+      38,
+      77,
+      0,
       79,
       0,
       81,
-      35,
-      83,
-      36,
-      85,
-      37,
-      87,
-      0,
-      89,
-      38,
-      91,
       39,
-      93,
+      83,
       40,
-      95,
+      85,
+      41,
+      87,
+      42,
+      89,
       0,
+      91,
+      0,
+      93,
+      0,
+      95,
+      43,
       97,
       0,
       99,
-      0,
+      44,
       101,
-      0,
+      45,
       103,
-      0,
+      46,
       105,
+      0,
+      107,
+      47,
+      109,
+      48,
+      111,
+      49,
+      113,
+      0,
+      115,
+      0,
+      117,
+      0,
+      119,
+      0,
+      121,
+      0,
+      123,
       0,
       1,
       0,
-      11,
+      12,
       3,
       0,
       9,
@@ -28003,6 +28242,16 @@ var require_MangleLexer = __commonJS({
       90,
       97,
       122,
+      4,
+      0,
+      100,
+      100,
+      104,
+      104,
+      109,
+      109,
+      115,
+      115,
       2,
       0,
       69,
@@ -28053,7 +28302,7 @@ var require_MangleLexer = __commonJS({
       57,
       97,
       102,
-      449,
+      542,
       0,
       1,
       1,
@@ -28241,6 +28490,18 @@ var require_MangleLexer = __commonJS({
       0,
       0,
       0,
+      63,
+      1,
+      0,
+      0,
+      0,
+      0,
+      65,
+      1,
+      0,
+      0,
+      0,
+      0,
       67,
       1,
       0,
@@ -28253,7 +28514,19 @@ var require_MangleLexer = __commonJS({
       0,
       0,
       0,
-      77,
+      71,
+      1,
+      0,
+      0,
+      0,
+      0,
+      73,
+      1,
+      0,
+      0,
+      0,
+      0,
+      75,
       1,
       0,
       0,
@@ -28277,445 +28550,421 @@ var require_MangleLexer = __commonJS({
       0,
       0,
       0,
-      89,
+      87,
       1,
       0,
       0,
       0,
       0,
-      91,
+      95,
       1,
       0,
       0,
       0,
       0,
-      93,
+      99,
       1,
       0,
       0,
       0,
+      0,
+      101,
       1,
+      0,
+      0,
+      0,
+      0,
+      103,
+      1,
+      0,
+      0,
+      0,
+      0,
       107,
       1,
       0,
       0,
       0,
-      3,
+      0,
       109,
       1,
       0,
       0,
       0,
-      5,
-      115,
+      0,
+      111,
       1,
       0,
       0,
       0,
-      7,
+      1,
       125,
       1,
       0,
       0,
       0,
-      9,
-      127,
+      3,
+      134,
       1,
       0,
       0,
       0,
-      11,
-      129,
-      1,
-      0,
-      0,
-      0,
-      13,
-      131,
-      1,
-      0,
-      0,
-      0,
-      15,
+      5,
       136,
       1,
       0,
       0,
       0,
-      17,
+      7,
       142,
       1,
       0,
       0,
       0,
+      9,
+      152,
+      1,
+      0,
+      0,
+      0,
+      11,
+      156,
+      1,
+      0,
+      0,
+      0,
+      13,
+      158,
+      1,
+      0,
+      0,
+      0,
+      15,
+      163,
+      1,
+      0,
+      0,
+      0,
+      17,
+      169,
+      1,
+      0,
+      0,
+      0,
       19,
-      151,
+      178,
       1,
       0,
       0,
       0,
       21,
-      153,
-      1,
-      0,
-      0,
-      0,
-      23,
-      161,
-      1,
-      0,
-      0,
-      0,
-      25,
-      165,
-      1,
-      0,
-      0,
-      0,
-      27,
-      170,
-      1,
-      0,
-      0,
-      0,
-      29,
-      176,
-      1,
-      0,
-      0,
-      0,
-      31,
       180,
       1,
       0,
       0,
       0,
-      33,
-      183,
+      23,
+      188,
       1,
       0,
       0,
       0,
-      35,
-      185,
+      25,
+      192,
       1,
       0,
       0,
       0,
-      37,
-      187,
+      27,
+      197,
       1,
       0,
       0,
       0,
-      39,
-      189,
+      29,
+      203,
       1,
       0,
       0,
       0,
-      41,
-      191,
-      1,
-      0,
-      0,
-      0,
-      43,
-      193,
-      1,
-      0,
-      0,
-      0,
-      45,
-      196,
-      1,
-      0,
-      0,
-      0,
-      47,
-      198,
-      1,
-      0,
-      0,
-      0,
-      49,
-      200,
-      1,
-      0,
-      0,
-      0,
-      51,
-      202,
-      1,
-      0,
-      0,
-      0,
-      53,
-      205,
-      1,
-      0,
-      0,
-      0,
-      55,
+      31,
       207,
       1,
       0,
       0,
       0,
-      57,
+      33,
       210,
       1,
       0,
       0,
       0,
-      59,
-      213,
+      35,
+      212,
       1,
       0,
       0,
       0,
-      61,
-      215,
+      37,
+      214,
       1,
       0,
       0,
       0,
-      63,
+      39,
+      216,
+      1,
+      0,
+      0,
+      0,
+      41,
       218,
       1,
       0,
       0,
       0,
-      65,
+      43,
       220,
       1,
       0,
       0,
       0,
+      45,
+      222,
+      1,
+      0,
+      0,
+      0,
+      47,
+      224,
+      1,
+      0,
+      0,
+      0,
+      49,
+      227,
+      1,
+      0,
+      0,
+      0,
+      51,
+      229,
+      1,
+      0,
+      0,
+      0,
+      53,
+      231,
+      1,
+      0,
+      0,
+      0,
+      55,
+      234,
+      1,
+      0,
+      0,
+      0,
+      57,
+      236,
+      1,
+      0,
+      0,
+      0,
+      59,
+      239,
+      1,
+      0,
+      0,
+      0,
+      61,
+      241,
+      1,
+      0,
+      0,
+      0,
+      63,
+      244,
+      1,
+      0,
+      0,
+      0,
+      65,
+      246,
+      1,
+      0,
+      0,
+      0,
       67,
-      223,
+      249,
       1,
       0,
       0,
       0,
       69,
-      261,
+      251,
       1,
       0,
       0,
       0,
       71,
-      263,
+      254,
       1,
       0,
       0,
       0,
       73,
-      272,
+      257,
       1,
       0,
       0,
       0,
       75,
-      276,
+      260,
       1,
       0,
       0,
       0,
       77,
-      286,
+      263,
       1,
       0,
       0,
       0,
       79,
-      291,
+      265,
       1,
       0,
       0,
       0,
       81,
-      294,
+      267,
       1,
       0,
       0,
       0,
       83,
-      305,
+      300,
       1,
       0,
       0,
       0,
       85,
-      314,
+      310,
       1,
       0,
       0,
       0,
       87,
-      320,
+      348,
       1,
       0,
       0,
       0,
       89,
-      322,
+      350,
       1,
       0,
       0,
       0,
       91,
-      341,
+      359,
       1,
       0,
       0,
       0,
       93,
-      343,
+      363,
       1,
       0,
       0,
       0,
       95,
-      364,
+      373,
       1,
       0,
       0,
       0,
       97,
-      366,
+      378,
       1,
       0,
       0,
       0,
       99,
-      377,
+      381,
       1,
       0,
       0,
       0,
       101,
-      379,
+      392,
       1,
       0,
       0,
       0,
       103,
-      413,
+      401,
       1,
       0,
       0,
       0,
       105,
-      415,
+      407,
       1,
       0,
       0,
       0,
       107,
-      108,
-      5,
-      46,
-      0,
-      0,
-      108,
-      2,
+      409,
       1,
       0,
       0,
       0,
       109,
-      110,
-      5,
-      100,
+      428,
+      1,
       0,
-      0,
-      110,
-      111,
-      5,
-      101,
       0,
       0,
       111,
-      112,
-      5,
-      115,
+      430,
+      1,
       0,
-      0,
-      112,
-      113,
-      5,
-      99,
       0,
       0,
       113,
-      114,
-      5,
-      114,
-      0,
-      0,
-      114,
-      4,
+      451,
       1,
       0,
       0,
       0,
       115,
-      116,
-      5,
-      105,
+      453,
+      1,
       0,
-      0,
-      116,
-      117,
-      5,
-      110,
       0,
       0,
       117,
-      118,
-      5,
-      99,
+      464,
+      1,
       0,
-      0,
-      118,
-      119,
-      5,
-      108,
       0,
       0,
       119,
-      120,
-      5,
-      117,
+      466,
+      1,
       0,
-      0,
-      120,
-      121,
-      5,
-      115,
       0,
       0,
       121,
-      122,
-      5,
-      105,
+      500,
+      1,
       0,
-      0,
-      122,
-      123,
-      5,
-      111,
       0,
       0,
       123,
-      124,
-      5,
-      110,
-      0,
-      0,
-      124,
-      6,
+      502,
       1,
       0,
       0,
@@ -28723,341 +28972,341 @@ var require_MangleLexer = __commonJS({
       125,
       126,
       5,
-      58,
+      116,
       0,
       0,
       126,
-      8,
-      1,
-      0,
+      127,
+      5,
+      101,
       0,
       0,
       127,
       128,
       5,
-      123,
+      109,
       0,
       0,
       128,
-      10,
-      1,
-      0,
+      129,
+      5,
+      112,
       0,
       0,
       129,
       130,
       5,
-      125,
+      111,
       0,
       0,
       130,
-      12,
-      1,
-      0,
+      131,
+      5,
+      114,
       0,
       0,
       131,
       132,
       5,
-      111,
+      97,
       0,
       0,
       132,
       133,
       5,
-      112,
+      108,
       0,
       0,
       133,
+      2,
+      1,
+      0,
+      0,
+      0,
       134,
+      135,
       5,
-      116,
-      0,
-      0,
-      134,
-      14,
-      1,
-      0,
+      46,
       0,
       0,
       135,
-      137,
-      7,
+      4,
+      1,
       0,
       0,
       0,
       136,
-      135,
-      1,
-      0,
+      137,
+      5,
+      100,
       0,
       0,
       137,
       138,
-      1,
-      0,
-      0,
-      0,
-      138,
-      136,
-      1,
-      0,
+      5,
+      101,
       0,
       0,
       138,
       139,
-      1,
-      0,
+      5,
+      115,
       0,
       0,
       139,
       140,
-      1,
-      0,
+      5,
+      99,
       0,
       0,
       140,
+      141,
+      5,
+      114,
+      0,
+      0,
       141,
       6,
-      7,
-      0,
-      0,
-      141,
-      16,
       1,
       0,
       0,
       0,
       142,
+      143,
+      5,
+      105,
+      0,
+      0,
+      143,
+      144,
+      5,
+      110,
+      0,
+      0,
+      144,
+      145,
+      5,
+      99,
+      0,
+      0,
+      145,
       146,
       5,
-      35,
-      0,
-      0,
-      143,
-      145,
-      8,
-      1,
-      0,
-      0,
-      144,
-      143,
-      1,
-      0,
-      0,
-      0,
-      145,
-      148,
-      1,
-      0,
-      0,
-      0,
-      146,
-      144,
-      1,
-      0,
+      108,
       0,
       0,
       146,
       147,
-      1,
-      0,
+      5,
+      117,
       0,
       0,
       147,
-      149,
-      1,
-      0,
+      148,
+      5,
+      115,
       0,
       0,
       148,
-      146,
-      1,
-      0,
+      149,
+      5,
+      105,
       0,
       0,
       149,
       150,
-      6,
-      8,
+      5,
+      111,
       0,
       0,
       150,
-      18,
-      1,
-      0,
+      151,
+      5,
+      110,
       0,
       0,
       151,
-      152,
-      5,
-      10232,
-      0,
-      0,
-      152,
-      20,
+      8,
       1,
       0,
+      0,
+      0,
+      152,
+      153,
+      5,
+      110,
       0,
       0,
       153,
       154,
       5,
-      80,
+      111,
       0,
       0,
       154,
       155,
       5,
-      97,
+      119,
       0,
       0,
       155,
-      156,
-      5,
-      99,
-      0,
-      0,
-      156,
-      157,
-      5,
-      107,
-      0,
-      0,
-      157,
-      158,
-      5,
-      97,
-      0,
-      0,
-      158,
-      159,
-      5,
-      103,
-      0,
-      0,
-      159,
-      160,
-      5,
-      101,
-      0,
-      0,
-      160,
-      22,
+      10,
       1,
       0,
       0,
       0,
+      156,
+      157,
+      5,
+      58,
+      0,
+      0,
+      157,
+      12,
+      1,
+      0,
+      0,
+      0,
+      158,
+      159,
+      5,
+      111,
+      0,
+      0,
+      159,
+      160,
+      5,
+      112,
+      0,
+      0,
+      160,
       161,
+      5,
+      116,
+      0,
+      0,
+      161,
+      14,
+      1,
+      0,
+      0,
+      0,
       162,
-      5,
-      85,
+      164,
+      7,
       0,
       0,
+      0,
+      163,
       162,
-      163,
-      5,
-      115,
+      1,
       0,
-      0,
-      163,
-      164,
-      5,
-      101,
       0,
       0,
       164,
-      24,
+      165,
+      1,
+      0,
+      0,
+      0,
+      165,
+      163,
       1,
       0,
       0,
       0,
       165,
       166,
-      5,
-      68,
-      0,
-      0,
-      166,
-      167,
-      5,
-      101,
-      0,
-      0,
-      167,
-      168,
-      5,
-      99,
-      0,
-      0,
-      168,
-      169,
-      5,
-      108,
-      0,
-      0,
-      169,
-      26,
       1,
       0,
       0,
       0,
+      166,
+      167,
+      1,
+      0,
+      0,
+      0,
+      167,
+      168,
+      6,
+      7,
+      0,
+      0,
+      168,
+      16,
+      1,
+      0,
+      0,
+      0,
+      169,
+      173,
+      5,
+      35,
+      0,
+      0,
       170,
-      171,
-      5,
-      98,
-      0,
-      0,
-      171,
       172,
-      5,
-      111,
+      8,
+      1,
+      0,
+      0,
+      171,
+      170,
+      1,
+      0,
       0,
       0,
       172,
+      175,
+      1,
+      0,
+      0,
+      0,
       173,
-      5,
-      117,
+      171,
+      1,
+      0,
       0,
       0,
       173,
       174,
-      5,
-      110,
+      1,
+      0,
       0,
       0,
       174,
-      175,
-      5,
-      100,
+      176,
+      1,
       0,
       0,
+      0,
       175,
-      28,
+      173,
       1,
       0,
       0,
       0,
       176,
       177,
-      5,
-      108,
+      6,
+      8,
       0,
       0,
       177,
-      178,
-      5,
-      101,
+      18,
+      1,
+      0,
       0,
       0,
       178,
       179,
       5,
-      116,
+      10232,
       0,
       0,
       179,
-      30,
+      20,
       1,
       0,
       0,
@@ -29065,985 +29314,889 @@ var require_MangleLexer = __commonJS({
       180,
       181,
       5,
-      100,
+      80,
       0,
       0,
       181,
       182,
       5,
-      111,
+      97,
       0,
       0,
       182,
-      32,
-      1,
-      0,
+      183,
+      5,
+      99,
       0,
       0,
       183,
       184,
       5,
-      40,
+      107,
       0,
       0,
       184,
-      34,
-      1,
-      0,
+      185,
+      5,
+      97,
       0,
       0,
       185,
       186,
       5,
-      41,
+      103,
       0,
       0,
       186,
-      36,
-      1,
-      0,
+      187,
+      5,
+      101,
       0,
       0,
       187,
-      188,
-      5,
-      91,
-      0,
-      0,
-      188,
-      38,
+      22,
       1,
       0,
+      0,
+      0,
+      188,
+      189,
+      5,
+      85,
       0,
       0,
       189,
       190,
       5,
-      93,
+      115,
       0,
       0,
       190,
-      40,
-      1,
-      0,
+      191,
+      5,
+      101,
       0,
       0,
       191,
-      192,
-      5,
-      61,
-      0,
-      0,
-      192,
-      42,
+      24,
       1,
       0,
+      0,
+      0,
+      192,
+      193,
+      5,
+      68,
       0,
       0,
       193,
       194,
       5,
-      33,
+      101,
       0,
       0,
       194,
       195,
       5,
-      61,
+      99,
       0,
       0,
       195,
-      44,
-      1,
-      0,
+      196,
+      5,
+      108,
       0,
       0,
       196,
-      197,
-      5,
-      44,
-      0,
-      0,
-      197,
-      46,
+      26,
       1,
       0,
+      0,
+      0,
+      197,
+      198,
+      5,
+      98,
       0,
       0,
       198,
       199,
       5,
-      33,
+      111,
       0,
       0,
       199,
-      48,
-      1,
-      0,
+      200,
+      5,
+      117,
       0,
       0,
       200,
       201,
       5,
-      60,
+      110,
       0,
       0,
       201,
-      50,
-      1,
-      0,
+      202,
+      5,
+      100,
       0,
       0,
       202,
-      203,
-      5,
-      60,
-      0,
-      0,
-      203,
-      204,
-      5,
-      61,
-      0,
-      0,
-      204,
-      52,
+      28,
       1,
       0,
+      0,
+      0,
+      203,
+      204,
+      5,
+      108,
+      0,
+      0,
+      204,
+      205,
+      5,
+      101,
       0,
       0,
       205,
       206,
       5,
-      62,
+      116,
       0,
       0,
       206,
+      30,
+      1,
+      0,
+      0,
+      0,
+      207,
+      208,
+      5,
+      100,
+      0,
+      0,
+      208,
+      209,
+      5,
+      111,
+      0,
+      0,
+      209,
+      32,
+      1,
+      0,
+      0,
+      0,
+      210,
+      211,
+      5,
+      40,
+      0,
+      0,
+      211,
+      34,
+      1,
+      0,
+      0,
+      0,
+      212,
+      213,
+      5,
+      41,
+      0,
+      0,
+      213,
+      36,
+      1,
+      0,
+      0,
+      0,
+      214,
+      215,
+      5,
+      91,
+      0,
+      0,
+      215,
+      38,
+      1,
+      0,
+      0,
+      0,
+      216,
+      217,
+      5,
+      93,
+      0,
+      0,
+      217,
+      40,
+      1,
+      0,
+      0,
+      0,
+      218,
+      219,
+      5,
+      123,
+      0,
+      0,
+      219,
+      42,
+      1,
+      0,
+      0,
+      0,
+      220,
+      221,
+      5,
+      125,
+      0,
+      0,
+      221,
+      44,
+      1,
+      0,
+      0,
+      0,
+      222,
+      223,
+      5,
+      61,
+      0,
+      0,
+      223,
+      46,
+      1,
+      0,
+      0,
+      0,
+      224,
+      225,
+      5,
+      33,
+      0,
+      0,
+      225,
+      226,
+      5,
+      61,
+      0,
+      0,
+      226,
+      48,
+      1,
+      0,
+      0,
+      0,
+      227,
+      228,
+      5,
+      44,
+      0,
+      0,
+      228,
+      50,
+      1,
+      0,
+      0,
+      0,
+      229,
+      230,
+      5,
+      33,
+      0,
+      0,
+      230,
+      52,
+      1,
+      0,
+      0,
+      0,
+      231,
+      232,
+      5,
+      60,
+      0,
+      0,
+      232,
+      233,
+      5,
+      61,
+      0,
+      0,
+      233,
       54,
       1,
       0,
       0,
       0,
-      207,
-      208,
+      234,
+      235,
       5,
-      62,
+      60,
       0,
       0,
-      208,
-      209,
-      5,
-      61,
-      0,
-      0,
-      209,
+      235,
       56,
       1,
       0,
       0,
       0,
-      210,
-      211,
+      236,
+      237,
       5,
-      58,
+      62,
       0,
       0,
-      211,
-      212,
+      237,
+      238,
       5,
-      45,
+      61,
       0,
       0,
-      212,
+      238,
       58,
       1,
       0,
       0,
       0,
-      213,
-      214,
+      239,
+      240,
       5,
-      10,
+      62,
       0,
       0,
-      214,
+      240,
       60,
       1,
       0,
       0,
       0,
-      215,
-      216,
+      241,
+      242,
       5,
-      124,
+      58,
       0,
       0,
-      216,
-      217,
+      242,
+      243,
       5,
-      62,
+      45,
       0,
       0,
-      217,
+      243,
       62,
       1,
       0,
       0,
       0,
-      218,
-      219,
-      7,
-      2,
+      244,
+      245,
+      5,
+      10,
       0,
       0,
-      219,
+      245,
       64,
       1,
       0,
       0,
       0,
-      220,
-      221,
-      2,
-      48,
-      57,
+      246,
+      247,
+      5,
+      124,
       0,
-      221,
+      0,
+      247,
+      248,
+      5,
+      62,
+      0,
+      0,
+      248,
       66,
       1,
       0,
       0,
       0,
-      222,
-      224,
+      249,
+      250,
       5,
-      45,
+      64,
       0,
       0,
-      223,
-      222,
-      1,
-      0,
-      0,
-      0,
-      223,
-      224,
-      1,
-      0,
-      0,
-      0,
-      224,
-      225,
-      1,
-      0,
-      0,
-      0,
-      225,
-      229,
-      3,
-      65,
-      32,
-      0,
-      226,
-      228,
-      3,
-      65,
-      32,
-      0,
-      227,
-      226,
-      1,
-      0,
-      0,
-      0,
-      228,
-      231,
-      1,
-      0,
-      0,
-      0,
-      229,
-      227,
-      1,
-      0,
-      0,
-      0,
-      229,
-      230,
-      1,
-      0,
-      0,
-      0,
-      230,
+      250,
       68,
       1,
       0,
       0,
       0,
-      231,
-      229,
-      1,
+      251,
+      252,
+      5,
+      60,
       0,
       0,
-      0,
-      232,
-      234,
+      252,
+      253,
       5,
       45,
       0,
       0,
-      233,
-      232,
-      1,
-      0,
-      0,
-      0,
-      233,
-      234,
-      1,
-      0,
-      0,
-      0,
-      234,
-      236,
-      1,
-      0,
-      0,
-      0,
-      235,
-      237,
-      3,
-      65,
-      32,
-      0,
-      236,
-      235,
-      1,
-      0,
-      0,
-      0,
-      237,
-      238,
-      1,
-      0,
-      0,
-      0,
-      238,
-      236,
-      1,
-      0,
-      0,
-      0,
-      238,
-      239,
-      1,
-      0,
-      0,
-      0,
-      239,
-      240,
-      1,
-      0,
-      0,
-      0,
-      240,
-      242,
-      5,
-      46,
-      0,
-      0,
-      241,
-      243,
-      3,
-      65,
-      32,
-      0,
-      242,
-      241,
-      1,
-      0,
-      0,
-      0,
-      243,
-      244,
-      1,
-      0,
-      0,
-      0,
-      244,
-      242,
-      1,
-      0,
-      0,
-      0,
-      244,
-      245,
-      1,
-      0,
-      0,
-      0,
-      245,
-      247,
-      1,
-      0,
-      0,
-      0,
-      246,
-      248,
-      3,
-      71,
-      35,
-      0,
-      247,
-      246,
-      1,
-      0,
-      0,
-      0,
-      247,
-      248,
-      1,
-      0,
-      0,
-      0,
-      248,
-      262,
-      1,
-      0,
-      0,
-      0,
-      249,
-      251,
-      5,
-      45,
-      0,
-      0,
-      250,
-      249,
-      1,
-      0,
-      0,
-      0,
-      250,
-      251,
-      1,
-      0,
-      0,
-      0,
-      251,
-      252,
-      1,
-      0,
-      0,
-      0,
-      252,
-      254,
-      5,
-      46,
-      0,
-      0,
       253,
-      255,
-      3,
-      65,
-      32,
-      0,
-      254,
-      253,
-      1,
-      0,
-      0,
-      0,
-      255,
-      256,
-      1,
-      0,
-      0,
-      0,
-      256,
-      254,
-      1,
-      0,
-      0,
-      0,
-      256,
-      257,
-      1,
-      0,
-      0,
-      0,
-      257,
-      259,
-      1,
-      0,
-      0,
-      0,
-      258,
-      260,
-      3,
-      71,
-      35,
-      0,
-      259,
-      258,
-      1,
-      0,
-      0,
-      0,
-      259,
-      260,
-      1,
-      0,
-      0,
-      0,
-      260,
-      262,
-      1,
-      0,
-      0,
-      0,
-      261,
-      233,
-      1,
-      0,
-      0,
-      0,
-      261,
-      250,
-      1,
-      0,
-      0,
-      0,
-      262,
       70,
       1,
       0,
       0,
       0,
-      263,
-      265,
-      7,
-      3,
+      254,
+      255,
+      5,
+      60,
       0,
       0,
-      264,
-      266,
-      7,
-      4,
+      255,
+      256,
+      5,
+      43,
       0,
       0,
-      265,
-      264,
-      1,
-      0,
-      0,
-      0,
-      265,
-      266,
-      1,
-      0,
-      0,
-      0,
-      266,
-      268,
-      1,
-      0,
-      0,
-      0,
-      267,
-      269,
-      3,
-      65,
-      32,
-      0,
-      268,
-      267,
-      1,
-      0,
-      0,
-      0,
-      269,
-      270,
-      1,
-      0,
-      0,
-      0,
-      270,
-      268,
-      1,
-      0,
-      0,
-      0,
-      270,
-      271,
-      1,
-      0,
-      0,
-      0,
-      271,
+      256,
       72,
       1,
       0,
       0,
       0,
-      272,
-      273,
-      2,
-      65,
-      90,
+      257,
+      258,
+      5,
+      91,
       0,
-      273,
+      0,
+      258,
+      259,
+      5,
+      45,
+      0,
+      0,
+      259,
       74,
       1,
       0,
       0,
       0,
-      274,
-      277,
-      3,
-      63,
-      31,
-      0,
-      275,
-      277,
-      3,
-      65,
-      32,
-      0,
-      276,
-      274,
-      1,
+      260,
+      261,
+      5,
+      91,
       0,
       0,
+      261,
+      262,
+      5,
+      43,
       0,
-      276,
-      275,
-      1,
       0,
-      0,
-      0,
-      277,
+      262,
       76,
       1,
       0,
       0,
       0,
-      278,
-      287,
-      5,
-      95,
+      263,
+      264,
+      7,
+      2,
       0,
       0,
-      279,
-      283,
-      3,
-      73,
-      36,
-      0,
-      280,
-      282,
-      3,
-      75,
-      37,
-      0,
-      281,
-      280,
-      1,
-      0,
-      0,
-      0,
-      282,
-      285,
-      1,
-      0,
-      0,
-      0,
-      283,
-      281,
-      1,
-      0,
-      0,
-      0,
-      283,
-      284,
-      1,
-      0,
-      0,
-      0,
-      284,
-      287,
-      1,
-      0,
-      0,
-      0,
-      285,
-      283,
-      1,
-      0,
-      0,
-      0,
-      286,
-      278,
-      1,
-      0,
-      0,
-      0,
-      286,
-      279,
-      1,
-      0,
-      0,
-      0,
-      287,
+      264,
       78,
       1,
       0,
       0,
       0,
-      288,
-      292,
-      3,
-      63,
-      31,
+      265,
+      266,
+      2,
+      48,
+      57,
       0,
-      289,
-      292,
-      3,
-      65,
-      32,
-      0,
-      290,
-      292,
-      7,
-      5,
-      0,
-      0,
-      291,
-      288,
-      1,
-      0,
-      0,
-      0,
-      291,
-      289,
-      1,
-      0,
-      0,
-      0,
-      291,
-      290,
-      1,
-      0,
-      0,
-      0,
-      292,
+      266,
       80,
       1,
       0,
       0,
       0,
-      293,
-      295,
+      267,
+      268,
+      3,
+      79,
+      39,
+      0,
+      268,
+      269,
+      3,
+      79,
+      39,
+      0,
+      269,
+      270,
+      3,
+      79,
+      39,
+      0,
+      270,
+      271,
+      3,
+      79,
+      39,
+      0,
+      271,
+      272,
+      5,
+      45,
+      0,
+      0,
+      272,
+      273,
+      3,
+      79,
+      39,
+      0,
+      273,
+      274,
+      3,
+      79,
+      39,
+      0,
+      274,
+      275,
+      5,
+      45,
+      0,
+      0,
+      275,
+      276,
+      3,
+      79,
+      39,
+      0,
+      276,
+      297,
+      3,
+      79,
+      39,
+      0,
+      277,
+      278,
+      5,
+      84,
+      0,
+      0,
+      278,
+      279,
+      3,
+      79,
+      39,
+      0,
+      279,
+      280,
+      3,
+      79,
+      39,
+      0,
+      280,
+      281,
       5,
       58,
       0,
       0,
-      294,
+      281,
+      282,
+      3,
+      79,
+      39,
+      0,
+      282,
+      283,
+      3,
+      79,
+      39,
+      0,
+      283,
+      284,
+      5,
+      58,
+      0,
+      0,
+      284,
+      285,
+      3,
+      79,
+      39,
+      0,
+      285,
+      292,
+      3,
+      79,
+      39,
+      0,
+      286,
+      288,
+      5,
+      46,
+      0,
+      0,
+      287,
+      289,
+      3,
+      79,
+      39,
+      0,
+      288,
+      287,
+      1,
+      0,
+      0,
+      0,
+      289,
+      290,
+      1,
+      0,
+      0,
+      0,
+      290,
+      288,
+      1,
+      0,
+      0,
+      0,
+      290,
+      291,
+      1,
+      0,
+      0,
+      0,
+      291,
       293,
       1,
       0,
       0,
       0,
+      292,
+      286,
+      1,
+      0,
+      0,
+      0,
+      292,
+      293,
+      1,
+      0,
+      0,
+      0,
+      293,
+      295,
+      1,
+      0,
+      0,
+      0,
       294,
-      295,
-      1,
-      0,
-      0,
-      0,
-      295,
       296,
-      1,
-      0,
-      0,
-      0,
-      296,
-      302,
-      2,
-      97,
-      122,
-      0,
-      297,
-      301,
-      3,
-      79,
-      39,
-      0,
-      298,
-      299,
       5,
-      46,
+      90,
       0,
       0,
-      299,
-      301,
-      3,
-      79,
-      39,
-      0,
-      300,
-      297,
+      295,
+      294,
       1,
       0,
       0,
       0,
-      300,
+      295,
+      296,
+      1,
+      0,
+      0,
+      0,
+      296,
       298,
       1,
       0,
       0,
       0,
-      301,
-      304,
+      297,
+      277,
       1,
       0,
       0,
       0,
-      302,
-      300,
+      297,
+      298,
       1,
       0,
       0,
       0,
-      302,
-      303,
-      1,
-      0,
-      0,
-      0,
-      303,
+      298,
       82,
       1,
       0,
       0,
       0,
-      304,
+      299,
+      301,
+      3,
+      79,
+      39,
+      0,
+      300,
+      299,
+      1,
+      0,
+      0,
+      0,
+      301,
       302,
       1,
       0,
       0,
       0,
+      302,
+      300,
+      1,
+      0,
+      0,
+      0,
+      302,
+      303,
+      1,
+      0,
+      0,
+      0,
+      303,
+      307,
+      1,
+      0,
+      0,
+      0,
+      304,
+      308,
+      7,
+      3,
+      0,
+      0,
       305,
-      311,
-      2,
-      65,
-      90,
+      306,
+      5,
+      109,
+      0,
       0,
       306,
-      310,
-      3,
-      79,
-      39,
-      0,
-      307,
       308,
       5,
-      46,
+      115,
+      0,
+      0,
+      307,
+      304,
+      1,
+      0,
+      0,
+      0,
+      307,
+      305,
+      1,
+      0,
       0,
       0,
       308,
-      310,
-      3,
-      79,
-      39,
-      0,
-      309,
-      306,
-      1,
-      0,
-      0,
-      0,
-      309,
-      307,
-      1,
-      0,
-      0,
-      0,
-      310,
-      313,
-      1,
-      0,
-      0,
-      0,
-      311,
-      309,
-      1,
-      0,
-      0,
-      0,
-      311,
-      312,
-      1,
-      0,
-      0,
-      0,
-      312,
       84,
       1,
       0,
       0,
       0,
-      313,
+      309,
+      311,
+      5,
+      45,
+      0,
+      0,
+      310,
+      309,
+      1,
+      0,
+      0,
+      0,
+      310,
       311,
       1,
       0,
       0,
       0,
-      314,
-      315,
-      5,
-      46,
+      311,
+      312,
+      1,
       0,
       0,
-      315,
+      0,
+      312,
       316,
       3,
-      83,
-      41,
+      79,
+      39,
+      0,
+      313,
+      315,
+      3,
+      79,
+      39,
+      0,
+      314,
+      313,
+      1,
+      0,
+      0,
+      0,
+      315,
+      318,
+      1,
+      0,
+      0,
       0,
       316,
+      314,
+      1,
+      0,
+      0,
+      0,
+      316,
+      317,
+      1,
+      0,
+      0,
+      0,
+      317,
       86,
       1,
       0,
       0,
       0,
-      317,
-      321,
-      3,
-      63,
-      31,
-      0,
       318,
-      321,
-      3,
-      65,
-      32,
+      316,
+      1,
+      0,
+      0,
       0,
       319,
       321,
-      7,
-      6,
-      0,
-      0,
-      320,
-      317,
-      1,
-      0,
-      0,
-      0,
-      320,
-      318,
-      1,
-      0,
+      5,
+      45,
       0,
       0,
       320,
@@ -30052,25 +30205,37 @@ var require_MangleLexer = __commonJS({
       0,
       0,
       0,
+      320,
       321,
-      88,
+      1,
+      0,
+      0,
+      0,
+      321,
+      323,
       1,
       0,
       0,
       0,
       322,
       324,
-      5,
-      47,
-      0,
-      0,
-      323,
-      325,
       3,
-      87,
-      43,
+      79,
+      39,
+      0,
+      323,
+      322,
+      1,
+      0,
+      0,
       0,
       324,
+      325,
+      1,
+      0,
+      0,
+      0,
+      325,
       323,
       1,
       0,
@@ -30078,12 +30243,6 @@ var require_MangleLexer = __commonJS({
       0,
       325,
       326,
-      1,
-      0,
-      0,
-      0,
-      326,
-      324,
       1,
       0,
       0,
@@ -30095,106 +30254,106 @@ var require_MangleLexer = __commonJS({
       0,
       0,
       327,
-      336,
-      1,
-      0,
-      0,
-      0,
-      328,
-      330,
+      329,
       5,
-      47,
+      46,
       0,
       0,
-      329,
-      331,
+      328,
+      330,
       3,
-      87,
-      43,
+      79,
+      39,
       0,
-      330,
       329,
-      1,
-      0,
-      0,
-      0,
-      331,
-      332,
-      1,
-      0,
-      0,
-      0,
-      332,
-      330,
-      1,
-      0,
-      0,
-      0,
-      332,
-      333,
-      1,
-      0,
-      0,
-      0,
-      333,
-      335,
-      1,
-      0,
-      0,
-      0,
-      334,
       328,
       1,
       0,
       0,
       0,
-      335,
-      338,
+      330,
+      331,
       1,
       0,
       0,
       0,
-      336,
+      331,
+      329,
+      1,
+      0,
+      0,
+      0,
+      331,
+      332,
+      1,
+      0,
+      0,
+      0,
+      332,
       334,
       1,
       0,
       0,
       0,
+      333,
+      335,
+      3,
+      89,
+      44,
+      0,
+      334,
+      333,
+      1,
+      0,
+      0,
+      0,
+      334,
+      335,
+      1,
+      0,
+      0,
+      0,
+      335,
+      349,
+      1,
+      0,
+      0,
+      0,
       336,
+      338,
+      5,
+      45,
+      0,
+      0,
       337,
+      336,
       1,
       0,
       0,
       0,
       337,
-      90,
+      338,
       1,
       0,
       0,
       0,
       338,
-      336,
+      339,
       1,
       0,
       0,
       0,
       339,
-      342,
-      3,
-      95,
-      47,
+      341,
+      5,
+      46,
+      0,
       0,
       340,
       342,
       3,
-      97,
-      48,
-      0,
-      341,
-      339,
-      1,
-      0,
-      0,
+      79,
+      39,
       0,
       341,
       340,
@@ -30203,190 +30362,196 @@ var require_MangleLexer = __commonJS({
       0,
       0,
       342,
-      92,
+      343,
+      1,
+      0,
+      0,
+      0,
+      343,
+      341,
       1,
       0,
       0,
       0,
       343,
       344,
-      5,
-      98,
+      1,
+      0,
       0,
       0,
       344,
-      345,
-      3,
-      91,
-      45,
+      346,
+      1,
+      0,
+      0,
       0,
       345,
+      347,
+      3,
+      89,
+      44,
+      0,
+      346,
+      345,
+      1,
+      0,
+      0,
+      0,
+      346,
+      347,
+      1,
+      0,
+      0,
+      0,
+      347,
+      349,
+      1,
+      0,
+      0,
+      0,
+      348,
+      320,
+      1,
+      0,
+      0,
+      0,
+      348,
+      337,
+      1,
+      0,
+      0,
+      0,
+      349,
+      88,
+      1,
+      0,
+      0,
+      0,
+      350,
+      352,
+      7,
+      4,
+      0,
+      0,
+      351,
+      353,
+      7,
+      5,
+      0,
+      0,
+      352,
+      351,
+      1,
+      0,
+      0,
+      0,
+      352,
+      353,
+      1,
+      0,
+      0,
+      0,
+      353,
+      355,
+      1,
+      0,
+      0,
+      0,
+      354,
+      356,
+      3,
+      79,
+      39,
+      0,
+      355,
+      354,
+      1,
+      0,
+      0,
+      0,
+      356,
+      357,
+      1,
+      0,
+      0,
+      0,
+      357,
+      355,
+      1,
+      0,
+      0,
+      0,
+      357,
+      358,
+      1,
+      0,
+      0,
+      0,
+      358,
+      90,
+      1,
+      0,
+      0,
+      0,
+      359,
+      360,
+      2,
+      65,
+      90,
+      0,
+      360,
+      92,
+      1,
+      0,
+      0,
+      0,
+      361,
+      364,
+      3,
+      77,
+      38,
+      0,
+      362,
+      364,
+      3,
+      79,
+      39,
+      0,
+      363,
+      361,
+      1,
+      0,
+      0,
+      0,
+      363,
+      362,
+      1,
+      0,
+      0,
+      0,
+      364,
       94,
       1,
       0,
       0,
       0,
-      346,
-      351,
-      5,
-      39,
-      0,
-      0,
-      347,
-      350,
-      3,
-      103,
-      51,
-      0,
-      348,
-      350,
-      8,
-      7,
-      0,
-      0,
-      349,
-      347,
-      1,
-      0,
-      0,
-      0,
-      349,
-      348,
-      1,
-      0,
-      0,
-      0,
-      350,
-      353,
-      1,
-      0,
-      0,
-      0,
-      351,
-      349,
-      1,
-      0,
-      0,
-      0,
-      351,
-      352,
-      1,
-      0,
-      0,
-      0,
-      352,
-      354,
-      1,
-      0,
-      0,
-      0,
-      353,
-      351,
-      1,
-      0,
-      0,
-      0,
-      354,
       365,
+      374,
       5,
-      39,
-      0,
-      0,
-      355,
-      360,
-      5,
-      34,
-      0,
-      0,
-      356,
-      359,
-      3,
-      103,
-      51,
-      0,
-      357,
-      359,
-      8,
-      8,
-      0,
-      0,
-      358,
-      356,
-      1,
-      0,
-      0,
-      0,
-      358,
-      357,
-      1,
-      0,
-      0,
-      0,
-      359,
-      362,
-      1,
-      0,
-      0,
-      0,
-      360,
-      358,
-      1,
-      0,
-      0,
-      0,
-      360,
-      361,
-      1,
-      0,
-      0,
-      0,
-      361,
-      363,
-      1,
-      0,
-      0,
-      0,
-      362,
-      360,
-      1,
-      0,
-      0,
-      0,
-      363,
-      365,
-      5,
-      34,
-      0,
-      0,
-      364,
-      346,
-      1,
-      0,
-      0,
-      0,
-      364,
-      355,
-      1,
-      0,
-      0,
-      0,
-      365,
-      96,
-      1,
-      0,
+      95,
       0,
       0,
       366,
       370,
-      5,
-      96,
-      0,
+      3,
+      91,
+      45,
       0,
       367,
       369,
       3,
-      99,
-      49,
+      93,
+      46,
       0,
       368,
       367,
@@ -30401,19 +30566,19 @@ var require_MangleLexer = __commonJS({
       0,
       0,
       370,
-      371,
-      1,
-      0,
-      0,
-      0,
-      370,
       368,
       1,
       0,
       0,
       0,
+      370,
       371,
-      373,
+      1,
+      0,
+      0,
+      0,
+      371,
+      374,
       1,
       0,
       0,
@@ -30425,369 +30590,1017 @@ var require_MangleLexer = __commonJS({
       0,
       0,
       373,
+      365,
+      1,
+      0,
+      0,
+      0,
+      373,
+      366,
+      1,
+      0,
+      0,
+      0,
       374,
-      5,
       96,
-      0,
-      0,
-      374,
-      98,
       1,
       0,
       0,
       0,
       375,
-      378,
+      379,
       3,
-      101,
-      50,
+      77,
+      38,
       0,
       376,
-      378,
+      379,
       3,
-      103,
-      51,
+      79,
+      39,
       0,
       377,
+      379,
+      7,
+      6,
+      0,
+      0,
+      378,
       375,
       1,
       0,
       0,
       0,
-      377,
+      378,
       376,
       1,
       0,
       0,
       0,
       378,
-      100,
+      377,
       1,
       0,
       0,
       0,
       379,
-      380,
-      8,
-      9,
+      98,
+      1,
       0,
       0,
+      0,
       380,
+      382,
+      5,
+      58,
+      0,
+      0,
+      381,
+      380,
+      1,
+      0,
+      0,
+      0,
+      381,
+      382,
+      1,
+      0,
+      0,
+      0,
+      382,
+      383,
+      1,
+      0,
+      0,
+      0,
+      383,
+      389,
+      2,
+      97,
+      122,
+      0,
+      384,
+      388,
+      3,
+      97,
+      48,
+      0,
+      385,
+      386,
+      5,
+      46,
+      0,
+      0,
+      386,
+      388,
+      3,
+      97,
+      48,
+      0,
+      387,
+      384,
+      1,
+      0,
+      0,
+      0,
+      387,
+      385,
+      1,
+      0,
+      0,
+      0,
+      388,
+      391,
+      1,
+      0,
+      0,
+      0,
+      389,
+      387,
+      1,
+      0,
+      0,
+      0,
+      389,
+      390,
+      1,
+      0,
+      0,
+      0,
+      390,
+      100,
+      1,
+      0,
+      0,
+      0,
+      391,
+      389,
+      1,
+      0,
+      0,
+      0,
+      392,
+      398,
+      2,
+      65,
+      90,
+      0,
+      393,
+      397,
+      3,
+      97,
+      48,
+      0,
+      394,
+      395,
+      5,
+      46,
+      0,
+      0,
+      395,
+      397,
+      3,
+      97,
+      48,
+      0,
+      396,
+      393,
+      1,
+      0,
+      0,
+      0,
+      396,
+      394,
+      1,
+      0,
+      0,
+      0,
+      397,
+      400,
+      1,
+      0,
+      0,
+      0,
+      398,
+      396,
+      1,
+      0,
+      0,
+      0,
+      398,
+      399,
+      1,
+      0,
+      0,
+      0,
+      399,
       102,
       1,
       0,
       0,
       0,
-      381,
-      382,
-      5,
-      92,
-      0,
-      0,
-      382,
-      414,
-      5,
-      110,
-      0,
-      0,
-      383,
-      384,
-      5,
-      92,
-      0,
-      0,
-      384,
-      414,
-      5,
-      116,
-      0,
-      0,
-      385,
-      386,
-      5,
-      92,
-      0,
-      0,
-      386,
-      414,
-      5,
-      34,
-      0,
-      0,
-      387,
-      388,
-      5,
-      92,
-      0,
-      0,
-      388,
-      414,
-      5,
-      39,
-      0,
-      0,
-      389,
-      390,
-      5,
-      92,
-      0,
-      0,
-      390,
-      414,
-      5,
-      92,
-      0,
-      0,
-      391,
-      392,
-      5,
-      92,
-      0,
-      0,
-      392,
-      393,
-      5,
-      120,
-      0,
-      0,
-      393,
-      394,
-      3,
-      105,
-      52,
-      0,
-      394,
-      395,
-      3,
-      105,
-      52,
-      0,
-      395,
-      414,
+      400,
+      398,
       1,
       0,
       0,
-      0,
-      396,
-      397,
-      5,
-      92,
-      0,
-      0,
-      397,
-      398,
-      5,
-      117,
-      0,
-      0,
-      398,
-      399,
-      5,
-      123,
-      0,
-      0,
-      399,
-      400,
-      3,
-      105,
-      52,
-      0,
-      400,
-      401,
-      3,
-      105,
-      52,
       0,
       401,
       402,
-      3,
-      105,
-      52,
+      5,
+      46,
+      0,
       0,
       402,
-      404,
+      403,
       3,
-      105,
-      52,
+      101,
+      50,
       0,
       403,
-      405,
-      3,
-      105,
-      52,
-      0,
-      404,
-      403,
-      1,
-      0,
-      0,
-      0,
-      404,
-      405,
-      1,
-      0,
-      0,
-      0,
-      405,
-      407,
-      1,
-      0,
-      0,
-      0,
-      406,
-      408,
-      3,
-      105,
-      52,
-      0,
-      407,
-      406,
-      1,
-      0,
-      0,
-      0,
-      407,
-      408,
-      1,
-      0,
-      0,
-      0,
-      408,
-      409,
-      1,
-      0,
-      0,
-      0,
-      409,
-      410,
-      5,
-      125,
-      0,
-      0,
-      410,
-      414,
-      1,
-      0,
-      0,
-      0,
-      411,
-      412,
-      5,
-      92,
-      0,
-      0,
-      412,
-      414,
-      3,
-      59,
-      29,
-      0,
-      413,
-      381,
-      1,
-      0,
-      0,
-      0,
-      413,
-      383,
-      1,
-      0,
-      0,
-      0,
-      413,
-      385,
-      1,
-      0,
-      0,
-      0,
-      413,
-      387,
-      1,
-      0,
-      0,
-      0,
-      413,
-      389,
-      1,
-      0,
-      0,
-      0,
-      413,
-      391,
-      1,
-      0,
-      0,
-      0,
-      413,
-      396,
-      1,
-      0,
-      0,
-      0,
-      413,
-      411,
-      1,
-      0,
-      0,
-      0,
-      414,
       104,
       1,
       0,
       0,
       0,
-      415,
-      416,
+      404,
+      408,
+      3,
+      77,
+      38,
+      0,
+      405,
+      408,
+      3,
+      79,
+      39,
+      0,
+      406,
+      408,
       7,
-      10,
+      7,
       0,
       0,
-      416,
+      407,
+      404,
+      1,
+      0,
+      0,
+      0,
+      407,
+      405,
+      1,
+      0,
+      0,
+      0,
+      407,
+      406,
+      1,
+      0,
+      0,
+      0,
+      408,
       106,
       1,
       0,
       0,
       0,
+      409,
+      411,
+      5,
+      47,
+      0,
+      0,
+      410,
+      412,
+      3,
+      105,
+      52,
+      0,
+      411,
+      410,
+      1,
+      0,
+      0,
+      0,
+      412,
+      413,
+      1,
+      0,
+      0,
+      0,
+      413,
+      411,
+      1,
+      0,
+      0,
+      0,
+      413,
+      414,
+      1,
+      0,
+      0,
+      0,
+      414,
+      423,
+      1,
+      0,
+      0,
+      0,
+      415,
+      417,
+      5,
+      47,
+      0,
+      0,
+      416,
+      418,
+      3,
+      105,
+      52,
+      0,
+      417,
+      416,
+      1,
+      0,
+      0,
+      0,
+      418,
+      419,
+      1,
+      0,
+      0,
+      0,
+      419,
+      417,
+      1,
+      0,
+      0,
+      0,
+      419,
+      420,
+      1,
+      0,
+      0,
+      0,
+      420,
+      422,
+      1,
+      0,
+      0,
+      0,
+      421,
+      415,
+      1,
+      0,
+      0,
+      0,
+      422,
+      425,
+      1,
+      0,
+      0,
+      0,
+      423,
+      421,
+      1,
+      0,
+      0,
+      0,
+      423,
+      424,
+      1,
+      0,
+      0,
+      0,
+      424,
+      108,
+      1,
+      0,
+      0,
+      0,
+      425,
+      423,
+      1,
+      0,
+      0,
+      0,
+      426,
+      429,
+      3,
+      113,
+      56,
+      0,
+      427,
+      429,
+      3,
+      115,
+      57,
+      0,
+      428,
+      426,
+      1,
+      0,
+      0,
+      0,
+      428,
+      427,
+      1,
+      0,
+      0,
+      0,
+      429,
+      110,
+      1,
+      0,
+      0,
+      0,
+      430,
+      431,
+      5,
+      98,
+      0,
+      0,
+      431,
+      432,
+      3,
+      109,
+      54,
+      0,
+      432,
+      112,
+      1,
+      0,
+      0,
+      0,
+      433,
+      438,
+      5,
       39,
       0,
-      138,
-      146,
-      223,
-      229,
-      233,
-      238,
-      244,
-      247,
-      250,
-      256,
-      259,
-      261,
-      265,
-      270,
-      276,
-      283,
-      286,
-      291,
-      294,
-      300,
+      0,
+      434,
+      437,
+      3,
+      121,
+      60,
+      0,
+      435,
+      437,
+      8,
+      8,
+      0,
+      0,
+      436,
+      434,
+      1,
+      0,
+      0,
+      0,
+      436,
+      435,
+      1,
+      0,
+      0,
+      0,
+      437,
+      440,
+      1,
+      0,
+      0,
+      0,
+      438,
+      436,
+      1,
+      0,
+      0,
+      0,
+      438,
+      439,
+      1,
+      0,
+      0,
+      0,
+      439,
+      441,
+      1,
+      0,
+      0,
+      0,
+      440,
+      438,
+      1,
+      0,
+      0,
+      0,
+      441,
+      452,
+      5,
+      39,
+      0,
+      0,
+      442,
+      447,
+      5,
+      34,
+      0,
+      0,
+      443,
+      446,
+      3,
+      121,
+      60,
+      0,
+      444,
+      446,
+      8,
+      9,
+      0,
+      0,
+      445,
+      443,
+      1,
+      0,
+      0,
+      0,
+      445,
+      444,
+      1,
+      0,
+      0,
+      0,
+      446,
+      449,
+      1,
+      0,
+      0,
+      0,
+      447,
+      445,
+      1,
+      0,
+      0,
+      0,
+      447,
+      448,
+      1,
+      0,
+      0,
+      0,
+      448,
+      450,
+      1,
+      0,
+      0,
+      0,
+      449,
+      447,
+      1,
+      0,
+      0,
+      0,
+      450,
+      452,
+      5,
+      34,
+      0,
+      0,
+      451,
+      433,
+      1,
+      0,
+      0,
+      0,
+      451,
+      442,
+      1,
+      0,
+      0,
+      0,
+      452,
+      114,
+      1,
+      0,
+      0,
+      0,
+      453,
+      457,
+      5,
+      96,
+      0,
+      0,
+      454,
+      456,
+      3,
+      117,
+      58,
+      0,
+      455,
+      454,
+      1,
+      0,
+      0,
+      0,
+      456,
+      459,
+      1,
+      0,
+      0,
+      0,
+      457,
+      458,
+      1,
+      0,
+      0,
+      0,
+      457,
+      455,
+      1,
+      0,
+      0,
+      0,
+      458,
+      460,
+      1,
+      0,
+      0,
+      0,
+      459,
+      457,
+      1,
+      0,
+      0,
+      0,
+      460,
+      461,
+      5,
+      96,
+      0,
+      0,
+      461,
+      116,
+      1,
+      0,
+      0,
+      0,
+      462,
+      465,
+      3,
+      119,
+      59,
+      0,
+      463,
+      465,
+      3,
+      121,
+      60,
+      0,
+      464,
+      462,
+      1,
+      0,
+      0,
+      0,
+      464,
+      463,
+      1,
+      0,
+      0,
+      0,
+      465,
+      118,
+      1,
+      0,
+      0,
+      0,
+      466,
+      467,
+      8,
+      10,
+      0,
+      0,
+      467,
+      120,
+      1,
+      0,
+      0,
+      0,
+      468,
+      469,
+      5,
+      92,
+      0,
+      0,
+      469,
+      501,
+      5,
+      110,
+      0,
+      0,
+      470,
+      471,
+      5,
+      92,
+      0,
+      0,
+      471,
+      501,
+      5,
+      116,
+      0,
+      0,
+      472,
+      473,
+      5,
+      92,
+      0,
+      0,
+      473,
+      501,
+      5,
+      34,
+      0,
+      0,
+      474,
+      475,
+      5,
+      92,
+      0,
+      0,
+      475,
+      501,
+      5,
+      39,
+      0,
+      0,
+      476,
+      477,
+      5,
+      92,
+      0,
+      0,
+      477,
+      501,
+      5,
+      92,
+      0,
+      0,
+      478,
+      479,
+      5,
+      92,
+      0,
+      0,
+      479,
+      480,
+      5,
+      120,
+      0,
+      0,
+      480,
+      481,
+      3,
+      123,
+      61,
+      0,
+      481,
+      482,
+      3,
+      123,
+      61,
+      0,
+      482,
+      501,
+      1,
+      0,
+      0,
+      0,
+      483,
+      484,
+      5,
+      92,
+      0,
+      0,
+      484,
+      485,
+      5,
+      117,
+      0,
+      0,
+      485,
+      486,
+      5,
+      123,
+      0,
+      0,
+      486,
+      487,
+      3,
+      123,
+      61,
+      0,
+      487,
+      488,
+      3,
+      123,
+      61,
+      0,
+      488,
+      489,
+      3,
+      123,
+      61,
+      0,
+      489,
+      491,
+      3,
+      123,
+      61,
+      0,
+      490,
+      492,
+      3,
+      123,
+      61,
+      0,
+      491,
+      490,
+      1,
+      0,
+      0,
+      0,
+      491,
+      492,
+      1,
+      0,
+      0,
+      0,
+      492,
+      494,
+      1,
+      0,
+      0,
+      0,
+      493,
+      495,
+      3,
+      123,
+      61,
+      0,
+      494,
+      493,
+      1,
+      0,
+      0,
+      0,
+      494,
+      495,
+      1,
+      0,
+      0,
+      0,
+      495,
+      496,
+      1,
+      0,
+      0,
+      0,
+      496,
+      497,
+      5,
+      125,
+      0,
+      0,
+      497,
+      501,
+      1,
+      0,
+      0,
+      0,
+      498,
+      499,
+      5,
+      92,
+      0,
+      0,
+      499,
+      501,
+      3,
+      63,
+      31,
+      0,
+      500,
+      468,
+      1,
+      0,
+      0,
+      0,
+      500,
+      470,
+      1,
+      0,
+      0,
+      0,
+      500,
+      472,
+      1,
+      0,
+      0,
+      0,
+      500,
+      474,
+      1,
+      0,
+      0,
+      0,
+      500,
+      476,
+      1,
+      0,
+      0,
+      0,
+      500,
+      478,
+      1,
+      0,
+      0,
+      0,
+      500,
+      483,
+      1,
+      0,
+      0,
+      0,
+      500,
+      498,
+      1,
+      0,
+      0,
+      0,
+      501,
+      122,
+      1,
+      0,
+      0,
+      0,
+      502,
+      503,
+      7,
+      11,
+      0,
+      0,
+      503,
+      124,
+      1,
+      0,
+      0,
+      0,
+      45,
+      0,
+      165,
+      173,
+      290,
+      292,
+      295,
+      297,
       302,
-      309,
-      311,
+      307,
+      310,
+      316,
       320,
-      326,
-      332,
-      336,
-      341,
-      349,
-      351,
-      358,
-      360,
-      364,
+      325,
+      331,
+      334,
+      337,
+      343,
+      346,
+      348,
+      352,
+      357,
+      363,
       370,
-      377,
-      404,
+      373,
+      378,
+      381,
+      387,
+      389,
+      396,
+      398,
       407,
       413,
+      419,
+      423,
+      428,
+      436,
+      438,
+      445,
+      447,
+      451,
+      457,
+      464,
+      491,
+      494,
+      500,
       1,
       0,
       1,
@@ -30840,7 +31653,7 @@ var require_MangleParser = __commonJS({
       };
     })();
     Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.AtomsContext = exports2.AtomContext = exports2.MemberContext = exports2.DotTypeContext = exports2.StructContext = exports2.MapContext = exports2.ListContext = exports2.NumContext = exports2.ConstContext = exports2.VarContext = exports2.ApplContext = exports2.FloatContext = exports2.BStrContext = exports2.StrContext = exports2.TermContext = exports2.LiteralOrFmlContext = exports2.LetStmtContext = exports2.TransformContext = exports2.ClauseBodyContext = exports2.ClauseContext = exports2.ConstraintsBlockContext = exports2.BoundsBlockContext = exports2.DescrBlockContext = exports2.DeclContext = exports2.UseDeclContext = exports2.PackageDeclContext = exports2.ProgramContext = exports2.StartContext = exports2.MangleParser = void 0;
+    exports2.AtomsContext = exports2.AtomContext = exports2.MemberContext = exports2.DotTypeContext = exports2.StructContext = exports2.MapContext = exports2.ListContext = exports2.NumContext = exports2.ConstContext = exports2.VarContext = exports2.ApplContext = exports2.FloatContext = exports2.BStrContext = exports2.StrContext = exports2.TermContext = exports2.TemporalOperatorContext = exports2.LiteralOrFmlContext = exports2.LetStmtContext = exports2.TransformContext = exports2.ClauseBodyContext = exports2.TemporalBoundContext = exports2.TemporalAnnotationContext = exports2.ClauseContext = exports2.ConstraintsBlockContext = exports2.BoundsBlockContext = exports2.DescrBlockContext = exports2.DeclContext = exports2.UseDeclContext = exports2.PackageDeclContext = exports2.ProgramContext = exports2.StartContext = exports2.MangleParser = void 0;
     var antlr = __importStar(require_dist());
     var MangleParser = class _MangleParser extends antlr.Parser {
       get grammarFileName() {
@@ -30871,9 +31684,9 @@ var require_MangleParser = __commonJS({
         try {
           this.enterOuterAlt(localContext, 1);
           {
-            this.state = 34;
+            this.state = 40;
             this.program();
-            this.state = 35;
+            this.state = 41;
             this.match(_MangleParser.EOF);
           }
         } catch (re) {
@@ -30895,45 +31708,45 @@ var require_MangleParser = __commonJS({
         try {
           this.enterOuterAlt(localContext, 1);
           {
-            this.state = 38;
+            this.state = 44;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
             if (_la === 11) {
               {
-                this.state = 37;
+                this.state = 43;
                 this.packageDecl();
               }
             }
-            this.state = 43;
+            this.state = 49;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
             while (_la === 12) {
               {
                 {
-                  this.state = 40;
+                  this.state = 46;
                   this.useDecl();
                 }
               }
-              this.state = 45;
+              this.state = 51;
               this.errorHandler.sync(this);
               _la = this.tokenStream.LA(1);
             }
-            this.state = 50;
+            this.state = 56;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            while ((_la & ~31) === 0 && (1 << _la & 532512) !== 0 || (_la - 32 & ~31) === 0 && (1 << _la - 32 & 495) !== 0) {
+            while ((_la & ~31) === 0 && (1 << _la & 2629632) !== 0 || (_la - 41 & ~31) === 0 && (1 << _la - 41 & 495) !== 0) {
               {
-                this.state = 48;
+                this.state = 54;
                 this.errorHandler.sync(this);
                 switch (this.tokenStream.LA(1)) {
                   case _MangleParser.DECL:
                     {
-                      this.state = 46;
+                      this.state = 52;
                       this.decl();
                     }
                     break;
-                  case _MangleParser.T__4:
                   case _MangleParser.LBRACKET:
+                  case _MangleParser.LBRACE:
                   case _MangleParser.NUMBER:
                   case _MangleParser.FLOAT:
                   case _MangleParser.VARIABLE:
@@ -30943,7 +31756,7 @@ var require_MangleParser = __commonJS({
                   case _MangleParser.STRING:
                   case _MangleParser.BYTESTRING:
                     {
-                      this.state = 47;
+                      this.state = 53;
                       this.clause();
                     }
                     break;
@@ -30951,7 +31764,7 @@ var require_MangleParser = __commonJS({
                     throw new antlr.NoViableAltException(this);
                 }
               }
-              this.state = 52;
+              this.state = 58;
               this.errorHandler.sync(this);
               _la = this.tokenStream.LA(1);
             }
@@ -30975,20 +31788,20 @@ var require_MangleParser = __commonJS({
         try {
           this.enterOuterAlt(localContext, 1);
           {
-            this.state = 53;
+            this.state = 59;
             this.match(_MangleParser.PACKAGE);
-            this.state = 54;
+            this.state = 60;
             this.match(_MangleParser.NAME);
-            this.state = 56;
+            this.state = 62;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
             if (_la === 19) {
               {
-                this.state = 55;
+                this.state = 61;
                 this.atoms();
               }
             }
-            this.state = 58;
+            this.state = 64;
             this.match(_MangleParser.BANG);
           }
         } catch (re) {
@@ -31010,20 +31823,20 @@ var require_MangleParser = __commonJS({
         try {
           this.enterOuterAlt(localContext, 1);
           {
-            this.state = 60;
+            this.state = 66;
             this.match(_MangleParser.USE);
-            this.state = 61;
+            this.state = 67;
             this.match(_MangleParser.NAME);
-            this.state = 63;
+            this.state = 69;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
             if (_la === 19) {
               {
-                this.state = 62;
+                this.state = 68;
                 this.atoms();
               }
             }
-            this.state = 65;
+            this.state = 71;
             this.match(_MangleParser.BANG);
           }
         } catch (re) {
@@ -31045,32 +31858,18 @@ var require_MangleParser = __commonJS({
         try {
           this.enterOuterAlt(localContext, 1);
           {
-            this.state = 67;
+            this.state = 73;
             this.match(_MangleParser.DECL);
-            this.state = 68;
+            this.state = 74;
             this.atom();
-            this.state = 70;
+            this.state = 76;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if (_la === 2) {
+            if (_la === 1) {
               {
-                this.state = 69;
-                this.descrBlock();
+                this.state = 75;
+                this.match(_MangleParser.T__0);
               }
-            }
-            this.state = 75;
-            this.errorHandler.sync(this);
-            _la = this.tokenStream.LA(1);
-            while (_la === 14) {
-              {
-                {
-                  this.state = 72;
-                  this.boundsBlock();
-                }
-              }
-              this.state = 77;
-              this.errorHandler.sync(this);
-              _la = this.tokenStream.LA(1);
             }
             this.state = 79;
             this.errorHandler.sync(this);
@@ -31078,11 +31877,34 @@ var require_MangleParser = __commonJS({
             if (_la === 3) {
               {
                 this.state = 78;
+                this.descrBlock();
+              }
+            }
+            this.state = 84;
+            this.errorHandler.sync(this);
+            _la = this.tokenStream.LA(1);
+            while (_la === 14) {
+              {
+                {
+                  this.state = 81;
+                  this.boundsBlock();
+                }
+              }
+              this.state = 86;
+              this.errorHandler.sync(this);
+              _la = this.tokenStream.LA(1);
+            }
+            this.state = 88;
+            this.errorHandler.sync(this);
+            _la = this.tokenStream.LA(1);
+            if (_la === 4) {
+              {
+                this.state = 87;
                 this.constraintsBlock();
               }
             }
-            this.state = 81;
-            this.match(_MangleParser.T__0);
+            this.state = 90;
+            this.match(_MangleParser.T__1);
           }
         } catch (re) {
           if (re instanceof antlr.RecognitionException) {
@@ -31102,9 +31924,9 @@ var require_MangleParser = __commonJS({
         try {
           this.enterOuterAlt(localContext, 1);
           {
-            this.state = 83;
-            this.match(_MangleParser.T__1);
-            this.state = 84;
+            this.state = 92;
+            this.match(_MangleParser.T__2);
+            this.state = 93;
             this.atoms();
           }
         } catch (re) {
@@ -31127,38 +31949,38 @@ var require_MangleParser = __commonJS({
           let alternative;
           this.enterOuterAlt(localContext, 1);
           {
-            this.state = 86;
+            this.state = 95;
             this.match(_MangleParser.BOUND);
-            this.state = 87;
+            this.state = 96;
             this.match(_MangleParser.LBRACKET);
-            this.state = 93;
+            this.state = 102;
             this.errorHandler.sync(this);
-            alternative = this.interpreter.adaptivePredict(this.tokenStream, 9, this.context);
+            alternative = this.interpreter.adaptivePredict(this.tokenStream, 10, this.context);
             while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
               if (alternative === 1) {
                 {
                   {
-                    this.state = 88;
+                    this.state = 97;
                     this.term();
-                    this.state = 89;
+                    this.state = 98;
                     this.match(_MangleParser.COMMA);
                   }
                 }
               }
-              this.state = 95;
+              this.state = 104;
               this.errorHandler.sync(this);
-              alternative = this.interpreter.adaptivePredict(this.tokenStream, 9, this.context);
+              alternative = this.interpreter.adaptivePredict(this.tokenStream, 10, this.context);
             }
-            this.state = 97;
+            this.state = 106;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if (_la === 5 || _la === 19 || (_la - 32 & ~31) === 0 && (1 << _la - 32 & 495) !== 0) {
+            if ((_la - 19 & ~31) === 0 && (1 << _la - 19 & 2076180485) !== 0) {
               {
-                this.state = 96;
+                this.state = 105;
                 this.term();
               }
             }
-            this.state = 99;
+            this.state = 108;
             this.match(_MangleParser.RBRACKET);
           }
         } catch (re) {
@@ -31179,9 +32001,9 @@ var require_MangleParser = __commonJS({
         try {
           this.enterOuterAlt(localContext, 1);
           {
-            this.state = 101;
-            this.match(_MangleParser.T__2);
-            this.state = 102;
+            this.state = 110;
+            this.match(_MangleParser.T__3);
+            this.state = 111;
             this.atoms();
           }
         } catch (re) {
@@ -31203,27 +32025,103 @@ var require_MangleParser = __commonJS({
         try {
           this.enterOuterAlt(localContext, 1);
           {
-            this.state = 104;
+            this.state = 113;
             this.atom();
-            this.state = 107;
+            this.state = 115;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if (_la === 10 || _la === 29) {
+            if (_la === 34) {
               {
-                this.state = 105;
+                this.state = 114;
+                this.temporalAnnotation();
+              }
+            }
+            this.state = 119;
+            this.errorHandler.sync(this);
+            _la = this.tokenStream.LA(1);
+            if (_la === 10 || _la === 31) {
+              {
+                this.state = 117;
                 _la = this.tokenStream.LA(1);
-                if (!(_la === 10 || _la === 29)) {
+                if (!(_la === 10 || _la === 31)) {
                   this.errorHandler.recoverInline(this);
                 } else {
                   this.errorHandler.reportMatch(this);
                   this.consume();
                 }
-                this.state = 106;
+                this.state = 118;
                 this.clauseBody();
               }
             }
-            this.state = 109;
-            this.match(_MangleParser.T__0);
+            this.state = 121;
+            this.match(_MangleParser.T__1);
+          }
+        } catch (re) {
+          if (re instanceof antlr.RecognitionException) {
+            this.errorHandler.reportError(this, re);
+            this.errorHandler.recover(this, re);
+          } else {
+            throw re;
+          }
+        } finally {
+          this.exitRule();
+        }
+        return localContext;
+      }
+      temporalAnnotation() {
+        let localContext = new TemporalAnnotationContext(this.context, this.state);
+        this.enterRule(localContext, 18, _MangleParser.RULE_temporalAnnotation);
+        let _la;
+        try {
+          this.enterOuterAlt(localContext, 1);
+          {
+            this.state = 123;
+            this.match(_MangleParser.AT);
+            this.state = 124;
+            this.match(_MangleParser.LBRACKET);
+            this.state = 125;
+            this.temporalBound();
+            this.state = 128;
+            this.errorHandler.sync(this);
+            _la = this.tokenStream.LA(1);
+            if (_la === 25) {
+              {
+                this.state = 126;
+                this.match(_MangleParser.COMMA);
+                this.state = 127;
+                this.temporalBound();
+              }
+            }
+            this.state = 130;
+            this.match(_MangleParser.RBRACKET);
+          }
+        } catch (re) {
+          if (re instanceof antlr.RecognitionException) {
+            this.errorHandler.reportError(this, re);
+            this.errorHandler.recover(this, re);
+          } else {
+            throw re;
+          }
+        } finally {
+          this.exitRule();
+        }
+        return localContext;
+      }
+      temporalBound() {
+        let localContext = new TemporalBoundContext(this.context, this.state);
+        this.enterRule(localContext, 20, _MangleParser.RULE_temporalBound);
+        let _la;
+        try {
+          this.enterOuterAlt(localContext, 1);
+          {
+            this.state = 132;
+            _la = this.tokenStream.LA(1);
+            if (!(_la === 5 || (_la - 39 & ~31) === 0 && (1 << _la - 39 & 19) !== 0)) {
+              this.errorHandler.recoverInline(this);
+            } else {
+              this.errorHandler.reportMatch(this);
+              this.consume();
+            }
           }
         } catch (re) {
           if (re instanceof antlr.RecognitionException) {
@@ -31239,54 +32137,54 @@ var require_MangleParser = __commonJS({
       }
       clauseBody() {
         let localContext = new ClauseBodyContext(this.context, this.state);
-        this.enterRule(localContext, 18, _MangleParser.RULE_clauseBody);
+        this.enterRule(localContext, 22, _MangleParser.RULE_clauseBody);
         let _la;
         try {
           let alternative;
           this.enterOuterAlt(localContext, 1);
           {
-            this.state = 111;
+            this.state = 134;
             this.literalOrFml();
-            this.state = 116;
+            this.state = 139;
             this.errorHandler.sync(this);
-            alternative = this.interpreter.adaptivePredict(this.tokenStream, 12, this.context);
+            alternative = this.interpreter.adaptivePredict(this.tokenStream, 15, this.context);
             while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
               if (alternative === 1) {
                 {
                   {
-                    this.state = 112;
+                    this.state = 135;
                     this.match(_MangleParser.COMMA);
-                    this.state = 113;
+                    this.state = 136;
                     this.literalOrFml();
                   }
                 }
               }
-              this.state = 118;
+              this.state = 141;
               this.errorHandler.sync(this);
-              alternative = this.interpreter.adaptivePredict(this.tokenStream, 12, this.context);
+              alternative = this.interpreter.adaptivePredict(this.tokenStream, 15, this.context);
             }
-            this.state = 120;
+            this.state = 143;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if (_la === 23) {
+            if (_la === 25) {
               {
-                this.state = 119;
+                this.state = 142;
                 this.match(_MangleParser.COMMA);
               }
             }
-            this.state = 126;
+            this.state = 149;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            while (_la === 31) {
+            while (_la === 33) {
               {
                 {
-                  this.state = 122;
+                  this.state = 145;
                   this.match(_MangleParser.PIPEGREATER);
-                  this.state = 123;
+                  this.state = 146;
                   this.transform();
                 }
               }
-              this.state = 128;
+              this.state = 151;
               this.errorHandler.sync(this);
               _la = this.tokenStream.LA(1);
             }
@@ -31305,41 +32203,41 @@ var require_MangleParser = __commonJS({
       }
       transform() {
         let localContext = new TransformContext(this.context, this.state);
-        this.enterRule(localContext, 20, _MangleParser.RULE_transform);
+        this.enterRule(localContext, 24, _MangleParser.RULE_transform);
         let _la;
         try {
-          this.state = 150;
+          this.state = 173;
           this.errorHandler.sync(this);
           switch (this.tokenStream.LA(1)) {
             case _MangleParser.DO:
               this.enterOuterAlt(localContext, 1);
               {
-                this.state = 129;
+                this.state = 152;
                 this.match(_MangleParser.DO);
-                this.state = 130;
+                this.state = 153;
                 this.term();
-                this.state = 140;
+                this.state = 163;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                if (_la === 23) {
+                if (_la === 25) {
                   {
-                    this.state = 131;
+                    this.state = 154;
                     this.match(_MangleParser.COMMA);
-                    this.state = 132;
+                    this.state = 155;
                     this.letStmt();
-                    this.state = 137;
+                    this.state = 160;
                     this.errorHandler.sync(this);
                     _la = this.tokenStream.LA(1);
-                    while (_la === 23) {
+                    while (_la === 25) {
                       {
                         {
-                          this.state = 133;
+                          this.state = 156;
                           this.match(_MangleParser.COMMA);
-                          this.state = 134;
+                          this.state = 157;
                           this.letStmt();
                         }
                       }
-                      this.state = 139;
+                      this.state = 162;
                       this.errorHandler.sync(this);
                       _la = this.tokenStream.LA(1);
                     }
@@ -31350,21 +32248,21 @@ var require_MangleParser = __commonJS({
             case _MangleParser.LET:
               this.enterOuterAlt(localContext, 2);
               {
-                this.state = 142;
+                this.state = 165;
                 this.letStmt();
-                this.state = 147;
+                this.state = 170;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                while (_la === 23) {
+                while (_la === 25) {
                   {
                     {
-                      this.state = 143;
+                      this.state = 166;
                       this.match(_MangleParser.COMMA);
-                      this.state = 144;
+                      this.state = 167;
                       this.letStmt();
                     }
                   }
-                  this.state = 149;
+                  this.state = 172;
                   this.errorHandler.sync(this);
                   _la = this.tokenStream.LA(1);
                 }
@@ -31387,17 +32285,17 @@ var require_MangleParser = __commonJS({
       }
       letStmt() {
         let localContext = new LetStmtContext(this.context, this.state);
-        this.enterRule(localContext, 22, _MangleParser.RULE_letStmt);
+        this.enterRule(localContext, 26, _MangleParser.RULE_letStmt);
         try {
           this.enterOuterAlt(localContext, 1);
           {
-            this.state = 152;
+            this.state = 175;
             this.match(_MangleParser.LET);
-            this.state = 153;
+            this.state = 176;
             this.match(_MangleParser.VARIABLE);
-            this.state = 154;
+            this.state = 177;
             this.match(_MangleParser.EQ);
-            this.state = 155;
+            this.state = 178;
             this.term();
           }
         } catch (re) {
@@ -31414,14 +32312,18 @@ var require_MangleParser = __commonJS({
       }
       literalOrFml() {
         let localContext = new LiteralOrFmlContext(this.context, this.state);
-        this.enterRule(localContext, 24, _MangleParser.RULE_literalOrFml);
+        this.enterRule(localContext, 28, _MangleParser.RULE_literalOrFml);
         let _la;
         try {
-          this.state = 164;
+          this.state = 193;
           this.errorHandler.sync(this);
           switch (this.tokenStream.LA(1)) {
-            case _MangleParser.T__4:
             case _MangleParser.LBRACKET:
+            case _MangleParser.LBRACE:
+            case _MangleParser.DIAMONDMINUS:
+            case _MangleParser.DIAMONDPLUS:
+            case _MangleParser.BOXMINUS:
+            case _MangleParser.BOXPLUS:
             case _MangleParser.NUMBER:
             case _MangleParser.FLOAT:
             case _MangleParser.VARIABLE:
@@ -31432,22 +32334,40 @@ var require_MangleParser = __commonJS({
             case _MangleParser.BYTESTRING:
               this.enterOuterAlt(localContext, 1);
               {
-                this.state = 157;
-                this.term();
-                this.state = 160;
+                this.state = 181;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                if ((_la & ~31) === 0 && (1 << _la & 509607936) !== 0) {
+                if ((_la - 35 & ~31) === 0 && (1 << _la - 35 & 15) !== 0) {
                   {
-                    this.state = 158;
+                    this.state = 180;
+                    this.temporalOperator();
+                  }
+                }
+                this.state = 183;
+                this.term();
+                this.state = 185;
+                this.errorHandler.sync(this);
+                _la = this.tokenStream.LA(1);
+                if (_la === 34) {
+                  {
+                    this.state = 184;
+                    this.temporalAnnotation();
+                  }
+                }
+                this.state = 189;
+                this.errorHandler.sync(this);
+                _la = this.tokenStream.LA(1);
+                if ((_la & ~31) === 0 && (1 << _la & 2038431744) !== 0) {
+                  {
+                    this.state = 187;
                     _la = this.tokenStream.LA(1);
-                    if (!((_la & ~31) === 0 && (1 << _la & 509607936) !== 0)) {
+                    if (!((_la & ~31) === 0 && (1 << _la & 2038431744) !== 0)) {
                       this.errorHandler.recoverInline(this);
                     } else {
                       this.errorHandler.reportMatch(this);
                       this.consume();
                     }
-                    this.state = 159;
+                    this.state = 188;
                     this.term();
                   }
                 }
@@ -31456,10 +32376,100 @@ var require_MangleParser = __commonJS({
             case _MangleParser.BANG:
               this.enterOuterAlt(localContext, 2);
               {
-                this.state = 162;
+                this.state = 191;
                 this.match(_MangleParser.BANG);
-                this.state = 163;
+                this.state = 192;
                 this.term();
+              }
+              break;
+            default:
+              throw new antlr.NoViableAltException(this);
+          }
+        } catch (re) {
+          if (re instanceof antlr.RecognitionException) {
+            this.errorHandler.reportError(this, re);
+            this.errorHandler.recover(this, re);
+          } else {
+            throw re;
+          }
+        } finally {
+          this.exitRule();
+        }
+        return localContext;
+      }
+      temporalOperator() {
+        let localContext = new TemporalOperatorContext(this.context, this.state);
+        this.enterRule(localContext, 30, _MangleParser.RULE_temporalOperator);
+        try {
+          this.state = 223;
+          this.errorHandler.sync(this);
+          switch (this.tokenStream.LA(1)) {
+            case _MangleParser.DIAMONDMINUS:
+              this.enterOuterAlt(localContext, 1);
+              {
+                this.state = 195;
+                this.match(_MangleParser.DIAMONDMINUS);
+                this.state = 196;
+                this.match(_MangleParser.LBRACKET);
+                this.state = 197;
+                this.temporalBound();
+                this.state = 198;
+                this.match(_MangleParser.COMMA);
+                this.state = 199;
+                this.temporalBound();
+                this.state = 200;
+                this.match(_MangleParser.RBRACKET);
+              }
+              break;
+            case _MangleParser.BOXMINUS:
+              this.enterOuterAlt(localContext, 2);
+              {
+                this.state = 202;
+                this.match(_MangleParser.BOXMINUS);
+                this.state = 203;
+                this.match(_MangleParser.LBRACKET);
+                this.state = 204;
+                this.temporalBound();
+                this.state = 205;
+                this.match(_MangleParser.COMMA);
+                this.state = 206;
+                this.temporalBound();
+                this.state = 207;
+                this.match(_MangleParser.RBRACKET);
+              }
+              break;
+            case _MangleParser.DIAMONDPLUS:
+              this.enterOuterAlt(localContext, 3);
+              {
+                this.state = 209;
+                this.match(_MangleParser.DIAMONDPLUS);
+                this.state = 210;
+                this.match(_MangleParser.LBRACKET);
+                this.state = 211;
+                this.temporalBound();
+                this.state = 212;
+                this.match(_MangleParser.COMMA);
+                this.state = 213;
+                this.temporalBound();
+                this.state = 214;
+                this.match(_MangleParser.RBRACKET);
+              }
+              break;
+            case _MangleParser.BOXPLUS:
+              this.enterOuterAlt(localContext, 4);
+              {
+                this.state = 216;
+                this.match(_MangleParser.BOXPLUS);
+                this.state = 217;
+                this.match(_MangleParser.LBRACKET);
+                this.state = 218;
+                this.temporalBound();
+                this.state = 219;
+                this.match(_MangleParser.COMMA);
+                this.state = 220;
+                this.temporalBound();
+                this.state = 221;
+                this.match(_MangleParser.RBRACKET);
               }
               break;
             default:
@@ -31479,18 +32489,18 @@ var require_MangleParser = __commonJS({
       }
       term() {
         let localContext = new TermContext(this.context, this.state);
-        this.enterRule(localContext, 26, _MangleParser.RULE_term);
+        this.enterRule(localContext, 32, _MangleParser.RULE_term);
         let _la;
         try {
           let alternative;
-          this.state = 252;
+          this.state = 311;
           this.errorHandler.sync(this);
-          switch (this.interpreter.adaptivePredict(this.tokenStream, 32, this.context)) {
+          switch (this.interpreter.adaptivePredict(this.tokenStream, 38, this.context)) {
             case 1:
               localContext = new VarContext(localContext);
               this.enterOuterAlt(localContext, 1);
               {
-                this.state = 166;
+                this.state = 225;
                 this.match(_MangleParser.VARIABLE);
               }
               break;
@@ -31498,7 +32508,7 @@ var require_MangleParser = __commonJS({
               localContext = new ConstContext(localContext);
               this.enterOuterAlt(localContext, 2);
               {
-                this.state = 167;
+                this.state = 226;
                 this.match(_MangleParser.CONSTANT);
               }
               break;
@@ -31506,7 +32516,7 @@ var require_MangleParser = __commonJS({
               localContext = new NumContext(localContext);
               this.enterOuterAlt(localContext, 3);
               {
-                this.state = 168;
+                this.state = 227;
                 this.match(_MangleParser.NUMBER);
               }
               break;
@@ -31514,7 +32524,7 @@ var require_MangleParser = __commonJS({
               localContext = new FloatContext(localContext);
               this.enterOuterAlt(localContext, 4);
               {
-                this.state = 169;
+                this.state = 228;
                 this.match(_MangleParser.FLOAT);
               }
               break;
@@ -31522,7 +32532,7 @@ var require_MangleParser = __commonJS({
               localContext = new StrContext(localContext);
               this.enterOuterAlt(localContext, 5);
               {
-                this.state = 170;
+                this.state = 229;
                 this.match(_MangleParser.STRING);
               }
               break;
@@ -31530,7 +32540,7 @@ var require_MangleParser = __commonJS({
               localContext = new BStrContext(localContext);
               this.enterOuterAlt(localContext, 6);
               {
-                this.state = 171;
+                this.state = 230;
                 this.match(_MangleParser.BYTESTRING);
               }
               break;
@@ -31538,36 +32548,36 @@ var require_MangleParser = __commonJS({
               localContext = new ListContext(localContext);
               this.enterOuterAlt(localContext, 7);
               {
-                this.state = 172;
+                this.state = 231;
                 this.match(_MangleParser.LBRACKET);
-                this.state = 178;
+                this.state = 237;
                 this.errorHandler.sync(this);
-                alternative = this.interpreter.adaptivePredict(this.tokenStream, 21, this.context);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 27, this.context);
                 while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
                   if (alternative === 1) {
                     {
                       {
-                        this.state = 173;
+                        this.state = 232;
                         this.term();
-                        this.state = 174;
+                        this.state = 233;
                         this.match(_MangleParser.COMMA);
                       }
                     }
                   }
-                  this.state = 180;
+                  this.state = 239;
                   this.errorHandler.sync(this);
-                  alternative = this.interpreter.adaptivePredict(this.tokenStream, 21, this.context);
+                  alternative = this.interpreter.adaptivePredict(this.tokenStream, 27, this.context);
                 }
-                this.state = 182;
+                this.state = 241;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                if (_la === 5 || _la === 19 || (_la - 32 & ~31) === 0 && (1 << _la - 32 & 495) !== 0) {
+                if ((_la - 19 & ~31) === 0 && (1 << _la - 19 & 2076180485) !== 0) {
                   {
-                    this.state = 181;
+                    this.state = 240;
                     this.term();
                   }
                 }
-                this.state = 184;
+                this.state = 243;
                 this.match(_MangleParser.RBRACKET);
               }
               break;
@@ -31575,44 +32585,44 @@ var require_MangleParser = __commonJS({
               localContext = new MapContext(localContext);
               this.enterOuterAlt(localContext, 8);
               {
-                this.state = 185;
+                this.state = 244;
                 this.match(_MangleParser.LBRACKET);
-                this.state = 193;
+                this.state = 252;
                 this.errorHandler.sync(this);
-                alternative = this.interpreter.adaptivePredict(this.tokenStream, 23, this.context);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 29, this.context);
                 while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
                   if (alternative === 1) {
                     {
                       {
-                        this.state = 186;
+                        this.state = 245;
                         this.term();
-                        this.state = 187;
-                        this.match(_MangleParser.T__3);
-                        this.state = 188;
+                        this.state = 246;
+                        this.match(_MangleParser.T__5);
+                        this.state = 247;
                         this.term();
-                        this.state = 189;
+                        this.state = 248;
                         this.match(_MangleParser.COMMA);
                       }
                     }
                   }
-                  this.state = 195;
+                  this.state = 254;
                   this.errorHandler.sync(this);
-                  alternative = this.interpreter.adaptivePredict(this.tokenStream, 23, this.context);
+                  alternative = this.interpreter.adaptivePredict(this.tokenStream, 29, this.context);
                 }
-                this.state = 200;
+                this.state = 259;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                if (_la === 5 || _la === 19 || (_la - 32 & ~31) === 0 && (1 << _la - 32 & 495) !== 0) {
+                if ((_la - 19 & ~31) === 0 && (1 << _la - 19 & 2076180485) !== 0) {
                   {
-                    this.state = 196;
+                    this.state = 255;
                     this.term();
-                    this.state = 197;
-                    this.match(_MangleParser.T__3);
-                    this.state = 198;
+                    this.state = 256;
+                    this.match(_MangleParser.T__5);
+                    this.state = 257;
                     this.term();
                   }
                 }
-                this.state = 202;
+                this.state = 261;
                 this.match(_MangleParser.RBRACKET);
               }
               break;
@@ -31620,92 +32630,92 @@ var require_MangleParser = __commonJS({
               localContext = new StructContext(localContext);
               this.enterOuterAlt(localContext, 9);
               {
-                this.state = 203;
-                this.match(_MangleParser.T__4);
-                this.state = 211;
+                this.state = 262;
+                this.match(_MangleParser.LBRACE);
+                this.state = 270;
                 this.errorHandler.sync(this);
-                alternative = this.interpreter.adaptivePredict(this.tokenStream, 25, this.context);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 31, this.context);
                 while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
                   if (alternative === 1) {
                     {
                       {
-                        this.state = 204;
+                        this.state = 263;
                         this.term();
-                        this.state = 205;
-                        this.match(_MangleParser.T__3);
-                        this.state = 206;
+                        this.state = 264;
+                        this.match(_MangleParser.T__5);
+                        this.state = 265;
                         this.term();
-                        this.state = 207;
+                        this.state = 266;
                         this.match(_MangleParser.COMMA);
                       }
                     }
                   }
-                  this.state = 213;
+                  this.state = 272;
                   this.errorHandler.sync(this);
-                  alternative = this.interpreter.adaptivePredict(this.tokenStream, 25, this.context);
+                  alternative = this.interpreter.adaptivePredict(this.tokenStream, 31, this.context);
                 }
-                this.state = 218;
+                this.state = 277;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                if (_la === 5 || _la === 19 || (_la - 32 & ~31) === 0 && (1 << _la - 32 & 495) !== 0) {
+                if ((_la - 19 & ~31) === 0 && (1 << _la - 19 & 2076180485) !== 0) {
                   {
-                    this.state = 214;
+                    this.state = 273;
                     this.term();
-                    this.state = 215;
-                    this.match(_MangleParser.T__3);
-                    this.state = 216;
+                    this.state = 274;
+                    this.match(_MangleParser.T__5);
+                    this.state = 275;
                     this.term();
                   }
                 }
-                this.state = 220;
-                this.match(_MangleParser.T__5);
+                this.state = 279;
+                this.match(_MangleParser.RBRACE);
               }
               break;
             case 10:
               localContext = new DotTypeContext(localContext);
               this.enterOuterAlt(localContext, 10);
               {
-                this.state = 221;
+                this.state = 280;
                 this.match(_MangleParser.DOT_TYPE);
-                this.state = 222;
+                this.state = 281;
                 this.match(_MangleParser.LESS);
-                this.state = 228;
+                this.state = 287;
                 this.errorHandler.sync(this);
-                alternative = this.interpreter.adaptivePredict(this.tokenStream, 27, this.context);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 33, this.context);
                 while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
                   if (alternative === 1) {
                     {
                       {
-                        this.state = 223;
+                        this.state = 282;
                         this.member();
-                        this.state = 224;
+                        this.state = 283;
                         this.match(_MangleParser.COMMA);
                       }
                     }
                   }
-                  this.state = 230;
+                  this.state = 289;
                   this.errorHandler.sync(this);
-                  alternative = this.interpreter.adaptivePredict(this.tokenStream, 27, this.context);
+                  alternative = this.interpreter.adaptivePredict(this.tokenStream, 33, this.context);
                 }
-                this.state = 235;
+                this.state = 294;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                if ((_la & ~31) === 0 && (1 << _la & 524448) !== 0 || (_la - 32 & ~31) === 0 && (1 << _la - 32 & 495) !== 0) {
+                if ((_la & ~31) === 0 && (1 << _la & 2621568) !== 0 || (_la - 41 & ~31) === 0 && (1 << _la - 41 & 495) !== 0) {
                   {
-                    this.state = 231;
+                    this.state = 290;
                     this.member();
-                    this.state = 233;
+                    this.state = 292;
                     this.errorHandler.sync(this);
                     _la = this.tokenStream.LA(1);
-                    if (_la === 23) {
+                    if (_la === 25) {
                       {
-                        this.state = 232;
+                        this.state = 291;
                         this.match(_MangleParser.COMMA);
                       }
                     }
                   }
                 }
-                this.state = 237;
+                this.state = 296;
                 this.match(_MangleParser.GREATER);
               }
               break;
@@ -31713,38 +32723,38 @@ var require_MangleParser = __commonJS({
               localContext = new ApplContext(localContext);
               this.enterOuterAlt(localContext, 11);
               {
-                this.state = 238;
+                this.state = 297;
                 this.match(_MangleParser.NAME);
-                this.state = 239;
+                this.state = 298;
                 this.match(_MangleParser.LPAREN);
-                this.state = 245;
+                this.state = 304;
                 this.errorHandler.sync(this);
-                alternative = this.interpreter.adaptivePredict(this.tokenStream, 30, this.context);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 36, this.context);
                 while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
                   if (alternative === 1) {
                     {
                       {
-                        this.state = 240;
+                        this.state = 299;
                         this.term();
-                        this.state = 241;
+                        this.state = 300;
                         this.match(_MangleParser.COMMA);
                       }
                     }
                   }
-                  this.state = 247;
+                  this.state = 306;
                   this.errorHandler.sync(this);
-                  alternative = this.interpreter.adaptivePredict(this.tokenStream, 30, this.context);
+                  alternative = this.interpreter.adaptivePredict(this.tokenStream, 36, this.context);
                 }
-                this.state = 249;
+                this.state = 308;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                if (_la === 5 || _la === 19 || (_la - 32 & ~31) === 0 && (1 << _la - 32 & 495) !== 0) {
+                if ((_la - 19 & ~31) === 0 && (1 << _la - 19 & 2076180485) !== 0) {
                   {
-                    this.state = 248;
+                    this.state = 307;
                     this.term();
                   }
                 }
-                this.state = 251;
+                this.state = 310;
                 this.match(_MangleParser.RPAREN);
               }
               break;
@@ -31763,14 +32773,14 @@ var require_MangleParser = __commonJS({
       }
       member() {
         let localContext = new MemberContext(this.context, this.state);
-        this.enterRule(localContext, 28, _MangleParser.RULE_member);
+        this.enterRule(localContext, 34, _MangleParser.RULE_member);
         let _la;
         try {
-          this.state = 264;
+          this.state = 323;
           this.errorHandler.sync(this);
           switch (this.tokenStream.LA(1)) {
-            case _MangleParser.T__4:
             case _MangleParser.LBRACKET:
+            case _MangleParser.LBRACE:
             case _MangleParser.NUMBER:
             case _MangleParser.FLOAT:
             case _MangleParser.VARIABLE:
@@ -31781,16 +32791,16 @@ var require_MangleParser = __commonJS({
             case _MangleParser.BYTESTRING:
               this.enterOuterAlt(localContext, 1);
               {
-                this.state = 254;
+                this.state = 313;
                 this.term();
-                this.state = 257;
+                this.state = 316;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                if (_la === 4) {
+                if (_la === 6) {
                   {
-                    this.state = 255;
-                    this.match(_MangleParser.T__3);
-                    this.state = 256;
+                    this.state = 314;
+                    this.match(_MangleParser.T__5);
+                    this.state = 315;
                     this.term();
                   }
                 }
@@ -31799,13 +32809,13 @@ var require_MangleParser = __commonJS({
             case _MangleParser.T__6:
               this.enterOuterAlt(localContext, 2);
               {
-                this.state = 259;
+                this.state = 318;
                 this.match(_MangleParser.T__6);
-                this.state = 260;
+                this.state = 319;
                 this.term();
-                this.state = 261;
-                this.match(_MangleParser.T__3);
-                this.state = 262;
+                this.state = 320;
+                this.match(_MangleParser.T__5);
+                this.state = 321;
                 this.term();
               }
               break;
@@ -31826,11 +32836,11 @@ var require_MangleParser = __commonJS({
       }
       atom() {
         let localContext = new AtomContext(this.context, this.state);
-        this.enterRule(localContext, 30, _MangleParser.RULE_atom);
+        this.enterRule(localContext, 36, _MangleParser.RULE_atom);
         try {
           this.enterOuterAlt(localContext, 1);
           {
-            this.state = 266;
+            this.state = 325;
             this.term();
           }
         } catch (re) {
@@ -31847,42 +32857,42 @@ var require_MangleParser = __commonJS({
       }
       atoms() {
         let localContext = new AtomsContext(this.context, this.state);
-        this.enterRule(localContext, 32, _MangleParser.RULE_atoms);
+        this.enterRule(localContext, 38, _MangleParser.RULE_atoms);
         let _la;
         try {
           let alternative;
           this.enterOuterAlt(localContext, 1);
           {
-            this.state = 268;
+            this.state = 327;
             this.match(_MangleParser.LBRACKET);
-            this.state = 274;
+            this.state = 333;
             this.errorHandler.sync(this);
-            alternative = this.interpreter.adaptivePredict(this.tokenStream, 35, this.context);
+            alternative = this.interpreter.adaptivePredict(this.tokenStream, 41, this.context);
             while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
               if (alternative === 1) {
                 {
                   {
-                    this.state = 269;
+                    this.state = 328;
                     this.atom();
-                    this.state = 270;
+                    this.state = 329;
                     this.match(_MangleParser.COMMA);
                   }
                 }
               }
-              this.state = 276;
+              this.state = 335;
               this.errorHandler.sync(this);
-              alternative = this.interpreter.adaptivePredict(this.tokenStream, 35, this.context);
+              alternative = this.interpreter.adaptivePredict(this.tokenStream, 41, this.context);
             }
-            this.state = 278;
+            this.state = 337;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if (_la === 5 || _la === 19 || (_la - 32 & ~31) === 0 && (1 << _la - 32 & 495) !== 0) {
+            if ((_la - 19 & ~31) === 0 && (1 << _la - 19 & 2076180485) !== 0) {
               {
-                this.state = 277;
+                this.state = 336;
                 this.atom();
               }
             }
-            this.state = 280;
+            this.state = 339;
             this.match(_MangleParser.RBRACKET);
           }
         } catch (re) {
@@ -31928,26 +32938,35 @@ var require_MangleParser = __commonJS({
     MangleParser.RPAREN = 18;
     MangleParser.LBRACKET = 19;
     MangleParser.RBRACKET = 20;
-    MangleParser.EQ = 21;
-    MangleParser.BANGEQ = 22;
-    MangleParser.COMMA = 23;
-    MangleParser.BANG = 24;
-    MangleParser.LESS = 25;
-    MangleParser.LESSEQ = 26;
-    MangleParser.GREATER = 27;
-    MangleParser.GREATEREQ = 28;
-    MangleParser.COLONDASH = 29;
-    MangleParser.NEWLINE = 30;
-    MangleParser.PIPEGREATER = 31;
-    MangleParser.NUMBER = 32;
-    MangleParser.FLOAT = 33;
-    MangleParser.VARIABLE = 34;
-    MangleParser.NAME = 35;
-    MangleParser.TYPENAME = 36;
-    MangleParser.DOT_TYPE = 37;
-    MangleParser.CONSTANT = 38;
-    MangleParser.STRING = 39;
-    MangleParser.BYTESTRING = 40;
+    MangleParser.LBRACE = 21;
+    MangleParser.RBRACE = 22;
+    MangleParser.EQ = 23;
+    MangleParser.BANGEQ = 24;
+    MangleParser.COMMA = 25;
+    MangleParser.BANG = 26;
+    MangleParser.LESSEQ = 27;
+    MangleParser.LESS = 28;
+    MangleParser.GREATEREQ = 29;
+    MangleParser.GREATER = 30;
+    MangleParser.COLONDASH = 31;
+    MangleParser.NEWLINE = 32;
+    MangleParser.PIPEGREATER = 33;
+    MangleParser.AT = 34;
+    MangleParser.DIAMONDMINUS = 35;
+    MangleParser.DIAMONDPLUS = 36;
+    MangleParser.BOXMINUS = 37;
+    MangleParser.BOXPLUS = 38;
+    MangleParser.TIMESTAMP = 39;
+    MangleParser.DURATION = 40;
+    MangleParser.NUMBER = 41;
+    MangleParser.FLOAT = 42;
+    MangleParser.VARIABLE = 43;
+    MangleParser.NAME = 44;
+    MangleParser.TYPENAME = 45;
+    MangleParser.DOT_TYPE = 46;
+    MangleParser.CONSTANT = 47;
+    MangleParser.STRING = 48;
+    MangleParser.BYTESTRING = 49;
     MangleParser.RULE_start = 0;
     MangleParser.RULE_program = 1;
     MangleParser.RULE_packageDecl = 2;
@@ -31957,22 +32976,25 @@ var require_MangleParser = __commonJS({
     MangleParser.RULE_boundsBlock = 6;
     MangleParser.RULE_constraintsBlock = 7;
     MangleParser.RULE_clause = 8;
-    MangleParser.RULE_clauseBody = 9;
-    MangleParser.RULE_transform = 10;
-    MangleParser.RULE_letStmt = 11;
-    MangleParser.RULE_literalOrFml = 12;
-    MangleParser.RULE_term = 13;
-    MangleParser.RULE_member = 14;
-    MangleParser.RULE_atom = 15;
-    MangleParser.RULE_atoms = 16;
+    MangleParser.RULE_temporalAnnotation = 9;
+    MangleParser.RULE_temporalBound = 10;
+    MangleParser.RULE_clauseBody = 11;
+    MangleParser.RULE_transform = 12;
+    MangleParser.RULE_letStmt = 13;
+    MangleParser.RULE_literalOrFml = 14;
+    MangleParser.RULE_temporalOperator = 15;
+    MangleParser.RULE_term = 16;
+    MangleParser.RULE_member = 17;
+    MangleParser.RULE_atom = 18;
+    MangleParser.RULE_atoms = 19;
     MangleParser.literalNames = [
       null,
+      "'temporal'",
       "'.'",
       "'descr'",
       "'inclusion'",
+      "'now'",
       "':'",
-      "'{'",
-      "'}'",
       "'opt'",
       null,
       null,
@@ -31987,17 +33009,24 @@ var require_MangleParser = __commonJS({
       "')'",
       "'['",
       "']'",
+      "'{'",
+      "'}'",
       "'='",
       "'!='",
       "','",
       "'!'",
-      "'<'",
       "'<='",
-      "'>'",
+      "'<'",
       "'>='",
+      "'>'",
       "':-'",
       "'\\n'",
-      "'|>'"
+      "'|>'",
+      "'@'",
+      "'<-'",
+      "'<+'",
+      "'[-'",
+      "'[+'"
     ];
     MangleParser.symbolicNames = [
       null,
@@ -32021,17 +33050,26 @@ var require_MangleParser = __commonJS({
       "RPAREN",
       "LBRACKET",
       "RBRACKET",
+      "LBRACE",
+      "RBRACE",
       "EQ",
       "BANGEQ",
       "COMMA",
       "BANG",
-      "LESS",
       "LESSEQ",
-      "GREATER",
+      "LESS",
       "GREATEREQ",
+      "GREATER",
       "COLONDASH",
       "NEWLINE",
       "PIPEGREATER",
+      "AT",
+      "DIAMONDMINUS",
+      "DIAMONDPLUS",
+      "BOXMINUS",
+      "BOXPLUS",
+      "TIMESTAMP",
+      "DURATION",
       "NUMBER",
       "FLOAT",
       "VARIABLE",
@@ -32052,10 +33090,13 @@ var require_MangleParser = __commonJS({
       "boundsBlock",
       "constraintsBlock",
       "clause",
+      "temporalAnnotation",
+      "temporalBound",
       "clauseBody",
       "transform",
       "letStmt",
       "literalOrFml",
+      "temporalOperator",
       "term",
       "member",
       "atom",
@@ -32064,8 +33105,8 @@ var require_MangleParser = __commonJS({
     MangleParser._serializedATN = [
       4,
       1,
-      40,
-      283,
+      49,
+      342,
       2,
       0,
       7,
@@ -32134,6 +33175,18 @@ var require_MangleParser = __commonJS({
       16,
       7,
       16,
+      2,
+      17,
+      7,
+      17,
+      2,
+      18,
+      7,
+      18,
+      2,
+      19,
+      7,
+      19,
       1,
       0,
       1,
@@ -32143,22 +33196,22 @@ var require_MangleParser = __commonJS({
       1,
       1,
       3,
-      1,
-      39,
-      8,
-      1,
-      1,
-      1,
-      5,
-      1,
-      42,
-      8,
-      1,
-      10,
-      1,
-      12,
       1,
       45,
+      8,
+      1,
+      1,
+      1,
+      5,
+      1,
+      48,
+      8,
+      1,
+      10,
+      1,
+      12,
+      1,
+      51,
       9,
       1,
       1,
@@ -32167,14 +33220,14 @@ var require_MangleParser = __commonJS({
       1,
       5,
       1,
-      49,
+      55,
       8,
       1,
       10,
       1,
       12,
       1,
-      52,
+      58,
       9,
       1,
       1,
@@ -32185,7 +33238,7 @@ var require_MangleParser = __commonJS({
       2,
       3,
       2,
-      57,
+      63,
       8,
       2,
       1,
@@ -32200,7 +33253,7 @@ var require_MangleParser = __commonJS({
       3,
       3,
       3,
-      64,
+      70,
       8,
       3,
       1,
@@ -32214,23 +33267,9 @@ var require_MangleParser = __commonJS({
       1,
       4,
       3,
-      4,
-      71,
-      8,
-      4,
-      1,
-      4,
-      5,
-      4,
-      74,
-      8,
-      4,
-      10,
-      4,
-      12,
       4,
       77,
-      9,
+      8,
       4,
       1,
       4,
@@ -32241,6 +33280,27 @@ var require_MangleParser = __commonJS({
       4,
       1,
       4,
+      5,
+      4,
+      83,
+      8,
+      4,
+      10,
+      4,
+      12,
+      4,
+      86,
+      9,
+      4,
+      1,
+      4,
+      3,
+      4,
+      89,
+      8,
+      4,
+      1,
+      4,
       1,
       4,
       1,
@@ -32261,21 +33321,21 @@ var require_MangleParser = __commonJS({
       6,
       5,
       6,
-      92,
+      101,
       8,
       6,
       10,
       6,
       12,
       6,
-      95,
+      104,
       9,
       6,
       1,
       6,
       3,
       6,
-      98,
+      107,
       8,
       6,
       1,
@@ -32292,11 +33352,18 @@ var require_MangleParser = __commonJS({
       8,
       1,
       8,
+      3,
+      8,
+      116,
+      8,
+      8,
+      1,
+      8,
       1,
       8,
       3,
       8,
-      108,
+      120,
       8,
       8,
       1,
@@ -32309,346 +33376,266 @@ var require_MangleParser = __commonJS({
       9,
       1,
       9,
-      5,
-      9,
-      115,
-      8,
-      9,
-      10,
-      9,
-      12,
-      9,
-      118,
-      9,
+      1,
       9,
       1,
       9,
       3,
       9,
-      121,
+      129,
       8,
       9,
       1,
       9,
       1,
       9,
+      1,
+      10,
+      1,
+      10,
+      1,
+      11,
+      1,
+      11,
+      1,
+      11,
       5,
-      9,
-      125,
+      11,
+      138,
       8,
-      9,
+      11,
       10,
-      9,
+      11,
       12,
-      9,
-      128,
-      9,
-      9,
-      1,
-      10,
-      1,
-      10,
-      1,
-      10,
-      1,
-      10,
-      1,
-      10,
-      1,
-      10,
-      5,
-      10,
-      136,
-      8,
-      10,
-      10,
-      10,
-      12,
-      10,
-      139,
-      9,
-      10,
-      3,
-      10,
+      11,
       141,
-      8,
-      10,
-      1,
-      10,
-      1,
-      10,
-      1,
-      10,
-      5,
-      10,
-      146,
-      8,
-      10,
-      10,
-      10,
-      12,
-      10,
-      149,
       9,
-      10,
+      11,
+      1,
+      11,
       3,
+      11,
+      144,
+      8,
+      11,
+      1,
+      11,
+      1,
+      11,
+      5,
+      11,
+      148,
+      8,
+      11,
       10,
+      11,
+      12,
+      11,
       151,
-      8,
-      10,
-      1,
-      11,
-      1,
-      11,
-      1,
-      11,
-      1,
-      11,
-      1,
-      11,
-      1,
-      12,
-      1,
-      12,
-      1,
-      12,
-      3,
-      12,
-      161,
-      8,
-      12,
-      1,
-      12,
-      1,
-      12,
-      3,
-      12,
-      165,
-      8,
-      12,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      5,
-      13,
-      177,
-      8,
-      13,
-      10,
-      13,
-      12,
-      13,
-      180,
       9,
-      13,
+      11,
       1,
-      13,
-      3,
-      13,
-      183,
-      8,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      5,
-      13,
-      192,
-      8,
-      13,
-      10,
-      13,
       12,
-      13,
-      195,
-      9,
-      13,
       1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      3,
-      13,
-      201,
-      8,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      5,
-      13,
-      210,
-      8,
-      13,
-      10,
-      13,
       12,
-      13,
-      213,
-      9,
-      13,
       1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      3,
-      13,
-      219,
-      8,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      5,
-      13,
-      227,
-      8,
-      13,
-      10,
-      13,
       12,
-      13,
-      230,
-      9,
-      13,
       1,
-      13,
+      12,
       1,
-      13,
-      3,
-      13,
-      234,
+      12,
+      1,
+      12,
+      5,
+      12,
+      159,
       8,
-      13,
+      12,
+      10,
+      12,
+      12,
+      12,
+      162,
+      9,
+      12,
       3,
+      12,
+      164,
+      8,
+      12,
+      1,
+      12,
+      1,
+      12,
+      1,
+      12,
+      5,
+      12,
+      169,
+      8,
+      12,
+      10,
+      12,
+      12,
+      12,
+      172,
+      9,
+      12,
+      3,
+      12,
+      174,
+      8,
+      12,
+      1,
       13,
+      1,
+      13,
+      1,
+      13,
+      1,
+      13,
+      1,
+      13,
+      1,
+      14,
+      3,
+      14,
+      182,
+      8,
+      14,
+      1,
+      14,
+      1,
+      14,
+      3,
+      14,
+      186,
+      8,
+      14,
+      1,
+      14,
+      1,
+      14,
+      3,
+      14,
+      190,
+      8,
+      14,
+      1,
+      14,
+      1,
+      14,
+      3,
+      14,
+      194,
+      8,
+      14,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      3,
+      15,
+      224,
+      8,
+      15,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      5,
+      16,
       236,
       8,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      5,
-      13,
-      244,
-      8,
-      13,
+      16,
       10,
-      13,
+      16,
       12,
-      13,
-      247,
+      16,
+      239,
       9,
-      13,
+      16,
       1,
-      13,
+      16,
       3,
-      13,
-      250,
+      16,
+      242,
       8,
-      13,
+      16,
       1,
-      13,
-      3,
-      13,
-      253,
-      8,
-      13,
+      16,
       1,
-      14,
+      16,
       1,
-      14,
-      1,
-      14,
-      3,
-      14,
-      258,
-      8,
-      14,
-      1,
-      14,
-      1,
-      14,
-      1,
-      14,
-      1,
-      14,
-      1,
-      14,
-      3,
-      14,
-      265,
-      8,
-      14,
-      1,
-      15,
-      1,
-      15,
+      16,
       1,
       16,
       1,
@@ -32659,21 +33646,27 @@ var require_MangleParser = __commonJS({
       16,
       5,
       16,
-      273,
+      251,
       8,
       16,
       10,
       16,
       12,
       16,
-      276,
+      254,
       9,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
       16,
       1,
       16,
       3,
       16,
-      279,
+      260,
       8,
       16,
       1,
@@ -32682,9 +33675,181 @@ var require_MangleParser = __commonJS({
       16,
       1,
       16,
-      0,
-      0,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      5,
+      16,
+      269,
+      8,
+      16,
+      10,
+      16,
+      12,
+      16,
+      272,
+      9,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      3,
+      16,
+      278,
+      8,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      5,
+      16,
+      286,
+      8,
+      16,
+      10,
+      16,
+      12,
+      16,
+      289,
+      9,
+      16,
+      1,
+      16,
+      1,
+      16,
+      3,
+      16,
+      293,
+      8,
+      16,
+      3,
+      16,
+      295,
+      8,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      5,
+      16,
+      303,
+      8,
+      16,
+      10,
+      16,
+      12,
+      16,
+      306,
+      9,
+      16,
+      1,
+      16,
+      3,
+      16,
+      309,
+      8,
+      16,
+      1,
+      16,
+      3,
+      16,
+      312,
+      8,
+      16,
+      1,
       17,
+      1,
+      17,
+      1,
+      17,
+      3,
+      17,
+      317,
+      8,
+      17,
+      1,
+      17,
+      1,
+      17,
+      1,
+      17,
+      1,
+      17,
+      1,
+      17,
+      3,
+      17,
+      324,
+      8,
+      17,
+      1,
+      18,
+      1,
+      18,
+      1,
+      19,
+      1,
+      19,
+      1,
+      19,
+      1,
+      19,
+      5,
+      19,
+      332,
+      8,
+      19,
+      10,
+      19,
+      12,
+      19,
+      335,
+      9,
+      19,
+      1,
+      19,
+      3,
+      19,
+      338,
+      8,
+      19,
+      1,
+      19,
+      1,
+      19,
+      1,
+      19,
+      0,
+      0,
+      20,
       0,
       2,
       4,
@@ -32702,1925 +33867,2326 @@ var require_MangleParser = __commonJS({
       28,
       30,
       32,
+      34,
+      36,
+      38,
       0,
-      2,
+      3,
       2,
       0,
       10,
       10,
-      29,
-      29,
+      31,
+      31,
+      3,
+      0,
+      5,
+      5,
+      39,
+      40,
+      43,
+      43,
       2,
       0,
-      21,
+      23,
+      24,
+      27,
+      30,
+      375,
+      0,
+      40,
+      1,
+      0,
+      0,
+      0,
+      2,
+      44,
+      1,
+      0,
+      0,
+      0,
+      4,
+      59,
+      1,
+      0,
+      0,
+      0,
+      6,
+      66,
+      1,
+      0,
+      0,
+      0,
+      8,
+      73,
+      1,
+      0,
+      0,
+      0,
+      10,
+      92,
+      1,
+      0,
+      0,
+      0,
+      12,
+      95,
+      1,
+      0,
+      0,
+      0,
+      14,
+      110,
+      1,
+      0,
+      0,
+      0,
+      16,
+      113,
+      1,
+      0,
+      0,
+      0,
+      18,
+      123,
+      1,
+      0,
+      0,
+      0,
+      20,
+      132,
+      1,
+      0,
+      0,
+      0,
       22,
-      25,
+      134,
+      1,
+      0,
+      0,
+      0,
+      24,
+      173,
+      1,
+      0,
+      0,
+      0,
+      26,
+      175,
+      1,
+      0,
+      0,
+      0,
       28,
+      193,
+      1,
+      0,
+      0,
+      0,
+      30,
+      223,
+      1,
+      0,
+      0,
+      0,
+      32,
       311,
+      1,
+      0,
+      0,
       0,
       34,
+      323,
       1,
       0,
       0,
       0,
-      2,
+      36,
+      325,
+      1,
+      0,
+      0,
+      0,
       38,
+      327,
       1,
       0,
       0,
       0,
+      40,
+      41,
+      3,
+      2,
+      1,
+      0,
+      41,
+      42,
+      5,
+      0,
+      0,
+      1,
+      42,
+      1,
+      1,
+      0,
+      0,
+      0,
+      43,
+      45,
+      3,
       4,
+      2,
+      0,
+      44,
+      43,
+      1,
+      0,
+      0,
+      0,
+      44,
+      45,
+      1,
+      0,
+      0,
+      0,
+      45,
+      49,
+      1,
+      0,
+      0,
+      0,
+      46,
+      48,
+      3,
+      6,
+      3,
+      0,
+      47,
+      46,
+      1,
+      0,
+      0,
+      0,
+      48,
+      51,
+      1,
+      0,
+      0,
+      0,
+      49,
+      47,
+      1,
+      0,
+      0,
+      0,
+      49,
+      50,
+      1,
+      0,
+      0,
+      0,
+      50,
+      56,
+      1,
+      0,
+      0,
+      0,
+      51,
+      49,
+      1,
+      0,
+      0,
+      0,
+      52,
+      55,
+      3,
+      8,
+      4,
+      0,
+      53,
+      55,
+      3,
+      16,
+      8,
+      0,
+      54,
+      52,
+      1,
+      0,
+      0,
+      0,
+      54,
       53,
       1,
       0,
       0,
       0,
-      6,
+      55,
+      58,
+      1,
+      0,
+      0,
+      0,
+      56,
+      54,
+      1,
+      0,
+      0,
+      0,
+      56,
+      57,
+      1,
+      0,
+      0,
+      0,
+      57,
+      3,
+      1,
+      0,
+      0,
+      0,
+      58,
+      56,
+      1,
+      0,
+      0,
+      0,
+      59,
       60,
+      5,
+      11,
+      0,
+      0,
+      60,
+      62,
+      5,
+      44,
+      0,
+      0,
+      61,
+      63,
+      3,
+      38,
+      19,
+      0,
+      62,
+      61,
       1,
       0,
       0,
       0,
-      8,
+      62,
+      63,
+      1,
+      0,
+      0,
+      0,
+      63,
+      64,
+      1,
+      0,
+      0,
+      0,
+      64,
+      65,
+      5,
+      26,
+      0,
+      0,
+      65,
+      5,
+      1,
+      0,
+      0,
+      0,
+      66,
       67,
-      1,
-      0,
-      0,
-      0,
-      10,
-      83,
-      1,
-      0,
-      0,
-      0,
+      5,
       12,
+      0,
+      0,
+      67,
+      69,
+      5,
+      44,
+      0,
+      0,
+      68,
+      70,
+      3,
+      38,
+      19,
+      0,
+      69,
+      68,
+      1,
+      0,
+      0,
+      0,
+      69,
+      70,
+      1,
+      0,
+      0,
+      0,
+      70,
+      71,
+      1,
+      0,
+      0,
+      0,
+      71,
+      72,
+      5,
+      26,
+      0,
+      0,
+      72,
+      7,
+      1,
+      0,
+      0,
+      0,
+      73,
+      74,
+      5,
+      13,
+      0,
+      0,
+      74,
+      76,
+      3,
+      36,
+      18,
+      0,
+      75,
+      77,
+      5,
+      1,
+      0,
+      0,
+      76,
+      75,
+      1,
+      0,
+      0,
+      0,
+      76,
+      77,
+      1,
+      0,
+      0,
+      0,
+      77,
+      79,
+      1,
+      0,
+      0,
+      0,
+      78,
+      80,
+      3,
+      10,
+      5,
+      0,
+      79,
+      78,
+      1,
+      0,
+      0,
+      0,
+      79,
+      80,
+      1,
+      0,
+      0,
+      0,
+      80,
+      84,
+      1,
+      0,
+      0,
+      0,
+      81,
+      83,
+      3,
+      12,
+      6,
+      0,
+      82,
+      81,
+      1,
+      0,
+      0,
+      0,
+      83,
       86,
       1,
       0,
       0,
       0,
-      14,
-      101,
+      84,
+      82,
       1,
       0,
       0,
       0,
-      16,
-      104,
+      84,
+      85,
       1,
       0,
       0,
       0,
-      18,
-      111,
+      85,
+      88,
       1,
       0,
       0,
       0,
-      20,
-      150,
+      86,
+      84,
       1,
       0,
       0,
       0,
-      22,
-      152,
-      1,
-      0,
-      0,
-      0,
-      24,
-      164,
-      1,
-      0,
-      0,
-      0,
-      26,
-      252,
-      1,
-      0,
-      0,
-      0,
-      28,
-      264,
-      1,
-      0,
-      0,
-      0,
-      30,
-      266,
-      1,
-      0,
-      0,
-      0,
-      32,
-      268,
-      1,
-      0,
-      0,
-      0,
-      34,
-      35,
-      3,
-      2,
-      1,
-      0,
-      35,
-      36,
-      5,
-      0,
-      0,
-      1,
-      36,
-      1,
-      1,
-      0,
-      0,
-      0,
-      37,
-      39,
-      3,
-      4,
-      2,
-      0,
-      38,
-      37,
-      1,
-      0,
-      0,
-      0,
-      38,
-      39,
-      1,
-      0,
-      0,
-      0,
-      39,
-      43,
-      1,
-      0,
-      0,
-      0,
-      40,
-      42,
-      3,
-      6,
-      3,
-      0,
-      41,
-      40,
-      1,
-      0,
-      0,
-      0,
-      42,
-      45,
-      1,
-      0,
-      0,
-      0,
-      43,
-      41,
-      1,
-      0,
-      0,
-      0,
-      43,
-      44,
-      1,
-      0,
-      0,
-      0,
-      44,
-      50,
-      1,
-      0,
-      0,
-      0,
-      45,
-      43,
-      1,
-      0,
-      0,
-      0,
-      46,
-      49,
-      3,
-      8,
-      4,
-      0,
-      47,
-      49,
-      3,
-      16,
-      8,
-      0,
-      48,
-      46,
-      1,
-      0,
-      0,
-      0,
-      48,
-      47,
-      1,
-      0,
-      0,
-      0,
-      49,
-      52,
-      1,
-      0,
-      0,
-      0,
-      50,
-      48,
-      1,
-      0,
-      0,
-      0,
-      50,
-      51,
-      1,
-      0,
-      0,
-      0,
-      51,
-      3,
-      1,
-      0,
-      0,
-      0,
-      52,
-      50,
-      1,
-      0,
-      0,
-      0,
-      53,
-      54,
-      5,
-      11,
-      0,
-      0,
-      54,
-      56,
-      5,
-      35,
-      0,
-      0,
-      55,
-      57,
-      3,
-      32,
-      16,
-      0,
-      56,
-      55,
-      1,
-      0,
-      0,
-      0,
-      56,
-      57,
-      1,
-      0,
-      0,
-      0,
-      57,
-      58,
-      1,
-      0,
-      0,
-      0,
-      58,
-      59,
-      5,
-      24,
-      0,
-      0,
-      59,
-      5,
-      1,
-      0,
-      0,
-      0,
-      60,
-      61,
-      5,
-      12,
-      0,
-      0,
-      61,
-      63,
-      5,
-      35,
-      0,
-      0,
-      62,
-      64,
-      3,
-      32,
-      16,
-      0,
-      63,
-      62,
-      1,
-      0,
-      0,
-      0,
-      63,
-      64,
-      1,
-      0,
-      0,
-      0,
-      64,
-      65,
-      1,
-      0,
-      0,
-      0,
-      65,
-      66,
-      5,
-      24,
-      0,
-      0,
-      66,
-      7,
-      1,
-      0,
-      0,
-      0,
-      67,
-      68,
-      5,
-      13,
-      0,
-      0,
-      68,
-      70,
-      3,
-      30,
-      15,
-      0,
-      69,
-      71,
-      3,
-      10,
-      5,
-      0,
-      70,
-      69,
-      1,
-      0,
-      0,
-      0,
-      70,
-      71,
-      1,
-      0,
-      0,
-      0,
-      71,
-      75,
-      1,
-      0,
-      0,
-      0,
-      72,
-      74,
-      3,
-      12,
-      6,
-      0,
-      73,
-      72,
-      1,
-      0,
-      0,
-      0,
-      74,
-      77,
-      1,
-      0,
-      0,
-      0,
-      75,
-      73,
-      1,
-      0,
-      0,
-      0,
-      75,
-      76,
-      1,
-      0,
-      0,
-      0,
-      76,
-      79,
-      1,
-      0,
-      0,
-      0,
-      77,
-      75,
-      1,
-      0,
-      0,
-      0,
-      78,
-      80,
+      87,
+      89,
       3,
       14,
       7,
       0,
-      79,
-      78,
+      88,
+      87,
       1,
       0,
       0,
       0,
-      79,
-      80,
+      88,
+      89,
       1,
       0,
       0,
       0,
-      80,
-      81,
+      89,
+      90,
       1,
       0,
       0,
       0,
-      81,
-      82,
+      90,
+      91,
       5,
-      1,
+      2,
       0,
       0,
-      82,
+      91,
       9,
       1,
       0,
       0,
       0,
-      83,
-      84,
+      92,
+      93,
       5,
-      2,
-      0,
-      0,
-      84,
-      85,
       3,
-      32,
-      16,
       0,
-      85,
+      0,
+      93,
+      94,
+      3,
+      38,
+      19,
+      0,
+      94,
       11,
       1,
       0,
       0,
       0,
-      86,
-      87,
+      95,
+      96,
       5,
       14,
       0,
       0,
-      87,
-      93,
+      96,
+      102,
       5,
       19,
       0,
       0,
-      88,
-      89,
-      3,
-      26,
-      13,
-      0,
-      89,
-      90,
-      5,
-      23,
-      0,
-      0,
-      90,
-      92,
-      1,
-      0,
-      0,
-      0,
-      91,
-      88,
-      1,
-      0,
-      0,
-      0,
-      92,
-      95,
-      1,
-      0,
-      0,
-      0,
-      93,
-      91,
-      1,
-      0,
-      0,
-      0,
-      93,
-      94,
-      1,
-      0,
-      0,
-      0,
-      94,
-      97,
-      1,
-      0,
-      0,
-      0,
-      95,
-      93,
-      1,
-      0,
-      0,
-      0,
-      96,
-      98,
-      3,
-      26,
-      13,
-      0,
-      97,
-      96,
-      1,
-      0,
-      0,
-      0,
       97,
       98,
-      1,
-      0,
-      0,
+      3,
+      32,
+      16,
       0,
       98,
       99,
+      5,
+      25,
+      0,
+      0,
+      99,
+      101,
       1,
       0,
       0,
       0,
-      99,
       100,
-      5,
-      20,
-      0,
-      0,
-      100,
-      13,
+      97,
       1,
       0,
       0,
       0,
       101,
+      104,
+      1,
+      0,
+      0,
+      0,
       102,
-      5,
-      3,
+      100,
+      1,
+      0,
       0,
       0,
       102,
       103,
-      3,
-      32,
-      16,
+      1,
+      0,
+      0,
       0,
       103,
-      15,
+      106,
       1,
       0,
       0,
       0,
       104,
-      107,
-      3,
-      30,
-      15,
+      102,
+      1,
+      0,
+      0,
       0,
       105,
+      107,
+      3,
+      32,
+      16,
+      0,
       106,
-      7,
+      105,
+      1,
       0,
       0,
       0,
       106,
+      107,
+      1,
+      0,
+      0,
+      0,
+      107,
       108,
+      1,
+      0,
+      0,
+      0,
+      108,
+      109,
+      5,
+      20,
+      0,
+      0,
+      109,
+      13,
+      1,
+      0,
+      0,
+      0,
+      110,
+      111,
+      5,
+      4,
+      0,
+      0,
+      111,
+      112,
+      3,
+      38,
+      19,
+      0,
+      112,
+      15,
+      1,
+      0,
+      0,
+      0,
+      113,
+      115,
+      3,
+      36,
+      18,
+      0,
+      114,
+      116,
       3,
       18,
       9,
       0,
-      107,
-      105,
+      115,
+      114,
       1,
       0,
       0,
       0,
-      107,
-      108,
+      115,
+      116,
       1,
       0,
       0,
       0,
-      108,
-      109,
+      116,
+      119,
       1,
       0,
       0,
       0,
-      109,
-      110,
+      117,
+      118,
+      7,
+      0,
+      0,
+      0,
+      118,
+      120,
+      3,
+      22,
+      11,
+      0,
+      119,
+      117,
+      1,
+      0,
+      0,
+      0,
+      119,
+      120,
+      1,
+      0,
+      0,
+      0,
+      120,
+      121,
+      1,
+      0,
+      0,
+      0,
+      121,
+      122,
       5,
-      1,
+      2,
       0,
       0,
-      110,
+      122,
       17,
       1,
       0,
       0,
       0,
-      111,
-      116,
-      3,
-      24,
-      12,
-      0,
-      112,
-      113,
-      5,
-      23,
-      0,
-      0,
-      113,
-      115,
-      3,
-      24,
-      12,
-      0,
-      114,
-      112,
-      1,
-      0,
-      0,
-      0,
-      115,
-      118,
-      1,
-      0,
-      0,
-      0,
-      116,
-      114,
-      1,
-      0,
-      0,
-      0,
-      116,
-      117,
-      1,
-      0,
-      0,
-      0,
-      117,
-      120,
-      1,
-      0,
-      0,
-      0,
-      118,
-      116,
-      1,
-      0,
-      0,
-      0,
-      119,
-      121,
-      5,
-      23,
-      0,
-      0,
-      120,
-      119,
-      1,
-      0,
-      0,
-      0,
-      120,
-      121,
-      1,
-      0,
-      0,
-      0,
-      121,
-      126,
-      1,
-      0,
-      0,
-      0,
-      122,
       123,
+      124,
       5,
-      31,
+      34,
       0,
-      0,
-      123,
-      125,
-      3,
-      20,
-      10,
       0,
       124,
-      122,
-      1,
-      0,
+      125,
+      5,
+      19,
       0,
       0,
       125,
       128,
-      1,
-      0,
-      0,
-      0,
-      126,
-      124,
-      1,
-      0,
-      0,
+      3,
+      20,
+      10,
       0,
       126,
       127,
+      5,
+      25,
+      0,
+      0,
+      127,
+      129,
+      3,
+      20,
+      10,
+      0,
+      128,
+      126,
       1,
       0,
       0,
       0,
-      127,
+      128,
+      129,
+      1,
+      0,
+      0,
+      0,
+      129,
+      130,
+      1,
+      0,
+      0,
+      0,
+      130,
+      131,
+      5,
+      20,
+      0,
+      0,
+      131,
       19,
       1,
       0,
       0,
       0,
-      128,
-      126,
-      1,
-      0,
-      0,
-      0,
-      129,
-      130,
-      5,
-      16,
-      0,
-      0,
-      130,
-      140,
-      3,
-      26,
-      13,
-      0,
-      131,
       132,
-      5,
-      23,
-      0,
-      0,
-      132,
-      137,
-      3,
-      22,
-      11,
-      0,
       133,
-      134,
-      5,
-      23,
-      0,
-      0,
-      134,
-      136,
-      3,
-      22,
-      11,
-      0,
-      135,
-      133,
-      1,
-      0,
-      0,
-      0,
-      136,
-      139,
-      1,
-      0,
-      0,
-      0,
-      137,
-      135,
-      1,
-      0,
-      0,
-      0,
-      137,
-      138,
-      1,
-      0,
-      0,
-      0,
-      138,
-      141,
-      1,
-      0,
-      0,
-      0,
-      139,
-      137,
-      1,
-      0,
-      0,
-      0,
-      140,
-      131,
-      1,
-      0,
-      0,
-      0,
-      140,
-      141,
-      1,
-      0,
-      0,
-      0,
-      141,
-      151,
-      1,
-      0,
-      0,
-      0,
-      142,
-      147,
-      3,
-      22,
-      11,
-      0,
-      143,
-      144,
-      5,
-      23,
-      0,
-      0,
-      144,
-      146,
-      3,
-      22,
-      11,
-      0,
-      145,
-      143,
-      1,
-      0,
-      0,
-      0,
-      146,
-      149,
-      1,
-      0,
-      0,
-      0,
-      147,
-      145,
-      1,
-      0,
-      0,
-      0,
-      147,
-      148,
-      1,
-      0,
-      0,
-      0,
-      148,
-      151,
-      1,
-      0,
-      0,
-      0,
-      149,
-      147,
-      1,
-      0,
-      0,
-      0,
-      150,
-      129,
-      1,
-      0,
-      0,
-      0,
-      150,
-      142,
-      1,
-      0,
-      0,
-      0,
-      151,
-      21,
-      1,
-      0,
-      0,
-      0,
-      152,
-      153,
-      5,
-      15,
-      0,
-      0,
-      153,
-      154,
-      5,
-      34,
-      0,
-      0,
-      154,
-      155,
-      5,
-      21,
-      0,
-      0,
-      155,
-      156,
-      3,
-      26,
-      13,
-      0,
-      156,
-      23,
-      1,
-      0,
-      0,
-      0,
-      157,
-      160,
-      3,
-      26,
-      13,
-      0,
-      158,
-      159,
       7,
       1,
       0,
       0,
-      159,
-      161,
+      133,
+      21,
+      1,
+      0,
+      0,
+      0,
+      134,
+      139,
       3,
-      26,
-      13,
+      28,
+      14,
       0,
-      160,
-      158,
-      1,
-      0,
-      0,
-      0,
-      160,
-      161,
-      1,
-      0,
-      0,
-      0,
-      161,
-      165,
-      1,
-      0,
-      0,
-      0,
-      162,
-      163,
+      135,
+      136,
       5,
-      24,
-      0,
-      0,
-      163,
-      165,
-      3,
-      26,
-      13,
-      0,
-      164,
-      157,
-      1,
-      0,
-      0,
-      0,
-      164,
-      162,
-      1,
-      0,
-      0,
-      0,
-      165,
       25,
+      0,
+      0,
+      136,
+      138,
+      3,
+      28,
+      14,
+      0,
+      137,
+      135,
       1,
       0,
       0,
       0,
-      166,
-      253,
+      138,
+      141,
+      1,
+      0,
+      0,
+      0,
+      139,
+      137,
+      1,
+      0,
+      0,
+      0,
+      139,
+      140,
+      1,
+      0,
+      0,
+      0,
+      140,
+      143,
+      1,
+      0,
+      0,
+      0,
+      141,
+      139,
+      1,
+      0,
+      0,
+      0,
+      142,
+      144,
       5,
-      34,
+      25,
       0,
       0,
-      167,
-      253,
-      5,
-      38,
+      143,
+      142,
+      1,
       0,
       0,
-      168,
-      253,
-      5,
-      32,
+      0,
+      143,
+      144,
+      1,
       0,
       0,
-      169,
-      253,
+      0,
+      144,
+      149,
+      1,
+      0,
+      0,
+      0,
+      145,
+      146,
       5,
       33,
       0,
       0,
-      170,
-      253,
-      5,
-      39,
-      0,
-      0,
-      171,
-      253,
-      5,
-      40,
-      0,
-      0,
-      172,
-      178,
-      5,
-      19,
-      0,
-      0,
-      173,
-      174,
+      146,
+      148,
       3,
-      26,
-      13,
+      24,
+      12,
       0,
-      174,
-      175,
-      5,
+      147,
+      145,
+      1,
+      0,
+      0,
+      0,
+      148,
+      151,
+      1,
+      0,
+      0,
+      0,
+      149,
+      147,
+      1,
+      0,
+      0,
+      0,
+      149,
+      150,
+      1,
+      0,
+      0,
+      0,
+      150,
       23,
-      0,
-      0,
-      175,
-      177,
       1,
       0,
       0,
       0,
-      176,
-      173,
+      151,
+      149,
       1,
       0,
       0,
       0,
-      177,
-      180,
-      1,
+      152,
+      153,
+      5,
+      16,
       0,
       0,
-      0,
-      178,
-      176,
-      1,
-      0,
-      0,
-      0,
-      178,
-      179,
-      1,
-      0,
-      0,
-      0,
-      179,
-      182,
-      1,
-      0,
-      0,
-      0,
-      180,
-      178,
-      1,
-      0,
-      0,
-      0,
-      181,
-      183,
+      153,
+      163,
       3,
-      26,
-      13,
-      0,
-      182,
-      181,
-      1,
-      0,
-      0,
-      0,
-      182,
-      183,
-      1,
-      0,
-      0,
-      0,
-      183,
-      184,
-      1,
-      0,
-      0,
-      0,
-      184,
-      253,
-      5,
-      20,
-      0,
-      0,
-      185,
-      193,
-      5,
-      19,
-      0,
-      0,
-      186,
-      187,
-      3,
-      26,
-      13,
-      0,
-      187,
-      188,
-      5,
-      4,
-      0,
-      0,
-      188,
-      189,
-      3,
-      26,
-      13,
-      0,
-      189,
-      190,
-      5,
-      23,
-      0,
-      0,
-      190,
-      192,
-      1,
-      0,
-      0,
-      0,
-      191,
-      186,
-      1,
-      0,
-      0,
-      0,
-      192,
-      195,
-      1,
-      0,
-      0,
-      0,
-      193,
-      191,
-      1,
-      0,
-      0,
-      0,
-      193,
-      194,
-      1,
-      0,
-      0,
-      0,
-      194,
-      200,
-      1,
-      0,
-      0,
-      0,
-      195,
-      193,
-      1,
-      0,
-      0,
-      0,
-      196,
-      197,
-      3,
-      26,
-      13,
-      0,
-      197,
-      198,
-      5,
-      4,
-      0,
-      0,
-      198,
-      199,
-      3,
-      26,
-      13,
-      0,
-      199,
-      201,
-      1,
-      0,
-      0,
-      0,
-      200,
-      196,
-      1,
-      0,
-      0,
-      0,
-      200,
-      201,
-      1,
-      0,
-      0,
-      0,
-      201,
-      202,
-      1,
-      0,
-      0,
-      0,
-      202,
-      253,
-      5,
-      20,
-      0,
-      0,
-      203,
-      211,
-      5,
-      5,
-      0,
-      0,
-      204,
-      205,
-      3,
-      26,
-      13,
-      0,
-      205,
-      206,
-      5,
-      4,
-      0,
-      0,
-      206,
-      207,
-      3,
-      26,
-      13,
-      0,
-      207,
-      208,
-      5,
-      23,
-      0,
-      0,
-      208,
-      210,
-      1,
-      0,
-      0,
-      0,
-      209,
-      204,
-      1,
-      0,
-      0,
-      0,
-      210,
-      213,
-      1,
-      0,
-      0,
-      0,
-      211,
-      209,
-      1,
-      0,
-      0,
-      0,
-      211,
-      212,
-      1,
-      0,
-      0,
-      0,
-      212,
-      218,
-      1,
-      0,
-      0,
-      0,
-      213,
-      211,
-      1,
-      0,
-      0,
-      0,
-      214,
-      215,
-      3,
-      26,
-      13,
-      0,
-      215,
-      216,
-      5,
-      4,
-      0,
-      0,
-      216,
-      217,
-      3,
-      26,
-      13,
-      0,
-      217,
-      219,
-      1,
-      0,
-      0,
-      0,
-      218,
-      214,
-      1,
-      0,
-      0,
-      0,
-      218,
-      219,
-      1,
-      0,
-      0,
-      0,
-      219,
-      220,
-      1,
-      0,
-      0,
-      0,
-      220,
-      253,
-      5,
-      6,
-      0,
-      0,
-      221,
-      222,
-      5,
-      37,
-      0,
-      0,
-      222,
-      228,
+      32,
+      16,
+      0,
+      154,
+      155,
       5,
       25,
       0,
       0,
-      223,
-      224,
-      3,
-      28,
-      14,
-      0,
-      224,
-      225,
-      5,
-      23,
-      0,
-      0,
-      225,
-      227,
-      1,
-      0,
-      0,
-      0,
-      226,
-      223,
-      1,
-      0,
-      0,
-      0,
-      227,
-      230,
-      1,
-      0,
-      0,
-      0,
-      228,
-      226,
-      1,
-      0,
-      0,
-      0,
-      228,
-      229,
-      1,
-      0,
-      0,
-      0,
-      229,
-      235,
-      1,
-      0,
-      0,
-      0,
-      230,
-      228,
-      1,
-      0,
-      0,
-      0,
-      231,
-      233,
-      3,
-      28,
-      14,
-      0,
-      232,
-      234,
-      5,
-      23,
-      0,
-      0,
-      233,
-      232,
-      1,
-      0,
-      0,
-      0,
-      233,
-      234,
-      1,
-      0,
-      0,
-      0,
-      234,
-      236,
-      1,
-      0,
-      0,
-      0,
-      235,
-      231,
-      1,
-      0,
-      0,
-      0,
-      235,
-      236,
-      1,
-      0,
-      0,
-      0,
-      236,
-      237,
-      1,
-      0,
-      0,
-      0,
-      237,
-      253,
-      5,
-      27,
-      0,
-      0,
-      238,
-      239,
-      5,
-      35,
-      0,
-      0,
-      239,
-      245,
-      5,
-      17,
-      0,
-      0,
-      240,
-      241,
+      155,
+      160,
       3,
       26,
       13,
       0,
-      241,
-      242,
+      156,
+      157,
       5,
-      23,
+      25,
       0,
       0,
-      242,
-      244,
-      1,
-      0,
-      0,
-      0,
-      243,
-      240,
-      1,
-      0,
-      0,
-      0,
-      244,
-      247,
-      1,
-      0,
-      0,
-      0,
-      245,
-      243,
-      1,
-      0,
-      0,
-      0,
-      245,
-      246,
-      1,
-      0,
-      0,
-      0,
-      246,
-      249,
-      1,
-      0,
-      0,
-      0,
-      247,
-      245,
-      1,
-      0,
-      0,
-      0,
-      248,
-      250,
+      157,
+      159,
       3,
       26,
       13,
       0,
-      249,
-      248,
+      158,
+      156,
       1,
       0,
       0,
       0,
-      249,
-      250,
+      159,
+      162,
       1,
       0,
       0,
       0,
-      250,
-      251,
+      160,
+      158,
       1,
       0,
       0,
       0,
-      251,
-      253,
+      160,
+      161,
+      1,
+      0,
+      0,
+      0,
+      161,
+      164,
+      1,
+      0,
+      0,
+      0,
+      162,
+      160,
+      1,
+      0,
+      0,
+      0,
+      163,
+      154,
+      1,
+      0,
+      0,
+      0,
+      163,
+      164,
+      1,
+      0,
+      0,
+      0,
+      164,
+      174,
+      1,
+      0,
+      0,
+      0,
+      165,
+      170,
+      3,
+      26,
+      13,
+      0,
+      166,
+      167,
       5,
-      18,
+      25,
       0,
       0,
-      252,
+      167,
+      169,
+      3,
+      26,
+      13,
+      0,
+      168,
       166,
       1,
       0,
       0,
       0,
-      252,
-      167,
-      1,
-      0,
-      0,
-      0,
-      252,
-      168,
-      1,
-      0,
-      0,
-      0,
-      252,
       169,
-      1,
-      0,
-      0,
-      0,
-      252,
-      170,
-      1,
-      0,
-      0,
-      0,
-      252,
-      171,
-      1,
-      0,
-      0,
-      0,
-      252,
       172,
       1,
       0,
       0,
       0,
-      252,
-      185,
+      170,
+      168,
       1,
       0,
       0,
       0,
-      252,
-      203,
+      170,
+      171,
       1,
       0,
       0,
       0,
-      252,
-      221,
+      171,
+      174,
       1,
       0,
       0,
       0,
-      252,
-      238,
+      172,
+      170,
       1,
       0,
       0,
       0,
-      253,
+      173,
+      152,
+      1,
+      0,
+      0,
+      0,
+      173,
+      165,
+      1,
+      0,
+      0,
+      0,
+      174,
+      25,
+      1,
+      0,
+      0,
+      0,
+      175,
+      176,
+      5,
+      15,
+      0,
+      0,
+      176,
+      177,
+      5,
+      43,
+      0,
+      0,
+      177,
+      178,
+      5,
+      23,
+      0,
+      0,
+      178,
+      179,
+      3,
+      32,
+      16,
+      0,
+      179,
       27,
       1,
       0,
       0,
       0,
-      254,
-      257,
+      180,
+      182,
       3,
-      26,
-      13,
+      30,
+      15,
       0,
-      255,
-      256,
-      5,
-      4,
+      181,
+      180,
+      1,
       0,
       0,
-      256,
-      258,
+      0,
+      181,
+      182,
+      1,
+      0,
+      0,
+      0,
+      182,
+      183,
+      1,
+      0,
+      0,
+      0,
+      183,
+      185,
       3,
-      26,
-      13,
+      32,
+      16,
       0,
-      257,
-      255,
+      184,
+      186,
+      3,
+      18,
+      9,
+      0,
+      185,
+      184,
       1,
       0,
       0,
       0,
-      257,
-      258,
+      185,
+      186,
       1,
       0,
       0,
       0,
-      258,
-      265,
+      186,
+      189,
       1,
       0,
       0,
       0,
-      259,
-      260,
-      5,
+      187,
+      188,
       7,
+      2,
       0,
       0,
-      260,
-      261,
+      188,
+      190,
       3,
-      26,
-      13,
+      32,
+      16,
       0,
-      261,
-      262,
+      189,
+      187,
+      1,
+      0,
+      0,
+      0,
+      189,
+      190,
+      1,
+      0,
+      0,
+      0,
+      190,
+      194,
+      1,
+      0,
+      0,
+      0,
+      191,
+      192,
       5,
-      4,
-      0,
-      0,
-      262,
-      263,
-      3,
       26,
-      13,
       0,
-      263,
-      265,
+      0,
+      192,
+      194,
+      3,
+      32,
+      16,
+      0,
+      193,
+      181,
       1,
       0,
       0,
       0,
-      264,
-      254,
+      193,
+      191,
       1,
       0,
       0,
       0,
-      264,
-      259,
-      1,
-      0,
-      0,
-      0,
-      265,
+      194,
       29,
       1,
       0,
       0,
       0,
-      266,
-      267,
-      3,
-      26,
-      13,
+      195,
+      196,
+      5,
+      35,
       0,
-      267,
+      0,
+      196,
+      197,
+      5,
+      19,
+      0,
+      0,
+      197,
+      198,
+      3,
+      20,
+      10,
+      0,
+      198,
+      199,
+      5,
+      25,
+      0,
+      0,
+      199,
+      200,
+      3,
+      20,
+      10,
+      0,
+      200,
+      201,
+      5,
+      20,
+      0,
+      0,
+      201,
+      224,
+      1,
+      0,
+      0,
+      0,
+      202,
+      203,
+      5,
+      37,
+      0,
+      0,
+      203,
+      204,
+      5,
+      19,
+      0,
+      0,
+      204,
+      205,
+      3,
+      20,
+      10,
+      0,
+      205,
+      206,
+      5,
+      25,
+      0,
+      0,
+      206,
+      207,
+      3,
+      20,
+      10,
+      0,
+      207,
+      208,
+      5,
+      20,
+      0,
+      0,
+      208,
+      224,
+      1,
+      0,
+      0,
+      0,
+      209,
+      210,
+      5,
+      36,
+      0,
+      0,
+      210,
+      211,
+      5,
+      19,
+      0,
+      0,
+      211,
+      212,
+      3,
+      20,
+      10,
+      0,
+      212,
+      213,
+      5,
+      25,
+      0,
+      0,
+      213,
+      214,
+      3,
+      20,
+      10,
+      0,
+      214,
+      215,
+      5,
+      20,
+      0,
+      0,
+      215,
+      224,
+      1,
+      0,
+      0,
+      0,
+      216,
+      217,
+      5,
+      38,
+      0,
+      0,
+      217,
+      218,
+      5,
+      19,
+      0,
+      0,
+      218,
+      219,
+      3,
+      20,
+      10,
+      0,
+      219,
+      220,
+      5,
+      25,
+      0,
+      0,
+      220,
+      221,
+      3,
+      20,
+      10,
+      0,
+      221,
+      222,
+      5,
+      20,
+      0,
+      0,
+      222,
+      224,
+      1,
+      0,
+      0,
+      0,
+      223,
+      195,
+      1,
+      0,
+      0,
+      0,
+      223,
+      202,
+      1,
+      0,
+      0,
+      0,
+      223,
+      209,
+      1,
+      0,
+      0,
+      0,
+      223,
+      216,
+      1,
+      0,
+      0,
+      0,
+      224,
       31,
       1,
       0,
       0,
       0,
-      268,
-      274,
+      225,
+      312,
+      5,
+      43,
+      0,
+      0,
+      226,
+      312,
+      5,
+      47,
+      0,
+      0,
+      227,
+      312,
+      5,
+      41,
+      0,
+      0,
+      228,
+      312,
+      5,
+      42,
+      0,
+      0,
+      229,
+      312,
+      5,
+      48,
+      0,
+      0,
+      230,
+      312,
+      5,
+      49,
+      0,
+      0,
+      231,
+      237,
       5,
       19,
       0,
       0,
-      269,
-      270,
+      232,
+      233,
       3,
-      30,
-      15,
+      32,
+      16,
       0,
-      270,
-      271,
+      233,
+      234,
       5,
-      23,
+      25,
       0,
       0,
-      271,
-      273,
+      234,
+      236,
       1,
       0,
       0,
       0,
-      272,
-      269,
+      235,
+      232,
       1,
       0,
       0,
       0,
-      273,
-      276,
+      236,
+      239,
       1,
       0,
       0,
       0,
-      274,
-      272,
+      237,
+      235,
       1,
       0,
       0,
       0,
-      274,
-      275,
+      237,
+      238,
       1,
       0,
       0,
       0,
-      275,
-      278,
+      238,
+      241,
       1,
       0,
       0,
       0,
-      276,
-      274,
+      239,
+      237,
       1,
       0,
       0,
       0,
-      277,
-      279,
+      240,
+      242,
       3,
-      30,
-      15,
+      32,
+      16,
       0,
-      278,
-      277,
+      241,
+      240,
       1,
       0,
       0,
       0,
-      278,
-      279,
+      241,
+      242,
       1,
       0,
       0,
       0,
-      279,
-      280,
+      242,
+      243,
       1,
       0,
       0,
       0,
-      280,
-      281,
+      243,
+      312,
       5,
       20,
       0,
       0,
+      244,
+      252,
+      5,
+      19,
+      0,
+      0,
+      245,
+      246,
+      3,
+      32,
+      16,
+      0,
+      246,
+      247,
+      5,
+      6,
+      0,
+      0,
+      247,
+      248,
+      3,
+      32,
+      16,
+      0,
+      248,
+      249,
+      5,
+      25,
+      0,
+      0,
+      249,
+      251,
+      1,
+      0,
+      0,
+      0,
+      250,
+      245,
+      1,
+      0,
+      0,
+      0,
+      251,
+      254,
+      1,
+      0,
+      0,
+      0,
+      252,
+      250,
+      1,
+      0,
+      0,
+      0,
+      252,
+      253,
+      1,
+      0,
+      0,
+      0,
+      253,
+      259,
+      1,
+      0,
+      0,
+      0,
+      254,
+      252,
+      1,
+      0,
+      0,
+      0,
+      255,
+      256,
+      3,
+      32,
+      16,
+      0,
+      256,
+      257,
+      5,
+      6,
+      0,
+      0,
+      257,
+      258,
+      3,
+      32,
+      16,
+      0,
+      258,
+      260,
+      1,
+      0,
+      0,
+      0,
+      259,
+      255,
+      1,
+      0,
+      0,
+      0,
+      259,
+      260,
+      1,
+      0,
+      0,
+      0,
+      260,
+      261,
+      1,
+      0,
+      0,
+      0,
+      261,
+      312,
+      5,
+      20,
+      0,
+      0,
+      262,
+      270,
+      5,
+      21,
+      0,
+      0,
+      263,
+      264,
+      3,
+      32,
+      16,
+      0,
+      264,
+      265,
+      5,
+      6,
+      0,
+      0,
+      265,
+      266,
+      3,
+      32,
+      16,
+      0,
+      266,
+      267,
+      5,
+      25,
+      0,
+      0,
+      267,
+      269,
+      1,
+      0,
+      0,
+      0,
+      268,
+      263,
+      1,
+      0,
+      0,
+      0,
+      269,
+      272,
+      1,
+      0,
+      0,
+      0,
+      270,
+      268,
+      1,
+      0,
+      0,
+      0,
+      270,
+      271,
+      1,
+      0,
+      0,
+      0,
+      271,
+      277,
+      1,
+      0,
+      0,
+      0,
+      272,
+      270,
+      1,
+      0,
+      0,
+      0,
+      273,
+      274,
+      3,
+      32,
+      16,
+      0,
+      274,
+      275,
+      5,
+      6,
+      0,
+      0,
+      275,
+      276,
+      3,
+      32,
+      16,
+      0,
+      276,
+      278,
+      1,
+      0,
+      0,
+      0,
+      277,
+      273,
+      1,
+      0,
+      0,
+      0,
+      277,
+      278,
+      1,
+      0,
+      0,
+      0,
+      278,
+      279,
+      1,
+      0,
+      0,
+      0,
+      279,
+      312,
+      5,
+      22,
+      0,
+      0,
+      280,
       281,
+      5,
+      46,
+      0,
+      0,
+      281,
+      287,
+      5,
+      28,
+      0,
+      0,
+      282,
+      283,
+      3,
+      34,
+      17,
+      0,
+      283,
+      284,
+      5,
+      25,
+      0,
+      0,
+      284,
+      286,
+      1,
+      0,
+      0,
+      0,
+      285,
+      282,
+      1,
+      0,
+      0,
+      0,
+      286,
+      289,
+      1,
+      0,
+      0,
+      0,
+      287,
+      285,
+      1,
+      0,
+      0,
+      0,
+      287,
+      288,
+      1,
+      0,
+      0,
+      0,
+      288,
+      294,
+      1,
+      0,
+      0,
+      0,
+      289,
+      287,
+      1,
+      0,
+      0,
+      0,
+      290,
+      292,
+      3,
+      34,
+      17,
+      0,
+      291,
+      293,
+      5,
+      25,
+      0,
+      0,
+      292,
+      291,
+      1,
+      0,
+      0,
+      0,
+      292,
+      293,
+      1,
+      0,
+      0,
+      0,
+      293,
+      295,
+      1,
+      0,
+      0,
+      0,
+      294,
+      290,
+      1,
+      0,
+      0,
+      0,
+      294,
+      295,
+      1,
+      0,
+      0,
+      0,
+      295,
+      296,
+      1,
+      0,
+      0,
+      0,
+      296,
+      312,
+      5,
+      30,
+      0,
+      0,
+      297,
+      298,
+      5,
+      44,
+      0,
+      0,
+      298,
+      304,
+      5,
+      17,
+      0,
+      0,
+      299,
+      300,
+      3,
+      32,
+      16,
+      0,
+      300,
+      301,
+      5,
+      25,
+      0,
+      0,
+      301,
+      303,
+      1,
+      0,
+      0,
+      0,
+      302,
+      299,
+      1,
+      0,
+      0,
+      0,
+      303,
+      306,
+      1,
+      0,
+      0,
+      0,
+      304,
+      302,
+      1,
+      0,
+      0,
+      0,
+      304,
+      305,
+      1,
+      0,
+      0,
+      0,
+      305,
+      308,
+      1,
+      0,
+      0,
+      0,
+      306,
+      304,
+      1,
+      0,
+      0,
+      0,
+      307,
+      309,
+      3,
+      32,
+      16,
+      0,
+      308,
+      307,
+      1,
+      0,
+      0,
+      0,
+      308,
+      309,
+      1,
+      0,
+      0,
+      0,
+      309,
+      310,
+      1,
+      0,
+      0,
+      0,
+      310,
+      312,
+      5,
+      18,
+      0,
+      0,
+      311,
+      225,
+      1,
+      0,
+      0,
+      0,
+      311,
+      226,
+      1,
+      0,
+      0,
+      0,
+      311,
+      227,
+      1,
+      0,
+      0,
+      0,
+      311,
+      228,
+      1,
+      0,
+      0,
+      0,
+      311,
+      229,
+      1,
+      0,
+      0,
+      0,
+      311,
+      230,
+      1,
+      0,
+      0,
+      0,
+      311,
+      231,
+      1,
+      0,
+      0,
+      0,
+      311,
+      244,
+      1,
+      0,
+      0,
+      0,
+      311,
+      262,
+      1,
+      0,
+      0,
+      0,
+      311,
+      280,
+      1,
+      0,
+      0,
+      0,
+      311,
+      297,
+      1,
+      0,
+      0,
+      0,
+      312,
       33,
       1,
       0,
       0,
       0,
+      313,
+      316,
+      3,
+      32,
+      16,
+      0,
+      314,
+      315,
+      5,
+      6,
+      0,
+      0,
+      315,
+      317,
+      3,
+      32,
+      16,
+      0,
+      316,
+      314,
+      1,
+      0,
+      0,
+      0,
+      316,
+      317,
+      1,
+      0,
+      0,
+      0,
+      317,
+      324,
+      1,
+      0,
+      0,
+      0,
+      318,
+      319,
+      5,
+      7,
+      0,
+      0,
+      319,
+      320,
+      3,
+      32,
+      16,
+      0,
+      320,
+      321,
+      5,
+      6,
+      0,
+      0,
+      321,
+      322,
+      3,
+      32,
+      16,
+      0,
+      322,
+      324,
+      1,
+      0,
+      0,
+      0,
+      323,
+      313,
+      1,
+      0,
+      0,
+      0,
+      323,
+      318,
+      1,
+      0,
+      0,
+      0,
+      324,
+      35,
+      1,
+      0,
+      0,
+      0,
+      325,
+      326,
+      3,
+      32,
+      16,
+      0,
+      326,
       37,
-      38,
+      1,
+      0,
+      0,
+      0,
+      327,
+      333,
+      5,
+      19,
+      0,
+      0,
+      328,
+      329,
+      3,
+      36,
+      18,
+      0,
+      329,
+      330,
+      5,
+      25,
+      0,
+      0,
+      330,
+      332,
+      1,
+      0,
+      0,
+      0,
+      331,
+      328,
+      1,
+      0,
+      0,
+      0,
+      332,
+      335,
+      1,
+      0,
+      0,
+      0,
+      333,
+      331,
+      1,
+      0,
+      0,
+      0,
+      333,
+      334,
+      1,
+      0,
+      0,
+      0,
+      334,
+      337,
+      1,
+      0,
+      0,
+      0,
+      335,
+      333,
+      1,
+      0,
+      0,
+      0,
+      336,
+      338,
+      3,
+      36,
+      18,
+      0,
+      337,
+      336,
+      1,
+      0,
+      0,
+      0,
+      337,
+      338,
+      1,
+      0,
+      0,
+      0,
+      338,
+      339,
+      1,
+      0,
+      0,
+      0,
+      339,
+      340,
+      5,
+      20,
+      0,
+      0,
+      340,
+      39,
+      1,
+      0,
+      0,
+      0,
       43,
-      48,
-      50,
+      44,
+      49,
+      54,
       56,
-      63,
-      70,
-      75,
+      62,
+      69,
+      76,
       79,
-      93,
-      97,
-      107,
-      116,
-      120,
-      126,
-      137,
-      140,
-      147,
-      150,
+      84,
+      88,
+      102,
+      106,
+      115,
+      119,
+      128,
+      139,
+      143,
+      149,
       160,
-      164,
-      178,
-      182,
+      163,
+      170,
+      173,
+      181,
+      185,
+      189,
       193,
-      200,
-      211,
-      218,
-      228,
-      233,
-      235,
-      245,
-      249,
+      223,
+      237,
+      241,
       252,
-      257,
-      264,
-      274,
-      278
+      259,
+      270,
+      277,
+      287,
+      292,
+      294,
+      304,
+      308,
+      311,
+      316,
+      323,
+      333,
+      337
     ];
     MangleParser.vocabulary = new antlr.Vocabulary(MangleParser.literalNames, MangleParser.symbolicNames, []);
     MangleParser.decisionsToDFA = MangleParser._ATN.decisionToState.map((ds, index) => new antlr.DFA(ds, index));
@@ -34936,6 +36502,9 @@ var require_MangleParser = __commonJS({
       atom() {
         return this.getRuleContext(0, AtomContext);
       }
+      temporalAnnotation() {
+        return this.getRuleContext(0, TemporalAnnotationContext);
+      }
       clauseBody() {
         return this.getRuleContext(0, ClauseBodyContext);
       }
@@ -34967,6 +36536,85 @@ var require_MangleParser = __commonJS({
       }
     };
     exports2.ClauseContext = ClauseContext;
+    var TemporalAnnotationContext = class extends antlr.ParserRuleContext {
+      constructor(parent, invokingState) {
+        super(parent, invokingState);
+      }
+      AT() {
+        return this.getToken(MangleParser.AT, 0);
+      }
+      LBRACKET() {
+        return this.getToken(MangleParser.LBRACKET, 0);
+      }
+      temporalBound(i) {
+        if (i === void 0) {
+          return this.getRuleContexts(TemporalBoundContext);
+        }
+        return this.getRuleContext(i, TemporalBoundContext);
+      }
+      RBRACKET() {
+        return this.getToken(MangleParser.RBRACKET, 0);
+      }
+      COMMA() {
+        return this.getToken(MangleParser.COMMA, 0);
+      }
+      get ruleIndex() {
+        return MangleParser.RULE_temporalAnnotation;
+      }
+      enterRule(listener) {
+        if (listener.enterTemporalAnnotation) {
+          listener.enterTemporalAnnotation(this);
+        }
+      }
+      exitRule(listener) {
+        if (listener.exitTemporalAnnotation) {
+          listener.exitTemporalAnnotation(this);
+        }
+      }
+      accept(visitor) {
+        if (visitor.visitTemporalAnnotation) {
+          return visitor.visitTemporalAnnotation(this);
+        } else {
+          return visitor.visitChildren(this);
+        }
+      }
+    };
+    exports2.TemporalAnnotationContext = TemporalAnnotationContext;
+    var TemporalBoundContext = class extends antlr.ParserRuleContext {
+      constructor(parent, invokingState) {
+        super(parent, invokingState);
+      }
+      TIMESTAMP() {
+        return this.getToken(MangleParser.TIMESTAMP, 0);
+      }
+      DURATION() {
+        return this.getToken(MangleParser.DURATION, 0);
+      }
+      VARIABLE() {
+        return this.getToken(MangleParser.VARIABLE, 0);
+      }
+      get ruleIndex() {
+        return MangleParser.RULE_temporalBound;
+      }
+      enterRule(listener) {
+        if (listener.enterTemporalBound) {
+          listener.enterTemporalBound(this);
+        }
+      }
+      exitRule(listener) {
+        if (listener.exitTemporalBound) {
+          listener.exitTemporalBound(this);
+        }
+      }
+      accept(visitor) {
+        if (visitor.visitTemporalBound) {
+          return visitor.visitTemporalBound(this);
+        } else {
+          return visitor.visitChildren(this);
+        }
+      }
+    };
+    exports2.TemporalBoundContext = TemporalBoundContext;
     var ClauseBodyContext = class extends antlr.ParserRuleContext {
       constructor(parent, invokingState) {
         super(parent, invokingState);
@@ -35112,6 +36760,12 @@ var require_MangleParser = __commonJS({
         }
         return this.getRuleContext(i, TermContext);
       }
+      temporalOperator() {
+        return this.getRuleContext(0, TemporalOperatorContext);
+      }
+      temporalAnnotation() {
+        return this.getRuleContext(0, TemporalAnnotationContext);
+      }
       EQ() {
         return this.getToken(MangleParser.EQ, 0);
       }
@@ -35155,6 +36809,59 @@ var require_MangleParser = __commonJS({
       }
     };
     exports2.LiteralOrFmlContext = LiteralOrFmlContext;
+    var TemporalOperatorContext = class extends antlr.ParserRuleContext {
+      constructor(parent, invokingState) {
+        super(parent, invokingState);
+      }
+      DIAMONDMINUS() {
+        return this.getToken(MangleParser.DIAMONDMINUS, 0);
+      }
+      LBRACKET() {
+        return this.getToken(MangleParser.LBRACKET, 0);
+      }
+      temporalBound(i) {
+        if (i === void 0) {
+          return this.getRuleContexts(TemporalBoundContext);
+        }
+        return this.getRuleContext(i, TemporalBoundContext);
+      }
+      COMMA() {
+        return this.getToken(MangleParser.COMMA, 0);
+      }
+      RBRACKET() {
+        return this.getToken(MangleParser.RBRACKET, 0);
+      }
+      BOXMINUS() {
+        return this.getToken(MangleParser.BOXMINUS, 0);
+      }
+      DIAMONDPLUS() {
+        return this.getToken(MangleParser.DIAMONDPLUS, 0);
+      }
+      BOXPLUS() {
+        return this.getToken(MangleParser.BOXPLUS, 0);
+      }
+      get ruleIndex() {
+        return MangleParser.RULE_temporalOperator;
+      }
+      enterRule(listener) {
+        if (listener.enterTemporalOperator) {
+          listener.enterTemporalOperator(this);
+        }
+      }
+      exitRule(listener) {
+        if (listener.exitTemporalOperator) {
+          listener.exitTemporalOperator(this);
+        }
+      }
+      accept(visitor) {
+        if (visitor.visitTemporalOperator) {
+          return visitor.visitTemporalOperator(this);
+        } else {
+          return visitor.visitChildren(this);
+        }
+      }
+    };
+    exports2.TemporalOperatorContext = TemporalOperatorContext;
     var TermContext = class extends antlr.ParserRuleContext {
       constructor(parent, invokingState) {
         super(parent, invokingState);
@@ -35465,6 +37172,12 @@ var require_MangleParser = __commonJS({
       constructor(ctx) {
         super(ctx.parent, ctx.invokingState);
         super.copyFrom(ctx);
+      }
+      LBRACE() {
+        return this.getToken(MangleParser.LBRACE, 0);
+      }
+      RBRACE() {
+        return this.getToken(MangleParser.RBRACE, 0);
       }
       term(i) {
         if (i === void 0) {
@@ -35892,6 +37605,9 @@ var require_visitor = __commonJS({
       }
       visitPackageDecl(ctx) {
         const name = ctx.NAME().getText();
+        if (name !== name.toLowerCase()) {
+          this.addError(`package names have to be lower-case: ${name}`, ctx);
+        }
         const atomsCtx = ctx.atoms();
         const atoms = atomsCtx ? this.visitAtoms(atomsCtx) : null;
         return {
@@ -35916,7 +37632,22 @@ var require_visitor = __commonJS({
         const atomCtx = ctx.atom();
         const declaredAtom = this.visitAtom(atomCtx);
         const descrCtx = ctx.descrBlock();
-        const descr = descrCtx ? this.visitDescrBlock(descrCtx) : null;
+        let descr = descrCtx ? this.visitDescrBlock(descrCtx) : null;
+        const ctxText = ctx.getText();
+        if (ctxText.includes("temporal")) {
+          const children = ctx.children ?? [];
+          for (const child of children) {
+            if ("getText" in child && child.getText() === "temporal") {
+              const temporalAtom = (0, ast_1.createAtom)((0, ast_1.createPredicateSym)(ast_1.DESCRIPTORS.TEMPORAL, 0), [], getRangeFromContext(ctx));
+              if (descr) {
+                descr = [...descr, temporalAtom];
+              } else {
+                descr = [temporalAtom];
+              }
+              break;
+            }
+          }
+        }
         const boundsCtxs = ctx.boundsBlock();
         const bounds = boundsCtxs.length > 0 ? boundsCtxs.map((b) => this.visitBoundsBlock(b)) : null;
         const constraintsCtx = ctx.constraintsBlock();
@@ -35967,6 +37698,11 @@ var require_visitor = __commonJS({
       visitClause(ctx) {
         const atomCtx = ctx.atom();
         const head = this.visitAtom(atomCtx);
+        let headTime = null;
+        const tempAnnotCtx = ctx.temporalAnnotation();
+        if (tempAnnotCtx) {
+          headTime = this.visitTemporalAnnotation(tempAnnotCtx);
+        }
         const bodyCtx = ctx.clauseBody();
         let premises = null;
         let transform = null;
@@ -35980,7 +37716,7 @@ var require_visitor = __commonJS({
           head,
           premises,
           transform,
-          headTime: null,
+          headTime,
           range: getRangeFromContext(ctx)
         };
       }
@@ -36061,11 +37797,12 @@ var require_visitor = __commonJS({
           }
           const term = this.visitTerm(termCtx);
           if (term && term.type === "Atom") {
-            return {
+            const negAtom = {
               type: "NegAtom",
               atom: term,
               range: getRangeFromContext(ctx)
             };
+            return negAtom;
           }
           this.addError("Negation must be applied to an atom", ctx);
           return {
@@ -36074,6 +37811,16 @@ var require_visitor = __commonJS({
             range: getRangeFromContext(ctx)
           };
         }
+        let tempOp = null;
+        const tempOpCtx = ctx.temporalOperator();
+        if (tempOpCtx) {
+          tempOp = this.visitTemporalOperator(tempOpCtx);
+        }
+        let tempAnnot = null;
+        const tempAnnotCtx = ctx.temporalAnnotation();
+        if (tempAnnotCtx) {
+          tempAnnot = this.visitTemporalAnnotation(tempAnnotCtx);
+        }
         const termCtxs = ctx.term();
         if (termCtxs.length === 1) {
           const termCtx = termCtxs[0];
@@ -36081,7 +37828,17 @@ var require_visitor = __commonJS({
             this.addError("Expected term", ctx);
             return this.createErrorVariable(ctx);
           }
-          return this.visitTerm(termCtx);
+          const term = this.visitTerm(termCtx);
+          if (term && term.type === "Atom" && (tempOp !== null || tempAnnot !== null)) {
+            return {
+              type: "TemporalLiteral",
+              literal: term,
+              operator: tempOp,
+              interval: tempAnnot,
+              range: getRangeFromContext(ctx)
+            };
+          }
+          return term;
         }
         const leftCtx = termCtxs[0];
         const rightCtx = termCtxs[1];
@@ -36264,6 +38021,9 @@ var require_visitor = __commonJS({
             baseterms.push(term);
           }
         }
+        if (ctx.getText().startsWith("opt")) {
+          return [(0, ast_1.createApplyFn)((0, ast_1.createFunctionSym)("fn:opt", -1), baseterms, getRangeFromContext(ctx))];
+        }
         return baseterms;
       }
       visitAppl(ctx) {
@@ -36287,8 +38047,175 @@ var require_visitor = __commonJS({
           range
         };
       }
+      // ========================================================================
+      // Temporal Visitor Methods (upstream parse.go:786-896)
+      // ========================================================================
+      /**
+       * Visit a temporal annotation: @[bound] or @[bound, bound]
+       * Returns a TemporalInterval.
+       * Upstream: parse.go:786-812
+       */
+      visitTemporalAnnotation(ctx) {
+        const boundCtxs = ctx.temporalBound();
+        if (boundCtxs.length === 0) {
+          this.addError("temporal annotation requires at least one bound", ctx);
+          return {
+            start: { boundType: "negativeInfinity", range: getRangeFromContext(ctx) },
+            end: { boundType: "positiveInfinity", range: getRangeFromContext(ctx) },
+            range: getRangeFromContext(ctx)
+          };
+        }
+        let start = this.visitTemporalBound(boundCtxs[0]);
+        let end;
+        if (boundCtxs.length > 1) {
+          end = this.visitTemporalBound(boundCtxs[1]);
+        } else {
+          end = { ...start };
+        }
+        if (start.boundType === "variable" && start.variable?.symbol === "_") {
+          start = { boundType: "negativeInfinity", range: start.range };
+        }
+        if (end.boundType === "variable" && end.variable?.symbol === "_") {
+          end = { boundType: "positiveInfinity", range: end.range };
+        }
+        return {
+          start,
+          end,
+          range: getRangeFromContext(ctx)
+        };
+      }
+      /**
+       * Visit a temporal bound: TIMESTAMP | DURATION | VARIABLE | 'now'
+       * Returns a TemporalBound.
+       * Upstream: parse.go:816-849
+       */
+      visitTemporalBound(ctx) {
+        const range = getRangeFromContext(ctx);
+        const tsToken = ctx.TIMESTAMP();
+        if (tsToken) {
+          const text = tsToken.getText();
+          const nanos = parseTimestamp(text);
+          if (nanos === null) {
+            this.addError(`invalid timestamp "${text}"`, ctx);
+            return { boundType: "timestamp", value: 0, rawText: text, range };
+          }
+          return { boundType: "timestamp", value: nanos, rawText: text, range };
+        }
+        const durToken = ctx.DURATION();
+        if (durToken) {
+          const text = durToken.getText();
+          const nanos = parseDuration(text);
+          if (nanos === null) {
+            this.addError(`invalid duration "${text}"`, ctx);
+            return { boundType: "duration", value: 0, rawText: text, range };
+          }
+          return { boundType: "duration", value: nanos, rawText: text, range };
+        }
+        const varToken = ctx.VARIABLE();
+        if (varToken) {
+          const text = varToken.getText();
+          const variable = {
+            type: "Variable",
+            symbol: text,
+            range: getRangeFromToken(varToken.symbol)
+          };
+          return { boundType: "variable", variable, range };
+        }
+        if (ctx.getText() === "now") {
+          return { boundType: "now", range };
+        }
+        this.addError("unknown temporal bound", ctx);
+        return { boundType: "timestamp", value: 0, range };
+      }
+      /**
+       * Visit a temporal operator: <-[b,b] | [-[b,b] | <+[b,b] | [+[b,b]
+       * Returns a TemporalOperator.
+       * Upstream: parse.go:853-896
+       */
+      visitTemporalOperator(ctx) {
+        const boundCtxs = ctx.temporalBound();
+        if (boundCtxs.length !== 2) {
+          this.addError("temporal operator requires exactly two bounds", ctx);
+          return {
+            operatorType: "diamondMinus",
+            interval: {
+              start: { boundType: "duration", value: 0, range: getRangeFromContext(ctx) },
+              end: { boundType: "duration", value: 0, range: getRangeFromContext(ctx) },
+              range: getRangeFromContext(ctx)
+            },
+            range: getRangeFromContext(ctx)
+          };
+        }
+        const start = this.visitTemporalBound(boundCtxs[0]);
+        const end = this.visitTemporalBound(boundCtxs[1]);
+        const interval = {
+          start,
+          end,
+          range: getRangeFromContext(ctx)
+        };
+        let operatorType;
+        if (ctx.DIAMONDMINUS()) {
+          operatorType = "diamondMinus";
+        } else if (ctx.BOXMINUS()) {
+          operatorType = "boxMinus";
+        } else if (ctx.DIAMONDPLUS()) {
+          operatorType = "diamondPlus";
+        } else if (ctx.BOXPLUS()) {
+          operatorType = "boxPlus";
+        } else {
+          this.addError("unknown temporal operator", ctx);
+          operatorType = "diamondMinus";
+        }
+        return {
+          operatorType,
+          interval,
+          range: getRangeFromContext(ctx)
+        };
+      }
     };
     exports2.MangleASTVisitor = MangleASTVisitor;
+    function parseTimestamp(s) {
+      const date = new Date(s);
+      if (!isNaN(date.getTime())) {
+        return date.getTime() * 1e6;
+      }
+      const dateMatch = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+      if (dateMatch) {
+        const d = new Date(Date.UTC(parseInt(dateMatch[1], 10), parseInt(dateMatch[2], 10) - 1, parseInt(dateMatch[3], 10)));
+        if (!isNaN(d.getTime())) {
+          return d.getTime() * 1e6;
+        }
+      }
+      return null;
+    }
+    function parseDuration(s) {
+      if (!s)
+        return null;
+      const match = /^(-?\d+)(ms|d|h|m|s)$/.exec(s);
+      if (!match)
+        return null;
+      const value = parseInt(match[1], 10);
+      const unit = match[2];
+      const NS_PER_MS = 1e6;
+      const NS_PER_SEC = 1e9;
+      const NS_PER_MIN = 60 * NS_PER_SEC;
+      const NS_PER_HOUR = 60 * NS_PER_MIN;
+      const NS_PER_DAY = 24 * NS_PER_HOUR;
+      switch (unit) {
+        case "ms":
+          return value * NS_PER_MS;
+        case "s":
+          return value * NS_PER_SEC;
+        case "m":
+          return value * NS_PER_MIN;
+        case "h":
+          return value * NS_PER_HOUR;
+        case "d":
+          return value * NS_PER_DAY;
+        default:
+          return null;
+      }
+    }
   }
 });
 
@@ -37060,6 +38987,61 @@ var require_predicates = __commonJS({
         arity: 2,
         mode: ["input", "input"],
         doc: "Greater-than-or-equal relation on durations. Usage: :duration:ge(D1, D2) means D1 >= D2"
+      },
+      // Allen's interval algebra predicates (upstream symbols/symbols.go, builtin/temporal.go)
+      {
+        name: ":interval:before",
+        arity: 2,
+        mode: ["input", "input"],
+        doc: "Allen's interval relation: interval A ends before interval B starts. Usage: :interval:before(A, B)"
+      },
+      {
+        name: ":interval:after",
+        arity: 2,
+        mode: ["input", "input"],
+        doc: "Allen's interval relation: interval A starts after interval B ends. Usage: :interval:after(A, B)"
+      },
+      {
+        name: ":interval:meets",
+        arity: 2,
+        mode: ["input", "input"],
+        doc: "Allen's interval relation: interval A ends exactly when interval B starts. Usage: :interval:meets(A, B)"
+      },
+      {
+        name: ":interval:overlaps",
+        arity: 2,
+        mode: ["input", "input"],
+        doc: "Allen's interval relation: interval A overlaps with interval B. Usage: :interval:overlaps(A, B)"
+      },
+      {
+        name: ":interval:during",
+        arity: 2,
+        mode: ["input", "input"],
+        doc: "Allen's interval relation: interval A is contained within interval B. Usage: :interval:during(A, B)"
+      },
+      {
+        name: ":interval:contains",
+        arity: 2,
+        mode: ["input", "input"],
+        doc: "Allen's interval relation: interval A contains interval B. Usage: :interval:contains(A, B)"
+      },
+      {
+        name: ":interval:starts",
+        arity: 2,
+        mode: ["input", "input"],
+        doc: "Allen's interval relation: interval A starts at the same time as B. Usage: :interval:starts(A, B)"
+      },
+      {
+        name: ":interval:finishes",
+        arity: 2,
+        mode: ["input", "input"],
+        doc: "Allen's interval relation: interval A finishes at the same time as B. Usage: :interval:finishes(A, B)"
+      },
+      {
+        name: ":interval:equals",
+        arity: 2,
+        mode: ["input", "input"],
+        doc: "Allen's interval relation: interval A equals interval B. Usage: :interval:equals(A, B)"
       }
     ];
     exports2.BUILTIN_PREDICATE_MAP = new Map(exports2.BUILTIN_PREDICATES.map((p) => [p.name, p]));
@@ -37302,9 +39284,9 @@ var require_functions = __commonJS({
       },
       {
         name: "fn:time:format_civil",
-        arity: 2,
+        arity: 3,
         isReducer: false,
-        doc: "Formats a time instant as a civil datetime string. Usage: fn:time:format_civil(Time, /precision)"
+        doc: "Formats a time instant as a civil datetime string with timezone. Usage: fn:time:format_civil(Time, /precision, Timezone)"
       },
       {
         name: "fn:time:parse_rfc3339",
@@ -37314,9 +39296,9 @@ var require_functions = __commonJS({
       },
       {
         name: "fn:time:parse_civil",
-        arity: 1,
+        arity: 2,
         isReducer: false,
-        doc: "Parses a civil datetime string into a time instant. Usage: fn:time:parse_civil(String)"
+        doc: "Parses a civil datetime string with timezone into a time instant. Usage: fn:time:parse_civil(String, Timezone)"
       },
       {
         name: "fn:time:year",
@@ -37432,6 +39414,31 @@ var require_functions = __commonJS({
         arity: 1,
         isReducer: false,
         doc: "Creates a duration from seconds. Usage: fn:duration:from_seconds(Number)"
+      },
+      {
+        name: "fn:duration:parse",
+        arity: 1,
+        isReducer: false,
+        doc: 'Parses a duration string (e.g., "7d", "24h", "30m", "1s", "500ms") into a duration. Usage: fn:duration:parse(String)'
+      },
+      // Interval functions (upstream symbols/symbols.go)
+      {
+        name: "fn:interval:start",
+        arity: 1,
+        isReducer: false,
+        doc: "Returns the start time of an interval. Usage: fn:interval:start(Interval)"
+      },
+      {
+        name: "fn:interval:end",
+        arity: 1,
+        isReducer: false,
+        doc: "Returns the end time of an interval. Usage: fn:interval:end(Interval)"
+      },
+      {
+        name: "fn:interval:duration",
+        arity: 1,
+        isReducer: false,
+        doc: "Returns the duration of an interval (end - start). Usage: fn:interval:duration(Interval)"
       }
     ];
     exports2.REDUCER_FUNCTIONS = [
@@ -37538,6 +39545,376 @@ var require_functions = __commonJS({
   }
 });
 
+// server/analysis/unionfind.js
+var require_unionfind = __commonJS({
+  "server/analysis/unionfind.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.UnionFind = void 0;
+    exports2.initVars = initVars;
+    exports2.unifyTerms = unifyTerms;
+    exports2.unifyTermsExtend = unifyTermsExtend;
+    function termKey(t) {
+      switch (t.type) {
+        case "Variable":
+          return `var:${t.symbol}`;
+        case "Constant": {
+          const c = t;
+          if (c.constantType === "number")
+            return `num:${c.numValue}`;
+          if (c.constantType === "float64")
+            return `float:${c.floatValue}`;
+          if (c.constantType === "string")
+            return `str:${c.symbol}`;
+          if (c.constantType === "bytes")
+            return `bytes:${c.symbol}`;
+          return `name:${c.symbol}`;
+        }
+        case "ApplyFn":
+          return `fn:${JSON.stringify(t)}`;
+        default:
+          return `unknown:${JSON.stringify(t)}`;
+      }
+    }
+    function termsEqual(a, b) {
+      if (a.type !== b.type)
+        return false;
+      if (a.type === "Variable" && b.type === "Variable") {
+        return a.symbol === b.symbol;
+      }
+      if (a.type === "Constant" && b.type === "Constant") {
+        const ac = a;
+        const bc = b;
+        if (ac.constantType !== bc.constantType)
+          return false;
+        if (ac.constantType === "number")
+          return ac.numValue === bc.numValue;
+        if (ac.constantType === "float64")
+          return ac.floatValue === bc.floatValue;
+        return ac.symbol === bc.symbol;
+      }
+      return termKey(a) === termKey(b);
+    }
+    var UnionFind = class _UnionFind {
+      constructor() {
+        this.parent = /* @__PURE__ */ new Map();
+        this.terms = /* @__PURE__ */ new Map();
+      }
+      /**
+       * Create a new empty UnionFind.
+       */
+      static create() {
+        return new _UnionFind();
+      }
+      /**
+       * Create a copy of this UnionFind.
+       */
+      copy() {
+        const uf = new _UnionFind();
+        for (const [k, v] of this.parent) {
+          uf.parent.set(k, v);
+        }
+        for (const [k, v] of this.terms) {
+          uf.terms.set(k, v);
+        }
+        return uf;
+      }
+      /**
+       * Find the representative element from the set of s.
+       * Uses path compression (grandparent-pointer halving).
+       *
+       * Upstream Go equivalent: unionfind.UnionFind.find()
+       */
+      find(s) {
+        const sKey = termKey(s);
+        let child = s;
+        let childKey = sKey;
+        const parentTerm = this.parent.get(childKey);
+        if (parentTerm === void 0) {
+          return null;
+        }
+        let parent = parentTerm;
+        let parentKey = termKey(parent);
+        while (childKey !== parentKey) {
+          const grandparent = this.parent.get(parentKey);
+          if (grandparent === void 0)
+            break;
+          this.parent.set(childKey, grandparent);
+          child = grandparent;
+          childKey = termKey(child);
+          parent = this.parent.get(childKey);
+          parentKey = termKey(parent);
+        }
+        return parent;
+      }
+      /**
+       * Adds an edge, making one root point to the other.
+       * Constants are preferred as roots (biased union).
+       *
+       * Upstream Go equivalent: unionfind.UnionFind.union()
+       */
+      union(s, t) {
+        const sroot = this.find(s);
+        const troot = this.find(t);
+        if (!sroot || !troot)
+          return;
+        if (sroot.type === "Constant") {
+          this.parent.set(termKey(troot), sroot);
+        } else {
+          this.parent.set(termKey(sroot), troot);
+        }
+      }
+      /**
+       * Returns true if variable v can be unified with term t.
+       * Updates the union-find sets.
+       *
+       * Upstream Go equivalent: unionfind.UnionFind.unify()
+       */
+      unify(v, t) {
+        let vroot = this.find(v);
+        if (vroot === null) {
+          vroot = v;
+        }
+        let troot = this.find(t);
+        if (troot === null) {
+          troot = t;
+        }
+        if (termsEqual(vroot, troot)) {
+          return true;
+        }
+        const vconst = vroot.type === "Constant";
+        const tconst = troot.type === "Constant";
+        if (vconst && tconst) {
+          return false;
+        }
+        const vKey = termKey(v);
+        const tKey = termKey(t);
+        this.parent.set(vKey, vroot);
+        this.terms.set(vKey, v);
+        this.parent.set(tKey, troot);
+        this.terms.set(tKey, t);
+        this.union(vroot, troot);
+        return true;
+      }
+      /**
+       * Get the representative for a variable.
+       * Returns the variable itself if not in the union-find.
+       *
+       * Upstream Go equivalent: unionfind.UnionFind.Get()
+       */
+      get(v) {
+        const res = this.find(v);
+        if (res !== null) {
+          return res;
+        }
+        return v;
+      }
+      /**
+       * Check if a variable is bound (has a representative that is either
+       * a constant or a bound variable).
+       */
+      isBound(v, boundVars) {
+        const rep = this.get(v);
+        if (rep.type === "Constant") {
+          return true;
+        }
+        if (rep.type === "Variable") {
+          const repVar = rep;
+          if (repVar.symbol !== v.symbol && boundVars.has(repVar.symbol)) {
+            return true;
+          }
+        }
+        return false;
+      }
+    };
+    exports2.UnionFind = UnionFind;
+    function initVars(vars, ts) {
+      if (vars.length !== ts.length) {
+        throw new Error("not of equal size");
+      }
+      const uf = UnionFind.create();
+      for (let i = 0; i < vars.length; i++) {
+        const v = vars[i];
+        const t = ts[i];
+        const tKey = termKey(t);
+        const vKey = termKey(v);
+        uf.unify(v, t);
+      }
+      return uf;
+    }
+    function unifyTerms(xs, ys) {
+      if (xs.length !== ys.length) {
+        throw new Error("not of equal size");
+      }
+      const uf = UnionFind.create();
+      for (let i = 0; i < xs.length; i++) {
+        const x = xs[i];
+        const y = ys[i];
+        if (x.type === "Variable" && x.symbol === "_")
+          continue;
+        if (y.type === "Variable" && y.symbol === "_")
+          continue;
+        if (x.type === "Variable") {
+          if (!uf.unify(x, y)) {
+            throw new Error(`cannot unify ${termKey(x)} ${termKey(y)}`);
+          }
+        } else if (y.type === "Variable") {
+          if (!uf.unify(y, x)) {
+            throw new Error(`cannot unify ${termKey(x)} ${termKey(y)}`);
+          }
+        } else if (!termsEqual(x, y)) {
+          throw new Error(`cannot unify ${termKey(x)} ${termKey(y)}`);
+        }
+      }
+      return uf;
+    }
+    function unifyTermsExtend(xs, ys, base) {
+      if (xs.length !== ys.length) {
+        throw new Error("not of equal size");
+      }
+      const uf = base.copy();
+      for (let i = 0; i < xs.length; i++) {
+        const x = xs[i];
+        const y = ys[i];
+        if (x.type === "Variable" && x.symbol === "_")
+          continue;
+        if (y.type === "Variable" && y.symbol === "_")
+          continue;
+        if (x.type === "Variable") {
+          if (!uf.unify(x, y)) {
+            throw new Error(`cannot unify ${termKey(x)} ${termKey(y)}`);
+          }
+        } else if (y.type === "Variable") {
+          if (!uf.unify(y, x)) {
+            throw new Error(`cannot unify ${termKey(x)} ${termKey(y)}`);
+          }
+        } else if (!termsEqual(x, y)) {
+          throw new Error(`cannot unify ${termKey(x)} ${termKey(y)}`);
+        }
+      }
+      return uf;
+    }
+  }
+});
+
+// server/analysis/rewrite.js
+var require_rewrite = __commonJS({
+  "server/analysis/rewrite.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.rewriteClause = rewriteClause;
+    function collectVars(term, vars) {
+      switch (term.type) {
+        case "Variable": {
+          const v = term;
+          if (v.symbol !== "_") {
+            vars.add(v.symbol);
+          }
+          break;
+        }
+        case "Atom": {
+          const atom = term;
+          for (const arg of atom.args) {
+            collectVars(arg, vars);
+          }
+          break;
+        }
+        case "NegAtom": {
+          const negAtom = term;
+          collectVars(negAtom.atom, vars);
+          break;
+        }
+        case "Eq":
+        case "Ineq": {
+          const eq = term;
+          collectVars(eq.left, vars);
+          collectVars(eq.right, vars);
+          break;
+        }
+        case "ApplyFn": {
+          const applyFn = term;
+          for (const arg of applyFn.args) {
+            collectVars(arg, vars);
+          }
+          break;
+        }
+      }
+    }
+    function rewriteClause(clause) {
+      if (!clause.premises || clause.premises.length === 0) {
+        return clause;
+      }
+      const boundVars = /* @__PURE__ */ new Set();
+      const premises = [];
+      const delayNegAtom = [];
+      const delayVars = [];
+      for (const p of clause.premises) {
+        let needsDelay = false;
+        switch (p.type) {
+          case "Atom": {
+            const defVars = /* @__PURE__ */ new Set();
+            collectVars(p, defVars);
+            for (const v of defVars) {
+              boundVars.add(v);
+            }
+            break;
+          }
+          case "Eq": {
+            const eqVars = /* @__PURE__ */ new Set();
+            collectVars(p, eqVars);
+            for (const v of eqVars) {
+              boundVars.add(v);
+            }
+            break;
+          }
+          case "NegAtom": {
+            const negVars = /* @__PURE__ */ new Set();
+            collectVars(p, negVars);
+            const unboundVars = /* @__PURE__ */ new Set();
+            for (const v of negVars) {
+              if (!boundVars.has(v)) {
+                unboundVars.add(v);
+              }
+            }
+            if (unboundVars.size > 0) {
+              needsDelay = true;
+              delayNegAtom.push(p);
+              delayVars.push(unboundVars);
+            }
+            break;
+          }
+        }
+        if (!needsDelay) {
+          premises.push(p);
+          const toRemove = [];
+          for (let i = 0; i < delayVars.length; i++) {
+            const vars = delayVars[i];
+            let allBound = true;
+            for (const v of vars) {
+              if (!boundVars.has(v)) {
+                allBound = false;
+                break;
+              }
+            }
+            if (allBound) {
+              premises.push(delayNegAtom[i]);
+              toRemove.unshift(i);
+            }
+          }
+          for (const i of toRemove) {
+            delayNegAtom.splice(i, 1);
+            delayVars.splice(i, 1);
+          }
+        }
+      }
+      return {
+        ...clause,
+        premises
+      };
+    }
+  }
+});
+
 // server/analysis/validation.js
 var require_validation = __commonJS({
   "server/analysis/validation.js"(exports2) {
@@ -37548,6 +39925,8 @@ var require_validation = __commonJS({
     var predicates_1 = require_predicates();
     var functions_1 = require_functions();
     var symbols_12 = require_symbols();
+    var unionfind_1 = require_unionfind();
+    var rewrite_1 = require_rewrite();
     var STRING_CONSTANT_PREDICATES = /* @__PURE__ */ new Set([
       ":match_prefix",
       ":string:starts_with",
@@ -37605,6 +39984,7 @@ var require_validation = __commonJS({
     function validateDeclaration(decl, errors) {
       const declAtom = decl.declaredAtom;
       const descriptors = decl.descr || [];
+      const expectedArgs = /* @__PURE__ */ new Map();
       for (let i = 0; i < declAtom.args.length; i++) {
         const arg = declAtom.args[i];
         if (arg && arg.type !== "Variable") {
@@ -37614,16 +39994,99 @@ var require_validation = __commonJS({
             range: arg.range,
             severity: "error"
           });
+        } else if (arg && arg.type === "Variable") {
+          expectedArgs.set(arg.symbol, arg);
         }
       }
       if (decl.bounds && decl.bounds.length > 0) {
-        if (decl.bounds.length !== declAtom.args.length) {
-          errors.push({
-            code: "E025",
-            message: `Declaration has ${declAtom.args.length} arguments but ${decl.bounds.length} bounds`,
-            range: declAtom.range,
-            severity: "error"
-          });
+        for (const boundDecl of decl.bounds) {
+          if (boundDecl.bounds.length !== declAtom.args.length) {
+            errors.push({
+              code: "E025",
+              message: `Declaration has ${declAtom.args.length} arguments but ${boundDecl.bounds.length} bounds`,
+              range: declAtom.range,
+              severity: "error"
+            });
+          }
+        }
+      }
+      let seenDoc = false;
+      const expectedArgsForArgCheck = new Map(expectedArgs);
+      let hasAnyArgDescr = false;
+      for (const descrAtom of descriptors) {
+        const sym = descrAtom.predicate.symbol;
+        if (sym === "doc") {
+          if (seenDoc) {
+            errors.push({
+              code: "E051",
+              message: `descr[] can only have one doc atom`,
+              range: descrAtom.range,
+              severity: "error"
+            });
+          }
+          seenDoc = true;
+          if (descrAtom.args.length === 0) {
+            errors.push({
+              code: "E052",
+              message: `descr atom must not be empty`,
+              range: descrAtom.range,
+              severity: "error"
+            });
+            continue;
+          }
+          for (const docArg of descrAtom.args) {
+            if (docArg.type !== "Constant" || docArg.constantType !== "string") {
+              errors.push({
+                code: "E053",
+                message: `expected string constant in doc(), got ${docArg.type}`,
+                range: docArg.range,
+                severity: "error"
+              });
+            }
+          }
+        } else if (sym === "arg") {
+          hasAnyArgDescr = true;
+          if (descrAtom.args.length < 2) {
+            errors.push({
+              code: "E054",
+              message: `arg atom must have at least 2 args`,
+              range: descrAtom.range,
+              severity: "error"
+            });
+            continue;
+          }
+          const firstArg = descrAtom.args[0];
+          if (firstArg.type !== "Variable") {
+            errors.push({
+              code: "E055",
+              message: `arg atom must have variable as first arg, got ${firstArg.type}`,
+              range: firstArg.range,
+              severity: "error"
+            });
+            continue;
+          }
+          const varName = firstArg.symbol;
+          if (!expectedArgsForArgCheck.has(varName)) {
+            errors.push({
+              code: "E056",
+              message: `arg atom for an unknown variable ${varName}`,
+              range: firstArg.range,
+              severity: "error"
+            });
+            continue;
+          }
+          expectedArgsForArgCheck.delete(varName);
+          for (let i = 1; i < descrAtom.args.length; i++) {
+            const argArg = descrAtom.args[i];
+            if (argArg.type !== "Constant" || argArg.constantType !== "string") {
+              errors.push({
+                code: "E053",
+                message: `expected string constant in arg(), got ${argArg.type}`,
+                range: argArg.range,
+                severity: "error"
+              });
+            }
+          }
         }
       }
       const isExternal = descriptors.some((d) => d.predicate.symbol === "external");
@@ -37638,30 +40101,24 @@ var require_validation = __commonJS({
           });
         }
       }
-      if (declAtom.predicate.symbol === "Package") {
-        for (const desc of descriptors) {
-          if (desc.predicate.symbol === "name" && desc.args.length > 0) {
-            const nameArg = desc.args[0];
-            if (nameArg && nameArg.type === "Constant") {
-              const constant = nameArg;
-              if (constant.symbol && constant.symbol !== constant.symbol.toLowerCase()) {
-                errors.push({
-                  code: "E031",
-                  message: `Package names must be lowercase: '${constant.symbol}'`,
-                  range: nameArg.range,
-                  severity: "error"
-                });
-              }
-            }
-          }
-        }
+      const isSynthetic = descriptors.some((d) => d.predicate.symbol === "synthetic");
+      if (!isSynthetic && hasAnyArgDescr && expectedArgsForArgCheck.size > 0 && expectedArgsForArgCheck.size !== declAtom.args.length) {
+        const missingVars = [...expectedArgsForArgCheck.keys()].join(", ");
+        errors.push({
+          code: "E057",
+          message: `missing arg atoms for arguments: ${missingVars}`,
+          range: declAtom.range,
+          severity: "warning"
+        });
       }
     }
     function validateClause(clause, symbolTable, errors) {
+      const rewritten = (0, rewrite_1.rewriteClause)(clause);
       const boundVars = /* @__PURE__ */ new Set();
       const headVars = /* @__PURE__ */ new Set();
-      collectAtomVariables(clause.head, headVars);
-      for (const arg of clause.head.args) {
+      const uf = unionfind_1.UnionFind.create();
+      collectAtomVariables(rewritten.head, headVars);
+      for (const arg of rewritten.head.args) {
         if (arg.type === "Variable" && arg.symbol === "_") {
           errors.push({
             code: "E039",
@@ -37671,49 +40128,54 @@ var require_validation = __commonJS({
           });
         }
       }
-      if (clause.transform && (!clause.premises || clause.premises.length === 0)) {
+      if (rewritten.transform && (!rewritten.premises || rewritten.premises.length === 0)) {
         errors.push({
           code: "E045",
           message: `Cannot have a transform without a body`,
-          range: clause.transform.range,
+          range: rewritten.transform.range,
           severity: "error"
         });
       }
-      if (!clause.premises || clause.premises.length === 0) {
+      if (!rewritten.premises || rewritten.premises.length === 0) {
         for (const v of headVars) {
           if (v !== "_") {
             errors.push({
               code: "E001",
               message: `Variable '${v}' in fact head must be ground (facts cannot have variables)`,
-              range: clause.head.range,
+              range: rewritten.head.range,
               severity: "error"
             });
           }
         }
         return;
       }
-      for (const premise of clause.premises) {
-        validatePremise(premise, boundVars, symbolTable, errors);
+      for (const premise of rewritten.premises) {
+        validatePremise(premise, boundVars, symbolTable, errors, uf);
       }
       const bodyVars = /* @__PURE__ */ new Set();
-      for (const premise of clause.premises) {
+      for (const premise of rewritten.premises) {
         collectPremiseVariables(premise, bodyVars);
       }
-      if (clause.transform) {
-        validateTransform(clause.transform, boundVars, errors, bodyVars);
+      if (rewritten.transform) {
+        validateTransform(rewritten.transform, boundVars, errors, bodyVars);
       }
       for (const v of headVars) {
-        if (v !== "_" && !boundVars.has(v)) {
-          errors.push({
-            code: "E002",
-            message: `Variable '${v}' in head is not bound in the body (range restriction violation)`,
-            range: clause.head.range,
-            severity: "error"
-          });
-        }
+        if (v === "_")
+          continue;
+        if (boundVars.has(v))
+          continue;
+        const dummyVar = { type: "Variable", symbol: v, range: rewritten.head.range };
+        if (uf.isBound(dummyVar, boundVars))
+          continue;
+        errors.push({
+          code: "E002",
+          message: `Variable '${v}' in head is not bound in the body (range restriction violation)`,
+          range: rewritten.head.range,
+          severity: "error"
+        });
       }
     }
-    function validatePremise(premise, boundVars, symbolTable, errors) {
+    function validatePremise(premise, boundVars, symbolTable, errors, uf) {
       switch (premise.type) {
         case "Atom": {
           const atom = premise;
@@ -37757,7 +40219,7 @@ var require_validation = __commonJS({
         }
         case "Eq": {
           const eq = premise;
-          handleEquality(eq.left, eq.right, boundVars, errors, eq.range);
+          handleEquality(eq.left, eq.right, boundVars, errors, eq.range, uf);
           break;
         }
         case "Ineq": {
@@ -38184,7 +40646,7 @@ var require_validation = __commonJS({
         current = current.next;
       }
     }
-    function handleEquality(left, right, boundVars, errors, range) {
+    function handleEquality(left, right, boundVars, errors, range, uf) {
       if (left.type === "Variable" && left.symbol !== "_") {
         const v = left.symbol;
         if (right.type === "Constant" || isGroundOrBound(right, boundVars)) {
@@ -38229,6 +40691,13 @@ var require_validation = __commonJS({
         }
         if (left.type === "Variable" && left.symbol !== "_") {
           boundVars.add(left.symbol);
+        }
+      }
+      if (uf && left.type === "Variable" && right.type === "Variable") {
+        const leftVar = left;
+        const rightVar = right;
+        if (leftVar.symbol !== "_" && rightVar.symbol !== "_") {
+          uf.unify(leftVar, rightVar);
         }
       }
     }
@@ -38925,7 +41394,7 @@ var require_stratification = __commonJS({
             const temporal = premise;
             if (temporal.operator) {
               const opType = temporal.operator.operatorType;
-              if (opType === "diamond_plus" || opType === "box_plus") {
+              if (opType === "diamondPlus" || opType === "boxPlus") {
                 let litPredKey = null;
                 if (temporal.literal.type === "Atom") {
                   litPredKey = predicateKey(temporal.literal.predicate);
@@ -38991,6 +41460,8 @@ var require_analysis = __commonJS({
     __exportStar(require_symbols(), exports2);
     __exportStar(require_validation(), exports2);
     __exportStar(require_stratification(), exports2);
+    __exportStar(require_unionfind(), exports2);
+    __exportStar(require_rewrite(), exports2);
   }
 });
 

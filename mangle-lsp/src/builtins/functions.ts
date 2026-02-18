@@ -245,9 +245,9 @@ export const BUILTIN_FUNCTIONS: BuiltinFunction[] = [
     },
     {
         name: 'fn:time:format_civil',
-        arity: 2,
+        arity: 3,
         isReducer: false,
-        doc: 'Formats a time instant as a civil datetime string. Usage: fn:time:format_civil(Time, /precision)',
+        doc: 'Formats a time instant as a civil datetime string with timezone. Usage: fn:time:format_civil(Time, /precision, Timezone)',
     },
     {
         name: 'fn:time:parse_rfc3339',
@@ -257,9 +257,9 @@ export const BUILTIN_FUNCTIONS: BuiltinFunction[] = [
     },
     {
         name: 'fn:time:parse_civil',
-        arity: 1,
+        arity: 2,
         isReducer: false,
-        doc: 'Parses a civil datetime string into a time instant. Usage: fn:time:parse_civil(String)',
+        doc: 'Parses a civil datetime string with timezone into a time instant. Usage: fn:time:parse_civil(String, Timezone)',
     },
     {
         name: 'fn:time:year',
@@ -376,6 +376,32 @@ export const BUILTIN_FUNCTIONS: BuiltinFunction[] = [
         arity: 1,
         isReducer: false,
         doc: 'Creates a duration from seconds. Usage: fn:duration:from_seconds(Number)',
+    },
+    {
+        name: 'fn:duration:parse',
+        arity: 1,
+        isReducer: false,
+        doc: 'Parses a duration string (e.g., "7d", "24h", "30m", "1s", "500ms") into a duration. Usage: fn:duration:parse(String)',
+    },
+
+    // Interval functions (upstream symbols/symbols.go)
+    {
+        name: 'fn:interval:start',
+        arity: 1,
+        isReducer: false,
+        doc: 'Returns the start time of an interval. Usage: fn:interval:start(Interval)',
+    },
+    {
+        name: 'fn:interval:end',
+        arity: 1,
+        isReducer: false,
+        doc: 'Returns the end time of an interval. Usage: fn:interval:end(Interval)',
+    },
+    {
+        name: 'fn:interval:duration',
+        arity: 1,
+        isReducer: false,
+        doc: 'Returns the duration of an interval (end - start). Usage: fn:interval:duration(Interval)',
     },
 ];
 

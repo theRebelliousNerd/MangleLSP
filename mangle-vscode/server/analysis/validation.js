@@ -11,6 +11,8 @@ const ast_1 = require("../parser/ast");
 const predicates_1 = require("../builtins/predicates");
 const functions_1 = require("../builtins/functions");
 const symbols_1 = require("./symbols");
+const unionfind_1 = require("./unionfind");
+const rewrite_1 = require("./rewrite");
 /**
  * Predicates that require their second argument to be a constant.
  */
@@ -89,11 +91,14 @@ function validate(unit) {
 }
 /**
  * Validate a declaration (CheckDecl equivalent from upstream).
+ *
+ * Ported from upstream Go implementation (analysis/declcheck.go).
  */
 function validateDeclaration(decl, errors) {
     const declAtom = decl.declaredAtom;
     const descriptors = decl.descr || [];
-    // Check that all declaration arguments are variables
+    // Build expected args map (all args must be variables)
+    const expectedArgs = new Map();
     for (let i = 0; i < declAtom.args.length; i++) {
         const arg = declAtom.args[i];
         if (arg && arg.type !== 'Variable') {
@@ -104,16 +109,111 @@ function validateDeclaration(decl, errors) {
                 severity: 'error',
             });
         }
+        else if (arg && arg.type === 'Variable') {
+            expectedArgs.set(arg.symbol, arg);
+        }
     }
     // Check bounds count matches arity (if bounds exist)
     if (decl.bounds && decl.bounds.length > 0) {
-        if (decl.bounds.length !== declAtom.args.length) {
-            errors.push({
-                code: 'E025',
-                message: `Declaration has ${declAtom.args.length} arguments but ${decl.bounds.length} bounds`,
-                range: declAtom.range,
-                severity: 'error',
-            });
+        for (const boundDecl of decl.bounds) {
+            if (boundDecl.bounds.length !== declAtom.args.length) {
+                errors.push({
+                    code: 'E025',
+                    message: `Declaration has ${declAtom.args.length} arguments but ${boundDecl.bounds.length} bounds`,
+                    range: declAtom.range,
+                    severity: 'error',
+                });
+            }
+        }
+    }
+    // Validate doc() and arg() descriptor atoms (Feature G)
+    let seenDoc = false;
+    const expectedArgsForArgCheck = new Map(expectedArgs);
+    let hasAnyArgDescr = false;
+    for (const descrAtom of descriptors) {
+        const sym = descrAtom.predicate.symbol;
+        if (sym === 'doc') {
+            // Upstream: at most one doc atom
+            if (seenDoc) {
+                errors.push({
+                    code: 'E051',
+                    message: `descr[] can only have one doc atom`,
+                    range: descrAtom.range,
+                    severity: 'error',
+                });
+            }
+            seenDoc = true;
+            // Upstream: doc atom must have at least one argument
+            if (descrAtom.args.length === 0) {
+                errors.push({
+                    code: 'E052',
+                    message: `descr atom must not be empty`,
+                    range: descrAtom.range,
+                    severity: 'error',
+                });
+                continue;
+            }
+            // Upstream: all doc args must be string constants
+            for (const docArg of descrAtom.args) {
+                if (docArg.type !== 'Constant' ||
+                    docArg.constantType !== 'string') {
+                    errors.push({
+                        code: 'E053',
+                        message: `expected string constant in doc(), got ${docArg.type}`,
+                        range: docArg.range,
+                        severity: 'error',
+                    });
+                }
+            }
+        }
+        else if (sym === 'arg') {
+            hasAnyArgDescr = true;
+            // Upstream: arg atom must have at least 2 args
+            if (descrAtom.args.length < 2) {
+                errors.push({
+                    code: 'E054',
+                    message: `arg atom must have at least 2 args`,
+                    range: descrAtom.range,
+                    severity: 'error',
+                });
+                continue;
+            }
+            // Upstream: first arg must be a variable
+            const firstArg = descrAtom.args[0];
+            if (firstArg.type !== 'Variable') {
+                errors.push({
+                    code: 'E055',
+                    message: `arg atom must have variable as first arg, got ${firstArg.type}`,
+                    range: firstArg.range,
+                    severity: 'error',
+                });
+                continue;
+            }
+            // Upstream: variable must match a declared atom argument
+            const varName = firstArg.symbol;
+            if (!expectedArgsForArgCheck.has(varName)) {
+                errors.push({
+                    code: 'E056',
+                    message: `arg atom for an unknown variable ${varName}`,
+                    range: firstArg.range,
+                    severity: 'error',
+                });
+                continue;
+            }
+            expectedArgsForArgCheck.delete(varName);
+            // Upstream: remaining args must be string constants
+            for (let i = 1; i < descrAtom.args.length; i++) {
+                const argArg = descrAtom.args[i];
+                if (argArg.type !== 'Constant' ||
+                    argArg.constantType !== 'string') {
+                    errors.push({
+                        code: 'E053',
+                        message: `expected string constant in arg(), got ${argArg.type}`,
+                        range: argArg.range,
+                        severity: 'error',
+                    });
+                }
+            }
         }
     }
     // Check for external predicates requiring exactly one mode
@@ -129,38 +229,35 @@ function validateDeclaration(decl, errors) {
             });
         }
     }
-    // Check package name case (if this is a Package declaration)
-    if (declAtom.predicate.symbol === 'Package') {
-        // Look for name descriptor
-        for (const desc of descriptors) {
-            if (desc.predicate.symbol === 'name' && desc.args.length > 0) {
-                const nameArg = desc.args[0];
-                if (nameArg && nameArg.type === 'Constant') {
-                    const constant = nameArg;
-                    if (constant.symbol && constant.symbol !== constant.symbol.toLowerCase()) {
-                        errors.push({
-                            code: 'E031',
-                            message: `Package names must be lowercase: '${constant.symbol}'`,
-                            range: nameArg.range,
-                            severity: 'error',
-                        });
-                    }
-                }
-            }
-        }
+    // Upstream: check partial arg coverage (if some but not all args have arg() descriptors)
+    const isSynthetic = descriptors.some(d => d.predicate.symbol === 'synthetic');
+    if (!isSynthetic && hasAnyArgDescr && expectedArgsForArgCheck.size > 0 &&
+        expectedArgsForArgCheck.size !== declAtom.args.length) {
+        const missingVars = [...expectedArgsForArgCheck.keys()].join(', ');
+        errors.push({
+            code: 'E057',
+            message: `missing arg atoms for arguments: ${missingVars}`,
+            range: declAtom.range,
+            severity: 'warning',
+        });
     }
 }
 /**
  * Validate a single clause.
  */
 function validateClause(clause, symbolTable, errors) {
+    // Apply clause rewriting (negation delay) before validation
+    // Upstream: RewriteClause is called before CheckRule
+    const rewritten = (0, rewrite_1.rewriteClause)(clause);
     // Collect bound variables
     const boundVars = new Set();
     const headVars = new Set();
+    // Create union-find for variable equivalence (Feature E)
+    const uf = unionfind_1.UnionFind.create();
     // Collect variables from head
-    collectAtomVariables(clause.head, headVars);
+    collectAtomVariables(rewritten.head, headVars);
     // Warn about wildcards in head (unusual, usually a mistake)
-    for (const arg of clause.head.args) {
+    for (const arg of rewritten.head.args) {
         if (arg.type === 'Variable' && arg.symbol === '_') {
             errors.push({
                 code: 'E039',
@@ -171,22 +268,22 @@ function validateClause(clause, symbolTable, errors) {
         }
     }
     // E045: Check for transform without body
-    if (clause.transform && (!clause.premises || clause.premises.length === 0)) {
+    if (rewritten.transform && (!rewritten.premises || rewritten.premises.length === 0)) {
         errors.push({
             code: 'E045',
             message: `Cannot have a transform without a body`,
-            range: clause.transform.range,
+            range: rewritten.transform.range,
             severity: 'error',
         });
     }
     // If this is a fact (no premises), all head variables must be ground
-    if (!clause.premises || clause.premises.length === 0) {
+    if (!rewritten.premises || rewritten.premises.length === 0) {
         for (const v of headVars) {
             if (v !== '_') {
                 errors.push({
                     code: 'E001',
                     message: `Variable '${v}' in fact head must be ground (facts cannot have variables)`,
-                    range: clause.head.range,
+                    range: rewritten.head.range,
                     severity: 'error',
                 });
             }
@@ -194,34 +291,41 @@ function validateClause(clause, symbolTable, errors) {
         return;
     }
     // Process premises to determine bound variables
-    for (const premise of clause.premises) {
-        validatePremise(premise, boundVars, symbolTable, errors);
+    for (const premise of rewritten.premises) {
+        validatePremise(premise, boundVars, symbolTable, errors, uf);
     }
     // Collect body variables for transform redefinition check (E043)
     const bodyVars = new Set();
-    for (const premise of clause.premises) {
+    for (const premise of rewritten.premises) {
         collectPremiseVariables(premise, bodyVars);
     }
     // Validate transform if present (this also binds let-variables)
-    if (clause.transform) {
-        validateTransform(clause.transform, boundVars, errors, bodyVars);
+    if (rewritten.transform) {
+        validateTransform(rewritten.transform, boundVars, errors, bodyVars);
     }
     // Check that all head variables are bound (after processing transform)
+    // Upstream: uses union-find to resolve variable equivalences
     for (const v of headVars) {
-        if (v !== '_' && !boundVars.has(v)) {
-            errors.push({
-                code: 'E002',
-                message: `Variable '${v}' in head is not bound in the body (range restriction violation)`,
-                range: clause.head.range,
-                severity: 'error',
-            });
-        }
+        if (v === '_')
+            continue;
+        if (boundVars.has(v))
+            continue;
+        // Check union-find: variable might be unified with a bound variable or constant
+        const dummyVar = { type: 'Variable', symbol: v, range: rewritten.head.range };
+        if (uf.isBound(dummyVar, boundVars))
+            continue;
+        errors.push({
+            code: 'E002',
+            message: `Variable '${v}' in head is not bound in the body (range restriction violation)`,
+            range: rewritten.head.range,
+            severity: 'error',
+        });
     }
 }
 /**
  * Validate a premise and update bound variables.
  */
-function validatePremise(premise, boundVars, symbolTable, errors) {
+function validatePremise(premise, boundVars, symbolTable, errors, uf) {
     // Check the type field to determine how to handle this premise
     switch (premise.type) {
         case 'Atom': {
@@ -273,7 +377,7 @@ function validatePremise(premise, boundVars, symbolTable, errors) {
         case 'Eq': {
             const eq = premise;
             // Equality can bind a variable if the other side is bound
-            handleEquality(eq.left, eq.right, boundVars, errors, eq.range);
+            handleEquality(eq.left, eq.right, boundVars, errors, eq.range, uf);
             break;
         }
         case 'Ineq': {
@@ -769,8 +873,9 @@ function validateTransform(transform, boundVars, errors, bodyVars) {
 }
 /**
  * Handle equality for variable binding.
+ * Now uses union-find for X = Y where both are unbound variables (Feature E).
  */
-function handleEquality(left, right, boundVars, errors, range) {
+function handleEquality(left, right, boundVars, errors, range, uf) {
     // If left is a single variable and right is ground or bound, bind left
     if (left.type === 'Variable' && left.symbol !== '_') {
         const v = left.symbol;
@@ -821,6 +926,15 @@ function handleEquality(left, right, boundVars, errors, range) {
         // The left side variable becomes bound
         if (left.type === 'Variable' && left.symbol !== '_') {
             boundVars.add(left.symbol);
+        }
+    }
+    // Feature E: If both sides are variables and neither is bound yet,
+    // use union-find to record their equivalence (upstream validation.go:514-522)
+    if (uf && left.type === 'Variable' && right.type === 'Variable') {
+        const leftVar = left;
+        const rightVar = right;
+        if (leftVar.symbol !== '_' && rightVar.symbol !== '_') {
+            uf.unify(leftVar, rightVar);
         }
     }
 }

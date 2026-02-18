@@ -12,10 +12,13 @@ import { DescrBlockContext } from "./MangleParser.js";
 import { BoundsBlockContext } from "./MangleParser.js";
 import { ConstraintsBlockContext } from "./MangleParser.js";
 import { ClauseContext } from "./MangleParser.js";
+import { TemporalAnnotationContext } from "./MangleParser.js";
+import { TemporalBoundContext } from "./MangleParser.js";
 import { ClauseBodyContext } from "./MangleParser.js";
 import { TransformContext } from "./MangleParser.js";
 import { LetStmtContext } from "./MangleParser.js";
 import { LiteralOrFmlContext } from "./MangleParser.js";
+import { TemporalOperatorContext } from "./MangleParser.js";
 import { VarContext } from "./MangleParser.js";
 import { ConstContext } from "./MangleParser.js";
 import { NumContext } from "./MangleParser.js";
@@ -128,6 +131,26 @@ export class MangleListener implements ParseTreeListener {
      */
     exitClause?: (ctx: ClauseContext) => void;
     /**
+     * Enter a parse tree produced by `MangleParser.temporalAnnotation`.
+     * @param ctx the parse tree
+     */
+    enterTemporalAnnotation?: (ctx: TemporalAnnotationContext) => void;
+    /**
+     * Exit a parse tree produced by `MangleParser.temporalAnnotation`.
+     * @param ctx the parse tree
+     */
+    exitTemporalAnnotation?: (ctx: TemporalAnnotationContext) => void;
+    /**
+     * Enter a parse tree produced by `MangleParser.temporalBound`.
+     * @param ctx the parse tree
+     */
+    enterTemporalBound?: (ctx: TemporalBoundContext) => void;
+    /**
+     * Exit a parse tree produced by `MangleParser.temporalBound`.
+     * @param ctx the parse tree
+     */
+    exitTemporalBound?: (ctx: TemporalBoundContext) => void;
+    /**
      * Enter a parse tree produced by `MangleParser.clauseBody`.
      * @param ctx the parse tree
      */
@@ -167,6 +190,16 @@ export class MangleListener implements ParseTreeListener {
      * @param ctx the parse tree
      */
     exitLiteralOrFml?: (ctx: LiteralOrFmlContext) => void;
+    /**
+     * Enter a parse tree produced by `MangleParser.temporalOperator`.
+     * @param ctx the parse tree
+     */
+    enterTemporalOperator?: (ctx: TemporalOperatorContext) => void;
+    /**
+     * Exit a parse tree produced by `MangleParser.temporalOperator`.
+     * @param ctx the parse tree
+     */
+    exitTemporalOperator?: (ctx: TemporalOperatorContext) => void;
     /**
      * Enter a parse tree produced by the `Var`
      * labeled alternative in `MangleParser.term`.

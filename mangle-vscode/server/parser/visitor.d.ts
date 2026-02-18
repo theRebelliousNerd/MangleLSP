@@ -4,7 +4,7 @@
  * Ported from upstream Go implementation (parse/parse.go).
  */
 import { AbstractParseTreeVisitor, ParserRuleContext } from 'antlr4ng';
-import { SourceUnit, PackageDecl, UseDecl, Decl, Clause, Atom, Term, BaseTerm, Variable, Constant, ApplyFn, Transform, TransformStmt, BoundDecl } from './ast';
+import { SourceUnit, PackageDecl, UseDecl, Decl, Clause, Atom, Term, BaseTerm, Variable, Constant, ApplyFn, Transform, TransformStmt, BoundDecl, TemporalBound, TemporalInterval, TemporalOperator } from './ast';
 /**
  * Error placeholder symbol used in broken AST nodes.
  * LSP features can check for this to identify error nodes.
@@ -25,7 +25,7 @@ export interface VisitorParseError {
     /** Length of the offending text (if known) */
     length: number;
 }
-import { StartContext, ProgramContext, PackageDeclContext, UseDeclContext, DeclContext, ClauseContext, ClauseBodyContext, TransformContext, LetStmtContext, LiteralOrFmlContext, AtomContext, AtomsContext, VarContext, ConstContext, NumContext, FloatContext, StrContext, BStrContext, ListContext, MapContext, StructContext, ApplContext, BoundsBlockContext, DescrBlockContext, ConstraintsBlockContext, DotTypeContext, MemberContext } from './gen/MangleParser';
+import { StartContext, ProgramContext, PackageDeclContext, UseDeclContext, DeclContext, ClauseContext, ClauseBodyContext, TransformContext, LetStmtContext, LiteralOrFmlContext, AtomContext, AtomsContext, VarContext, ConstContext, NumContext, FloatContext, StrContext, BStrContext, ListContext, MapContext, StructContext, ApplContext, BoundsBlockContext, DescrBlockContext, ConstraintsBlockContext, DotTypeContext, MemberContext, TemporalAnnotationContext, TemporalBoundContext, TemporalOperatorContext } from './gen/MangleParser';
 /**
  * Visitor that builds AST from ANTLR parse tree.
  *
@@ -96,5 +96,23 @@ export declare class MangleASTVisitor extends AbstractParseTreeVisitor<any> {
     visitDotType(ctx: DotTypeContext): ApplyFn;
     visitMember(ctx: MemberContext): BaseTerm[];
     visitAppl(ctx: ApplContext): Atom | ApplyFn;
+    /**
+     * Visit a temporal annotation: @[bound] or @[bound, bound]
+     * Returns a TemporalInterval.
+     * Upstream: parse.go:786-812
+     */
+    visitTemporalAnnotation(ctx: TemporalAnnotationContext): TemporalInterval;
+    /**
+     * Visit a temporal bound: TIMESTAMP | DURATION | VARIABLE | 'now'
+     * Returns a TemporalBound.
+     * Upstream: parse.go:816-849
+     */
+    visitTemporalBound(ctx: TemporalBoundContext): TemporalBound;
+    /**
+     * Visit a temporal operator: <-[b,b] | [-[b,b] | <+[b,b] | [+[b,b]
+     * Returns a TemporalOperator.
+     * Upstream: parse.go:853-896
+     */
+    visitTemporalOperator(ctx: TemporalOperatorContext): TemporalOperator;
 }
 //# sourceMappingURL=visitor.d.ts.map
