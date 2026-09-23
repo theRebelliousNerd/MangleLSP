@@ -5,14 +5,15 @@
     { "include": "#comments" },
     { "include": "#keywords" },
     { "include": "#builtins" },
+    { "include": "#types" },
     { "include": "#functions" },
     { "include": "#strings" },
     { "include": "#numbers" },
     { "include": "#variables" },
     { "include": "#predicates" },
     { "include": "#operators" },
-    { "include": "#names" },
-    { "include": "#types" }
+    { "include": "#basetypes" },
+    { "include": "#names" }
   ],
   "repository": {
     "comments": {
@@ -31,11 +32,11 @@
         },
         {
           "name": "keyword.other.mangle",
-          "match": "\\b(descr|bound|inclusion|opt|private|external|temporal|mode|doc|arg|fundep|merge|deferred|now)\\b"
+          "match": "\\b(descr|bound|inclusion|opt|private|external|extensional|reflects|synthetic|temporal|mode|doc|arg|fundep|merge|deferred|now)\\b"
         },
         {
           "name": "keyword.operator.mangle",
-          "match": ":-|\\|>"
+          "match": ":-|⟸|\\|>"
         }
       ]
     },
@@ -170,8 +171,23 @@
     "types": {
       "patterns": [
         {
+          "comment": "Dot-type syntax: .List<...>, .Struct<...>, .TaggedUnion<...>",
           "name": "entity.name.type.mangle",
           "match": "\\.[A-Z][a-zA-Z0-9]*"
+        },
+        {
+          "comment": "Type constructors in function syntax: fn:List(...), fn:TaggedUnion(...)",
+          "name": "entity.name.type.mangle",
+          "match": "\\bfn:[A-Z][A-Za-z0-9]*"
+        }
+      ]
+    },
+    "basetypes": {
+      "patterns": [
+        {
+          "comment": "Built-in base types used in bound [...] declarations (upstream ast.go *Bound)",
+          "name": "support.type.builtin.mangle",
+          "match": "/(any|bot|number|float64|string|bytes|name|time|duration)\\b(?![/.~%-])"
         }
       ]
     }

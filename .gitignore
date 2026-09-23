@@ -10,6 +10,11 @@ out/
 # Generated parser files (old location)
 server/src/parser/gen/
 
+# VS Code extension server: only the esbuild bundles are committed
+mangle-vscode/server/*
+!mangle-vscode/server/server.bundle.js
+!mangle-vscode/server/cli.bundle.js
+
 # VS Code extension packages
 *.vsix
 

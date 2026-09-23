@@ -1,6 +1,6 @@
 {
   "name": "@mangle/mangle-lsp",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Language Server Protocol (LSP) implementation for the Mangle declarative programming language",
   "author": "Next-Gen Engineering and Research Development LLC",
   "license": "MIT",

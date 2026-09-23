@@ -1,8 +1,8 @@
 {
   "name": "mangle-vscode",
   "displayName": "Mangle Language Support",
-  "description": "Language support for Mangle (.mg files) - syntax highlighting, diagnostics, CLI tools, and more",
-  "version": "1.0.0",
+  "description": "Language support for Mangle (.mg files) - syntax highlighting, diagnostics with fixes and explanations, type checking, hover, completion and CLI tools",
+  "version": "1.1.0",
   "publisher": "theRebelliousNerd",
   "license": "MIT",
   "icon": "images/icon.png",
@@ -47,6 +47,10 @@
       {
         "command": "mangle.exportToFile",
         "title": "Mangle: Export Diagnostics to File"
+      },
+      {
+        "command": "mangle.explainDiagnostic",
+        "title": "Mangle: Explain Diagnostic Code"
       }
     ],
     "languages": [
@@ -127,11 +131,12 @@
   "scripts": {
     "vscode:prepublish": "npm run bundle",
     "compile": "tsc -p ./",
-    "bundle": "npm run compile && npm run bundle:client && npm run bundle:server",
+    "bundle": "npm run compile && npm run bundle:client && npm run bundle:server && npm run bundle:cli",
     "bundle:client": "npx esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
-    "bundle:server": "npx esbuild server/server.js --bundle --outfile=server/server.bundle.js --format=cjs --platform=node",
+    "bundle:server": "npx esbuild ../mangle-lsp/src/server.ts --bundle --outfile=server/server.bundle.js --format=cjs --platform=node",
+    "bundle:cli": "npx esbuild ../mangle-lsp/src/cli.ts --bundle --outfile=server/cli.bundle.js --format=cjs --platform=node",
     "watch": "tsc -watch -p ./",
-    "package": "node ./node_modules/@vscode/vsce/vsce package --allow-missing-repository"
+    "package": "vsce package --allow-missing-repository"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

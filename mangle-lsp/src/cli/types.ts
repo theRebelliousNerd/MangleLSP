@@ -24,7 +24,22 @@ export interface Range {
 export type DiagnosticSeverity = 'error' | 'warning' | 'info';
 
 /**
+ * A machine-applicable fix for a diagnostic: replace `range` with `newText`.
+ */
+export interface CLIFix {
+    title: string;
+    range: Range;
+    newText: string;
+}
+
+/**
  * A single diagnostic.
+ *
+ * Besides the location and message, diagnostics carry catalog information so
+ * that a reader (or coding agent) who has never seen Mangle can act on them:
+ * `hint` is an instance-specific suggestion, `fixes` are applicable edits,
+ * `docs` links to the long-form explanation (also `mangle-cli explain CODE`).
+ * `explanation`, `fix` and `example` are included with `--explain`.
  */
 export interface CLIDiagnostic {
     severity: DiagnosticSeverity;
@@ -33,6 +48,22 @@ export interface CLIDiagnostic {
     message: string;
     range: Range;
     context?: string;
+    /** Short title of the diagnostic code */
+    title?: string;
+    /** Category of the diagnostic code (safety, type, performance, ...) */
+    category?: string;
+    /** Instance-specific, actionable suggestion */
+    hint?: string;
+    /** Machine-applicable edits */
+    fixes?: CLIFix[];
+    /** Link to the documentation of the code */
+    docs?: string;
+    /** What the rule means (with --explain) */
+    explanation?: string;
+    /** How to fix it in general (with --explain) */
+    fix?: string;
+    /** Minimal failing and corrected program (with --explain) */
+    example?: { bad: string; good: string };
 }
 
 /**
@@ -158,6 +189,8 @@ export interface CommonOptions {
 export interface CheckOptions extends CommonOptions {
     severity: DiagnosticSeverity;
     failOn: 'error' | 'warning' | 'never';
+    /** Include the long-form explanation of each code in the output */
+    explain?: boolean;
 }
 
 /**

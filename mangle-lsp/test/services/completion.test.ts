@@ -38,6 +38,13 @@ function getCompletionsAt(source: string, line: number, character: number) {
     return getCompletions(document, parseResult.unit, symbolTable, position);
 }
 
+/** Completion documentation as text (string or MarkupContent). */
+function docText(item: { documentation?: unknown } | undefined): string {
+    const doc = item?.documentation;
+    if (typeof doc === 'string') return doc;
+    return (doc as { value?: string } | undefined)?.value ?? '';
+}
+
 describe('Completion Service', () => {
     describe('User-defined predicate completions', () => {
         it('should suggest user-defined predicates with correct arity', () => {
@@ -207,7 +214,7 @@ test(X) :- parent(X, Y).`;
 
             const plusCompletion = completions.find(c => c.label === 'fn:plus');
             expect(plusCompletion).toBeDefined();
-            expect(plusCompletion?.documentation).toContain('Addition');
+            expect(docText(plusCompletion)).toContain('Integer addition');
         });
 
         it('should suggest list functions', () => {
@@ -622,7 +629,7 @@ result(Sum) :- values(X) |> do fn:group_by(), let Sum =
 
             const ltCompletion = completions.find(c => c.label === ':lt');
             expect(ltCompletion?.documentation).toBeDefined();
-            expect(ltCompletion?.documentation).toContain('Less-than');
+            expect(docText(ltCompletion)).toContain('Less-than');
         });
 
         it('should provide completions for nested contexts', () => {
@@ -839,7 +846,7 @@ test(X) :- foo(X).
 
             const filterCompletion = completions.find(c => c.label === ':filter');
             expect(filterCompletion).toBeDefined();
-            expect(filterCompletion?.documentation).toContain('boolean');
+            expect(docText(filterCompletion)).toContain('boolean');
         });
 
         it('should suggest :within_distance predicate', () => {

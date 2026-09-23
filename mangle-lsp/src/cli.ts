@@ -15,6 +15,7 @@
  *   references    Find all references
  *   completion    Get completions at position
  *   format        Format Mangle source files
+ *   explain       Explain a diagnostic code (or list all codes)
  */
 
 import { resolve } from 'path';
@@ -59,14 +60,30 @@ import {
     DiagnosticSeverity,
 } from './cli/types';
 
-const VERSION = '1.0.0';
+import { VERSION, UPSTREAM_MANGLE_REVISION } from './version';
+import {
+    getDiagnosticInfo,
+    getAllDiagnosticInfos,
+    renderExplanation,
+    renderDiagnosticsMarkdown,
+    suggestSimilar,
+    didYouMean,
+} from './analysis/diagnostics';
+
+/**
+ * Flags that never take a value (so `--check file.mg` does not swallow the file).
+ */
+const BOOLEAN_FLAGS = new Set([
+    'quiet', 'help', 'version', 'write', 'check', 'diff',
+    'include-declaration', 'explain', 'all', 'markdown', 'list',
+]);
 
 /**
  * Print usage information.
  */
 function printUsage(): void {
     console.log(`
-Mangle CLI v${VERSION}
+Mangle CLI v${VERSION} (tracks upstream Mangle ${UPSTREAM_MANGLE_REVISION})
 
 Usage: mangle-cli <command> [options] <files...>
 
@@ -80,6 +97,7 @@ Commands:
   format        Format Mangle source files
   batch         Run multiple queries in one call (for agents)
   file-info     Get complete analysis of a file
+  explain       Explain a diagnostic code: what it means, how to fix it, example
 
 Global Options:
   --format, -f    Output format: json | text | sarif (default: json)
@@ -90,6 +108,12 @@ Global Options:
 Check Options:
   --severity      Minimum severity: error | warning | info (default: info)
   --fail-on       Exit non-zero on: error | warning | never (default: error)
+  --explain       Include the full explanation, fix and example of every code
+
+Explain Options:
+  mangle-cli explain E002          Explain one code
+  mangle-cli explain --list        One line per code
+  mangle-cli explain --all         Every code in full (--markdown for docs)
 
 Position Options (hover, definition, references, completion):
   --line          Line number (1-indexed, required)
@@ -109,6 +133,9 @@ Examples:
 
   # Check with human-readable output
   mangle-cli check --format text src/**/*.mg
+
+  # Explain a diagnostic code
+  mangle-cli explain E003
 
   # Get symbols from a file
   mangle-cli symbols src/main.mg
@@ -170,9 +197,15 @@ function parseArgs(args: string[]): ParsedArgs {
         }
 
         if (arg.startsWith('--')) {
+            const eq = arg.indexOf('=');
+            if (eq !== -1) {
+                result.options[arg.slice(2, eq)] = arg.slice(eq + 1);
+                i++;
+                continue;
+            }
             const key = arg.slice(2);
             const next = args[i + 1];
-            if (next && !next.startsWith('-')) {
+            if (!BOOLEAN_FLAGS.has(key) && next && !next.startsWith('-')) {
                 result.options[key] = next;
                 i += 2;
             } else {
@@ -244,7 +277,7 @@ function main(): void {
 
     // Handle global flags
     if (args.options['version']) {
-        console.log(`mangle-cli v${VERSION}`);
+        console.log(`mangle-cli v${VERSION} (upstream Mangle ${UPSTREAM_MANGLE_REVISION})`);
         process.exit(0);
     }
 
@@ -297,6 +330,10 @@ function main(): void {
                 handleFileInfo(files[0] || '', outputFormat, args.options);
                 break;
 
+            case 'explain':
+                handleExplain(args.files, (args.options['format'] as string) || 'text', args.options);
+                break;
+
             default:
                 console.error(`Unknown command: ${args.command}`);
                 printUsage();
@@ -328,6 +365,7 @@ function handleCheck(
         quiet: !!options['quiet'],
         severity: (options['severity'] as DiagnosticSeverity) || 'info',
         failOn: (options['fail-on'] as 'error' | 'warning' | 'never') || 'error',
+        explain: !!options['explain'],
     };
 
     const result = runCheck(files, checkOptions);
@@ -344,6 +382,52 @@ function handleCheck(
     }
 
     process.exit(getExitCode(result, checkOptions));
+}
+
+/**
+ * Handle explain command: long-form documentation of diagnostic codes.
+ * JSON output (the default) returns the catalog entries for programmatic use.
+ */
+function handleExplain(
+    codes: string[],
+    format: string,
+    options: Record<string, string | boolean | number>
+): void {
+    const all = getAllDiagnosticInfos();
+    if (options['markdown']) {
+        console.log(renderDiagnosticsMarkdown());
+        return;
+    }
+    if (options['list']) {
+        if (format === 'json') {
+            console.log(JSON.stringify(all.map(i => ({ code: i.code, title: i.title, category: i.category, severity: i.severity })), null, 2));
+        } else {
+            for (const i of all) {
+                console.log(`${i.code}  ${i.severity.padEnd(7)}  ${i.category.padEnd(14)}  ${i.title}`);
+            }
+        }
+        return;
+    }
+    const selected = options['all'] ? all : codes.map(c => c.toUpperCase());
+    if (selected.length === 0) {
+        console.error('Error: specify a code (e.g. mangle-cli explain E002), --list or --all');
+        process.exit(1);
+    }
+    const infos = [];
+    for (const item of selected) {
+        const info = typeof item === 'string' ? getDiagnosticInfo(item) : item;
+        if (!info) {
+            const hint = didYouMean(suggestSimilar(String(item), all.map(i => i.code)));
+            console.error(`Unknown diagnostic code: ${item}${hint ? ` (${hint})` : ''}. Run 'mangle-cli explain --list' to see all codes.`);
+            process.exit(1);
+        }
+        infos.push(info);
+    }
+    if (format === 'json') {
+        console.log(JSON.stringify(infos.length === 1 ? infos[0] : infos, null, 2));
+    } else {
+        console.log(infos.map(i => renderExplanation(i, format === 'markdown')).join('\n\n---\n\n'));
+    }
 }
 
 /**

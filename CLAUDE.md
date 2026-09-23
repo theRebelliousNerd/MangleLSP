@@ -1,7 +1,7 @@
 # Project Intent
 
-This repository exists to contribute to the Google Mangle project:
-https://github.com/google/mangle
+This repository exists to contribute to the Mangle project:
+https://codeberg.org/TauCeti/mangle-go (mirror: https://github.com/google/mangle)
 
 Primary goals:
 - Create TypeScript and Python implementations of Mangle.
@@ -9,138 +9,67 @@ Primary goals:
 
 # Upstream Reference
 
-The most current reference version of Mangle is located at:
-`C:\CodeProjects\MangleTSandPython\upstream\mangle`
+Upstream Mangle is developed at **https://codeberg.org/TauCeti/mangle-go**
+(module `codeberg.org/TauCeti/mangle-go`, mirrored at https://github.com/google/mangle).
+This repository is synced with upstream commit **`77780a5` (2026-09-19)**; the revision is
+recorded in `mangle-lsp/src/version.ts` (`UPSTREAM_MANGLE_REVISION`) and `CHANGELOG.md`.
 
-Use it as the source of truth for parser/AST behavior, semantic analysis,
+A local copy may exist at `C:\CodeProjects\MangleTSandPython\upstream\mangle`; otherwise
+clone upstream. Use it as the source of truth for parser/AST behavior, semantic analysis,
 evaluation, builtins, diagnostics, and tests.
 
 Key upstream files:
 | Component | Path | Purpose |
 |-----------|------|---------|
-| Grammar | `upstream/mangle/parse/gen/Mangle.g4` | ANTLR4 grammar (source of truth) |
-| Parser | `upstream/mangle/parse/parse.go` | Visitor-based AST construction |
-| AST | `upstream/mangle/ast/ast.go` | Core type definitions (~1400 lines) |
-| Analysis | `upstream/mangle/analysis/validation.go` | Semantic validation (~1450 lines) |
-| Stratification | `upstream/mangle/analysis/stratification.go` | Negation cycle detection |
-| Builtins | `upstream/mangle/builtin/builtin.go` | Built-in predicates/functions |
-| Examples | `upstream/mangle/examples/*.mg` | Test files for parser validation |
+| Grammar | `parse/gen/Mangle.g4` | ANTLR4 grammar (source of truth; identical to `mangle-lsp/Mangle.g4`) |
+| Parser | `parse/parse.go` | Visitor-based AST construction |
+| AST | `ast/ast.go`, `ast/decl.go`, `ast/temporal.go` | Core types, modes, temporal types |
+| Rule checks | `analysis/rulecheck.go` | Binding/mode checks (CheckRule) |
+| Bounds checking | `analysis/boundscheck.go`, `analysis/infercontext.go` | Type (bounds) inference and checking |
+| Decl checks | `analysis/declcheck.go` | Declaration well-formedness |
+| Rewriting | `analysis/rewriteclause.go` | Negation delay |
+| Stratification | `analysis/stratification.go` | Negation cycle detection |
+| Symbols & types | `symbols/symbols.go`, `symbols/typeexprs.go` | Builtin names/arities, type expressions |
+| Builtins | `builtin/builtin.go`, `functional/functional.go` | Modes, type signatures, runtime behavior |
+| Examples | `examples/*.mg`, `analysis/test_cases/*.mg` | Vendored as conformance fixtures in `mangle-lsp/test/fixtures/upstream/` |
 
-# Package Structure
-
-The `packages/` directory contains a monorepo with four packages:
-
-```
-packages/
-├── mangle-ts/      # TypeScript implementation (core)
-├── mangle-py/      # Python implementation (standalone)
-├── mangle-lsp/     # Language Server Protocol (depends on mangle-ts)
-└── mangle-lint/    # CLI linter (depends on mangle-ts)
-```
-
-## Dependency Graph
+# Repository Structure
 
 ```
-mangle-ts (standalone)
-    ↓
-    ├── mangle-lsp (depends on mangle-ts)
-    └── mangle-lint (depends on mangle-ts)
-
-mangle-py (standalone, mirrors mangle-ts structure)
+mangle-lsp/        # LSP server + CLI (TypeScript, implemented)
+  src/parser/      # ANTLR parser and AST (gen/ is generated from Mangle.g4)
+  src/analysis/    # validation, bounds checking (boundscheck.ts), lints, stratification,
+                   # type expressions (types.ts), diagnostic catalog (diagnostics.ts),
+                   # shared pipeline (pipeline.ts)
+  src/builtins/    # typed catalog of upstream builtin functions and predicates
+  src/services/    # hover, completion, definition, references, symbols, formatting, rename
+  src/cli/         # mangle-cli commands and formatters (json/text/sarif)
+  test/            # vitest suites, incl. test/conformance (upstream examples)
+mangle-vscode/     # VS Code extension; server/*.bundle.js are esbuild bundles of mangle-lsp/src
+docs/              # DIAGNOSTICS.md (generated), CLI-API.md
 ```
 
-## Package Details
+`packages/` (mangle-ts / mangle-py ports) is a separate, gitignored monorepo and is not part
+of this repository.
 
-### mangle-ts (TypeScript Core)
+## Rules for changes
 
-**Location:** `packages/mangle-ts`
-**Status:** Scaffolding only (empty module stubs)
-**Package:** `@mangle/mangle-ts`
+- Every diagnostic code must be in `mangle-lsp/src/analysis/diagnostics.ts` with an
+  explanation and fix (plus a bad/good example where useful); regenerate `docs/DIAGNOSTICS.md` with
+  `node mangle-vscode/server/cli.bundle.js explain --markdown > docs/DIAGNOSTICS.md`
+  (a test fails if it is stale). Never reuse a code for a different meaning.
+- Diagnostics should carry a `hint` (and `fixes` when the edit is unambiguous): they are read by
+  people and coding agents who do not know Mangle.
+- Type checks must only report provable mismatches (`isDisjoint`), never unknowns.
+- After changing `mangle-lsp/src`, run `npm run build` at the root so the committed bundles in
+  `mangle-vscode/server/` stay in sync.
 
-Module structure mirrors upstream Go:
-- `analysis/` - Semantic validation
-- `ast/` - AST type definitions
-- `builtin/` - Built-in predicates/functions
-- `engine/` - Query engine
-- `factstore/` - Fact storage
-- `functional/` - Functional utilities
-- `interpreter/` - Mangle interpreter
-- `parse/` - Parser (ANTLR-generated code goes in `parse/gen/`)
-- `symbols/` - Symbol management
-- `unionfind/` - Union-find data structure
-
-Build: `npm run build` (TypeScript → ES2022)
-
-### mangle-py (Python Core)
-
-**Location:** `packages/mangle-py`
-**Status:** Scaffolding only (empty `__init__.py` files)
-**Package:** `mangle-py` (PyPI)
-
-Module structure mirrors mangle-ts:
-- `src/mangle_py/` - Main package
-- Same submodules as mangle-ts
-- `parse/gen/` - ANTLR-generated parser output
-
-Build: Uses hatchling (`python -m build`)
-Runtime dependency: `antlr4-python3-runtime==4.13.1`
-
-### mangle-lsp (Language Server)
-
-**Location:** `packages/mangle-lsp`
-**Status:** Stub (throws "not implemented")
-**Package:** `@mangle/mangle-lsp`
-
-Dependencies:
-- `@mangle/mangle-ts` (workspace)
-- `vscode-languageserver` ^9.0.0
-- `vscode-languageserver-textdocument` ^1.0.11
-
-Entry point: `src/server.ts` (currently throws error)
-
-Planned features:
-- Syntax error diagnostics
-- Semantic error diagnostics (unbound vars, unknown predicates)
-- Hover information for predicates/builtins
-- Code completion
-- Go-to-definition
-- Find references
-- Document formatting
-
-### mangle-lint (CLI Linter)
-
-**Location:** `packages/mangle-lint`
-**Status:** Stub (prints "not implemented", exits 1)
-**Package:** `@mangle/mangle-lint`
-
-Binary: `mangle-lint` → `dist/cli.js`
-Dependency: `@mangle/mangle-ts` (workspace)
-
-Entry point: `src/cli.ts` (currently exits with error)
-
-Planned features:
-- CLI interface for linting `.mg` files
-- CI-friendly output formats
-- Rule IDs for error categorization
-
-## Implementation Priority
-
-1. **mangle-ts** - Must be implemented first (core parser, AST, analysis)
-2. **mangle-lsp** - Depends on mangle-ts for parsing/analysis
-3. **mangle-lint** - Depends on mangle-ts, simpler than LSP
-4. **mangle-py** - Can be developed in parallel, independent of TS
-
-## Building the Monorepo
+## Building and testing
 
 ```bash
-# Install dependencies
-npm install
-
-# Build all packages
-npm run build
-
-# Build specific package
-npm run build --workspace=@mangle/mangle-ts
+npm install          # root (npm workspaces: mangle-lsp, mangle-vscode)
+npm run build        # regenerate parser, tsc, bundle extension + server + CLI
+npm test             # vitest in mangle-lsp
 ```
 
 # Skills

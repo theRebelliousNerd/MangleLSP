@@ -4,19 +4,9 @@
 
 import { readFileSync, existsSync } from 'fs';
 import { resolve, relative } from 'path';
-import { parse, ParseError } from '../../parser/index';
-import {
-    validate,
-    checkStratification,
-    checkUnboundedRecursion,
-    checkCartesianExplosion,
-    checkLateFiltering,
-    checkLateNegation,
-    checkMultipleIndependentVars,
-    checkTemporalRecursion,
-    SemanticError,
-    StratificationError,
-} from '../../analysis/index';
+import { parse } from '../../parser/index';
+import { analyzeUnit } from '../../analysis/pipeline';
+import { analysisToCLIDiagnostic, parseErrorToCLIDiagnostic } from '../diagnostics';
 import {
     CheckResult,
     CheckOptions,
@@ -30,7 +20,7 @@ import {
  */
 export function runCheck(files: string[], options: CheckOptions): CheckResult {
     const result: CheckResult = {
-        version: '1.0',
+        version: '1.1',
         files: [],
         summary: {
             totalFiles: 0,
@@ -104,89 +94,26 @@ export function runCheck(files: string[], options: CheckOptions): CheckResult {
 /**
  * Check a single file.
  */
-function checkFile(filePath: string, source: string, options: CheckOptions): FileDiagnostics {
+export function checkFile(filePath: string, source: string, options: CheckOptions): FileDiagnostics {
     const diagnostics: CLIDiagnostic[] = [];
     const lines = source.split('\n');
+    const explain = !!options.explain;
 
     // Parse
     const parseResult = parse(source);
 
     // Add parse errors
     for (const error of parseResult.errors) {
-        const diag = parseErrorToDiagnostic(error, lines);
+        const diag = parseErrorToCLIDiagnostic(error, lines, explain);
         if (shouldInclude(diag.severity, options.severity)) {
             diagnostics.push(diag);
         }
     }
 
-    // Semantic validation
+    // Semantic validation, stratification and advisory checks
     if (parseResult.unit) {
-        const validationResult = validate(parseResult.unit);
-        for (const error of validationResult.errors) {
-            const diag = semanticErrorToDiagnostic(error, lines);
-            if (shouldInclude(diag.severity, options.severity)) {
-                diagnostics.push(diag);
-            }
-        }
-
-        // Stratification errors
-        const stratErrors = checkStratification(parseResult.unit);
-        for (const error of stratErrors) {
-            const diag = stratificationErrorToDiagnostic(error, lines);
-            if (shouldInclude(diag.severity, options.severity)) {
-                diagnostics.push(diag);
-            }
-        }
-
-        // Unbounded recursion warnings
-        const recursionWarnings = checkUnboundedRecursion(parseResult.unit);
-        for (const warning of recursionWarnings) {
-            const diag = stratificationErrorToDiagnostic(warning, lines);
-            if (shouldInclude(diag.severity, options.severity)) {
-                diagnostics.push(diag);
-            }
-        }
-
-        // Cartesian explosion warnings
-        const cartesianWarnings = checkCartesianExplosion(parseResult.unit);
-        for (const warning of cartesianWarnings) {
-            const diag = stratificationErrorToDiagnostic(warning, lines);
-            if (shouldInclude(diag.severity, options.severity)) {
-                diagnostics.push(diag);
-            }
-        }
-
-        // Late filtering warnings
-        const lateFilterWarnings = checkLateFiltering(parseResult.unit);
-        for (const warning of lateFilterWarnings) {
-            const diag = stratificationErrorToDiagnostic(warning, lines);
-            if (shouldInclude(diag.severity, options.severity)) {
-                diagnostics.push(diag);
-            }
-        }
-
-        // Late negation warnings
-        const lateNegationWarnings = checkLateNegation(parseResult.unit);
-        for (const warning of lateNegationWarnings) {
-            const diag = stratificationErrorToDiagnostic(warning, lines);
-            if (shouldInclude(diag.severity, options.severity)) {
-                diagnostics.push(diag);
-            }
-        }
-
-        // Multiple independent variables
-        const multiIndepWarnings = checkMultipleIndependentVars(parseResult.unit);
-        for (const warning of multiIndepWarnings) {
-            const diag = stratificationErrorToDiagnostic(warning, lines);
-            if (shouldInclude(diag.severity, options.severity)) {
-                diagnostics.push(diag);
-            }
-        }
-
-        // Temporal recursion warnings (DatalogMTL)
-        const temporalWarnings = checkTemporalRecursion(parseResult.unit);
-        for (const warning of temporalWarnings) {
-            const diag = stratificationErrorToDiagnostic(warning, lines);
+        for (const error of analyzeUnit(parseResult.unit).diagnostics) {
+            const diag = analysisToCLIDiagnostic(error, lines, explain);
             if (shouldInclude(diag.severity, options.severity)) {
                 diagnostics.push(diag);
             }
@@ -196,66 +123,6 @@ function checkFile(filePath: string, source: string, options: CheckOptions): Fil
     return {
         path: relative(process.cwd(), filePath),
         diagnostics,
-    };
-}
-
-/**
- * Convert a parse error to a CLI diagnostic.
- */
-function parseErrorToDiagnostic(error: ParseError, lines: string[]): CLIDiagnostic {
-    const line = lines[error.line - 1] || '';
-    const context = line.trim();
-
-    return {
-        severity: 'error',
-        code: 'P001',
-        source: error.source === 'lexer' ? 'mangle-lexer' : 'mangle-parse',
-        message: error.message,
-        range: {
-            start: { line: error.line, column: error.column },
-            end: { line: error.line, column: error.column + error.length },
-        },
-        context: context.length > 0 ? context : undefined,
-    };
-}
-
-/**
- * Convert a semantic error to a CLI diagnostic.
- */
-function semanticErrorToDiagnostic(error: SemanticError, lines: string[]): CLIDiagnostic {
-    const line = lines[error.range.start.line - 1] || '';
-    const context = line.trim();
-
-    return {
-        severity: error.severity,
-        code: error.code,
-        source: 'mangle-semantic',
-        message: error.message,
-        range: {
-            start: { line: error.range.start.line, column: error.range.start.column },
-            end: { line: error.range.end.line, column: error.range.end.column },
-        },
-        context: context.length > 0 ? context : undefined,
-    };
-}
-
-/**
- * Convert a stratification error to a CLI diagnostic.
- */
-function stratificationErrorToDiagnostic(error: StratificationError, lines: string[]): CLIDiagnostic {
-    const line = lines[error.range.start.line - 1] || '';
-    const context = line.trim();
-
-    return {
-        severity: error.severity,
-        code: error.code,
-        source: 'mangle-stratification',
-        message: error.message,
-        range: {
-            start: { line: error.range.start.line, column: error.range.start.column },
-            end: { line: error.range.end.line, column: error.range.end.column },
-        },
-        context: context.length > 0 ? context : undefined,
     };
 }
 

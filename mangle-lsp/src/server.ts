@@ -26,12 +26,19 @@ import {
     DidChangeConfigurationParams,
     WorkspaceFoldersChangeEvent,
     TextDocumentChangeEvent,
+    CodeAction,
+    CodeActionKind,
+    CodeActionParams,
+    TextEdit,
 } from 'vscode-languageserver/node';
 
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
 import { parse, ParseError, ParseResult } from './parser/index';
-import { validate, SemanticError, ValidationResult, checkStratification, checkUnboundedRecursion, checkCartesianExplosion, checkLateFiltering, checkLateNegation, checkMultipleIndependentVars, checkTemporalRecursion, StratificationError } from './analysis/index';
+import { ValidationResult, QuickFix } from './analysis/index';
+import { analyzeUnit, AnalysisDiagnostic } from './analysis/pipeline';
+import { getDiagnosticInfo, diagnosticDocUrl, renderExplanation } from './analysis/diagnostics';
+import { parseErrorHint } from './cli/diagnostics';
 import { SymbolTable, buildSymbolTable } from './analysis/symbols';
 import {
     getHover,
@@ -57,6 +64,15 @@ interface DocumentState {
     version: number;
     parseResult: ParseResult;
     validationResult: ValidationResult | null;
+    /** All analysis diagnostics (semantic, type, stratification, advice) */
+    analysis: AnalysisDiagnostic[];
+    /** Source text (for hints that need line context) */
+    text: string;
+}
+
+/** Payload stored in Diagnostic.data so code actions can apply fixes. */
+interface DiagnosticData {
+    fixes?: QuickFix[];
 }
 const documentStates = new Map<string, DocumentState>();
 
@@ -114,6 +130,10 @@ connection.onInitialize((params: InitializeParams): InitializeResult => {
             // Rename
             renameProvider: {
                 prepareProvider: true,
+            },
+            // Quick fixes for diagnostics that carry machine-applicable edits
+            codeActionProvider: {
+                codeActionKinds: [CodeActionKind.QuickFix],
             },
         },
     };
@@ -232,190 +252,183 @@ documents.onDidClose((event: TextDocumentChangeEvent<TextDocument>) => {
 });
 
 /**
- * Validate a document and publish diagnostics.
+ * Analyze a document (parse + full analysis pipeline) and cache the state.
  */
-async function validateDocument(document: TextDocument): Promise<void> {
-    const settings = await getDocumentSettings(document.uri);
+function analyzeDocument(document: TextDocument, semantic: boolean): DocumentState {
     const text = document.getText();
-
-    // Parse the document
     const parseResult = parse(text);
-
-    // Run semantic validation if parse succeeded
     let validationResult: ValidationResult | null = null;
-    if (parseResult.unit && settings.enableSemanticAnalysis) {
-        validationResult = validate(parseResult.unit);
+    let analysis: AnalysisDiagnostic[] = [];
+    if (parseResult.unit && semantic) {
+        const result = analyzeUnit(parseResult.unit);
+        validationResult = result.validation;
+        analysis = result.diagnostics;
     }
-
-    // Cache state
-    documentStates.set(document.uri, {
+    const state: DocumentState = {
         uri: document.uri,
         version: document.version,
         parseResult,
         validationResult,
-    });
+        analysis,
+        text,
+    };
+    documentStates.set(document.uri, state);
+    return state;
+}
 
-    // Collect diagnostics
+/**
+ * Validate a document and publish diagnostics.
+ */
+async function validateDocument(document: TextDocument): Promise<void> {
+    const settings = await getDocumentSettings(document.uri);
+    const state = analyzeDocument(document, settings.enableSemanticAnalysis);
+    const lines = state.text.split('\n');
+
     const diagnostics: Diagnostic[] = [];
-
-    // Parse errors
-    for (const error of parseResult.errors) {
-        if (diagnostics.length >= settings.maxNumberOfProblems) {
-            break;
-        }
-        diagnostics.push(parseErrorToDiagnostic(error));
+    for (const error of state.parseResult.errors) {
+        if (diagnostics.length >= settings.maxNumberOfProblems) break;
+        diagnostics.push(parseErrorToDiagnostic(error, lines));
+    }
+    for (const error of state.analysis) {
+        if (diagnostics.length >= settings.maxNumberOfProblems) break;
+        diagnostics.push(analysisToDiagnostic(error));
     }
 
-    // Semantic errors
-    if (validationResult) {
-        for (const error of validationResult.errors) {
-            if (diagnostics.length >= settings.maxNumberOfProblems) {
-                break;
-            }
-            diagnostics.push(semanticErrorToDiagnostic(error));
-        }
-    }
-
-    // Stratification errors (negation cycles)
-    if (parseResult.unit && settings.enableSemanticAnalysis) {
-        const stratErrors = checkStratification(parseResult.unit);
-        for (const error of stratErrors) {
-            if (diagnostics.length >= settings.maxNumberOfProblems) {
-                break;
-            }
-            diagnostics.push(stratificationErrorToDiagnostic(error));
-        }
-
-        // Unbounded recursion warnings
-        const recursionWarnings = checkUnboundedRecursion(parseResult.unit);
-        for (const warning of recursionWarnings) {
-            if (diagnostics.length >= settings.maxNumberOfProblems) {
-                break;
-            }
-            diagnostics.push(stratificationErrorToDiagnostic(warning));
-        }
-
-        // Cartesian explosion warnings
-        const cartesianWarnings = checkCartesianExplosion(parseResult.unit);
-        for (const warning of cartesianWarnings) {
-            if (diagnostics.length >= settings.maxNumberOfProblems) {
-                break;
-            }
-            diagnostics.push(stratificationErrorToDiagnostic(warning));
-        }
-
-        // Late filtering warnings
-        const lateFilterWarnings = checkLateFiltering(parseResult.unit);
-        for (const warning of lateFilterWarnings) {
-            if (diagnostics.length >= settings.maxNumberOfProblems) {
-                break;
-            }
-            diagnostics.push(stratificationErrorToDiagnostic(warning));
-        }
-
-        // Late negation warnings
-        const lateNegationWarnings = checkLateNegation(parseResult.unit);
-        for (const warning of lateNegationWarnings) {
-            if (diagnostics.length >= settings.maxNumberOfProblems) {
-                break;
-            }
-            diagnostics.push(stratificationErrorToDiagnostic(warning));
-        }
-
-        // Multiple independent variables (massive Cartesian)
-        const multiIndepWarnings = checkMultipleIndependentVars(parseResult.unit);
-        for (const warning of multiIndepWarnings) {
-            if (diagnostics.length >= settings.maxNumberOfProblems) {
-                break;
-            }
-            diagnostics.push(stratificationErrorToDiagnostic(warning));
-        }
-
-        // Temporal recursion warnings (DatalogMTL)
-        const temporalWarnings = checkTemporalRecursion(parseResult.unit);
-        for (const warning of temporalWarnings) {
-            if (diagnostics.length >= settings.maxNumberOfProblems) {
-                break;
-            }
-            diagnostics.push(stratificationErrorToDiagnostic(warning));
-        }
-    }
-
-    // Send diagnostics
     connection.sendDiagnostics({ uri: document.uri, diagnostics });
+}
+
+function toLspSeverity(severity: 'error' | 'warning' | 'info'): DiagnosticSeverity {
+    switch (severity) {
+        case 'error':
+            return DiagnosticSeverity.Error;
+        case 'warning':
+            return DiagnosticSeverity.Warning;
+        default:
+            return DiagnosticSeverity.Information;
+    }
 }
 
 /**
  * Convert a parse error to an LSP diagnostic.
  */
-function parseErrorToDiagnostic(error: ParseError): Diagnostic {
+function parseErrorToDiagnostic(error: ParseError, lines: string[] = []): Diagnostic {
+    const hint = parseErrorHint(error.message, lines[error.line - 1] ?? '');
     return {
         severity: DiagnosticSeverity.Error,
         range: {
             start: { line: error.line - 1, character: error.column },
             end: { line: error.line - 1, character: error.column + error.length },
         },
-        message: error.message,
+        message: hint ? `${error.message}\nhelp: ${hint}` : error.message,
         source: error.source === 'lexer' ? 'mangle-lexer' : 'mangle-parse',
+        code: 'P001',
+        codeDescription: { href: diagnosticDocUrl('P001') },
     };
 }
 
 /**
- * Convert a semantic error to an LSP diagnostic.
+ * Convert an analysis diagnostic to an LSP diagnostic. The instance hint is
+ * appended to the message (editors show it inline), the code links to the
+ * diagnostics reference, and fixes travel in `data` for code actions.
  */
-function semanticErrorToDiagnostic(error: SemanticError): Diagnostic {
-    let severity: DiagnosticSeverity;
-    switch (error.severity) {
-        case 'error':
-            severity = DiagnosticSeverity.Error;
-            break;
-        case 'warning':
-            severity = DiagnosticSeverity.Warning;
-            break;
-        case 'info':
-            severity = DiagnosticSeverity.Information;
-            break;
-        default:
-            severity = DiagnosticSeverity.Error;
-    }
-    return {
-        severity,
+function analysisToDiagnostic(error: AnalysisDiagnostic): Diagnostic {
+    const diagnostic: Diagnostic = {
+        severity: toLspSeverity(error.severity),
         range: {
             start: { line: error.range.start.line - 1, character: error.range.start.column },
             end: { line: error.range.end.line - 1, character: error.range.end.column },
         },
-        message: error.message,
-        source: 'mangle-semantic',
+        message: error.hint ? `${error.message}\nhelp: ${error.hint}` : error.message,
+        source: error.source,
         code: error.code,
+    };
+    if (getDiagnosticInfo(error.code)) {
+        diagnostic.codeDescription = { href: diagnosticDocUrl(error.code) };
+    }
+    if (error.fixes && error.fixes.length > 0) {
+        const data: DiagnosticData = { fixes: error.fixes };
+        diagnostic.data = data;
+    }
+    return diagnostic;
+}
+
+/**
+ * JSON form of an analysis diagnostic for custom requests (1-indexed lines).
+ */
+function analysisToJson(e: AnalysisDiagnostic): Record<string, unknown> {
+    const info = getDiagnosticInfo(e.code);
+    return {
+        code: e.code,
+        title: info?.title,
+        category: info?.category,
+        source: e.source,
+        severity: e.severity,
+        message: e.message,
+        hint: e.hint,
+        fixes: e.fixes?.map(f => ({
+            title: f.title,
+            newText: f.newText,
+            range: {
+                start: { line: f.range.start.line, column: f.range.start.column },
+                end: { line: f.range.end.line, column: f.range.end.column },
+            },
+        })),
+        docs: info ? diagnosticDocUrl(e.code) : undefined,
+        range: {
+            start: { line: e.range.start.line, column: e.range.start.column },
+            end: { line: e.range.end.line, column: e.range.end.column },
+        },
     };
 }
 
 /**
- * Convert a stratification error to an LSP diagnostic.
+ * Collects the diagnostics of a cached document for the custom requests.
  */
-function stratificationErrorToDiagnostic(error: StratificationError): Diagnostic {
-    let severity: DiagnosticSeverity;
-    switch (error.severity) {
-        case 'error':
-            severity = DiagnosticSeverity.Error;
-            break;
-        case 'warning':
-            severity = DiagnosticSeverity.Warning;
-            break;
-        default:
-            severity = DiagnosticSeverity.Error;
-    }
-    return {
-        severity,
+function collectDiagnosticsJson(uri: string, state: DocumentState): Record<string, unknown> {
+    const lines = state.text.split('\n');
+    const parseErrors = state.parseResult.errors.map(e => ({
+        code: 'P001',
+        source: e.source === 'lexer' ? 'mangle-lexer' : 'mangle-parse',
+        severity: 'error',
+        message: e.message,
+        hint: parseErrorHint(e.message, lines[e.line - 1] ?? ''),
         range: {
-            start: { line: error.range.start.line - 1, character: error.range.start.column },
-            end: { line: error.range.end.line - 1, character: error.range.end.column },
+            start: { line: e.line, column: e.column },
+            end: { line: e.line, column: e.column + e.length },
         },
-        message: error.message,
-        source: 'mangle-stratification',
-        code: error.code,
+    }));
+    return {
+        uri,
+        parseErrors,
+        semanticErrors: state.analysis.filter(e => e.source === 'mangle-semantic').map(analysisToJson),
+        stratificationErrors: state.analysis.filter(e => e.source === 'mangle-stratification').map(analysisToJson),
     };
 }
+
+/**
+ * Quick fixes: every diagnostic that carries fixes offers them as code actions.
+ */
+connection.onCodeAction((params: CodeActionParams): CodeAction[] => {
+    const actions: CodeAction[] = [];
+    for (const diagnostic of params.context.diagnostics) {
+        const data = diagnostic.data as DiagnosticData | undefined;
+        if (!data?.fixes) continue;
+        data.fixes.forEach((fix, index) => {
+            const edit = TextEdit.replace({
+                start: { line: fix.range.start.line - 1, character: fix.range.start.column },
+                end: { line: fix.range.end.line - 1, character: fix.range.end.column },
+            }, fix.newText);
+            actions.push({
+                title: fix.title,
+                kind: CodeActionKind.QuickFix,
+                diagnostics: [diagnostic],
+                isPreferred: index === 0,
+                edit: { changes: { [params.textDocument.uri]: [edit] } },
+            });
+        });
+    }
+    return actions;
+});
 
 /**
  * Get the symbol table for a document.
@@ -629,53 +642,7 @@ connection.onRequest('mangle/getDiagnostics', (params: { uri: string }) => {
                 stratificationErrors: [],
             };
         }
-
-        // Collect parse errors
-        const parseErrors = state.parseResult.errors.map(e => ({
-            code: 'P001',
-            source: e.source === 'lexer' ? 'mangle-lexer' : 'mangle-parse',
-            message: e.message,
-            range: {
-                start: { line: e.line, column: e.column },
-                end: { line: e.line, column: e.column + e.length },
-            },
-        }));
-
-        // Collect semantic errors
-        const semanticErrors = state.validationResult?.errors.map(e => ({
-            code: e.code,
-            source: 'mangle-semantic',
-            severity: e.severity,
-            message: e.message,
-            range: {
-                start: { line: e.range.start.line, column: e.range.start.column },
-                end: { line: e.range.end.line, column: e.range.end.column },
-            },
-        })) || [];
-
-        // Collect stratification errors
-        let stratificationErrors: any[] = [];
-        if (state.parseResult.unit) {
-            const stratErrors = checkStratification(state.parseResult.unit);
-            stratificationErrors = stratErrors.map(e => ({
-                code: e.code,
-                source: 'mangle-stratification',
-                severity: e.severity,
-                message: e.message,
-                range: {
-                    start: { line: e.range.start.line, column: e.range.start.column },
-                    end: { line: e.range.end.line, column: e.range.end.column },
-                },
-                cycle: e.cycle,
-            }));
-        }
-
-        return {
-            uri: params.uri,
-            parseErrors,
-            semanticErrors,
-            stratificationErrors,
-        };
+        return collectDiagnosticsJson(params.uri, state);
     } catch (e) {
         connection.console.error(`mangle/getDiagnostics error: ${e}`);
         return {
@@ -686,6 +653,20 @@ connection.onRequest('mangle/getDiagnostics', (params: { uri: string }) => {
             error: String(e),
         };
     }
+});
+
+/**
+ * Custom request: Explain a diagnostic code.
+ * Request: 'mangle/explain'
+ * Params: { code: string }
+ * Returns: the catalog entry plus rendered markdown, or { error }
+ */
+connection.onRequest('mangle/explain', (params: { code: string }) => {
+    const info = getDiagnosticInfo(params.code ?? '');
+    if (!info) {
+        return { code: params.code, error: `Unknown diagnostic code: ${params.code}` };
+    }
+    return { ...info, docs: diagnosticDocUrl(info.code), markdown: renderExplanation(info, true) };
 });
 
 /**
@@ -700,8 +681,7 @@ connection.onRequest('mangle/checkFiles', async (params: { uris: string[] }) => 
     for (const uri of params.uris) {
         const state = documentStates.get(uri);
         if (state) {
-            const diagnostics = await connection.sendRequest('mangle/getDiagnostics', { uri }) as Record<string, any>;
-            results.push({ uri, ...diagnostics });
+            results.push(collectDiagnosticsJson(uri, state));
         }
     }
 
@@ -941,8 +921,9 @@ connection.onRequest('mangle/batchLookup', async (params: { queries: BatchQuery[
                 }
 
                 case 'diagnostics': {
-                    const diagResult = await connection.sendRequest('mangle/getDiagnostics', { uri: query.uri }) as Record<string, any>;
-                    result.result = diagResult;
+                    result.result = state
+                        ? collectDiagnosticsJson(query.uri, state)
+                        : { uri: query.uri, parseErrors: [], semanticErrors: [], stratificationErrors: [] };
                     break;
                 }
 
@@ -989,7 +970,7 @@ connection.onRequest('mangle/getFileInfo', async (params: { uri: string }) => {
         }
 
         // Get diagnostics
-        const diagResult = await connection.sendRequest('mangle/getDiagnostics', { uri: params.uri }) as Record<string, any>;
+        const diagResult = collectDiagnosticsJson(params.uri, state);
 
         // Get symbols
         const symbols = state.parseResult.unit ? getDocumentSymbols(state.parseResult.unit) : [];
@@ -1047,7 +1028,7 @@ connection.onRequest('mangle/checkAll', async () => {
     let totalInfo = 0;
 
     for (const [uri, state] of documentStates) {
-        const diagResult = await connection.sendRequest('mangle/getDiagnostics', { uri }) as Record<string, any>;
+        const diagResult = collectDiagnosticsJson(uri, state) as Record<string, any>;
 
         const fileResult = {
             uri,
@@ -1062,10 +1043,11 @@ connection.onRequest('mangle/checkAll', async () => {
         const semanticInfo = diagResult.semanticErrors?.filter((e: any) => e.severity === 'info')?.length ?? 0;
         const stratErrors = diagResult.stratificationErrors?.filter((e: any) => e.severity === 'error')?.length ?? 0;
         const stratWarnings = diagResult.stratificationErrors?.filter((e: any) => e.severity === 'warning')?.length ?? 0;
+        const stratInfo = diagResult.stratificationErrors?.filter((e: any) => e.severity === 'info')?.length ?? 0;
 
         totalErrors += parseErrors + semanticErrors + stratErrors;
         totalWarnings += semanticWarnings + stratWarnings;
-        totalInfo += semanticInfo;
+        totalInfo += semanticInfo + stratInfo;
     }
 
     return {

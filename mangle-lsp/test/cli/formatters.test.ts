@@ -9,6 +9,7 @@ import {
     formatCheckResultSarif,
 } from '../../src/cli/formatters/index';
 import { CheckResult } from '../../src/cli/types';
+import { VERSION } from '../../src/version';
 
 describe('CLI formatters', () => {
     const sampleResult: CheckResult = {
@@ -90,7 +91,7 @@ describe('CLI formatters', () => {
 
             const tool = parsed.runs[0].tool.driver;
             expect(tool.name).toBe('mangle-cli');
-            expect(tool.version).toBe('1.0.0');
+            expect(tool.version).toBe(VERSION);
         });
 
         it('should include rule definitions', () => {

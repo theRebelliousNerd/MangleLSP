@@ -102,11 +102,17 @@ describe('Validation Module', () => {
     });
 
     describe('E003: Variables in negation must be bound', () => {
-        it('should silently handle negated atom with variable not bound elsewhere (negation delay drops it)', () => {
-            // Upstream behavior: RewriteClause delays negated atoms until their variables are bound.
-            // If variables never get bound, the negated atom is silently dropped.
-            // Y is never bound by any positive atom, so !parent(Y, X) is dropped.
-            expectNoErrors('orphan(X) :- person(X), !parent(Y, X).');
+        it('should error on negated atom with a variable never bound elsewhere (upstream would silently drop it)', () => {
+            // Upstream RewriteClause delays negated atoms until their variables are bound and
+            // silently drops those whose variables never get bound - which turns orphan into person.
+            // The LSP reports this as E003 and suggests '_'.
+            const parseResult = parse('orphan(X) :- person(X), !parent(Y, X).');
+            const result = validate(parseResult.unit!);
+            const error = result.errors.find(e => e.code === 'E003');
+            expect(error).toBeDefined();
+            expect(error?.message).toContain("'Y'");
+            expect(error?.message).toContain('silently drops');
+            expect(error?.hint).toContain("'_'");
         });
 
         it('should allow negation with all variables bound', () => {
@@ -117,9 +123,9 @@ describe('Validation Module', () => {
             expectNoErrors('different(X, Y) :- item(X), item(Y), !same(X, Y).');
         });
 
-        it('should silently handle negation with variables never bound (negation delay drops it)', () => {
-            // Y, Z are never bound by any positive atom, so !baz(Y, Z) is dropped.
-            expectNoErrors('foo(X) :- bar(X), !baz(Y, Z).');
+        it('should report every never-bound variable of a dropped negation', () => {
+            // Y, Z are never bound by any positive atom; upstream would drop !baz(Y, Z).
+            expectErrorCount('foo(X) :- bar(X), !baz(Y, Z).', 'E003', 2);
         });
 
         it('should error when negated atom has unbound variable and no rewrite possible', () => {
@@ -415,7 +421,13 @@ describe('Validation Module', () => {
         });
 
         it('should allow constant pattern', () => {
-            expectNoErrors('foo(X) :- str(X), :match_prefix(X, "prefix").');
+            expectNoErrors('foo(X) :- str(X), :match_prefix(X, /prefix).');
+            expectNoErrors('foo(X) :- str(X), :string:starts_with(X, "prefix").');
+        });
+
+        it('should reject a string pattern for :match_prefix (names only)', () => {
+            // Upstream: "2nd arguments must be name constant for ':match_prefix'"
+            expectError('foo(X) :- str(X), :match_prefix(X, "prefix").', 'E069');
         });
     });
 
@@ -599,13 +611,22 @@ describe('Validation Module', () => {
     });
 
     describe('E041: Private predicate access', () => {
-        it('should error when accessing private predicate', () => {
+        it('should error when accessing a private predicate from another package', () => {
+            const source = `
+                Decl lib.helper(X) descr [private()].
+                lib.helper(/a).
+                app.foo(X) :- lib.helper(X).
+            `;
+            expectError(source, 'E041');
+        });
+
+        it('should allow private predicates within their own package (upstream checkVisibility)', () => {
             const source = `
                 Decl helper(X) descr [private()].
                 helper(/a).
                 foo(X) :- helper(X).
             `;
-            expectError(source, 'E041');
+            expectNoErrors(source);
         });
 
         it('should allow non-private predicates', () => {
@@ -830,7 +851,7 @@ describe('Validation Module', () => {
                 Decl text(X).
                 Decl matched(X).
                 text("hello world").
-                matched(X) :- text(X), :match_prefix(X, "hello").
+                matched(X) :- text(X), :string:starts_with(X, "hello").
             `;
             expectNoErrors(source);
         });
@@ -935,13 +956,13 @@ describe('Validation Module', () => {
             expect(error?.message).toContain('Missing');
         });
 
-        it('E003 message: negation delay drops atoms with never-bound vars', () => {
-            // With negation delay rewriting, !baz(Unbound) is silently dropped
-            // because Unbound is never bound by any premise. No E003 is emitted.
+        it('E003 message: never-bound variables in negation are reported, not dropped', () => {
+            // Upstream negation delay would silently drop !baz(Unbound); the LSP reports it.
             const parseResult = parse('foo(X) :- bar(X), !baz(Unbound).');
             const result = validate(parseResult.unit!);
             const error = result.errors.find(e => e.code === 'E003');
-            expect(error).toBeUndefined();
+            expect(error).toBeDefined();
+            expect(error?.message).toContain('Unbound');
         });
 
         it('E005 message should mention unknown predicate', () => {
@@ -1012,10 +1033,9 @@ describe('Validation Module', () => {
             expectNoErrors('orphan(X) :- person(X), !parent(_, _).');
         });
 
-        it('negation delay should drop negated atom with never-bound nested var', () => {
-            // With negation delay, !complex(fn:plus(Y, 1)) is dropped because
-            // Y is never bound by any premise. Silently dropped, no error.
-            expectNoErrors('foo(X) :- bar(X), !complex(fn:plus(Y, 1)).');
+        it('should report never-bound nested var in a negated atom', () => {
+            // Upstream negation delay would silently drop !complex(fn:plus(Y, 1)).
+            expectError('foo(X) :- bar(X), !complex(fn:plus(Y, 1)).', 'E003');
         });
     });
 
@@ -1080,13 +1100,21 @@ describe('Validation Module', () => {
         });
     });
 
-    describe('E013: Let statement function validation', () => {
-        it('should warn when non-reducer used after group_by', () => {
-            // fn:plus is not a reducer, so after group_by it should warn
+    describe('E013: Let statement function validation (retired; covered by E047)', () => {
+        it('should explain the reducer alternative when a non-reducer uses per-row values after group_by', () => {
+            // fn:plus is not a reducer and X is a per-row variable: E047, whose hint names reducers.
             const parseResult = parse('result(Y) :- input(X) |> do fn:group_by(), let Y = fn:plus(X, 1).');
             const result = validate(parseResult.unit!);
-            const warning = result.errors.find(e => e.code === 'E013' && e.severity === 'warning');
-            expect(warning).toBeDefined();
+            const error = result.errors.find(e => e.code === 'E047');
+            expect(error).toBeDefined();
+            expect(error?.hint).toContain('fn:sum');
+            expect(result.errors.filter(e => e.code === 'E013')).toHaveLength(0);
+        });
+
+        it('should not warn when a non-reducer only uses grouped values (valid upstream)', () => {
+            const parseResult = parse('result(G, V) :- data(G, X) |> do fn:group_by(G), let S = fn:sum(X), let V = fn:plus(G, S).');
+            const result = validate(parseResult.unit!);
+            expect(result.errors.filter(e => e.code === 'E013' || e.code === 'E047')).toHaveLength(0);
         });
 
         it('should not warn when reducer used after group_by', () => {
@@ -1140,9 +1168,13 @@ describe('Validation Module', () => {
             expectNoErrors('positive(X) :- num(X), isPositive(X, B), :filter(B).');
         });
 
-        it('should allow :filter with function result', () => {
-            // Use a valid function that returns a value
-            expectNoErrors('hasElements(L) :- list(L), N = fn:list:len(L), :filter(N).');
+        it('should allow :filter with a boolean function result', () => {
+            expectNoErrors('hasTag(L) :- list(L), :filter(fn:list:contains(L, "urgent")).');
+        });
+
+        it('should reject :filter with a non-boolean function result', () => {
+            // fn:list:len returns /number; :filter only passes /true, so it would never succeed.
+            expectError('hasElements(L) :- list(L), N = fn:list:len(L), :filter(N).', 'E069');
         });
     });
 

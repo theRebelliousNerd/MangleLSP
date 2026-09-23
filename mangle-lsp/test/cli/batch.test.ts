@@ -8,7 +8,7 @@ import { join } from 'path';
 import { runBatch, parseBatchInput, BatchQuery } from '../../src/cli/commands/batch';
 
 describe('CLI batch command', () => {
-    const testDir = join(__dirname, 'test-files');
+    const testDir = join(__dirname, 'test-files-batch'); // per-suite dir: suites run in parallel
     const validFile = join(testDir, 'valid.mg');
 
     beforeAll(() => {

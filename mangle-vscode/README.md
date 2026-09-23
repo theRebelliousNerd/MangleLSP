@@ -3,14 +3,17 @@
 [![Open VSX](https://img.shields.io/open-vsx/v/theRebelliousNerd/mangle-vscode)](https://open-vsx.org/extension/theRebelliousNerd/mangle-vscode)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Language support for [Mangle](https://github.com/google/mangle), a Datalog-inspired declarative programming language created by Google.
+Language support for [Mangle](https://codeberg.org/TauCeti/mangle-go), a Datalog-inspired declarative programming language originally created at Google (synced with upstream `77780a5`, 2026-09-19).
 
 ## Features
 
 - ✨ **Syntax Highlighting** - Full TextMate grammar for `.mg` files
-- 🔍 **Real-time Diagnostics** - Parse errors, semantic analysis, stratification checks
-- 💡 **IntelliSense** - Auto-completion for predicates and builtins
-- 📖 **Hover Information** - Predicate signatures and documentation
+- 🔍 **Real-time Diagnostics** - Parse errors, safety and mode checks, type (bounds) checking, stratification
+- 🧭 **Diagnostics that teach** - every problem says why it matters and how to fix it; `Mangle: Explain Diagnostic Code` opens the full explanation with an example
+- 🛠️ **Quick Fixes** - one-click fixes for miscased or unknown functions, typos in predicates and variables, time units and more
+- ⚡ **Optimization Advice** - cross products, late filters and negations, collect-then-count, duplicate premises
+- 💡 **IntelliSense** - Completion with typed signatures and parameter-name snippets for the full built-in library
+- 📖 **Hover Information** - Typed signatures, examples and related built-ins
 - 🔗 **Go to Definition** - Jump to predicate definitions
 - 🔎 **Find References** - Locate all usages of a predicate
 - 📋 **Document Outline** - Navigate your Mangle code structure
@@ -70,7 +73,7 @@ This extension is developed and maintained by **[N.E.R.D.](https://nextgenrd.com
 
 ## Related
 
-- [Mangle](https://github.com/google/mangle) - The original Mangle language by Google
+- [Mangle](https://codeberg.org/TauCeti/mangle-go) - The Mangle language ([github.com/google/mangle](https://github.com/google/mangle))
 - [MangleLSP Repository](https://github.com/theRebelliousNerd/MangleLSP) - Full source code
 
 ## License

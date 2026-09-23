@@ -11,12 +11,14 @@ import {
     Position,
     Range,
     TextEdit,
+    MarkupContent,
+    MarkupKind,
 } from 'vscode-languageserver/node';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { SourceUnit, Clause, collectClauseVariables, containsPosition, SourcePosition } from '../parser/ast';
 import { SymbolTable } from '../analysis/symbols';
-import { BUILTIN_PREDICATES } from '../builtins/predicates';
-import { ALL_BUILTIN_FUNCTIONS, REDUCER_FUNCTIONS } from '../builtins/functions';
+import { BUILTIN_PREDICATES, BuiltinPredicate, formatPredicateSignature, modeSymbol } from '../builtins/predicates';
+import { ALL_BUILTIN_FUNCTIONS, REDUCER_FUNCTIONS, BuiltinFunction, formatFunctionSignature } from '../builtins/functions';
 
 /**
  * Context information for completion.
@@ -226,9 +228,9 @@ function getBuiltinPredicateCompletions(prefix: string, replaceRange: Range): Co
         .map((pred, index) => ({
             label: pred.name,
             kind: CompletionItemKind.Function,
-            detail: `Built-in predicate (${pred.mode.join(', ')})`,
-            documentation: pred.doc,
-            textEdit: TextEdit.replace(replaceRange, createPredicateSnippet(pred.name, pred.arity)),
+            detail: `Built-in predicate (${pred.mode.map(modeSymbol).join(', ')}) ${formatPredicateSignature(pred)}`,
+            documentation: builtinPredicateDocs(pred),
+            textEdit: TextEdit.replace(replaceRange, createPredicateSnippet(pred.name, pred.arity, pred.paramNames)),
             insertTextFormat: InsertTextFormat.Snippet,
             sortText: `0${index.toString().padStart(3, '0')}`, // Sort built-ins first
         }));
@@ -243,9 +245,9 @@ function getBuiltinFunctionCompletions(prefix: string, replaceRange: Range): Com
         .map((fn, index) => ({
             label: fn.name,
             kind: CompletionItemKind.Function,
-            detail: fn.isReducer ? 'Reducer function' : 'Built-in function',
-            documentation: fn.doc,
-            textEdit: TextEdit.replace(replaceRange, createFunctionSnippet(fn.name, fn.arity)),
+            detail: functionDetail(fn),
+            documentation: builtinFunctionDocs(fn),
+            textEdit: TextEdit.replace(replaceRange, createFunctionSnippet(fn.name, fn.arity, fn.paramNames)),
             insertTextFormat: InsertTextFormat.Snippet,
             sortText: `0${index.toString().padStart(3, '0')}`,
         }));
@@ -270,9 +272,9 @@ function getTransformDoCompletions(replaceRange: Range): CompletionItem[] {
             .map((fn, index) => ({
                 label: fn.name,
                 kind: CompletionItemKind.Function,
-                detail: fn.isReducer ? 'Reducer function' : 'Built-in function',
-                documentation: fn.doc,
-                textEdit: TextEdit.replace(replaceRange, createFunctionSnippet(fn.name, fn.arity)),
+                detail: functionDetail(fn),
+                documentation: builtinFunctionDocs(fn),
+                textEdit: TextEdit.replace(replaceRange, createFunctionSnippet(fn.name, fn.arity, fn.paramNames)),
                 insertTextFormat: InsertTextFormat.Snippet,
                 sortText: `1${index.toString().padStart(3, '0')}`,
             })),
@@ -286,9 +288,9 @@ function getReducerFunctionCompletions(replaceRange: Range): CompletionItem[] {
     return REDUCER_FUNCTIONS.map((fn, index) => ({
         label: fn.name,
         kind: CompletionItemKind.Function,
-        detail: 'Reducer function',
-        documentation: fn.doc,
-        textEdit: TextEdit.replace(replaceRange, createFunctionSnippet(fn.name, fn.arity)),
+        detail: `Reducer function ${formatFunctionSignature(fn)}`,
+        documentation: builtinFunctionDocs(fn),
+        textEdit: TextEdit.replace(replaceRange, createFunctionSnippet(fn.name, fn.arity, fn.paramNames)),
         insertTextFormat: InsertTextFormat.Snippet,
         sortText: `0${index.toString().padStart(3, '0')}`,
     }));
@@ -547,27 +549,50 @@ function getKeywordCompletions(replaceRange: Range): CompletionItem[] {
 /**
  * Create a snippet for a predicate call.
  */
-function createPredicateSnippet(name: string, arity: number): string {
+function createPredicateSnippet(name: string, arity: number, paramNames?: readonly string[]): string {
     if (arity === 0) {
         return name;
     }
-    const args = Array.from({ length: arity }, (_, i) => `\${${i + 1}:arg${i + 1}}`);
+    const args = Array.from({ length: arity }, (_, i) => `\${${i + 1}:${paramNames?.[i] ?? `arg${i + 1}`}}`);
     return `${name}(${args.join(', ')})`;
 }
 
 /**
  * Create a snippet for a function call.
  */
-function createFunctionSnippet(name: string, arity: number): string {
+function createFunctionSnippet(name: string, arity: number, paramNames?: readonly string[]): string {
     if (arity === 0) {
         return `${name}()`;
     }
     if (arity === -1) {
         // Variable arity - provide one placeholder
-        return `${name}(\${1:args})`;
+        return `${name}(\${1:${paramNames?.[0] ?? 'args'}})`;
     }
-    const args = Array.from({ length: arity }, (_, i) => `\${${i + 1}:arg${i + 1}}`);
+    const args = Array.from({ length: arity }, (_, i) => `\${${i + 1}:${paramNames?.[i] ?? `arg${i + 1}`}}`);
     return `${name}(${args.join(', ')})`;
+}
+
+/** Completion detail line for a builtin function: kind plus typed signature. */
+function functionDetail(fn: BuiltinFunction): string {
+    const kind = fn.isReducer ? 'Reducer function' : 'Built-in function';
+    return fn.signature ? `${kind} ${formatFunctionSignature(fn)}` : kind;
+}
+
+/** Markdown documentation for a builtin function completion. */
+function builtinFunctionDocs(fn: BuiltinFunction): MarkupContent {
+    const parts = [fn.doc];
+    if (fn.unitArg) parts.push(`Units: ${fn.unitArg.units.join(', ')}`);
+    if (fn.example) parts.push(`Example: \`${fn.example}\``);
+    if (fn.seeAlso?.length) parts.push(`See also: ${fn.seeAlso.join(', ')}`);
+    return { kind: MarkupKind.Markdown, value: parts.join('\n\n') };
+}
+
+/** Markdown documentation for a builtin predicate completion. */
+function builtinPredicateDocs(pred: BuiltinPredicate): MarkupContent {
+    const parts = [pred.doc];
+    if (pred.example) parts.push(`Example: \`${pred.example}\``);
+    if (pred.seeAlso?.length) parts.push(`See also: ${pred.seeAlso.join(', ')}`);
+    return { kind: MarkupKind.Markdown, value: parts.join('\n\n') };
 }
 
 /**

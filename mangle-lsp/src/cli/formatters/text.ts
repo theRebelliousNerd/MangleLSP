@@ -66,6 +66,23 @@ function formatDiagnostic(diag: CLIDiagnostic, filePath: string): string {
     if (diag.context) {
         output += `\n  ${color('|', COLORS.gray)} ${diag.context}`;
     }
+    if (diag.hint) {
+        output += `\n  ${color('= help:', COLORS.cyan)} ${diag.hint}`;
+    }
+    for (const fix of diag.fixes ?? []) {
+        const at = `${fix.range.start.line}:${fix.range.start.column}-${fix.range.end.line}:${fix.range.end.column}`;
+        output += `\n  ${color('= fix:', COLORS.cyan)} ${fix.title} ${color(`(${at} -> ${JSON.stringify(fix.newText)})`, COLORS.gray)}`;
+    }
+    if (diag.explanation) {
+        output += `\n  ${color('= note:', COLORS.gray)} ${diag.explanation}`;
+        if (diag.fix) {
+            output += `\n  ${color('= how to fix:', COLORS.gray)} ${diag.fix}`;
+        }
+        if (diag.example) {
+            output += `\n  ${color('= instead of:', COLORS.gray)} ${diag.example.bad.replace(/\n/g, '\n                  ')}`;
+            output += `\n  ${color('= write:', COLORS.gray)}      ${diag.example.good.replace(/\n/g, '\n                  ')}`;
+        }
+    }
 
     return output;
 }
@@ -94,6 +111,11 @@ export function formatCheckResultText(result: CheckResult): string {
         }
         if (result.summary.totalInfo > 0) {
             lines.push(`  Info: ${result.summary.totalInfo}`);
+        }
+        const codes = [...new Set(result.files.flatMap(f => f.diagnostics.map(d => d.code)))].filter(c => c !== 'E000').sort();
+        if (codes.length > 0) {
+            lines.push('');
+            lines.push(color(`For more information about a code, run 'mangle-cli explain <CODE>' (${codes.join(', ')}).`, COLORS.gray));
         }
     } else {
         lines.push(color('No issues found.', COLORS.gray));

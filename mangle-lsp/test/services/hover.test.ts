@@ -103,8 +103,8 @@ describe('Hover Service', () => {
             expect(hover).not.toBeNull();
             const content = (hover?.contents as { value: string }).value;
             expect(content).toContain('Built-in Predicate: :lt/2');
-            expect(content).toContain('Less-than relation on numbers');
-            expect(content).toContain('Mode: (input, input)');
+            expect(content).toContain('Less-than relation on /number');
+            expect(content).toContain('Mode: (+, +)');
         });
 
         it('should show :le predicate', () => {
@@ -120,7 +120,7 @@ describe('Hover Service', () => {
             const content = (hover?.contents as { value: string }).value;
             expect(content).toContain('Built-in Predicate: :le/2');
             expect(content).toContain('Less-than-or-equal');
-            expect(content).toContain('Mode: (input, input)');
+            expect(content).toContain('Mode: (+, +)');
         });
 
         it('should show :gt predicate', () => {
@@ -136,7 +136,7 @@ describe('Hover Service', () => {
             const content = (hover?.contents as { value: string }).value;
             expect(content).toContain('Built-in Predicate: :gt/2');
             expect(content).toContain('Greater-than');
-            expect(content).toContain('Mode: (input, input)');
+            expect(content).toContain('Mode: (+, +)');
         });
 
         it('should show :ge predicate', () => {
@@ -152,7 +152,7 @@ describe('Hover Service', () => {
             const content = (hover?.contents as { value: string }).value;
             expect(content).toContain('Built-in Predicate: :ge/2');
             expect(content).toContain('Greater-than-or-equal');
-            expect(content).toContain('Mode: (input, input)');
+            expect(content).toContain('Mode: (+, +)');
         });
 
         it('should show :string:starts_with predicate', () => {
@@ -167,8 +167,8 @@ describe('Hover Service', () => {
             expect(hover).not.toBeNull();
             const content = (hover?.contents as { value: string }).value;
             expect(content).toContain('Built-in Predicate: :string:starts_with/2');
-            expect(content).toContain('string constants that have a given prefix');
-            expect(content).toContain('Mode: (input, input)');
+            expect(content).toContain('strings that start with a given prefix');
+            expect(content).toContain('Mode: (+, +)');
         });
     });
 
@@ -185,7 +185,7 @@ describe('Hover Service', () => {
             expect(hover).not.toBeNull();
             const content = (hover?.contents as { value: string }).value;
             expect(content).toContain('Built-in Function: fn:plus');
-            expect(content).toContain('Addition');
+            expect(content).toContain('Integer addition');
             expect(content).toContain('variadic');
         });
 
@@ -201,7 +201,7 @@ describe('Hover Service', () => {
             expect(hover).not.toBeNull();
             const content = (hover?.contents as { value: string }).value;
             expect(content).toContain('Built-in Function: fn:mult');
-            expect(content).toContain('Multiplication');
+            expect(content).toContain('Integer multiplication');
             expect(content).toContain('variadic');
         });
 
@@ -617,7 +617,7 @@ describe('Hover Service', () => {
             expect(hover).not.toBeNull();
             const content = (hover?.contents as { value: string }).value;
             expect(content).toContain('Built-in Predicate: :list:member/2');
-            expect(content).toContain('Mode: (output, input)');
+            expect(content).toContain('Mode: (?, +)');
         });
 
         it('should show hover for fn:collect reducer function', () => {
@@ -662,7 +662,7 @@ describe('Hover Service', () => {
             expect(hover).not.toBeNull();
             const content = (hover?.contents as { value: string }).value;
             expect(content).toContain('Built-in Function: fn:group_by');
-            expect(content).toContain('Groups');
+            expect(content).toContain('groups all tuples');
         });
 
         it('should handle triple-nested function calls', () => {

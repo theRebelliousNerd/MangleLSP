@@ -11,3 +11,4 @@ tsconfig.json
 # Everything is bundled with esbuild, exclude all node_modules
 node_modules/**
 esbuild.js
+CLAUDE.md

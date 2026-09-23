@@ -28,31 +28,20 @@ If you see the extension activate but no diagnostics appear, check:
 ## Build & Deploy Process
 
 ```bash
-# 1. Build the LSP server
-cd packages/mangle-lsp
-npm run build
+# From the repository root
+npm install
+npm run build        # mangle-lsp: regenerate parser + tsc; mangle-vscode: compile + esbuild bundles
+npm run package      # build + vsce package -> mangle-vscode/mangle-vscode-<version>.vsix
 
-# 2. Copy server to extension
-rm -rf ../mangle-vscode/server
-cp -r dist ../mangle-vscode/server
-
-# 3. Build extension client
-cd ../mangle-vscode
-npm run compile
-
-# 4. Bundle with esbuild (CRITICAL: bundles all dependencies)
-# Bundle extension client:
-npx esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node --sourcemap
-
-# Bundle server (includes all runtime deps like vscode-languageserver, antlr4ng):
-npx esbuild server/server.js --bundle --outfile=server/server.bundle.js --format=cjs --platform=node --sourcemap
-
-# 5. Package as VSIX
-npx vsce package --allow-missing-repository
-
-# 6. Install
-code --install-extension mangle-vscode-1.0.0.vsix --force
+# Install
+code --install-extension mangle-vscode/mangle-vscode-1.1.0.vsix --force
 ```
+
+The bundles are built by esbuild **directly from `mangle-lsp/src`**:
+- `bundle:server` -> `server/server.bundle.js` (from `../mangle-lsp/src/server.ts`)
+- `bundle:cli` -> `server/cli.bundle.js` (from `../mangle-lsp/src/cli.ts`)
+
+There is no copy step any more; only the two bundles live in `server/` (see `.gitignore`).
 
 ## Why esbuild Bundling is Required
 
@@ -91,7 +80,7 @@ The `.vscodeignore` should:
 1. **Missing runtime dependencies**: Check that node_modules is included in VSIX
    - Run `vsce ls --tree` to verify node_modules/* is listed
 2. **Module format conflict**: Check `mangle-lsp/package.json` doesn't have `"type": "module"`
-3. **Stale server files**: Re-copy from `mangle-lsp/dist` to `mangle-vscode/server`
+3. **Stale server files**: Re-run `npm run build` (the bundles are generated from `mangle-lsp/src`)
 4. **Reload VS Code**: Use "Developer: Reload Window" after installing
 
 ### VSIX packaging errors
@@ -117,7 +106,7 @@ Check Output panel → "Mangle Language Server" for errors:
 
 When changing LSP functionality:
 1. `mangle-lsp/src/**` - Server implementation
-2. `mangle-vscode/server/` - Must re-copy after build
+2. `mangle-vscode/server/*.bundle.js` - Regenerate with `npm run build`
 3. `mangle-vscode/package.json` - If adding new capabilities
 
 When changing syntax highlighting:

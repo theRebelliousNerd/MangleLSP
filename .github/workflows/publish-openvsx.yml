@@ -22,10 +22,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        # No package-lock.json is committed (see .gitignore), so `npm ci` cannot run.
+        run: npm install
+
+      - name: Test mangle-lsp
+        run: npx vitest run
+        working-directory: ./mangle-lsp
 
       - name: Build mangle-lsp
         run: npm run build:lsp

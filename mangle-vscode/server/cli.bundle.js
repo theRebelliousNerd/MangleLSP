@@ -26,9 +26,9 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
-// node_modules/vscode-languageserver/lib/common/utils/is.js
+// ../node_modules/vscode-languageserver/lib/common/utils/is.js
 var require_is = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/utils/is.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/utils/is.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.thenable = exports2.typedArray = exports2.stringArray = exports2.array = exports2.func = exports2.error = exports2.number = exports2.string = exports2.boolean = void 0;
@@ -71,9 +71,9 @@ var require_is = __commonJS({
   }
 });
 
-// node_modules/vscode-jsonrpc/lib/common/is.js
+// ../node_modules/vscode-jsonrpc/lib/common/is.js
 var require_is2 = __commonJS({
-  "node_modules/vscode-jsonrpc/lib/common/is.js"(exports2) {
+  "../node_modules/vscode-jsonrpc/lib/common/is.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.stringArray = exports2.array = exports2.func = exports2.error = exports2.number = exports2.string = exports2.boolean = void 0;
@@ -108,9 +108,9 @@ var require_is2 = __commonJS({
   }
 });
 
-// node_modules/vscode-jsonrpc/lib/common/messages.js
+// ../node_modules/vscode-jsonrpc/lib/common/messages.js
 var require_messages = __commonJS({
-  "node_modules/vscode-jsonrpc/lib/common/messages.js"(exports2) {
+  "../node_modules/vscode-jsonrpc/lib/common/messages.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.Message = exports2.NotificationType9 = exports2.NotificationType8 = exports2.NotificationType7 = exports2.NotificationType6 = exports2.NotificationType5 = exports2.NotificationType4 = exports2.NotificationType3 = exports2.NotificationType2 = exports2.NotificationType1 = exports2.NotificationType0 = exports2.NotificationType = exports2.RequestType9 = exports2.RequestType8 = exports2.RequestType7 = exports2.RequestType6 = exports2.RequestType5 = exports2.RequestType4 = exports2.RequestType3 = exports2.RequestType2 = exports2.RequestType1 = exports2.RequestType = exports2.RequestType0 = exports2.AbstractMessageSignature = exports2.ParameterStructures = exports2.ResponseError = exports2.ErrorCodes = void 0;
@@ -346,9 +346,9 @@ var require_messages = __commonJS({
   }
 });
 
-// node_modules/vscode-jsonrpc/lib/common/linkedMap.js
+// ../node_modules/vscode-jsonrpc/lib/common/linkedMap.js
 var require_linkedMap = __commonJS({
-  "node_modules/vscode-jsonrpc/lib/common/linkedMap.js"(exports2) {
+  "../node_modules/vscode-jsonrpc/lib/common/linkedMap.js"(exports2) {
     "use strict";
     var _a;
     Object.defineProperty(exports2, "__esModule", { value: true });
@@ -716,9 +716,9 @@ var require_linkedMap = __commonJS({
   }
 });
 
-// node_modules/vscode-jsonrpc/lib/common/disposable.js
+// ../node_modules/vscode-jsonrpc/lib/common/disposable.js
 var require_disposable = __commonJS({
-  "node_modules/vscode-jsonrpc/lib/common/disposable.js"(exports2) {
+  "../node_modules/vscode-jsonrpc/lib/common/disposable.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.Disposable = void 0;
@@ -734,9 +734,9 @@ var require_disposable = __commonJS({
   }
 });
 
-// node_modules/vscode-jsonrpc/lib/common/ral.js
+// ../node_modules/vscode-jsonrpc/lib/common/ral.js
 var require_ral = __commonJS({
-  "node_modules/vscode-jsonrpc/lib/common/ral.js"(exports2) {
+  "../node_modules/vscode-jsonrpc/lib/common/ral.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     var _ral;
@@ -759,9 +759,9 @@ var require_ral = __commonJS({
   }
 });
 
-// node_modules/vscode-jsonrpc/lib/common/events.js
+// ../node_modules/vscode-jsonrpc/lib/common/events.js
 var require_events = __commonJS({
-  "node_modules/vscode-jsonrpc/lib/common/events.js"(exports2) {
+  "../node_modules/vscode-jsonrpc/lib/common/events.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.Emitter = exports2.Event = void 0;
@@ -888,9 +888,9 @@ var require_events = __commonJS({
   }
 });
 
-// node_modules/vscode-jsonrpc/lib/common/cancellation.js
+// ../node_modules/vscode-jsonrpc/lib/common/cancellation.js
 var require_cancellation = __commonJS({
-  "node_modules/vscode-jsonrpc/lib/common/cancellation.js"(exports2) {
+  "../node_modules/vscode-jsonrpc/lib/common/cancellation.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.CancellationTokenSource = exports2.CancellationToken = void 0;
@@ -977,9 +977,9 @@ var require_cancellation = __commonJS({
   }
 });
 
-// node_modules/vscode-jsonrpc/lib/common/sharedArrayCancellation.js
+// ../node_modules/vscode-jsonrpc/lib/common/sharedArrayCancellation.js
 var require_sharedArrayCancellation = __commonJS({
-  "node_modules/vscode-jsonrpc/lib/common/sharedArrayCancellation.js"(exports2) {
+  "../node_modules/vscode-jsonrpc/lib/common/sharedArrayCancellation.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.SharedArrayReceiverStrategy = exports2.SharedArraySenderStrategy = void 0;
@@ -1055,9 +1055,9 @@ var require_sharedArrayCancellation = __commonJS({
   }
 });
 
-// node_modules/vscode-jsonrpc/lib/common/semaphore.js
+// ../node_modules/vscode-jsonrpc/lib/common/semaphore.js
 var require_semaphore = __commonJS({
-  "node_modules/vscode-jsonrpc/lib/common/semaphore.js"(exports2) {
+  "../node_modules/vscode-jsonrpc/lib/common/semaphore.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.Semaphore = void 0;
@@ -1123,9 +1123,9 @@ var require_semaphore = __commonJS({
   }
 });
 
-// node_modules/vscode-jsonrpc/lib/common/messageReader.js
+// ../node_modules/vscode-jsonrpc/lib/common/messageReader.js
 var require_messageReader = __commonJS({
-  "node_modules/vscode-jsonrpc/lib/common/messageReader.js"(exports2) {
+  "../node_modules/vscode-jsonrpc/lib/common/messageReader.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ReadableStreamMessageReader = exports2.AbstractMessageReader = exports2.MessageReader = void 0;
@@ -1312,9 +1312,9 @@ ${JSON.stringify(Object.fromEntries(headers))}`));
   }
 });
 
-// node_modules/vscode-jsonrpc/lib/common/messageWriter.js
+// ../node_modules/vscode-jsonrpc/lib/common/messageWriter.js
 var require_messageWriter = __commonJS({
-  "node_modules/vscode-jsonrpc/lib/common/messageWriter.js"(exports2) {
+  "../node_modules/vscode-jsonrpc/lib/common/messageWriter.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.WriteableStreamMessageWriter = exports2.AbstractMessageWriter = exports2.MessageWriter = void 0;
@@ -1424,9 +1424,9 @@ var require_messageWriter = __commonJS({
   }
 });
 
-// node_modules/vscode-jsonrpc/lib/common/messageBuffer.js
+// ../node_modules/vscode-jsonrpc/lib/common/messageBuffer.js
 var require_messageBuffer = __commonJS({
-  "node_modules/vscode-jsonrpc/lib/common/messageBuffer.js"(exports2) {
+  "../node_modules/vscode-jsonrpc/lib/common/messageBuffer.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.AbstractMessageBuffer = void 0;
@@ -1572,9 +1572,9 @@ ${header}`);
   }
 });
 
-// node_modules/vscode-jsonrpc/lib/common/connection.js
+// ../node_modules/vscode-jsonrpc/lib/common/connection.js
 var require_connection = __commonJS({
-  "node_modules/vscode-jsonrpc/lib/common/connection.js"(exports2) {
+  "../node_modules/vscode-jsonrpc/lib/common/connection.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.createMessageConnection = exports2.ConnectionOptions = exports2.MessageStrategy = exports2.CancellationStrategy = exports2.CancellationSenderStrategy = exports2.CancellationReceiverStrategy = exports2.RequestCancellationReceiverStrategy = exports2.IdCancellationReceiverStrategy = exports2.ConnectionStrategy = exports2.ConnectionError = exports2.ConnectionErrors = exports2.LogTraceNotification = exports2.SetTraceNotification = exports2.TraceFormat = exports2.TraceValues = exports2.Trace = exports2.NullLogger = exports2.ProgressType = exports2.ProgressToken = void 0;
@@ -2700,9 +2700,9 @@ ${JSON.stringify(message, null, 4)}`);
   }
 });
 
-// node_modules/vscode-jsonrpc/lib/common/api.js
+// ../node_modules/vscode-jsonrpc/lib/common/api.js
 var require_api = __commonJS({
-  "node_modules/vscode-jsonrpc/lib/common/api.js"(exports2) {
+  "../node_modules/vscode-jsonrpc/lib/common/api.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ProgressType = exports2.ProgressToken = exports2.createMessageConnection = exports2.NullLogger = exports2.ConnectionOptions = exports2.ConnectionStrategy = exports2.AbstractMessageBuffer = exports2.WriteableStreamMessageWriter = exports2.AbstractMessageWriter = exports2.MessageWriter = exports2.ReadableStreamMessageReader = exports2.AbstractMessageReader = exports2.MessageReader = exports2.SharedArrayReceiverStrategy = exports2.SharedArraySenderStrategy = exports2.CancellationToken = exports2.CancellationTokenSource = exports2.Emitter = exports2.Event = exports2.Disposable = exports2.LRUCache = exports2.Touch = exports2.LinkedMap = exports2.ParameterStructures = exports2.NotificationType9 = exports2.NotificationType8 = exports2.NotificationType7 = exports2.NotificationType6 = exports2.NotificationType5 = exports2.NotificationType4 = exports2.NotificationType3 = exports2.NotificationType2 = exports2.NotificationType1 = exports2.NotificationType0 = exports2.NotificationType = exports2.ErrorCodes = exports2.ResponseError = exports2.RequestType9 = exports2.RequestType8 = exports2.RequestType7 = exports2.RequestType6 = exports2.RequestType5 = exports2.RequestType4 = exports2.RequestType3 = exports2.RequestType2 = exports2.RequestType1 = exports2.RequestType0 = exports2.RequestType = exports2.Message = exports2.RAL = void 0;
@@ -2902,9 +2902,9 @@ var require_api = __commonJS({
   }
 });
 
-// node_modules/vscode-jsonrpc/lib/node/ril.js
+// ../node_modules/vscode-jsonrpc/lib/node/ril.js
 var require_ril = __commonJS({
-  "node_modules/vscode-jsonrpc/lib/node/ril.js"(exports2) {
+  "../node_modules/vscode-jsonrpc/lib/node/ril.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     var util_1 = require("util");
@@ -3058,11 +3058,11 @@ var require_ril = __commonJS({
   }
 });
 
-// node_modules/vscode-jsonrpc/lib/node/main.js
+// ../node_modules/vscode-jsonrpc/lib/node/main.js
 var require_main = __commonJS({
-  "node_modules/vscode-jsonrpc/lib/node/main.js"(exports2) {
+  "../node_modules/vscode-jsonrpc/lib/node/main.js"(exports2) {
     "use strict";
-    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m2, k, k2) {
+    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m2, k, k2) {
       if (k2 === void 0) k2 = k;
       var desc = Object.getOwnPropertyDescriptor(m2, k);
       if (!desc || ("get" in desc ? !m2.__esModule : desc.writable || desc.configurable)) {
@@ -3071,10 +3071,10 @@ var require_main = __commonJS({
         } };
       }
       Object.defineProperty(o, k2, desc);
-    } : function(o, m2, k, k2) {
+    }) : (function(o, m2, k, k2) {
       if (k2 === void 0) k2 = k;
       o[k2] = m2[k];
-    });
+    }));
     var __exportStar = exports2 && exports2.__exportStar || function(m2, exports3) {
       for (var p in m2) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p)) __createBinding(exports3, m2, p);
     };
@@ -3318,17 +3318,17 @@ var require_main = __commonJS({
   }
 });
 
-// node_modules/vscode-jsonrpc/node.js
+// ../node_modules/vscode-jsonrpc/node.js
 var require_node = __commonJS({
-  "node_modules/vscode-jsonrpc/node.js"(exports2, module2) {
+  "../node_modules/vscode-jsonrpc/node.js"(exports2, module2) {
     "use strict";
     module2.exports = require_main();
   }
 });
 
-// node_modules/vscode-languageserver-types/lib/umd/main.js
+// ../node_modules/vscode-languageserver-types/lib/umd/main.js
 var require_main2 = __commonJS({
-  "node_modules/vscode-languageserver-types/lib/umd/main.js"(exports2, module2) {
+  "../node_modules/vscode-languageserver-types/lib/umd/main.js"(exports2, module2) {
     (function(factory) {
       if (typeof module2 === "object" && typeof module2.exports === "object") {
         var v = factory(require, exports2);
@@ -3757,7 +3757,7 @@ var require_main2 = __commonJS({
       })(WorkspaceEdit || (exports3.WorkspaceEdit = WorkspaceEdit = {}));
       var TextEditChangeImpl = (
         /** @class */
-        function() {
+        (function() {
           function TextEditChangeImpl2(edits, changeAnnotations) {
             this.edits = edits;
             this.changeAnnotations = changeAnnotations;
@@ -3831,11 +3831,11 @@ var require_main2 = __commonJS({
             }
           };
           return TextEditChangeImpl2;
-        }()
+        })()
       );
       var ChangeAnnotations = (
         /** @class */
-        function() {
+        (function() {
           function ChangeAnnotations2(annotations) {
             this._annotations = annotations === void 0 ? /* @__PURE__ */ Object.create(null) : annotations;
             this._counter = 0;
@@ -3874,11 +3874,11 @@ var require_main2 = __commonJS({
             return this._counter.toString();
           };
           return ChangeAnnotations2;
-        }()
+        })()
       );
       var WorkspaceChange = (
         /** @class */
-        function() {
+        (function() {
           function WorkspaceChange2(workspaceEdit) {
             var _this = this;
             this._textEditChanges = /* @__PURE__ */ Object.create(null);
@@ -4041,7 +4041,7 @@ var require_main2 = __commonJS({
             }
           };
           return WorkspaceChange2;
-        }()
+        })()
       );
       exports3.WorkspaceChange = WorkspaceChange;
       var TextDocumentIdentifier;
@@ -4092,24 +4092,24 @@ var require_main2 = __commonJS({
         }
         TextDocumentItem2.is = is;
       })(TextDocumentItem || (exports3.TextDocumentItem = TextDocumentItem = {}));
-      var MarkupKind2;
-      (function(MarkupKind3) {
-        MarkupKind3.PlainText = "plaintext";
-        MarkupKind3.Markdown = "markdown";
+      var MarkupKind3;
+      (function(MarkupKind4) {
+        MarkupKind4.PlainText = "plaintext";
+        MarkupKind4.Markdown = "markdown";
         function is(value) {
           var candidate = value;
-          return candidate === MarkupKind3.PlainText || candidate === MarkupKind3.Markdown;
+          return candidate === MarkupKind4.PlainText || candidate === MarkupKind4.Markdown;
         }
-        MarkupKind3.is = is;
-      })(MarkupKind2 || (exports3.MarkupKind = MarkupKind2 = {}));
-      var MarkupContent;
-      (function(MarkupContent2) {
+        MarkupKind4.is = is;
+      })(MarkupKind3 || (exports3.MarkupKind = MarkupKind3 = {}));
+      var MarkupContent2;
+      (function(MarkupContent3) {
         function is(value) {
           var candidate = value;
-          return Is.objectLiteral(value) && MarkupKind2.is(candidate.kind) && Is.string(candidate.value);
+          return Is.objectLiteral(value) && MarkupKind3.is(candidate.kind) && Is.string(candidate.value);
         }
-        MarkupContent2.is = is;
-      })(MarkupContent || (exports3.MarkupContent = MarkupContent = {}));
+        MarkupContent3.is = is;
+      })(MarkupContent2 || (exports3.MarkupContent = MarkupContent2 = {}));
       var CompletionItemKind3;
       (function(CompletionItemKind4) {
         CompletionItemKind4.Text = 1;
@@ -4202,7 +4202,7 @@ var require_main2 = __commonJS({
       (function(Hover3) {
         function is(value) {
           var candidate = value;
-          return !!candidate && Is.objectLiteral(candidate) && (MarkupContent.is(candidate.contents) || MarkedString.is(candidate.contents) || Is.typedArray(candidate.contents, MarkedString.is)) && (value.range === void 0 || Range2.is(value.range));
+          return !!candidate && Is.objectLiteral(candidate) && (MarkupContent2.is(candidate.contents) || MarkedString.is(candidate.contents) || Is.typedArray(candidate.contents, MarkedString.is)) && (value.range === void 0 || Range2.is(value.range));
         }
         Hover3.is = is;
       })(Hover2 || (exports3.Hover = Hover2 = {}));
@@ -4552,7 +4552,7 @@ var require_main2 = __commonJS({
         InlayHintLabelPart2.create = create;
         function is(value) {
           var candidate = value;
-          return Is.objectLiteral(candidate) && (candidate.tooltip === void 0 || Is.string(candidate.tooltip) || MarkupContent.is(candidate.tooltip)) && (candidate.location === void 0 || Location.is(candidate.location)) && (candidate.command === void 0 || Command.is(candidate.command));
+          return Is.objectLiteral(candidate) && (candidate.tooltip === void 0 || Is.string(candidate.tooltip) || MarkupContent2.is(candidate.tooltip)) && (candidate.location === void 0 || Location.is(candidate.location)) && (candidate.command === void 0 || Command.is(candidate.command));
         }
         InlayHintLabelPart2.is = is;
       })(InlayHintLabelPart || (exports3.InlayHintLabelPart = InlayHintLabelPart = {}));
@@ -4568,7 +4568,7 @@ var require_main2 = __commonJS({
         InlayHint2.create = create;
         function is(value) {
           var candidate = value;
-          return Is.objectLiteral(candidate) && Position3.is(candidate.position) && (Is.string(candidate.label) || Is.typedArray(candidate.label, InlayHintLabelPart.is)) && (candidate.kind === void 0 || InlayHintKind.is(candidate.kind)) && candidate.textEdits === void 0 || Is.typedArray(candidate.textEdits, TextEdit2.is) && (candidate.tooltip === void 0 || Is.string(candidate.tooltip) || MarkupContent.is(candidate.tooltip)) && (candidate.paddingLeft === void 0 || Is.boolean(candidate.paddingLeft)) && (candidate.paddingRight === void 0 || Is.boolean(candidate.paddingRight));
+          return Is.objectLiteral(candidate) && Position3.is(candidate.position) && (Is.string(candidate.label) || Is.typedArray(candidate.label, InlayHintLabelPart.is)) && (candidate.kind === void 0 || InlayHintKind.is(candidate.kind)) && candidate.textEdits === void 0 || Is.typedArray(candidate.textEdits, TextEdit2.is) && (candidate.tooltip === void 0 || Is.string(candidate.tooltip) || MarkupContent2.is(candidate.tooltip)) && (candidate.paddingLeft === void 0 || Is.boolean(candidate.paddingLeft)) && (candidate.paddingRight === void 0 || Is.boolean(candidate.paddingRight));
         }
         InlayHint2.is = is;
       })(InlayHint || (exports3.InlayHint = InlayHint = {}));
@@ -4687,7 +4687,7 @@ var require_main2 = __commonJS({
       })(TextDocument2 || (exports3.TextDocument = TextDocument2 = {}));
       var FullTextDocument2 = (
         /** @class */
-        function() {
+        (function() {
           function FullTextDocument3(uri, languageId, version, content) {
             this._uri = uri;
             this._languageId = languageId;
@@ -4789,7 +4789,7 @@ var require_main2 = __commonJS({
             configurable: true
           });
           return FullTextDocument3;
-        }()
+        })()
       );
       var Is;
       (function(Is2) {
@@ -4843,9 +4843,9 @@ var require_main2 = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/messages.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/messages.js
 var require_messages2 = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/messages.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/messages.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ProtocolNotificationType = exports2.ProtocolNotificationType0 = exports2.ProtocolRequestType = exports2.ProtocolRequestType0 = exports2.RegistrationType = exports2.MessageDirection = void 0;
@@ -4889,9 +4889,9 @@ var require_messages2 = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/utils/is.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/utils/is.js
 var require_is3 = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/utils/is.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/utils/is.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.objectLiteral = exports2.typedArray = exports2.stringArray = exports2.array = exports2.func = exports2.error = exports2.number = exports2.string = exports2.boolean = void 0;
@@ -4934,9 +4934,9 @@ var require_is3 = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.implementation.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.implementation.js
 var require_protocol_implementation = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.implementation.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.implementation.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ImplementationRequest = void 0;
@@ -4950,9 +4950,9 @@ var require_protocol_implementation = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.typeDefinition.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.typeDefinition.js
 var require_protocol_typeDefinition = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.typeDefinition.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.typeDefinition.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.TypeDefinitionRequest = void 0;
@@ -4966,9 +4966,9 @@ var require_protocol_typeDefinition = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.workspaceFolder.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.workspaceFolder.js
 var require_protocol_workspaceFolder = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.workspaceFolder.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.workspaceFolder.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.DidChangeWorkspaceFoldersNotification = exports2.WorkspaceFoldersRequest = void 0;
@@ -4988,9 +4988,9 @@ var require_protocol_workspaceFolder = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.configuration.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.configuration.js
 var require_protocol_configuration = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.configuration.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.configuration.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ConfigurationRequest = void 0;
@@ -5004,9 +5004,9 @@ var require_protocol_configuration = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.colorProvider.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.colorProvider.js
 var require_protocol_colorProvider = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.colorProvider.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.colorProvider.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ColorPresentationRequest = exports2.DocumentColorRequest = void 0;
@@ -5026,9 +5026,9 @@ var require_protocol_colorProvider = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.foldingRange.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.foldingRange.js
 var require_protocol_foldingRange = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.foldingRange.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.foldingRange.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.FoldingRangeRefreshRequest = exports2.FoldingRangeRequest = void 0;
@@ -5048,9 +5048,9 @@ var require_protocol_foldingRange = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.declaration.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.declaration.js
 var require_protocol_declaration = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.declaration.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.declaration.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.DeclarationRequest = void 0;
@@ -5064,9 +5064,9 @@ var require_protocol_declaration = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.selectionRange.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.selectionRange.js
 var require_protocol_selectionRange = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.selectionRange.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.selectionRange.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.SelectionRangeRequest = void 0;
@@ -5080,9 +5080,9 @@ var require_protocol_selectionRange = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.progress.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.progress.js
 var require_protocol_progress = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.progress.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.progress.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.WorkDoneProgressCancelNotification = exports2.WorkDoneProgressCreateRequest = exports2.WorkDoneProgress = void 0;
@@ -5111,9 +5111,9 @@ var require_protocol_progress = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.callHierarchy.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.callHierarchy.js
 var require_protocol_callHierarchy = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.callHierarchy.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.callHierarchy.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.CallHierarchyOutgoingCallsRequest = exports2.CallHierarchyIncomingCallsRequest = exports2.CallHierarchyPrepareRequest = void 0;
@@ -5139,9 +5139,9 @@ var require_protocol_callHierarchy = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.semanticTokens.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.semanticTokens.js
 var require_protocol_semanticTokens = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.semanticTokens.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.semanticTokens.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.SemanticTokensRefreshRequest = exports2.SemanticTokensRangeRequest = exports2.SemanticTokensDeltaRequest = exports2.SemanticTokensRequest = exports2.SemanticTokensRegistrationType = exports2.TokenFormat = void 0;
@@ -5185,9 +5185,9 @@ var require_protocol_semanticTokens = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.showDocument.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.showDocument.js
 var require_protocol_showDocument = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.showDocument.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.showDocument.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ShowDocumentRequest = void 0;
@@ -5201,9 +5201,9 @@ var require_protocol_showDocument = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.linkedEditingRange.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.linkedEditingRange.js
 var require_protocol_linkedEditingRange = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.linkedEditingRange.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.linkedEditingRange.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.LinkedEditingRangeRequest = void 0;
@@ -5217,9 +5217,9 @@ var require_protocol_linkedEditingRange = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.fileOperations.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.fileOperations.js
 var require_protocol_fileOperations = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.fileOperations.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.fileOperations.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.WillDeleteFilesRequest = exports2.DidDeleteFilesNotification = exports2.DidRenameFilesNotification = exports2.WillRenameFilesRequest = exports2.DidCreateFilesNotification = exports2.WillCreateFilesRequest = exports2.FileOperationPatternKind = void 0;
@@ -5268,9 +5268,9 @@ var require_protocol_fileOperations = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.moniker.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.moniker.js
 var require_protocol_moniker = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.moniker.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.moniker.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.MonikerRequest = exports2.MonikerKind = exports2.UniquenessLevel = void 0;
@@ -5298,9 +5298,9 @@ var require_protocol_moniker = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.typeHierarchy.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.typeHierarchy.js
 var require_protocol_typeHierarchy = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.typeHierarchy.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.typeHierarchy.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.TypeHierarchySubtypesRequest = exports2.TypeHierarchySupertypesRequest = exports2.TypeHierarchyPrepareRequest = void 0;
@@ -5326,9 +5326,9 @@ var require_protocol_typeHierarchy = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineValue.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineValue.js
 var require_protocol_inlineValue = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineValue.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineValue.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.InlineValueRefreshRequest = exports2.InlineValueRequest = void 0;
@@ -5348,9 +5348,9 @@ var require_protocol_inlineValue = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.inlayHint.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.inlayHint.js
 var require_protocol_inlayHint = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.inlayHint.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.inlayHint.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.InlayHintRefreshRequest = exports2.InlayHintResolveRequest = exports2.InlayHintRequest = void 0;
@@ -5376,9 +5376,9 @@ var require_protocol_inlayHint = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.diagnostic.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.diagnostic.js
 var require_protocol_diagnostic = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.diagnostic.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.diagnostic.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.DiagnosticRefreshRequest = exports2.WorkspaceDiagnosticRequest = exports2.DocumentDiagnosticRequest = exports2.DocumentDiagnosticReportKind = exports2.DiagnosticServerCancellationData = void 0;
@@ -5421,9 +5421,9 @@ var require_protocol_diagnostic = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.notebook.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.notebook.js
 var require_protocol_notebook = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.notebook.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.notebook.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.DidCloseNotebookDocumentNotification = exports2.DidSaveNotebookDocumentNotification = exports2.DidChangeNotebookDocumentNotification = exports2.NotebookCellArrayChange = exports2.DidOpenNotebookDocumentNotification = exports2.NotebookDocumentSyncRegistrationType = exports2.NotebookDocument = exports2.NotebookCell = exports2.ExecutionSummary = exports2.NotebookCellKind = void 0;
@@ -5610,9 +5610,9 @@ var require_protocol_notebook = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineCompletion.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineCompletion.js
 var require_protocol_inlineCompletion = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineCompletion.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineCompletion.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.InlineCompletionRequest = void 0;
@@ -5626,9 +5626,9 @@ var require_protocol_inlineCompletion = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/protocol.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.js
 var require_protocol = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/protocol.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.WorkspaceSymbolRequest = exports2.CodeActionResolveRequest = exports2.CodeActionRequest = exports2.DocumentSymbolRequest = exports2.DocumentHighlightRequest = exports2.ReferencesRequest = exports2.DefinitionRequest = exports2.SignatureHelpRequest = exports2.SignatureHelpTriggerKind = exports2.HoverRequest = exports2.CompletionResolveRequest = exports2.CompletionRequest = exports2.CompletionTriggerKind = exports2.PublishDiagnosticsNotification = exports2.WatchKind = exports2.RelativePattern = exports2.FileChangeType = exports2.DidChangeWatchedFilesNotification = exports2.WillSaveTextDocumentWaitUntilRequest = exports2.WillSaveTextDocumentNotification = exports2.TextDocumentSaveReason = exports2.DidSaveTextDocumentNotification = exports2.DidCloseTextDocumentNotification = exports2.DidChangeTextDocumentNotification = exports2.TextDocumentContentChangeEvent = exports2.DidOpenTextDocumentNotification = exports2.TextDocumentSyncKind = exports2.TelemetryEventNotification = exports2.LogMessageNotification = exports2.ShowMessageRequest = exports2.ShowMessageNotification = exports2.MessageType = exports2.DidChangeConfigurationNotification = exports2.ExitNotification = exports2.ShutdownRequest = exports2.InitializedNotification = exports2.InitializeErrorCodes = exports2.InitializeRequest = exports2.WorkDoneProgressOptions = exports2.TextDocumentRegistrationOptions = exports2.StaticRegistrationOptions = exports2.PositionEncodingKind = exports2.FailureHandlingKind = exports2.ResourceOperationKind = exports2.UnregistrationRequest = exports2.RegistrationRequest = exports2.DocumentSelector = exports2.NotebookCellTextDocumentFilter = exports2.NotebookDocumentFilter = exports2.TextDocumentFilter = void 0;
@@ -6262,9 +6262,9 @@ var require_protocol = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/connection.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/connection.js
 var require_connection2 = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/connection.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/connection.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.createProtocolConnection = void 0;
@@ -6279,11 +6279,11 @@ var require_connection2 = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/common/api.js
+// ../node_modules/vscode-languageserver-protocol/lib/common/api.js
 var require_api2 = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/common/api.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/common/api.js"(exports2) {
     "use strict";
-    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m2, k, k2) {
+    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m2, k, k2) {
       if (k2 === void 0) k2 = k;
       var desc = Object.getOwnPropertyDescriptor(m2, k);
       if (!desc || ("get" in desc ? !m2.__esModule : desc.writable || desc.configurable)) {
@@ -6292,10 +6292,10 @@ var require_api2 = __commonJS({
         } };
       }
       Object.defineProperty(o, k2, desc);
-    } : function(o, m2, k, k2) {
+    }) : (function(o, m2, k, k2) {
       if (k2 === void 0) k2 = k;
       o[k2] = m2[k];
-    });
+    }));
     var __exportStar = exports2 && exports2.__exportStar || function(m2, exports3) {
       for (var p in m2) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p)) __createBinding(exports3, m2, p);
     };
@@ -6321,11 +6321,11 @@ var require_api2 = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/lib/node/main.js
+// ../node_modules/vscode-languageserver-protocol/lib/node/main.js
 var require_main3 = __commonJS({
-  "node_modules/vscode-languageserver-protocol/lib/node/main.js"(exports2) {
+  "../node_modules/vscode-languageserver-protocol/lib/node/main.js"(exports2) {
     "use strict";
-    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m2, k, k2) {
+    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m2, k, k2) {
       if (k2 === void 0) k2 = k;
       var desc = Object.getOwnPropertyDescriptor(m2, k);
       if (!desc || ("get" in desc ? !m2.__esModule : desc.writable || desc.configurable)) {
@@ -6334,10 +6334,10 @@ var require_main3 = __commonJS({
         } };
       }
       Object.defineProperty(o, k2, desc);
-    } : function(o, m2, k, k2) {
+    }) : (function(o, m2, k, k2) {
       if (k2 === void 0) k2 = k;
       o[k2] = m2[k];
-    });
+    }));
     var __exportStar = exports2 && exports2.__exportStar || function(m2, exports3) {
       for (var p in m2) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p)) __createBinding(exports3, m2, p);
     };
@@ -6353,9 +6353,9 @@ var require_main3 = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/common/utils/uuid.js
+// ../node_modules/vscode-languageserver/lib/common/utils/uuid.js
 var require_uuid = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/utils/uuid.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/utils/uuid.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.generateUuid = exports2.parse = exports2.isUUID = exports2.v4 = exports2.empty = void 0;
@@ -6444,9 +6444,9 @@ var require_uuid = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/common/progress.js
+// ../node_modules/vscode-languageserver/lib/common/progress.js
 var require_progress = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/progress.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/progress.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.attachPartialResult = exports2.ProgressFeature = exports2.attachWorkDone = void 0;
@@ -6602,9 +6602,9 @@ var require_progress = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/common/configuration.js
+// ../node_modules/vscode-languageserver/lib/common/configuration.js
 var require_configuration = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/configuration.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/configuration.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ConfigurationFeature = void 0;
@@ -6639,9 +6639,9 @@ var require_configuration = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/common/workspaceFolder.js
+// ../node_modules/vscode-languageserver/lib/common/workspaceFolder.js
 var require_workspaceFolder = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/workspaceFolder.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/workspaceFolder.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.WorkspaceFoldersFeature = void 0;
@@ -6685,9 +6685,9 @@ var require_workspaceFolder = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/common/callHierarchy.js
+// ../node_modules/vscode-languageserver/lib/common/callHierarchy.js
 var require_callHierarchy = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/callHierarchy.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/callHierarchy.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.CallHierarchyFeature = void 0;
@@ -6721,9 +6721,9 @@ var require_callHierarchy = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/common/semanticTokens.js
+// ../node_modules/vscode-languageserver/lib/common/semanticTokens.js
 var require_semanticTokens = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/semanticTokens.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/semanticTokens.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.SemanticTokensBuilder = exports2.SemanticTokensDiff = exports2.SemanticTokensFeature = void 0;
@@ -6869,9 +6869,9 @@ var require_semanticTokens = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/common/showDocument.js
+// ../node_modules/vscode-languageserver/lib/common/showDocument.js
 var require_showDocument = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/showDocument.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/showDocument.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ShowDocumentFeature = void 0;
@@ -6887,9 +6887,9 @@ var require_showDocument = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/common/fileOperations.js
+// ../node_modules/vscode-languageserver/lib/common/fileOperations.js
 var require_fileOperations = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/fileOperations.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/fileOperations.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.FileOperationsFeature = void 0;
@@ -6932,9 +6932,9 @@ var require_fileOperations = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/common/linkedEditingRange.js
+// ../node_modules/vscode-languageserver/lib/common/linkedEditingRange.js
 var require_linkedEditingRange = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/linkedEditingRange.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/linkedEditingRange.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.LinkedEditingRangeFeature = void 0;
@@ -6952,9 +6952,9 @@ var require_linkedEditingRange = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/common/typeHierarchy.js
+// ../node_modules/vscode-languageserver/lib/common/typeHierarchy.js
 var require_typeHierarchy = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/typeHierarchy.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/typeHierarchy.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.TypeHierarchyFeature = void 0;
@@ -6988,9 +6988,9 @@ var require_typeHierarchy = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/common/inlineValue.js
+// ../node_modules/vscode-languageserver/lib/common/inlineValue.js
 var require_inlineValue = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/inlineValue.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/inlineValue.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.InlineValueFeature = void 0;
@@ -7015,9 +7015,9 @@ var require_inlineValue = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/common/foldingRange.js
+// ../node_modules/vscode-languageserver/lib/common/foldingRange.js
 var require_foldingRange = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/foldingRange.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/foldingRange.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.FoldingRangeFeature = void 0;
@@ -7043,9 +7043,9 @@ var require_foldingRange = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/common/inlayHint.js
+// ../node_modules/vscode-languageserver/lib/common/inlayHint.js
 var require_inlayHint = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/inlayHint.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/inlayHint.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.InlayHintFeature = void 0;
@@ -7075,9 +7075,9 @@ var require_inlayHint = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/common/diagnostic.js
+// ../node_modules/vscode-languageserver/lib/common/diagnostic.js
 var require_diagnostic = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/diagnostic.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/diagnostic.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.DiagnosticFeature = void 0;
@@ -7107,9 +7107,9 @@ var require_diagnostic = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/common/textDocuments.js
+// ../node_modules/vscode-languageserver/lib/common/textDocuments.js
 var require_textDocuments = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/textDocuments.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/textDocuments.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.TextDocuments = void 0;
@@ -7272,9 +7272,9 @@ var require_textDocuments = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/common/notebook.js
+// ../node_modules/vscode-languageserver/lib/common/notebook.js
 var require_notebook = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/notebook.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/notebook.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.NotebookDocuments = exports2.NotebookSyncFeature = void 0;
@@ -7531,9 +7531,9 @@ var require_notebook = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/common/moniker.js
+// ../node_modules/vscode-languageserver/lib/common/moniker.js
 var require_moniker = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/moniker.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/moniker.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.MonikerFeature = void 0;
@@ -7556,9 +7556,9 @@ var require_moniker = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/common/server.js
+// ../node_modules/vscode-languageserver/lib/common/server.js
 var require_server = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/server.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/server.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.createConnection = exports2.combineFeatures = exports2.combineNotebooksFeatures = exports2.combineLanguagesFeatures = exports2.combineWorkspaceFeatures = exports2.combineWindowFeatures = exports2.combineClientFeatures = exports2.combineTracerFeatures = exports2.combineTelemetryFeatures = exports2.combineConsoleFeatures = exports2._NotebooksImpl = exports2._LanguagesImpl = exports2.BulkUnregistration = exports2.BulkRegistration = exports2.ErrorMessageTracker = void 0;
@@ -8303,9 +8303,9 @@ var require_server = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/node/files.js
+// ../node_modules/vscode-languageserver/lib/node/files.js
 var require_files = __commonJS({
-  "node_modules/vscode-languageserver/lib/node/files.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/node/files.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.resolveModulePath = exports2.FileSystem = exports2.resolveGlobalYarnPath = exports2.resolveGlobalNodePath = exports2.resolve = exports2.uriToFilePath = void 0;
@@ -8534,17 +8534,17 @@ var require_files = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver-protocol/node.js
+// ../node_modules/vscode-languageserver-protocol/node.js
 var require_node2 = __commonJS({
-  "node_modules/vscode-languageserver-protocol/node.js"(exports2, module2) {
+  "../node_modules/vscode-languageserver-protocol/node.js"(exports2, module2) {
     "use strict";
     module2.exports = require_main3();
   }
 });
 
-// node_modules/vscode-languageserver/lib/common/inlineCompletion.proposed.js
+// ../node_modules/vscode-languageserver/lib/common/inlineCompletion.proposed.js
 var require_inlineCompletion_proposed = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/inlineCompletion.proposed.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/inlineCompletion.proposed.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.InlineCompletionFeature = void 0;
@@ -8566,11 +8566,11 @@ var require_inlineCompletion_proposed = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/common/api.js
+// ../node_modules/vscode-languageserver/lib/common/api.js
 var require_api3 = __commonJS({
-  "node_modules/vscode-languageserver/lib/common/api.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/common/api.js"(exports2) {
     "use strict";
-    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m2, k, k2) {
+    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m2, k, k2) {
       if (k2 === void 0) k2 = k;
       var desc = Object.getOwnPropertyDescriptor(m2, k);
       if (!desc || ("get" in desc ? !m2.__esModule : desc.writable || desc.configurable)) {
@@ -8579,10 +8579,10 @@ var require_api3 = __commonJS({
         } };
       }
       Object.defineProperty(o, k2, desc);
-    } : function(o, m2, k, k2) {
+    }) : (function(o, m2, k, k2) {
       if (k2 === void 0) k2 = k;
       o[k2] = m2[k];
-    });
+    }));
     var __exportStar = exports2 && exports2.__exportStar || function(m2, exports3) {
       for (var p in m2) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p)) __createBinding(exports3, m2, p);
     };
@@ -8613,11 +8613,11 @@ var require_api3 = __commonJS({
   }
 });
 
-// node_modules/vscode-languageserver/lib/node/main.js
+// ../node_modules/vscode-languageserver/lib/node/main.js
 var require_main4 = __commonJS({
-  "node_modules/vscode-languageserver/lib/node/main.js"(exports2) {
+  "../node_modules/vscode-languageserver/lib/node/main.js"(exports2) {
     "use strict";
-    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m2, k, k2) {
+    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m2, k, k2) {
       if (k2 === void 0) k2 = k;
       var desc = Object.getOwnPropertyDescriptor(m2, k);
       if (!desc || ("get" in desc ? !m2.__esModule : desc.writable || desc.configurable)) {
@@ -8626,10 +8626,10 @@ var require_main4 = __commonJS({
         } };
       }
       Object.defineProperty(o, k2, desc);
-    } : function(o, m2, k, k2) {
+    }) : (function(o, m2, k, k2) {
       if (k2 === void 0) k2 = k;
       o[k2] = m2[k];
-    });
+    }));
     var __exportStar = exports2 && exports2.__exportStar || function(m2, exports3) {
       for (var p in m2) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p)) __createBinding(exports3, m2, p);
     };
@@ -8868,19 +8868,19 @@ ${stack}`);
   }
 });
 
-// node_modules/vscode-languageserver/node.js
+// ../node_modules/vscode-languageserver/node.js
 var require_node3 = __commonJS({
-  "node_modules/vscode-languageserver/node.js"(exports2, module2) {
+  "../node_modules/vscode-languageserver/node.js"(exports2, module2) {
     "use strict";
     module2.exports = require_main4();
   }
 });
 
-// src/cli/commands/check.ts
+// ../mangle-lsp/src/cli/commands/check.ts
 var import_fs = require("fs");
 var import_path = require("path");
 
-// src/parser/ast.ts
+// ../mangle-lsp/src/parser/ast.ts
 function containsPosition(range, pos) {
   if (pos.line < range.start.line || pos.line > range.end.line) return false;
   if (pos.line === range.start.line && pos.column < range.start.column) return false;
@@ -8899,11 +8899,14 @@ function createFunctionSym(symbol, arity) {
 function createAtom(predicate, args, range) {
   return { type: "Atom", predicate, args, range };
 }
-function createApplyFn(fn, args, range) {
-  return { type: "ApplyFn", function: fn, args, range };
+function createApplyFn(fn2, args, range) {
+  return { type: "ApplyFn", function: fn2, args, range };
 }
 function isVariable(term) {
   return "type" in term && term.type === "Variable";
+}
+function isConstant(term) {
+  return "type" in term && term.type === "Constant";
 }
 function isAtom(term) {
   return "type" in term && term.type === "Atom";
@@ -8914,7 +8917,39 @@ function isNegAtom(term) {
 function isApplyFn(term) {
   return "type" in term && term.type === "ApplyFn";
 }
+function isTemporalLiteral(term) {
+  return "type" in term && term.type === "TemporalLiteral";
+}
+function isTemporalAtom(term) {
+  return "type" in term && term.type === "TemporalAtom";
+}
+function isEternalInterval(interval) {
+  return interval.start.boundType === "negativeInfinity" && interval.end.boundType === "positiveInfinity";
+}
+function isDeclTemporal(decl) {
+  return decl.descr?.some((d) => d.predicate.symbol === DESCRIPTORS.TEMPORAL) ?? false;
+}
+function isDeclMaybeTemporal(decl) {
+  return decl.descr?.some((d) => d.predicate.symbol === DESCRIPTORS.MAYBE_TEMPORAL) ?? false;
+}
 var COMPARISON_PREDICATES = [":lt", ":le", ":gt", ":ge"];
+var DESCRIPTORS = {
+  EXTERNAL: "external",
+  EXTENSIONAL: "extensional",
+  MODE: "mode",
+  REFLECTS: "reflects",
+  SYNTHETIC: "synthetic",
+  PRIVATE: "private",
+  DOC: "doc",
+  ARG: "arg",
+  NAME: "name",
+  DESUGARED: "desugared",
+  FUNDEP: "fundep",
+  MERGE_PREDICATE: "merge",
+  DEFERRED_PREDICATE: "deferred",
+  TEMPORAL: "temporal",
+  MAYBE_TEMPORAL: "internal:maybe_temporal"
+};
 function isComparisonAtom(term) {
   return isAtom(term) && COMPARISON_PREDICATES.includes(term.predicate.symbol);
 }
@@ -8939,6 +8974,12 @@ function collectVariables(term) {
       t.args.forEach(visit);
     } else if (isNegAtom(t)) {
       visit(t.atom);
+    } else if (isTemporalLiteral(t)) {
+      visit(t.literal);
+      if (t.interval) {
+        if (t.interval.start.variable) vars.add(t.interval.start.variable.symbol);
+        if (t.interval.end.variable) vars.add(t.interval.end.variable.symbol);
+      }
     } else if (isApplyFn(t)) {
       t.args.forEach(visit);
     } else if ("left" in t && "right" in t) {
@@ -8956,6 +8997,10 @@ function collectClauseVariables(clause) {
       vars.add(v);
     }
   });
+  if (clause.headTime) {
+    if (clause.headTime.start.variable) vars.add(clause.headTime.start.variable.symbol);
+    if (clause.headTime.end.variable) vars.add(clause.headTime.end.variable.symbol);
+  }
   if (clause.premises) {
     clause.premises.forEach((premise) => {
       for (const v of collectVariables(premise)) {
@@ -8979,8 +9024,157 @@ function collectClauseVariables(clause) {
   }
   return vars;
 }
+function termToString(term) {
+  if (isConstant(term)) {
+    switch (term.constantType) {
+      case "name":
+        return term.symbol ?? "";
+      case "string":
+        return `"${term.symbol ?? ""}"`;
+      case "bytes":
+        return `b"${term.symbol ?? ""}"`;
+      case "number":
+        return String(term.numValue ?? 0);
+      case "float64":
+        return String(term.floatValue ?? 0);
+      case "time":
+        return `time(${term.numValue ?? 0})`;
+      case "duration":
+        return `duration(${term.numValue ?? 0})`;
+      case "list":
+        if (!term.fst) return "[]";
+        const elements = [];
+        let current = term;
+        while (current && current.fst) {
+          elements.push(termToString(current.fst));
+          current = current.snd;
+        }
+        return `[${elements.join(", ")}]`;
+      case "map":
+      case "struct":
+        return term.constantType === "map" ? "[...]" : "{...}";
+      case "pair":
+        return `fn:pair(${term.fst ? termToString(term.fst) : ""}, ${term.snd ? termToString(term.snd) : ""})`;
+    }
+  }
+  if (isVariable(term)) {
+    return term.symbol;
+  }
+  if (isAtom(term)) {
+    const args = term.args.map(termToString).join(", ");
+    return `${term.predicate.symbol}(${args})`;
+  }
+  if (isNegAtom(term)) {
+    return `!${termToString(term.atom)}`;
+  }
+  if (isTemporalLiteral(term)) {
+    let result = "";
+    if (term.operator) {
+      result += temporalOperatorToString(term.operator) + " ";
+    }
+    result += termToString(term.literal);
+    if (term.interval && !isEternalInterval(term.interval)) {
+      result += temporalIntervalToString(term.interval);
+    }
+    return result;
+  }
+  if (isTemporalAtom(term)) {
+    let result = termToString(term.atom);
+    if (term.interval && !isEternalInterval(term.interval)) {
+      result += temporalIntervalToString(term.interval);
+    }
+    return result;
+  }
+  if (isApplyFn(term)) {
+    const args = term.args.map(termToString).join(", ");
+    return `${term.function.symbol}(${args})`;
+  }
+  if ("left" in term && "right" in term) {
+    const left = termToString(term.left);
+    const right = termToString(term.right);
+    switch (term.type) {
+      case "Eq":
+        return `${left} = ${right}`;
+      case "Ineq":
+        return `${left} != ${right}`;
+      case "Lt":
+        return `${left} < ${right}`;
+      case "Le":
+        return `${left} <= ${right}`;
+      case "Gt":
+        return `${left} > ${right}`;
+      case "Ge":
+        return `${left} >= ${right}`;
+    }
+  }
+  return "?";
+}
+var TEMPORAL_OP_SYMBOLS = {
+  "diamondMinus": "<-",
+  "diamondPlus": "<+",
+  "boxMinus": "[-",
+  "boxPlus": "[+"
+};
+function temporalBoundToString(bound) {
+  switch (bound.boundType) {
+    case "variable":
+      return bound.variable?.symbol ?? "_";
+    case "negativeInfinity":
+    case "positiveInfinity":
+      return "_";
+    case "now":
+      return "now";
+    case "timestamp":
+      if (bound.rawText) return bound.rawText;
+      if (bound.value !== void 0) {
+        const ms = bound.value / 1e6;
+        return new Date(ms).toISOString();
+      }
+      return "?";
+    case "duration":
+      if (bound.rawText) return bound.rawText;
+      if (bound.value !== void 0) {
+        return formatDurationNanos(bound.value);
+      }
+      return "?";
+    default:
+      return "?";
+  }
+}
+function formatDurationNanos(nanos) {
+  const ms = 1e6;
+  const sec = 1e9;
+  const min = sec * 60;
+  const hour = min * 60;
+  const day = hour * 24;
+  if (nanos === 0) return "0s";
+  if (nanos % day === 0) return `${nanos / day}d`;
+  if (nanos % hour === 0) return `${nanos / hour}h`;
+  if (nanos % min === 0) return `${nanos / min}m`;
+  if (nanos % sec === 0) return `${nanos / sec}s`;
+  if (nanos % ms === 0) return `${nanos / ms}ms`;
+  return `${nanos}ns`;
+}
+function temporalIntervalToString(interval) {
+  if (isEternalInterval(interval)) return "";
+  const startStr = temporalBoundToString(interval.start);
+  const endStr = temporalBoundToString(interval.end);
+  if (startStr === endStr) {
+    return `@[${startStr}]`;
+  }
+  return `@[${startStr}, ${endStr}]`;
+}
+function temporalOperatorToString(op) {
+  const symbol = TEMPORAL_OP_SYMBOLS[op.operatorType];
+  if (op.interval) {
+    const startStr = temporalBoundToString(op.interval.start);
+    const endStr = temporalBoundToString(op.interval.end);
+    return `${symbol}[${startStr}, ${endStr}]`;
+  }
+  return symbol;
+}
 
-// node_modules/antlr4ng/dist/index.mjs
+// ../node_modules/antlr4ng/dist/index.mjs
 var __defProp2 = Object.defineProperty;
 var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
 var IntStream;
@@ -11859,20 +12053,20 @@ var ArrayPredictionContext = class _ArrayPredictionContext extends PredictionCon
     if (this.isEmpty()) {
       return "[]";
     }
-    const entries = [];
+    const entries2 = [];
     for (let i = 0; i < this.returnStates.length; i++) {
       if (this.returnStates[i] === PredictionContext.EMPTY_RETURN_STATE) {
-        entries.push("$");
+        entries2.push("$");
         continue;
       }
-      entries.push(this.returnStates[i].toString());
+      entries2.push(this.returnStates[i].toString());
       if (this.parents[i]) {
-        entries.push(this.parents[i].toString());
+        entries2.push(this.parents[i].toString());
       } else {
-        entries.push("null");
+        entries2.push("null");
       }
     }
-    return `[${entries.join(", ")}]`;
+    return `[${entries2.join(", ")}]`;
   }
 };
 var createSingletonPredictionContext = /* @__PURE__ */ __name((parent, returnState) => {
@@ -17346,10 +17540,10 @@ var ParserATNSimulator = class _ParserATNSimulator extends ATNSimulator {
     }
     let nPredAlts = 0;
     for (let i = 1; i < altCount + 1; i++) {
-      const pred = altToPred[i] ?? null;
-      if (pred === null) {
+      const pred2 = altToPred[i] ?? null;
+      if (pred2 === null) {
         altToPred[i] = SemanticContext.NONE;
-      } else if (pred !== SemanticContext.NONE) {
+      } else if (pred2 !== SemanticContext.NONE) {
         nPredAlts += 1;
       }
     }
@@ -17365,11 +17559,11 @@ var ParserATNSimulator = class _ParserATNSimulator extends ATNSimulator {
     const pairs = [];
     let containsPredicate = false;
     for (let i = 1; i < altToPred.length; i++) {
-      const pred = altToPred[i];
+      const pred2 = altToPred[i];
       if (ambigAlts.get(i)) {
-        pairs.push({ pred, alt: i });
+        pairs.push({ pred: pred2, alt: i });
       }
-      if (pred !== SemanticContext.NONE) {
+      if (pred2 !== SemanticContext.NONE) {
         containsPredicate = true;
       }
     }
@@ -24676,11 +24870,11 @@ var MultiMap = class extends Map {
     return pairs;
   }
   toString() {
-    const entries = [];
+    const entries2 = [];
     this.forEach((value, key) => {
-      entries.push(`${key}=[${value.join(", ")}]`);
+      entries2.push(`${key}=[${value.join(", ")}]`);
     });
-    return `{${entries.join(", ")}}`;
+    return `{${entries2.join(", ")}}`;
   }
 };
 var CannotInvokeStartRuleError = class extends Error {
@@ -26031,7 +26225,7 @@ var UnbufferedTokenStream = class {
   }
 };
 
-// src/parser/gen/MangleLexer.ts
+// ../mangle-lsp/src/parser/gen/MangleLexer.ts
 var MangleLexer = class _MangleLexer extends Lexer {
   static {
     this.T__0 = 1;
@@ -26094,64 +26288,91 @@ var MangleLexer = class _MangleLexer extends Lexer {
     this.RBRACKET = 20;
   }
   static {
-    this.EQ = 21;
+    this.LBRACE = 21;
   }
   static {
-    this.BANGEQ = 22;
+    this.RBRACE = 22;
   }
   static {
-    this.COMMA = 23;
+    this.EQ = 23;
   }
   static {
-    this.BANG = 24;
+    this.BANGEQ = 24;
   }
   static {
-    this.LESS = 25;
+    this.COMMA = 25;
   }
   static {
-    this.LESSEQ = 26;
+    this.BANG = 26;
   }
   static {
-    this.GREATER = 27;
+    this.LESSEQ = 27;
   }
   static {
-    this.GREATEREQ = 28;
+    this.LESS = 28;
   }
   static {
-    this.COLONDASH = 29;
+    this.GREATEREQ = 29;
   }
   static {
-    this.NEWLINE = 30;
+    this.GREATER = 30;
   }
   static {
-    this.PIPEGREATER = 31;
+    this.COLONDASH = 31;
   }
   static {
-    this.NUMBER = 32;
+    this.NEWLINE = 32;
   }
   static {
-    this.FLOAT = 33;
+    this.PIPEGREATER = 33;
   }
   static {
-    this.VARIABLE = 34;
+    this.AT = 34;
   }
   static {
-    this.NAME = 35;
+    this.DIAMONDMINUS = 35;
   }
   static {
-    this.TYPENAME = 36;
+    this.DIAMONDPLUS = 36;
   }
   static {
-    this.DOT_TYPE = 37;
+    this.BOXMINUS = 37;
   }
   static {
-    this.CONSTANT = 38;
+    this.BOXPLUS = 38;
   }
   static {
-    this.STRING = 39;
+    this.TIMESTAMP = 39;
   }
   static {
-    this.BYTESTRING = 40;
+    this.DURATION = 40;
+  }
+  static {
+    this.NUMBER = 41;
+  }
+  static {
+    this.FLOAT = 42;
+  }
+  static {
+    this.VARIABLE = 43;
+  }
+  static {
+    this.NAME = 44;
+  }
+  static {
+    this.TYPENAME = 45;
+  }
+  static {
+    this.DOT_TYPE = 46;
+  }
+  static {
+    this.CONSTANT = 47;
+  }
+  static {
+    this.STRING = 48;
+  }
+  static {
+    this.BYTESTRING = 49;
   }
   static {
     this.channelNames = [
@@ -26162,16 +26383,16 @@ var MangleLexer = class _MangleLexer extends Lexer {
   static {
     this.literalNames = [
       null,
+      "'temporal'",
       "'.'",
       "'descr'",
       "'inclusion'",
+      "'now'",
       "':'",
-      "'{'",
-      "'}'",
       "'opt'",
       null,
       null,
-      "'\\u00E2\\u0178\\u00B8'",
+      "'\\u27F8'",
       "'Package'",
       "'Use'",
       "'Decl'",
@@ -26182,17 +26403,24 @@ var MangleLexer = class _MangleLexer extends Lexer {
       "')'",
       "'['",
       "']'",
+      "'{'",
+      "'}'",
       "'='",
       "'!='",
       "','",
       "'!'",
-      "'<'",
       "'<='",
-      "'>'",
+      "'<'",
       "'>='",
+      "'>'",
       "':-'",
       "'\\n'",
-      "'|>'"
+      "'|>'",
+      "'@'",
+      "'<-'",
+      "'<+'",
+      "'[-'",
+      "'[+'"
     ];
   }
   static {
@@ -26218,17 +26446,26 @@ var MangleLexer = class _MangleLexer extends Lexer {
       "RPAREN",
       "LBRACKET",
       "RBRACKET",
+      "LBRACE",
+      "RBRACE",
       "EQ",
       "BANGEQ",
       "COMMA",
       "BANG",
-      "LESS",
       "LESSEQ",
-      "GREATER",
+      "LESS",
       "GREATEREQ",
+      "GREATER",
       "COLONDASH",
       "NEWLINE",
       "PIPEGREATER",
+      "AT",
+      "DIAMONDMINUS",
+      "DIAMONDPLUS",
+      "BOXMINUS",
+      "BOXPLUS",
+      "TIMESTAMP",
+      "DURATION",
       "NUMBER",
       "FLOAT",
       "VARIABLE",
@@ -26267,19 +26504,28 @@ var MangleLexer = class _MangleLexer extends Lexer {
       "RPAREN",
       "LBRACKET",
       "RBRACKET",
+      "LBRACE",
+      "RBRACE",
       "EQ",
       "BANGEQ",
       "COMMA",
       "BANG",
-      "LESS",
       "LESSEQ",
-      "GREATER",
+      "LESS",
       "GREATEREQ",
+      "GREATER",
       "COLONDASH",
       "NEWLINE",
       "PIPEGREATER",
+      "AT",
+      "DIAMONDMINUS",
+      "DIAMONDPLUS",
+      "BOXMINUS",
+      "BOXPLUS",
       "LETTER",
       "DIGIT",
+      "TIMESTAMP",
+      "DURATION",
       "NUMBER",
       "FLOAT",
       "EXPONENT",
@@ -26331,8 +26577,8 @@ var MangleLexer = class _MangleLexer extends Lexer {
     this._serializedATN = [
       4,
       0,
-      40,
-      419,
+      49,
+      504,
       6,
       -1,
       2,
@@ -26547,30 +26793,64 @@ var MangleLexer = class _MangleLexer extends Lexer {
       52,
       7,
       52,
+      2,
+      53,
+      7,
+      53,
+      2,
+      54,
+      7,
+      54,
+      2,
+      55,
+      7,
+      55,
+      2,
+      56,
+      7,
+      56,
+      2,
+      57,
+      7,
+      57,
+      2,
+      58,
+      7,
+      58,
+      2,
+      59,
+      7,
+      59,
+      2,
+      60,
+      7,
+      60,
+      2,
+      61,
+      7,
+      61,
       1,
       0,
       1,
       0,
       1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
       1,
       1,
       1,
       1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      2,
-      1,
-      2,
-      1,
-      2,
-      1,
-      2,
       1,
       2,
       1,
@@ -26587,6 +26867,26 @@ var MangleLexer = class _MangleLexer extends Lexer {
       3,
       1,
       3,
+      1,
+      3,
+      1,
+      3,
+      1,
+      3,
+      1,
+      3,
+      1,
+      3,
+      1,
+      3,
+      1,
+      3,
+      1,
+      3,
+      1,
+      4,
+      1,
+      4,
       1,
       4,
       1,
@@ -26607,14 +26907,14 @@ var MangleLexer = class _MangleLexer extends Lexer {
       7,
       4,
       7,
-      137,
+      164,
       8,
       7,
       11,
       7,
       12,
       7,
-      138,
+      165,
       1,
       7,
       1,
@@ -26625,24 +26925,20 @@ var MangleLexer = class _MangleLexer extends Lexer {
       8,
       5,
       8,
-      145,
+      172,
       8,
       8,
       10,
       8,
       12,
       8,
-      148,
+      175,
       9,
       8,
       1,
       8,
       1,
       8,
-      1,
-      9,
-      1,
-      9,
       1,
       9,
       1,
@@ -26732,11 +27028,11 @@ var MangleLexer = class _MangleLexer extends Lexer {
       1,
       21,
       1,
-      21,
-      1,
       22,
       1,
       22,
+      1,
+      23,
       1,
       23,
       1,
@@ -26750,13 +27046,11 @@ var MangleLexer = class _MangleLexer extends Lexer {
       1,
       25,
       1,
-      25,
-      1,
       26,
       1,
       26,
       1,
-      27,
+      26,
       1,
       27,
       1,
@@ -26786,122 +27080,25 @@ var MangleLexer = class _MangleLexer extends Lexer {
       1,
       32,
       1,
-      33,
-      3,
-      33,
-      226,
-      8,
-      33,
+      32,
       1,
       33,
       1,
       33,
-      5,
-      33,
-      230,
-      8,
-      33,
-      10,
-      33,
-      12,
-      33,
-      233,
-      9,
-      33,
-      1,
-      34,
-      3,
-      34,
-      236,
-      8,
-      34,
-      1,
-      34,
-      4,
-      34,
-      239,
-      8,
-      34,
-      11,
-      34,
-      12,
-      34,
-      240,
       1,
       34,
       1,
       34,
-      4,
-      34,
-      245,
-      8,
-      34,
-      11,
-      34,
-      12,
-      34,
-      246,
       1,
-      34,
-      3,
-      34,
-      250,
-      8,
-      34,
-      1,
-      34,
-      3,
-      34,
-      253,
-      8,
-      34,
-      1,
-      34,
-      1,
-      34,
-      4,
-      34,
-      257,
-      8,
-      34,
-      11,
-      34,
-      12,
-      34,
-      258,
-      1,
-      34,
-      3,
-      34,
-      262,
-      8,
-      34,
-      3,
-      34,
-      264,
-      8,
       34,
       1,
       35,
       1,
       35,
-      3,
-      35,
-      268,
-      8,
-      35,
       1,
       35,
-      4,
-      35,
-      271,
-      8,
-      35,
-      11,
-      35,
-      12,
-      35,
-      272,
+      1,
+      36,
       1,
       36,
       1,
@@ -26910,321 +27107,548 @@ var MangleLexer = class _MangleLexer extends Lexer {
       37,
       1,
       37,
-      3,
-      37,
-      279,
-      8,
+      1,
       37,
       1,
       38,
       1,
       38,
       1,
-      38,
-      5,
-      38,
-      284,
-      8,
-      38,
-      10,
-      38,
-      12,
-      38,
-      287,
-      9,
-      38,
-      3,
-      38,
+      39,
+      1,
+      39,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      1,
+      40,
+      4,
+      40,
       289,
       8,
-      38,
-      1,
-      39,
-      1,
-      39,
-      1,
-      39,
-      3,
-      39,
-      294,
-      8,
-      39,
-      1,
       40,
-      3,
-      40,
-      297,
-      8,
-      40,
-      1,
-      40,
-      1,
-      40,
-      1,
-      40,
-      1,
-      40,
-      5,
-      40,
-      303,
-      8,
-      40,
-      10,
+      11,
       40,
       12,
       40,
-      306,
-      9,
+      290,
+      3,
+      40,
+      293,
+      8,
+      40,
+      1,
+      40,
+      3,
+      40,
+      296,
+      8,
+      40,
+      3,
+      40,
+      298,
+      8,
       40,
       1,
       41,
-      1,
+      4,
       41,
-      1,
-      41,
-      1,
-      41,
-      5,
-      41,
-      312,
+      301,
       8,
       41,
-      10,
+      11,
       41,
       12,
       41,
+      302,
+      1,
+      41,
+      1,
+      41,
+      1,
+      41,
+      3,
+      41,
+      308,
+      8,
+      41,
+      1,
+      42,
+      3,
+      42,
+      311,
+      8,
+      42,
+      1,
+      42,
+      1,
+      42,
+      5,
+      42,
       315,
+      8,
+      42,
+      10,
+      42,
+      12,
+      42,
+      318,
       9,
-      41,
-      1,
-      42,
-      1,
-      42,
-      1,
       42,
       1,
       43,
+      3,
+      43,
+      321,
+      8,
+      43,
       1,
+      43,
+      4,
+      43,
+      324,
+      8,
+      43,
+      11,
+      43,
+      12,
+      43,
+      325,
+      1,
+      43,
+      1,
+      43,
+      4,
+      43,
+      330,
+      8,
+      43,
+      11,
+      43,
+      12,
+      43,
+      331,
+      1,
+      43,
+      3,
+      43,
+      335,
+      8,
       43,
       1,
       43,
       3,
       43,
-      323,
+      338,
+      8,
+      43,
+      1,
+      43,
+      1,
+      43,
+      4,
+      43,
+      342,
+      8,
+      43,
+      11,
+      43,
+      12,
+      43,
+      343,
+      1,
+      43,
+      3,
+      43,
+      347,
+      8,
+      43,
+      3,
+      43,
+      349,
       8,
       43,
       1,
       44,
       1,
       44,
+      3,
+      44,
+      353,
+      8,
+      44,
+      1,
+      44,
       4,
       44,
-      327,
+      356,
       8,
       44,
       11,
       44,
       12,
       44,
-      328,
-      1,
-      44,
-      1,
-      44,
-      4,
-      44,
-      333,
-      8,
-      44,
-      11,
-      44,
-      12,
-      44,
-      334,
-      5,
-      44,
-      337,
-      8,
-      44,
-      10,
-      44,
-      12,
-      44,
-      340,
-      9,
-      44,
+      357,
       1,
       45,
       1,
       45,
+      1,
+      46,
+      1,
+      46,
       3,
-      45,
-      344,
-      8,
-      45,
-      1,
       46,
-      1,
-      46,
-      1,
-      46,
-      1,
-      47,
-      1,
-      47,
-      1,
-      47,
-      5,
-      47,
-      352,
-      8,
-      47,
-      10,
-      47,
-      12,
-      47,
-      355,
-      9,
-      47,
-      1,
-      47,
-      1,
-      47,
-      1,
-      47,
-      1,
-      47,
-      5,
-      47,
-      361,
-      8,
-      47,
-      10,
-      47,
-      12,
-      47,
       364,
-      9,
-      47,
-      1,
-      47,
-      3,
-      47,
-      367,
       8,
+      46,
+      1,
       47,
       1,
-      48,
+      47,
       1,
-      48,
+      47,
       5,
-      48,
-      371,
+      47,
+      369,
       8,
-      48,
+      47,
       10,
-      48,
+      47,
       12,
-      48,
-      374,
-      9,
-      48,
-      1,
-      48,
-      1,
-      48,
-      1,
-      49,
-      1,
-      49,
-      3,
-      49,
-      380,
-      8,
-      49,
-      1,
-      50,
-      1,
-      50,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      3,
-      51,
-      407,
-      8,
-      51,
-      1,
-      51,
-      3,
-      51,
-      410,
-      8,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      1,
-      51,
-      3,
-      51,
-      416,
-      8,
-      51,
-      1,
-      52,
-      1,
-      52,
-      1,
+      47,
       372,
-      0,
+      9,
+      47,
+      3,
+      47,
+      374,
+      8,
+      47,
+      1,
+      48,
+      1,
+      48,
+      1,
+      48,
+      3,
+      48,
+      379,
+      8,
+      48,
+      1,
+      49,
+      3,
+      49,
+      382,
+      8,
+      49,
+      1,
+      49,
+      1,
+      49,
+      1,
+      49,
+      1,
+      49,
+      5,
+      49,
+      388,
+      8,
+      49,
+      10,
+      49,
+      12,
+      49,
+      391,
+      9,
+      49,
+      1,
+      50,
+      1,
+      50,
+      1,
+      50,
+      1,
+      50,
+      5,
+      50,
+      397,
+      8,
+      50,
+      10,
+      50,
+      12,
+      50,
+      400,
+      9,
+      50,
+      1,
+      51,
+      1,
+      51,
+      1,
+      51,
+      1,
+      52,
+      1,
+      52,
+      1,
+      52,
+      3,
+      52,
+      408,
+      8,
+      52,
+      1,
       53,
+      1,
+      53,
+      4,
+      53,
+      412,
+      8,
+      53,
+      11,
+      53,
+      12,
+      53,
+      413,
+      1,
+      53,
+      1,
+      53,
+      4,
+      53,
+      418,
+      8,
+      53,
+      11,
+      53,
+      12,
+      53,
+      419,
+      5,
+      53,
+      422,
+      8,
+      53,
+      10,
+      53,
+      12,
+      53,
+      425,
+      9,
+      53,
+      1,
+      54,
+      1,
+      54,
+      3,
+      54,
+      429,
+      8,
+      54,
+      1,
+      55,
+      1,
+      55,
+      1,
+      55,
+      1,
+      56,
+      1,
+      56,
+      1,
+      56,
+      5,
+      56,
+      437,
+      8,
+      56,
+      10,
+      56,
+      12,
+      56,
+      440,
+      9,
+      56,
+      1,
+      56,
+      1,
+      56,
+      1,
+      56,
+      1,
+      56,
+      5,
+      56,
+      446,
+      8,
+      56,
+      10,
+      56,
+      12,
+      56,
+      449,
+      9,
+      56,
+      1,
+      56,
+      3,
+      56,
+      452,
+      8,
+      56,
+      1,
+      57,
+      1,
+      57,
+      5,
+      57,
+      456,
+      8,
+      57,
+      10,
+      57,
+      12,
+      57,
+      459,
+      9,
+      57,
+      1,
+      57,
+      1,
+      57,
+      1,
+      58,
+      1,
+      58,
+      3,
+      58,
+      465,
+      8,
+      58,
+      1,
+      59,
+      1,
+      59,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      3,
+      60,
+      492,
+      8,
+      60,
+      1,
+      60,
+      3,
+      60,
+      495,
+      8,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      1,
+      60,
+      3,
+      60,
+      501,
+      8,
+      60,
+      1,
+      61,
+      1,
+      61,
+      1,
+      457,
+      0,
+      62,
       1,
       1,
       3,
@@ -27288,52 +27712,70 @@ var MangleLexer = class _MangleLexer extends Lexer {
       61,
       31,
       63,
-      0,
-      65,
-      0,
-      67,
       32,
-      69,
+      65,
       33,
-      71,
-      0,
-      73,
-      0,
-      75,
-      0,
-      77,
+      67,
       34,
+      69,
+      35,
+      71,
+      36,
+      73,
+      37,
+      75,
+      38,
+      77,
+      0,
       79,
       0,
       81,
-      35,
-      83,
-      36,
-      85,
-      37,
-      87,
-      0,
-      89,
-      38,
-      91,
       39,
-      93,
+      83,
       40,
-      95,
+      85,
+      41,
+      87,
+      42,
+      89,
       0,
+      91,
+      0,
+      93,
+      0,
+      95,
+      43,
       97,
       0,
       99,
-      0,
+      44,
       101,
-      0,
+      45,
       103,
-      0,
+      46,
       105,
+      0,
+      107,
+      47,
+      109,
+      48,
+      111,
+      49,
+      113,
+      0,
+      115,
+      0,
+      117,
+      0,
+      119,
+      0,
+      121,
+      0,
+      123,
       0,
       1,
       0,
-      11,
+      12,
       3,
       0,
       9,
@@ -27352,6 +27794,16 @@ var MangleLexer = class _MangleLexer extends Lexer {
       90,
       97,
       122,
+      4,
+      0,
+      100,
+      100,
+      104,
+      104,
+      109,
+      109,
+      115,
+      115,
       2,
       0,
       69,
@@ -27402,7 +27854,7 @@ var MangleLexer = class _MangleLexer extends Lexer {
       57,
       97,
       102,
-      451,
+      542,
       0,
       1,
       1,
@@ -27590,6 +28042,18 @@ var MangleLexer = class _MangleLexer extends Lexer {
       0,
       0,
       0,
+      63,
+      1,
+      0,
+      0,
+      0,
+      0,
+      65,
+      1,
+      0,
+      0,
+      0,
+      0,
       67,
       1,
       0,
@@ -27602,7 +28066,19 @@ var MangleLexer = class _MangleLexer extends Lexer {
       0,
       0,
       0,
-      77,
+      71,
+      1,
+      0,
+      0,
+      0,
+      0,
+      73,
+      1,
+      0,
+      0,
+      0,
+      0,
+      75,
       1,
       0,
       0,
@@ -27626,445 +28102,421 @@ var MangleLexer = class _MangleLexer extends Lexer {
       0,
       0,
       0,
-      89,
+      87,
       1,
       0,
       0,
       0,
       0,
-      91,
+      95,
       1,
       0,
       0,
       0,
       0,
-      93,
+      99,
       1,
       0,
       0,
       0,
+      0,
+      101,
       1,
+      0,
+      0,
+      0,
+      0,
+      103,
+      1,
+      0,
+      0,
+      0,
+      0,
       107,
       1,
       0,
       0,
       0,
-      3,
+      0,
       109,
       1,
       0,
       0,
       0,
-      5,
-      115,
+      0,
+      111,
       1,
       0,
       0,
       0,
-      7,
+      1,
       125,
       1,
       0,
       0,
       0,
-      9,
-      127,
+      3,
+      134,
       1,
       0,
       0,
       0,
-      11,
-      129,
-      1,
-      0,
-      0,
-      0,
-      13,
-      131,
-      1,
-      0,
-      0,
-      0,
-      15,
+      5,
       136,
       1,
       0,
       0,
       0,
-      17,
+      7,
       142,
       1,
       0,
       0,
       0,
-      19,
-      151,
+      9,
+      152,
       1,
       0,
       0,
       0,
-      21,
-      155,
+      11,
+      156,
       1,
       0,
       0,
       0,
-      23,
+      13,
+      158,
+      1,
+      0,
+      0,
+      0,
+      15,
       163,
       1,
       0,
       0,
       0,
-      25,
-      167,
+      17,
+      169,
       1,
       0,
       0,
       0,
-      27,
-      172,
-      1,
-      0,
-      0,
-      0,
-      29,
+      19,
       178,
       1,
       0,
       0,
       0,
+      21,
+      180,
+      1,
+      0,
+      0,
+      0,
+      23,
+      188,
+      1,
+      0,
+      0,
+      0,
+      25,
+      192,
+      1,
+      0,
+      0,
+      0,
+      27,
+      197,
+      1,
+      0,
+      0,
+      0,
+      29,
+      203,
+      1,
+      0,
+      0,
+      0,
       31,
-      182,
-      1,
-      0,
-      0,
-      0,
-      33,
-      185,
-      1,
-      0,
-      0,
-      0,
-      35,
-      187,
-      1,
-      0,
-      0,
-      0,
-      37,
-      189,
-      1,
-      0,
-      0,
-      0,
-      39,
-      191,
-      1,
-      0,
-      0,
-      0,
-      41,
-      193,
-      1,
-      0,
-      0,
-      0,
-      43,
-      195,
-      1,
-      0,
-      0,
-      0,
-      45,
-      198,
-      1,
-      0,
-      0,
-      0,
-      47,
-      200,
-      1,
-      0,
-      0,
-      0,
-      49,
-      202,
-      1,
-      0,
-      0,
-      0,
-      51,
-      204,
-      1,
-      0,
-      0,
-      0,
-      53,
       207,
       1,
       0,
       0,
       0,
-      55,
-      209,
+      33,
+      210,
       1,
       0,
       0,
       0,
-      57,
+      35,
       212,
       1,
       0,
       0,
       0,
-      59,
-      215,
+      37,
+      214,
       1,
       0,
       0,
       0,
-      61,
-      217,
+      39,
+      216,
       1,
       0,
       0,
       0,
-      63,
+      41,
+      218,
+      1,
+      0,
+      0,
+      0,
+      43,
       220,
       1,
       0,
       0,
       0,
-      65,
+      45,
       222,
       1,
       0,
       0,
       0,
+      47,
+      224,
+      1,
+      0,
+      0,
+      0,
+      49,
+      227,
+      1,
+      0,
+      0,
+      0,
+      51,
+      229,
+      1,
+      0,
+      0,
+      0,
+      53,
+      231,
+      1,
+      0,
+      0,
+      0,
+      55,
+      234,
+      1,
+      0,
+      0,
+      0,
+      57,
+      236,
+      1,
+      0,
+      0,
+      0,
+      59,
+      239,
+      1,
+      0,
+      0,
+      0,
+      61,
+      241,
+      1,
+      0,
+      0,
+      0,
+      63,
+      244,
+      1,
+      0,
+      0,
+      0,
+      65,
+      246,
+      1,
+      0,
+      0,
+      0,
       67,
-      225,
+      249,
       1,
       0,
       0,
       0,
       69,
-      263,
+      251,
       1,
       0,
       0,
       0,
       71,
-      265,
+      254,
       1,
       0,
       0,
       0,
       73,
-      274,
+      257,
       1,
       0,
       0,
       0,
       75,
-      278,
+      260,
       1,
       0,
       0,
       0,
       77,
-      288,
+      263,
       1,
       0,
       0,
       0,
       79,
-      293,
+      265,
       1,
       0,
       0,
       0,
       81,
-      296,
+      267,
       1,
       0,
       0,
       0,
       83,
-      307,
+      300,
       1,
       0,
       0,
       0,
       85,
-      316,
+      310,
       1,
       0,
       0,
       0,
       87,
-      322,
+      348,
       1,
       0,
       0,
       0,
       89,
-      324,
+      350,
       1,
       0,
       0,
       0,
       91,
-      343,
+      359,
       1,
       0,
       0,
       0,
       93,
-      345,
+      363,
       1,
       0,
       0,
       0,
       95,
-      366,
+      373,
       1,
       0,
       0,
       0,
       97,
-      368,
+      378,
       1,
       0,
       0,
       0,
       99,
-      379,
-      1,
-      0,
-      0,
-      0,
-      101,
       381,
       1,
       0,
       0,
       0,
+      101,
+      392,
+      1,
+      0,
+      0,
+      0,
       103,
-      415,
+      401,
       1,
       0,
       0,
       0,
       105,
-      417,
+      407,
       1,
       0,
       0,
       0,
       107,
-      108,
-      5,
-      46,
-      0,
-      0,
-      108,
-      2,
+      409,
       1,
       0,
       0,
       0,
       109,
-      110,
-      5,
-      100,
+      428,
+      1,
       0,
-      0,
-      110,
-      111,
-      5,
-      101,
       0,
       0,
       111,
-      112,
-      5,
-      115,
+      430,
+      1,
       0,
-      0,
-      112,
-      113,
-      5,
-      99,
       0,
       0,
       113,
-      114,
-      5,
-      114,
-      0,
-      0,
-      114,
-      4,
+      451,
       1,
       0,
       0,
       0,
       115,
-      116,
-      5,
-      105,
+      453,
+      1,
       0,
-      0,
-      116,
-      117,
-      5,
-      110,
       0,
       0,
       117,
-      118,
-      5,
-      99,
+      464,
+      1,
       0,
-      0,
-      118,
-      119,
-      5,
-      108,
       0,
       0,
       119,
-      120,
-      5,
-      117,
+      466,
+      1,
       0,
-      0,
-      120,
-      121,
-      5,
-      115,
       0,
       0,
       121,
-      122,
-      5,
-      105,
+      500,
+      1,
       0,
-      0,
-      122,
-      123,
-      5,
-      111,
       0,
       0,
       123,
-      124,
-      5,
-      110,
-      0,
-      0,
-      124,
-      6,
+      502,
       1,
       0,
       0,
@@ -28072,329 +28524,329 @@ var MangleLexer = class _MangleLexer extends Lexer {
       125,
       126,
       5,
-      58,
+      116,
       0,
       0,
       126,
-      8,
-      1,
-      0,
+      127,
+      5,
+      101,
       0,
       0,
       127,
       128,
       5,
-      123,
+      109,
       0,
       0,
       128,
-      10,
-      1,
-      0,
+      129,
+      5,
+      112,
       0,
       0,
       129,
       130,
       5,
-      125,
+      111,
       0,
       0,
       130,
-      12,
-      1,
-      0,
+      131,
+      5,
+      114,
       0,
       0,
       131,
       132,
       5,
-      111,
+      97,
       0,
       0,
       132,
       133,
       5,
-      112,
+      108,
       0,
       0,
       133,
+      2,
+      1,
+      0,
+      0,
+      0,
       134,
+      135,
       5,
-      116,
-      0,
-      0,
-      134,
-      14,
-      1,
-      0,
+      46,
       0,
       0,
       135,
-      137,
-      7,
+      4,
+      1,
       0,
       0,
       0,
       136,
-      135,
-      1,
-      0,
+      137,
+      5,
+      100,
       0,
       0,
       137,
       138,
-      1,
-      0,
-      0,
-      0,
-      138,
-      136,
-      1,
-      0,
+      5,
+      101,
       0,
       0,
       138,
       139,
-      1,
-      0,
+      5,
+      115,
       0,
       0,
       139,
       140,
-      1,
-      0,
+      5,
+      99,
       0,
       0,
       140,
+      141,
+      5,
+      114,
+      0,
+      0,
       141,
       6,
-      7,
-      0,
-      0,
-      141,
-      16,
       1,
       0,
       0,
       0,
       142,
-      146,
+      143,
       5,
-      35,
+      105,
       0,
       0,
       143,
-      145,
-      8,
-      1,
+      144,
+      5,
+      110,
       0,
       0,
       144,
-      143,
-      1,
-      0,
-      0,
-      0,
       145,
-      148,
-      1,
-      0,
-      0,
-      0,
-      146,
-      144,
-      1,
-      0,
-      0,
-      0,
-      146,
-      147,
-      1,
-      0,
-      0,
-      0,
-      147,
-      149,
-      1,
-      0,
-      0,
-      0,
-      148,
-      146,
-      1,
-      0,
-      0,
-      0,
-      149,
-      150,
-      6,
-      8,
-      0,
-      0,
-      150,
-      18,
-      1,
-      0,
-      0,
-      0,
-      151,
-      152,
-      5,
-      226,
-      0,
-      0,
-      152,
-      153,
-      5,
-      376,
-      0,
-      0,
-      153,
-      154,
-      5,
-      184,
-      0,
-      0,
-      154,
-      20,
-      1,
-      0,
-      0,
-      0,
-      155,
-      156,
-      5,
-      80,
-      0,
-      0,
-      156,
-      157,
-      5,
-      97,
-      0,
-      0,
-      157,
-      158,
       5,
       99,
       0,
       0,
-      158,
-      159,
+      145,
+      146,
       5,
-      107,
+      108,
       0,
       0,
-      159,
-      160,
+      146,
+      147,
       5,
-      97,
+      117,
       0,
       0,
-      160,
-      161,
-      5,
-      103,
-      0,
-      0,
-      161,
-      162,
-      5,
-      101,
-      0,
-      0,
-      162,
-      22,
-      1,
-      0,
-      0,
-      0,
-      163,
-      164,
-      5,
-      85,
-      0,
-      0,
-      164,
-      165,
+      147,
+      148,
       5,
       115,
       0,
       0,
+      148,
+      149,
+      5,
+      105,
+      0,
+      0,
+      149,
+      150,
+      5,
+      111,
+      0,
+      0,
+      150,
+      151,
+      5,
+      110,
+      0,
+      0,
+      151,
+      8,
+      1,
+      0,
+      0,
+      0,
+      152,
+      153,
+      5,
+      110,
+      0,
+      0,
+      153,
+      154,
+      5,
+      111,
+      0,
+      0,
+      154,
+      155,
+      5,
+      119,
+      0,
+      0,
+      155,
+      10,
+      1,
+      0,
+      0,
+      0,
+      156,
+      157,
+      5,
+      58,
+      0,
+      0,
+      157,
+      12,
+      1,
+      0,
+      0,
+      0,
+      158,
+      159,
+      5,
+      111,
+      0,
+      0,
+      159,
+      160,
+      5,
+      112,
+      0,
+      0,
+      160,
+      161,
+      5,
+      116,
+      0,
+      0,
+      161,
+      14,
+      1,
+      0,
+      0,
+      0,
+      162,
+      164,
+      7,
+      0,
+      0,
+      0,
+      163,
+      162,
+      1,
+      0,
+      0,
+      0,
+      164,
+      165,
+      1,
+      0,
+      0,
+      0,
+      165,
+      163,
+      1,
+      0,
+      0,
+      0,
       165,
       166,
-      5,
-      101,
+      1,
+      0,
       0,
       0,
       166,
-      24,
+      167,
       1,
       0,
       0,
       0,
       167,
       168,
-      5,
-      68,
+      6,
+      7,
       0,
       0,
       168,
+      16,
+      1,
+      0,
+      0,
+      0,
       169,
+      173,
       5,
-      101,
-      0,
-      0,
-      169,
-      170,
-      5,
-      99,
+      35,
       0,
       0,
       170,
-      171,
-      5,
-      108,
+      172,
+      8,
+      1,
       0,
       0,
       171,
-      26,
+      170,
       1,
       0,
       0,
       0,
       172,
+      175,
+      1,
+      0,
+      0,
+      0,
       173,
-      5,
-      98,
+      171,
+      1,
+      0,
       0,
       0,
       173,
       174,
-      5,
-      111,
+      1,
+      0,
       0,
       0,
       174,
-      175,
-      5,
-      117,
-      0,
-      0,
-      175,
       176,
-      5,
-      110,
+      1,
+      0,
+      0,
+      0,
+      175,
+      173,
+      1,
+      0,
       0,
       0,
       176,
       177,
-      5,
-      100,
+      6,
+      8,
       0,
       0,
       177,
-      28,
+      18,
       1,
       0,
       0,
@@ -28402,173 +28854,173 @@ var MangleLexer = class _MangleLexer extends Lexer {
       178,
       179,
       5,
-      108,
+      10232,
       0,
       0,
       179,
-      180,
-      5,
-      101,
-      0,
-      0,
-      180,
-      181,
-      5,
-      116,
-      0,
-      0,
-      181,
-      30,
+      20,
       1,
       0,
+      0,
+      0,
+      180,
+      181,
+      5,
+      80,
+      0,
+      0,
+      181,
+      182,
+      5,
+      97,
       0,
       0,
       182,
       183,
       5,
-      100,
+      99,
       0,
       0,
       183,
       184,
       5,
-      111,
+      107,
       0,
       0,
       184,
-      32,
-      1,
-      0,
+      185,
+      5,
+      97,
       0,
       0,
       185,
       186,
       5,
-      40,
+      103,
       0,
       0,
       186,
-      34,
-      1,
-      0,
+      187,
+      5,
+      101,
       0,
       0,
       187,
-      188,
-      5,
-      41,
-      0,
-      0,
-      188,
-      36,
+      22,
       1,
       0,
+      0,
+      0,
+      188,
+      189,
+      5,
+      85,
       0,
       0,
       189,
       190,
       5,
-      91,
+      115,
       0,
       0,
       190,
-      38,
-      1,
-      0,
+      191,
+      5,
+      101,
       0,
       0,
       191,
-      192,
-      5,
-      93,
-      0,
-      0,
-      192,
-      40,
+      24,
       1,
       0,
+      0,
+      0,
+      192,
+      193,
+      5,
+      68,
       0,
       0,
       193,
       194,
       5,
-      61,
+      101,
       0,
       0,
       194,
-      42,
-      1,
-      0,
+      195,
+      5,
+      99,
       0,
       0,
       195,
       196,
       5,
-      33,
+      108,
       0,
       0,
       196,
-      197,
-      5,
-      61,
-      0,
-      0,
-      197,
-      44,
+      26,
       1,
       0,
+      0,
+      0,
+      197,
+      198,
+      5,
+      98,
       0,
       0,
       198,
       199,
       5,
-      44,
+      111,
       0,
       0,
       199,
-      46,
-      1,
-      0,
+      200,
+      5,
+      117,
       0,
       0,
       200,
       201,
       5,
-      33,
+      110,
       0,
       0,
       201,
-      48,
-      1,
-      0,
+      202,
+      5,
+      100,
       0,
       0,
       202,
-      203,
-      5,
-      60,
-      0,
-      0,
-      203,
-      50,
+      28,
       1,
       0,
+      0,
+      0,
+      203,
+      204,
+      5,
+      108,
       0,
       0,
       204,
       205,
       5,
-      60,
+      101,
       0,
       0,
       205,
       206,
       5,
-      61,
+      116,
       0,
       0,
       206,
-      52,
+      30,
       1,
       0,
       0,
@@ -28576,917 +29028,833 @@ var MangleLexer = class _MangleLexer extends Lexer {
       207,
       208,
       5,
-      62,
+      100,
       0,
       0,
       208,
+      209,
+      5,
+      111,
+      0,
+      0,
+      209,
+      32,
+      1,
+      0,
+      0,
+      0,
+      210,
+      211,
+      5,
+      40,
+      0,
+      0,
+      211,
+      34,
+      1,
+      0,
+      0,
+      0,
+      212,
+      213,
+      5,
+      41,
+      0,
+      0,
+      213,
+      36,
+      1,
+      0,
+      0,
+      0,
+      214,
+      215,
+      5,
+      91,
+      0,
+      0,
+      215,
+      38,
+      1,
+      0,
+      0,
+      0,
+      216,
+      217,
+      5,
+      93,
+      0,
+      0,
+      217,
+      40,
+      1,
+      0,
+      0,
+      0,
+      218,
+      219,
+      5,
+      123,
+      0,
+      0,
+      219,
+      42,
+      1,
+      0,
+      0,
+      0,
+      220,
+      221,
+      5,
+      125,
+      0,
+      0,
+      221,
+      44,
+      1,
+      0,
+      0,
+      0,
+      222,
+      223,
+      5,
+      61,
+      0,
+      0,
+      223,
+      46,
+      1,
+      0,
+      0,
+      0,
+      224,
+      225,
+      5,
+      33,
+      0,
+      0,
+      225,
+      226,
+      5,
+      61,
+      0,
+      0,
+      226,
+      48,
+      1,
+      0,
+      0,
+      0,
+      227,
+      228,
+      5,
+      44,
+      0,
+      0,
+      228,
+      50,
+      1,
+      0,
+      0,
+      0,
+      229,
+      230,
+      5,
+      33,
+      0,
+      0,
+      230,
+      52,
+      1,
+      0,
+      0,
+      0,
+      231,
+      232,
+      5,
+      60,
+      0,
+      0,
+      232,
+      233,
+      5,
+      61,
+      0,
+      0,
+      233,
       54,
       1,
       0,
       0,
       0,
-      209,
-      210,
+      234,
+      235,
       5,
-      62,
+      60,
       0,
       0,
-      210,
-      211,
-      5,
-      61,
-      0,
-      0,
-      211,
+      235,
       56,
       1,
       0,
       0,
       0,
-      212,
-      213,
+      236,
+      237,
       5,
-      58,
+      62,
       0,
       0,
-      213,
-      214,
+      237,
+      238,
       5,
-      45,
+      61,
       0,
       0,
-      214,
+      238,
       58,
       1,
       0,
       0,
       0,
-      215,
-      216,
+      239,
+      240,
       5,
-      10,
+      62,
       0,
       0,
-      216,
+      240,
       60,
       1,
       0,
       0,
       0,
-      217,
-      218,
+      241,
+      242,
       5,
-      124,
+      58,
       0,
       0,
-      218,
-      219,
+      242,
+      243,
       5,
-      62,
+      45,
       0,
       0,
-      219,
+      243,
       62,
       1,
       0,
       0,
       0,
-      220,
-      221,
-      7,
-      2,
+      244,
+      245,
+      5,
+      10,
       0,
       0,
-      221,
+      245,
       64,
       1,
       0,
       0,
       0,
-      222,
-      223,
-      2,
-      48,
-      57,
+      246,
+      247,
+      5,
+      124,
       0,
-      223,
+      0,
+      247,
+      248,
+      5,
+      62,
+      0,
+      0,
+      248,
       66,
       1,
       0,
       0,
       0,
-      224,
-      226,
+      249,
+      250,
       5,
-      45,
+      64,
       0,
       0,
-      225,
-      224,
-      1,
-      0,
-      0,
-      0,
-      225,
-      226,
-      1,
-      0,
-      0,
-      0,
-      226,
-      227,
-      1,
-      0,
-      0,
-      0,
-      227,
-      231,
-      3,
-      65,
-      32,
-      0,
-      228,
-      230,
-      3,
-      65,
-      32,
-      0,
-      229,
-      228,
-      1,
-      0,
-      0,
-      0,
-      230,
-      233,
-      1,
-      0,
-      0,
-      0,
-      231,
-      229,
-      1,
-      0,
-      0,
-      0,
-      231,
-      232,
-      1,
-      0,
-      0,
-      0,
-      232,
+      250,
       68,
       1,
       0,
       0,
       0,
-      233,
-      231,
-      1,
-      0,
-      0,
-      0,
-      234,
-      236,
-      5,
-      45,
-      0,
-      0,
-      235,
-      234,
-      1,
-      0,
-      0,
-      0,
-      235,
-      236,
-      1,
-      0,
-      0,
-      0,
-      236,
-      238,
-      1,
-      0,
-      0,
-      0,
-      237,
-      239,
-      3,
-      65,
-      32,
-      0,
-      238,
-      237,
-      1,
-      0,
-      0,
-      0,
-      239,
-      240,
-      1,
-      0,
-      0,
-      0,
-      240,
-      238,
-      1,
-      0,
-      0,
-      0,
-      240,
-      241,
-      1,
-      0,
-      0,
-      0,
-      241,
-      242,
-      1,
-      0,
-      0,
-      0,
-      242,
-      244,
-      5,
-      46,
-      0,
-      0,
-      243,
-      245,
-      3,
-      65,
-      32,
-      0,
-      244,
-      243,
-      1,
-      0,
-      0,
-      0,
-      245,
-      246,
-      1,
-      0,
-      0,
-      0,
-      246,
-      244,
-      1,
-      0,
-      0,
-      0,
-      246,
-      247,
-      1,
-      0,
-      0,
-      0,
-      247,
-      249,
-      1,
-      0,
-      0,
-      0,
-      248,
-      250,
-      3,
-      71,
-      35,
-      0,
-      249,
-      248,
-      1,
-      0,
-      0,
-      0,
-      249,
-      250,
-      1,
-      0,
-      0,
-      0,
-      250,
-      264,
-      1,
-      0,
-      0,
-      0,
       251,
+      252,
+      5,
+      60,
+      0,
+      0,
+      252,
       253,
       5,
       45,
       0,
       0,
-      252,
-      251,
-      1,
-      0,
-      0,
-      0,
-      252,
       253,
-      1,
-      0,
-      0,
-      0,
-      253,
-      254,
-      1,
-      0,
-      0,
-      0,
-      254,
-      256,
-      5,
-      46,
-      0,
-      0,
-      255,
-      257,
-      3,
-      65,
-      32,
-      0,
-      256,
-      255,
-      1,
-      0,
-      0,
-      0,
-      257,
-      258,
-      1,
-      0,
-      0,
-      0,
-      258,
-      256,
-      1,
-      0,
-      0,
-      0,
-      258,
-      259,
-      1,
-      0,
-      0,
-      0,
-      259,
-      261,
-      1,
-      0,
-      0,
-      0,
-      260,
-      262,
-      3,
-      71,
-      35,
-      0,
-      261,
-      260,
-      1,
-      0,
-      0,
-      0,
-      261,
-      262,
-      1,
-      0,
-      0,
-      0,
-      262,
-      264,
-      1,
-      0,
-      0,
-      0,
-      263,
-      235,
-      1,
-      0,
-      0,
-      0,
-      263,
-      252,
-      1,
-      0,
-      0,
-      0,
-      264,
       70,
       1,
       0,
       0,
       0,
-      265,
-      267,
-      7,
-      3,
+      254,
+      255,
+      5,
+      60,
       0,
       0,
-      266,
-      268,
-      7,
-      4,
+      255,
+      256,
+      5,
+      43,
       0,
       0,
-      267,
-      266,
-      1,
-      0,
-      0,
-      0,
-      267,
-      268,
-      1,
-      0,
-      0,
-      0,
-      268,
-      270,
-      1,
-      0,
-      0,
-      0,
-      269,
-      271,
-      3,
-      65,
-      32,
-      0,
-      270,
-      269,
-      1,
-      0,
-      0,
-      0,
-      271,
-      272,
-      1,
-      0,
-      0,
-      0,
-      272,
-      270,
-      1,
-      0,
-      0,
-      0,
-      272,
-      273,
-      1,
-      0,
-      0,
-      0,
-      273,
+      256,
       72,
       1,
       0,
       0,
       0,
-      274,
-      275,
-      2,
-      65,
-      90,
+      257,
+      258,
+      5,
+      91,
       0,
-      275,
+      0,
+      258,
+      259,
+      5,
+      45,
+      0,
+      0,
+      259,
       74,
       1,
       0,
       0,
       0,
-      276,
-      279,
-      3,
-      63,
-      31,
-      0,
-      277,
-      279,
-      3,
-      65,
-      32,
-      0,
-      278,
-      276,
-      1,
+      260,
+      261,
+      5,
+      91,
       0,
       0,
+      261,
+      262,
+      5,
+      43,
       0,
-      278,
-      277,
-      1,
       0,
-      0,
-      0,
-      279,
+      262,
       76,
       1,
       0,
       0,
       0,
-      280,
-      289,
-      5,
-      95,
+      263,
+      264,
+      7,
+      2,
       0,
       0,
-      281,
-      285,
-      3,
-      73,
-      36,
-      0,
-      282,
-      284,
-      3,
-      75,
-      37,
-      0,
-      283,
-      282,
-      1,
-      0,
-      0,
-      0,
-      284,
-      287,
-      1,
-      0,
-      0,
-      0,
-      285,
-      283,
-      1,
-      0,
-      0,
-      0,
-      285,
-      286,
-      1,
-      0,
-      0,
-      0,
-      286,
-      289,
-      1,
-      0,
-      0,
-      0,
-      287,
-      285,
-      1,
-      0,
-      0,
-      0,
-      288,
-      280,
-      1,
-      0,
-      0,
-      0,
-      288,
-      281,
-      1,
-      0,
-      0,
-      0,
-      289,
+      264,
       78,
       1,
       0,
       0,
       0,
-      290,
-      294,
-      3,
-      63,
-      31,
+      265,
+      266,
+      2,
+      48,
+      57,
       0,
-      291,
-      294,
-      3,
-      65,
-      32,
-      0,
-      292,
-      294,
-      7,
-      5,
-      0,
-      0,
-      293,
-      290,
-      1,
-      0,
-      0,
-      0,
-      293,
-      291,
-      1,
-      0,
-      0,
-      0,
-      293,
-      292,
-      1,
-      0,
-      0,
-      0,
-      294,
+      266,
       80,
       1,
       0,
       0,
       0,
-      295,
+      267,
+      268,
+      3,
+      79,
+      39,
+      0,
+      268,
+      269,
+      3,
+      79,
+      39,
+      0,
+      269,
+      270,
+      3,
+      79,
+      39,
+      0,
+      270,
+      271,
+      3,
+      79,
+      39,
+      0,
+      271,
+      272,
+      5,
+      45,
+      0,
+      0,
+      272,
+      273,
+      3,
+      79,
+      39,
+      0,
+      273,
+      274,
+      3,
+      79,
+      39,
+      0,
+      274,
+      275,
+      5,
+      45,
+      0,
+      0,
+      275,
+      276,
+      3,
+      79,
+      39,
+      0,
+      276,
       297,
+      3,
+      79,
+      39,
+      0,
+      277,
+      278,
+      5,
+      84,
+      0,
+      0,
+      278,
+      279,
+      3,
+      79,
+      39,
+      0,
+      279,
+      280,
+      3,
+      79,
+      39,
+      0,
+      280,
+      281,
       5,
       58,
       0,
       0,
-      296,
+      281,
+      282,
+      3,
+      79,
+      39,
+      0,
+      282,
+      283,
+      3,
+      79,
+      39,
+      0,
+      283,
+      284,
+      5,
+      58,
+      0,
+      0,
+      284,
+      285,
+      3,
+      79,
+      39,
+      0,
+      285,
+      292,
+      3,
+      79,
+      39,
+      0,
+      286,
+      288,
+      5,
+      46,
+      0,
+      0,
+      287,
+      289,
+      3,
+      79,
+      39,
+      0,
+      288,
+      287,
+      1,
+      0,
+      0,
+      0,
+      289,
+      290,
+      1,
+      0,
+      0,
+      0,
+      290,
+      288,
+      1,
+      0,
+      0,
+      0,
+      290,
+      291,
+      1,
+      0,
+      0,
+      0,
+      291,
+      293,
+      1,
+      0,
+      0,
+      0,
+      292,
+      286,
+      1,
+      0,
+      0,
+      0,
+      292,
+      293,
+      1,
+      0,
+      0,
+      0,
+      293,
       295,
       1,
       0,
       0,
       0,
+      294,
       296,
-      297,
-      1,
-      0,
-      0,
-      0,
-      297,
-      298,
-      1,
-      0,
-      0,
-      0,
-      298,
-      304,
-      2,
-      97,
-      122,
-      0,
-      299,
-      303,
-      3,
-      79,
-      39,
-      0,
-      300,
-      301,
       5,
-      46,
+      90,
       0,
       0,
-      301,
-      303,
-      3,
-      79,
-      39,
-      0,
-      302,
-      299,
+      295,
+      294,
       1,
       0,
       0,
       0,
-      302,
-      300,
+      295,
+      296,
       1,
       0,
       0,
       0,
-      303,
-      306,
+      296,
+      298,
       1,
       0,
       0,
       0,
-      304,
-      302,
+      297,
+      277,
       1,
       0,
       0,
       0,
-      304,
-      305,
+      297,
+      298,
       1,
       0,
       0,
       0,
-      305,
+      298,
       82,
       1,
       0,
       0,
       0,
+      299,
+      301,
+      3,
+      79,
+      39,
+      0,
+      300,
+      299,
+      1,
+      0,
+      0,
+      0,
+      301,
+      302,
+      1,
+      0,
+      0,
+      0,
+      302,
+      300,
+      1,
+      0,
+      0,
+      0,
+      302,
+      303,
+      1,
+      0,
+      0,
+      0,
+      303,
+      307,
+      1,
+      0,
+      0,
+      0,
+      304,
+      308,
+      7,
+      3,
+      0,
+      0,
+      305,
       306,
+      5,
+      109,
+      0,
+      0,
+      306,
+      308,
+      5,
+      115,
+      0,
+      0,
+      307,
       304,
       1,
       0,
       0,
       0,
       307,
-      313,
-      2,
-      65,
-      90,
+      305,
+      1,
+      0,
+      0,
       0,
       308,
-      312,
-      3,
-      79,
-      39,
-      0,
-      309,
-      310,
-      5,
-      46,
-      0,
-      0,
-      310,
-      312,
-      3,
-      79,
-      39,
-      0,
-      311,
-      308,
-      1,
-      0,
-      0,
-      0,
-      311,
-      309,
-      1,
-      0,
-      0,
-      0,
-      312,
-      315,
-      1,
-      0,
-      0,
-      0,
-      313,
-      311,
-      1,
-      0,
-      0,
-      0,
-      313,
-      314,
-      1,
-      0,
-      0,
-      0,
-      314,
       84,
       1,
       0,
       0,
       0,
-      315,
+      309,
+      311,
+      5,
+      45,
+      0,
+      0,
+      310,
+      309,
+      1,
+      0,
+      0,
+      0,
+      310,
+      311,
+      1,
+      0,
+      0,
+      0,
+      311,
+      312,
+      1,
+      0,
+      0,
+      0,
+      312,
+      316,
+      3,
+      79,
+      39,
+      0,
       313,
+      315,
+      3,
+      79,
+      39,
+      0,
+      314,
+      313,
+      1,
+      0,
+      0,
+      0,
+      315,
+      318,
+      1,
+      0,
+      0,
+      0,
+      316,
+      314,
       1,
       0,
       0,
       0,
       316,
       317,
-      5,
-      46,
+      1,
+      0,
       0,
       0,
       317,
-      318,
-      3,
-      83,
-      41,
-      0,
-      318,
       86,
       1,
       0,
       0,
       0,
+      318,
+      316,
+      1,
+      0,
+      0,
+      0,
       319,
-      323,
-      3,
-      63,
-      31,
+      321,
+      5,
+      45,
+      0,
       0,
       320,
-      323,
-      3,
-      65,
-      32,
-      0,
-      321,
-      323,
-      7,
-      6,
-      0,
-      0,
-      322,
       319,
       1,
       0,
       0,
       0,
-      322,
       320,
-      1,
-      0,
-      0,
-      0,
-      322,
       321,
       1,
       0,
       0,
       0,
+      321,
       323,
-      88,
+      1,
+      0,
+      0,
+      0,
+      322,
+      324,
+      3,
+      79,
+      39,
+      0,
+      323,
+      322,
       1,
       0,
       0,
       0,
       324,
+      325,
+      1,
+      0,
+      0,
+      0,
+      325,
+      323,
+      1,
+      0,
+      0,
+      0,
+      325,
       326,
+      1,
+      0,
+      0,
+      0,
+      326,
+      327,
+      1,
+      0,
+      0,
+      0,
+      327,
+      329,
       5,
-      47,
+      46,
       0,
       0,
-      325,
-      327,
+      328,
+      330,
       3,
-      87,
-      43,
-      0,
-      326,
-      325,
-      1,
-      0,
-      0,
-      0,
-      327,
-      328,
-      1,
-      0,
-      0,
-      0,
-      328,
-      326,
-      1,
-      0,
-      0,
-      0,
-      328,
-      329,
-      1,
-      0,
-      0,
+      79,
+      39,
       0,
       329,
-      338,
+      328,
       1,
       0,
       0,
       0,
       330,
-      332,
-      5,
-      47,
+      331,
+      1,
+      0,
       0,
       0,
       331,
+      329,
+      1,
+      0,
+      0,
+      0,
+      331,
+      332,
+      1,
+      0,
+      0,
+      0,
+      332,
+      334,
+      1,
+      0,
+      0,
+      0,
       333,
+      335,
       3,
-      87,
-      43,
+      89,
+      44,
       0,
-      332,
-      331,
-      1,
-      0,
-      0,
-      0,
+      334,
       333,
-      334,
-      1,
-      0,
-      0,
-      0,
-      334,
-      332,
       1,
       0,
       0,
@@ -29498,25 +29866,25 @@ var MangleLexer = class _MangleLexer extends Lexer {
       0,
       0,
       335,
-      337,
+      349,
       1,
       0,
       0,
       0,
       336,
-      330,
-      1,
-      0,
-      0,
-      0,
-      337,
-      340,
-      1,
-      0,
-      0,
-      0,
       338,
+      5,
+      45,
+      0,
+      0,
+      337,
       336,
+      1,
+      0,
+      0,
+      0,
+      337,
+      338,
       1,
       0,
       0,
@@ -29528,28 +29896,28 @@ var MangleLexer = class _MangleLexer extends Lexer {
       0,
       0,
       339,
-      90,
-      1,
-      0,
+      341,
+      5,
+      46,
       0,
       0,
       340,
-      338,
+      342,
+      3,
+      79,
+      39,
+      0,
+      341,
+      340,
       1,
       0,
       0,
       0,
-      341,
-      344,
-      3,
-      95,
-      47,
-      0,
       342,
-      344,
-      3,
-      97,
-      48,
+      343,
+      1,
+      0,
+      0,
       0,
       343,
       341,
@@ -29558,597 +29926,1233 @@ var MangleLexer = class _MangleLexer extends Lexer {
       0,
       0,
       343,
-      342,
+      344,
       1,
       0,
       0,
       0,
       344,
-      92,
+      346,
       1,
       0,
       0,
       0,
       345,
-      346,
-      5,
-      98,
-      0,
-      0,
-      346,
       347,
       3,
-      91,
-      45,
+      89,
+      44,
+      0,
+      346,
+      345,
+      1,
+      0,
+      0,
+      0,
+      346,
+      347,
+      1,
+      0,
+      0,
       0,
       347,
+      349,
+      1,
+      0,
+      0,
+      0,
+      348,
+      320,
+      1,
+      0,
+      0,
+      0,
+      348,
+      337,
+      1,
+      0,
+      0,
+      0,
+      349,
+      88,
+      1,
+      0,
+      0,
+      0,
+      350,
+      352,
+      7,
+      4,
+      0,
+      0,
+      351,
+      353,
+      7,
+      5,
+      0,
+      0,
+      352,
+      351,
+      1,
+      0,
+      0,
+      0,
+      352,
+      353,
+      1,
+      0,
+      0,
+      0,
+      353,
+      355,
+      1,
+      0,
+      0,
+      0,
+      354,
+      356,
+      3,
+      79,
+      39,
+      0,
+      355,
+      354,
+      1,
+      0,
+      0,
+      0,
+      356,
+      357,
+      1,
+      0,
+      0,
+      0,
+      357,
+      355,
+      1,
+      0,
+      0,
+      0,
+      357,
+      358,
+      1,
+      0,
+      0,
+      0,
+      358,
+      90,
+      1,
+      0,
+      0,
+      0,
+      359,
+      360,
+      2,
+      65,
+      90,
+      0,
+      360,
+      92,
+      1,
+      0,
+      0,
+      0,
+      361,
+      364,
+      3,
+      77,
+      38,
+      0,
+      362,
+      364,
+      3,
+      79,
+      39,
+      0,
+      363,
+      361,
+      1,
+      0,
+      0,
+      0,
+      363,
+      362,
+      1,
+      0,
+      0,
+      0,
+      364,
       94,
       1,
       0,
       0,
       0,
-      348,
-      353,
-      5,
-      39,
-      0,
-      0,
-      349,
-      352,
-      3,
-      103,
-      51,
-      0,
-      350,
-      352,
-      8,
-      7,
-      0,
-      0,
-      351,
-      349,
-      1,
-      0,
-      0,
-      0,
-      351,
-      350,
-      1,
-      0,
-      0,
-      0,
-      352,
-      355,
-      1,
-      0,
-      0,
-      0,
-      353,
-      351,
-      1,
-      0,
-      0,
-      0,
-      353,
-      354,
-      1,
-      0,
-      0,
-      0,
-      354,
-      356,
-      1,
-      0,
-      0,
-      0,
-      355,
-      353,
-      1,
-      0,
-      0,
-      0,
-      356,
-      367,
-      5,
-      39,
-      0,
-      0,
-      357,
-      362,
-      5,
-      34,
-      0,
-      0,
-      358,
-      361,
-      3,
-      103,
-      51,
-      0,
-      359,
-      361,
-      8,
-      8,
-      0,
-      0,
-      360,
-      358,
-      1,
-      0,
-      0,
-      0,
-      360,
-      359,
-      1,
-      0,
-      0,
-      0,
-      361,
-      364,
-      1,
-      0,
-      0,
-      0,
-      362,
-      360,
-      1,
-      0,
-      0,
-      0,
-      362,
-      363,
-      1,
-      0,
-      0,
-      0,
-      363,
       365,
-      1,
-      0,
-      0,
-      0,
-      364,
-      362,
-      1,
-      0,
-      0,
-      0,
-      365,
-      367,
+      374,
       5,
-      34,
+      95,
       0,
       0,
       366,
-      348,
-      1,
-      0,
-      0,
-      0,
-      366,
-      357,
-      1,
-      0,
-      0,
+      370,
+      3,
+      91,
+      45,
       0,
       367,
-      96,
-      1,
-      0,
-      0,
+      369,
+      3,
+      93,
+      46,
       0,
       368,
-      372,
-      5,
-      96,
+      367,
+      1,
+      0,
       0,
       0,
       369,
+      372,
+      1,
+      0,
+      0,
+      0,
+      370,
+      368,
+      1,
+      0,
+      0,
+      0,
+      370,
       371,
+      1,
+      0,
+      0,
+      0,
+      371,
+      374,
+      1,
+      0,
+      0,
+      0,
+      372,
+      370,
+      1,
+      0,
+      0,
+      0,
+      373,
+      365,
+      1,
+      0,
+      0,
+      0,
+      373,
+      366,
+      1,
+      0,
+      0,
+      0,
+      374,
+      96,
+      1,
+      0,
+      0,
+      0,
+      375,
+      379,
       3,
-      99,
-      49,
+      77,
+      38,
       0,
-      370,
-      369,
-      1,
+      376,
+      379,
+      3,
+      79,
+      39,
       0,
-      0,
-      0,
-      371,
-      374,
-      1,
-      0,
-      0,
-      0,
-      372,
-      373,
-      1,
+      377,
+      379,
+      7,
+      6,
       0,
       0,
-      0,
-      372,
-      370,
-      1,
-      0,
-      0,
-      0,
-      373,
+      378,
       375,
       1,
       0,
       0,
       0,
-      374,
-      372,
+      378,
+      376,
       1,
       0,
       0,
       0,
-      375,
-      376,
-      5,
-      96,
+      378,
+      377,
+      1,
       0,
       0,
-      376,
+      0,
+      379,
       98,
       1,
       0,
       0,
       0,
-      377,
       380,
-      3,
-      101,
-      50,
+      382,
+      5,
+      58,
       0,
-      378,
+      0,
+      381,
       380,
-      3,
-      103,
-      51,
-      0,
-      379,
-      377,
-      1,
-      0,
-      0,
-      0,
-      379,
-      378,
-      1,
-      0,
-      0,
-      0,
-      380,
-      100,
       1,
       0,
       0,
       0,
       381,
       382,
-      8,
-      9,
+      1,
+      0,
       0,
       0,
       382,
+      383,
+      1,
+      0,
+      0,
+      0,
+      383,
+      389,
+      2,
+      97,
+      122,
+      0,
+      384,
+      388,
+      3,
+      97,
+      48,
+      0,
+      385,
+      386,
+      5,
+      46,
+      0,
+      0,
+      386,
+      388,
+      3,
+      97,
+      48,
+      0,
+      387,
+      384,
+      1,
+      0,
+      0,
+      0,
+      387,
+      385,
+      1,
+      0,
+      0,
+      0,
+      388,
+      391,
+      1,
+      0,
+      0,
+      0,
+      389,
+      387,
+      1,
+      0,
+      0,
+      0,
+      389,
+      390,
+      1,
+      0,
+      0,
+      0,
+      390,
+      100,
+      1,
+      0,
+      0,
+      0,
+      391,
+      389,
+      1,
+      0,
+      0,
+      0,
+      392,
+      398,
+      2,
+      65,
+      90,
+      0,
+      393,
+      397,
+      3,
+      97,
+      48,
+      0,
+      394,
+      395,
+      5,
+      46,
+      0,
+      0,
+      395,
+      397,
+      3,
+      97,
+      48,
+      0,
+      396,
+      393,
+      1,
+      0,
+      0,
+      0,
+      396,
+      394,
+      1,
+      0,
+      0,
+      0,
+      397,
+      400,
+      1,
+      0,
+      0,
+      0,
+      398,
+      396,
+      1,
+      0,
+      0,
+      0,
+      398,
+      399,
+      1,
+      0,
+      0,
+      0,
+      399,
       102,
       1,
       0,
       0,
       0,
-      383,
-      384,
-      5,
-      92,
-      0,
-      0,
-      384,
-      416,
-      5,
-      110,
-      0,
-      0,
-      385,
-      386,
-      5,
-      92,
-      0,
-      0,
-      386,
-      416,
-      5,
-      116,
-      0,
-      0,
-      387,
-      388,
-      5,
-      92,
-      0,
-      0,
-      388,
-      416,
-      5,
-      34,
-      0,
-      0,
-      389,
-      390,
-      5,
-      92,
-      0,
-      0,
-      390,
-      416,
-      5,
-      39,
-      0,
-      0,
-      391,
-      392,
-      5,
-      92,
-      0,
-      0,
-      392,
-      416,
-      5,
-      92,
-      0,
-      0,
-      393,
-      394,
-      5,
-      92,
-      0,
-      0,
-      394,
-      395,
-      5,
-      120,
-      0,
-      0,
-      395,
-      396,
-      3,
-      105,
-      52,
-      0,
-      396,
-      397,
-      3,
-      105,
-      52,
-      0,
-      397,
-      416,
-      1,
-      0,
-      0,
-      0,
-      398,
-      399,
-      5,
-      92,
-      0,
-      0,
-      399,
       400,
-      5,
-      117,
-      0,
-      0,
-      400,
-      401,
-      5,
-      123,
-      0,
-      0,
-      401,
-      402,
-      3,
-      105,
-      52,
-      0,
-      402,
-      403,
-      3,
-      105,
-      52,
-      0,
-      403,
-      404,
-      3,
-      105,
-      52,
-      0,
-      404,
-      406,
-      3,
-      105,
-      52,
-      0,
-      405,
-      407,
-      3,
-      105,
-      52,
-      0,
-      406,
-      405,
-      1,
-      0,
-      0,
-      0,
-      406,
-      407,
-      1,
-      0,
-      0,
-      0,
-      407,
-      409,
-      1,
-      0,
-      0,
-      0,
-      408,
-      410,
-      3,
-      105,
-      52,
-      0,
-      409,
-      408,
-      1,
-      0,
-      0,
-      0,
-      409,
-      410,
-      1,
-      0,
-      0,
-      0,
-      410,
-      411,
-      1,
-      0,
-      0,
-      0,
-      411,
-      412,
-      5,
-      125,
-      0,
-      0,
-      412,
-      416,
-      1,
-      0,
-      0,
-      0,
-      413,
-      414,
-      5,
-      92,
-      0,
-      0,
-      414,
-      416,
-      3,
-      59,
-      29,
-      0,
-      415,
-      383,
-      1,
-      0,
-      0,
-      0,
-      415,
-      385,
-      1,
-      0,
-      0,
-      0,
-      415,
-      387,
-      1,
-      0,
-      0,
-      0,
-      415,
-      389,
-      1,
-      0,
-      0,
-      0,
-      415,
-      391,
-      1,
-      0,
-      0,
-      0,
-      415,
-      393,
-      1,
-      0,
-      0,
-      0,
-      415,
       398,
       1,
       0,
       0,
       0,
-      415,
-      413,
-      1,
+      401,
+      402,
+      5,
+      46,
       0,
       0,
+      402,
+      403,
+      3,
+      101,
+      50,
       0,
-      416,
+      403,
       104,
       1,
       0,
       0,
       0,
-      417,
-      418,
+      404,
+      408,
+      3,
+      77,
+      38,
+      0,
+      405,
+      408,
+      3,
+      79,
+      39,
+      0,
+      406,
+      408,
       7,
-      10,
+      7,
       0,
       0,
-      418,
+      407,
+      404,
+      1,
+      0,
+      0,
+      0,
+      407,
+      405,
+      1,
+      0,
+      0,
+      0,
+      407,
+      406,
+      1,
+      0,
+      0,
+      0,
+      408,
       106,
       1,
       0,
       0,
       0,
+      409,
+      411,
+      5,
+      47,
+      0,
+      0,
+      410,
+      412,
+      3,
+      105,
+      52,
+      0,
+      411,
+      410,
+      1,
+      0,
+      0,
+      0,
+      412,
+      413,
+      1,
+      0,
+      0,
+      0,
+      413,
+      411,
+      1,
+      0,
+      0,
+      0,
+      413,
+      414,
+      1,
+      0,
+      0,
+      0,
+      414,
+      423,
+      1,
+      0,
+      0,
+      0,
+      415,
+      417,
+      5,
+      47,
+      0,
+      0,
+      416,
+      418,
+      3,
+      105,
+      52,
+      0,
+      417,
+      416,
+      1,
+      0,
+      0,
+      0,
+      418,
+      419,
+      1,
+      0,
+      0,
+      0,
+      419,
+      417,
+      1,
+      0,
+      0,
+      0,
+      419,
+      420,
+      1,
+      0,
+      0,
+      0,
+      420,
+      422,
+      1,
+      0,
+      0,
+      0,
+      421,
+      415,
+      1,
+      0,
+      0,
+      0,
+      422,
+      425,
+      1,
+      0,
+      0,
+      0,
+      423,
+      421,
+      1,
+      0,
+      0,
+      0,
+      423,
+      424,
+      1,
+      0,
+      0,
+      0,
+      424,
+      108,
+      1,
+      0,
+      0,
+      0,
+      425,
+      423,
+      1,
+      0,
+      0,
+      0,
+      426,
+      429,
+      3,
+      113,
+      56,
+      0,
+      427,
+      429,
+      3,
+      115,
+      57,
+      0,
+      428,
+      426,
+      1,
+      0,
+      0,
+      0,
+      428,
+      427,
+      1,
+      0,
+      0,
+      0,
+      429,
+      110,
+      1,
+      0,
+      0,
+      0,
+      430,
+      431,
+      5,
+      98,
+      0,
+      0,
+      431,
+      432,
+      3,
+      109,
+      54,
+      0,
+      432,
+      112,
+      1,
+      0,
+      0,
+      0,
+      433,
+      438,
+      5,
       39,
       0,
-      138,
-      146,
-      225,
-      231,
-      235,
-      240,
-      246,
-      249,
-      252,
-      258,
-      261,
-      263,
-      267,
-      272,
-      278,
-      285,
-      288,
-      293,
-      296,
+      0,
+      434,
+      437,
+      3,
+      121,
+      60,
+      0,
+      435,
+      437,
+      8,
+      8,
+      0,
+      0,
+      436,
+      434,
+      1,
+      0,
+      0,
+      0,
+      436,
+      435,
+      1,
+      0,
+      0,
+      0,
+      437,
+      440,
+      1,
+      0,
+      0,
+      0,
+      438,
+      436,
+      1,
+      0,
+      0,
+      0,
+      438,
+      439,
+      1,
+      0,
+      0,
+      0,
+      439,
+      441,
+      1,
+      0,
+      0,
+      0,
+      440,
+      438,
+      1,
+      0,
+      0,
+      0,
+      441,
+      452,
+      5,
+      39,
+      0,
+      0,
+      442,
+      447,
+      5,
+      34,
+      0,
+      0,
+      443,
+      446,
+      3,
+      121,
+      60,
+      0,
+      444,
+      446,
+      8,
+      9,
+      0,
+      0,
+      445,
+      443,
+      1,
+      0,
+      0,
+      0,
+      445,
+      444,
+      1,
+      0,
+      0,
+      0,
+      446,
+      449,
+      1,
+      0,
+      0,
+      0,
+      447,
+      445,
+      1,
+      0,
+      0,
+      0,
+      447,
+      448,
+      1,
+      0,
+      0,
+      0,
+      448,
+      450,
+      1,
+      0,
+      0,
+      0,
+      449,
+      447,
+      1,
+      0,
+      0,
+      0,
+      450,
+      452,
+      5,
+      34,
+      0,
+      0,
+      451,
+      433,
+      1,
+      0,
+      0,
+      0,
+      451,
+      442,
+      1,
+      0,
+      0,
+      0,
+      452,
+      114,
+      1,
+      0,
+      0,
+      0,
+      453,
+      457,
+      5,
+      96,
+      0,
+      0,
+      454,
+      456,
+      3,
+      117,
+      58,
+      0,
+      455,
+      454,
+      1,
+      0,
+      0,
+      0,
+      456,
+      459,
+      1,
+      0,
+      0,
+      0,
+      457,
+      458,
+      1,
+      0,
+      0,
+      0,
+      457,
+      455,
+      1,
+      0,
+      0,
+      0,
+      458,
+      460,
+      1,
+      0,
+      0,
+      0,
+      459,
+      457,
+      1,
+      0,
+      0,
+      0,
+      460,
+      461,
+      5,
+      96,
+      0,
+      0,
+      461,
+      116,
+      1,
+      0,
+      0,
+      0,
+      462,
+      465,
+      3,
+      119,
+      59,
+      0,
+      463,
+      465,
+      3,
+      121,
+      60,
+      0,
+      464,
+      462,
+      1,
+      0,
+      0,
+      0,
+      464,
+      463,
+      1,
+      0,
+      0,
+      0,
+      465,
+      118,
+      1,
+      0,
+      0,
+      0,
+      466,
+      467,
+      8,
+      10,
+      0,
+      0,
+      467,
+      120,
+      1,
+      0,
+      0,
+      0,
+      468,
+      469,
+      5,
+      92,
+      0,
+      0,
+      469,
+      501,
+      5,
+      110,
+      0,
+      0,
+      470,
+      471,
+      5,
+      92,
+      0,
+      0,
+      471,
+      501,
+      5,
+      116,
+      0,
+      0,
+      472,
+      473,
+      5,
+      92,
+      0,
+      0,
+      473,
+      501,
+      5,
+      34,
+      0,
+      0,
+      474,
+      475,
+      5,
+      92,
+      0,
+      0,
+      475,
+      501,
+      5,
+      39,
+      0,
+      0,
+      476,
+      477,
+      5,
+      92,
+      0,
+      0,
+      477,
+      501,
+      5,
+      92,
+      0,
+      0,
+      478,
+      479,
+      5,
+      92,
+      0,
+      0,
+      479,
+      480,
+      5,
+      120,
+      0,
+      0,
+      480,
+      481,
+      3,
+      123,
+      61,
+      0,
+      481,
+      482,
+      3,
+      123,
+      61,
+      0,
+      482,
+      501,
+      1,
+      0,
+      0,
+      0,
+      483,
+      484,
+      5,
+      92,
+      0,
+      0,
+      484,
+      485,
+      5,
+      117,
+      0,
+      0,
+      485,
+      486,
+      5,
+      123,
+      0,
+      0,
+      486,
+      487,
+      3,
+      123,
+      61,
+      0,
+      487,
+      488,
+      3,
+      123,
+      61,
+      0,
+      488,
+      489,
+      3,
+      123,
+      61,
+      0,
+      489,
+      491,
+      3,
+      123,
+      61,
+      0,
+      490,
+      492,
+      3,
+      123,
+      61,
+      0,
+      491,
+      490,
+      1,
+      0,
+      0,
+      0,
+      491,
+      492,
+      1,
+      0,
+      0,
+      0,
+      492,
+      494,
+      1,
+      0,
+      0,
+      0,
+      493,
+      495,
+      3,
+      123,
+      61,
+      0,
+      494,
+      493,
+      1,
+      0,
+      0,
+      0,
+      494,
+      495,
+      1,
+      0,
+      0,
+      0,
+      495,
+      496,
+      1,
+      0,
+      0,
+      0,
+      496,
+      497,
+      5,
+      125,
+      0,
+      0,
+      497,
+      501,
+      1,
+      0,
+      0,
+      0,
+      498,
+      499,
+      5,
+      92,
+      0,
+      0,
+      499,
+      501,
+      3,
+      63,
+      31,
+      0,
+      500,
+      468,
+      1,
+      0,
+      0,
+      0,
+      500,
+      470,
+      1,
+      0,
+      0,
+      0,
+      500,
+      472,
+      1,
+      0,
+      0,
+      0,
+      500,
+      474,
+      1,
+      0,
+      0,
+      0,
+      500,
+      476,
+      1,
+      0,
+      0,
+      0,
+      500,
+      478,
+      1,
+      0,
+      0,
+      0,
+      500,
+      483,
+      1,
+      0,
+      0,
+      0,
+      500,
+      498,
+      1,
+      0,
+      0,
+      0,
+      501,
+      122,
+      1,
+      0,
+      0,
+      0,
+      502,
+      503,
+      7,
+      11,
+      0,
+      0,
+      503,
+      124,
+      1,
+      0,
+      0,
+      0,
+      45,
+      0,
+      165,
+      173,
+      290,
+      292,
+      295,
+      297,
       302,
-      304,
-      311,
-      313,
-      322,
-      328,
+      307,
+      310,
+      316,
+      320,
+      325,
+      331,
       334,
-      338,
+      337,
       343,
-      351,
-      353,
-      360,
-      362,
-      366,
-      372,
-      379,
-      406,
-      409,
-      415,
+      346,
+      348,
+      352,
+      357,
+      363,
+      370,
+      373,
+      378,
+      381,
+      387,
+      389,
+      396,
+      398,
+      407,
+      413,
+      419,
+      423,
+      428,
+      436,
+      438,
+      445,
+      447,
+      451,
+      457,
+      464,
+      491,
+      494,
+      500,
       1,
       0,
       1,
@@ -30172,7 +31176,7 @@ var MangleLexer = class _MangleLexer extends Lexer {
   }
 };
 
-// src/parser/gen/MangleParser.ts
+// ../mangle-lsp/src/parser/gen/MangleParser.ts
 var MangleParser = class _MangleParser extends Parser {
   static {
     this.T__0 = 1;
@@ -30235,64 +31239,91 @@ var MangleParser = class _MangleParser extends Parser {
     this.RBRACKET = 20;
   }
   static {
-    this.EQ = 21;
+    this.LBRACE = 21;
   }
   static {
-    this.BANGEQ = 22;
+    this.RBRACE = 22;
   }
   static {
-    this.COMMA = 23;
+    this.EQ = 23;
   }
   static {
-    this.BANG = 24;
+    this.BANGEQ = 24;
   }
   static {
-    this.LESS = 25;
+    this.COMMA = 25;
   }
   static {
-    this.LESSEQ = 26;
+    this.BANG = 26;
   }
   static {
-    this.GREATER = 27;
+    this.LESSEQ = 27;
   }
   static {
-    this.GREATEREQ = 28;
+    this.LESS = 28;
   }
   static {
-    this.COLONDASH = 29;
+    this.GREATEREQ = 29;
   }
   static {
-    this.NEWLINE = 30;
+    this.GREATER = 30;
   }
   static {
-    this.PIPEGREATER = 31;
+    this.COLONDASH = 31;
   }
   static {
-    this.NUMBER = 32;
+    this.NEWLINE = 32;
   }
   static {
-    this.FLOAT = 33;
+    this.PIPEGREATER = 33;
   }
   static {
-    this.VARIABLE = 34;
+    this.AT = 34;
   }
   static {
-    this.NAME = 35;
+    this.DIAMONDMINUS = 35;
   }
   static {
-    this.TYPENAME = 36;
+    this.DIAMONDPLUS = 36;
   }
   static {
-    this.DOT_TYPE = 37;
+    this.BOXMINUS = 37;
   }
   static {
-    this.CONSTANT = 38;
+    this.BOXPLUS = 38;
   }
   static {
-    this.STRING = 39;
+    this.TIMESTAMP = 39;
   }
   static {
-    this.BYTESTRING = 40;
+    this.DURATION = 40;
+  }
+  static {
+    this.NUMBER = 41;
+  }
+  static {
+    this.FLOAT = 42;
+  }
+  static {
+    this.VARIABLE = 43;
+  }
+  static {
+    this.NAME = 44;
+  }
+  static {
+    this.TYPENAME = 45;
+  }
+  static {
+    this.DOT_TYPE = 46;
+  }
+  static {
+    this.CONSTANT = 47;
+  }
+  static {
+    this.STRING = 48;
+  }
+  static {
+    this.BYTESTRING = 49;
   }
   static {
     this.RULE_start = 0;
@@ -30322,42 +31353,51 @@ var MangleParser = class _MangleParser extends Parser {
     this.RULE_clause = 8;
   }
   static {
-    this.RULE_clauseBody = 9;
+    this.RULE_temporalAnnotation = 9;
   }
   static {
-    this.RULE_transform = 10;
+    this.RULE_temporalBound = 10;
   }
   static {
-    this.RULE_letStmt = 11;
+    this.RULE_clauseBody = 11;
   }
   static {
-    this.RULE_literalOrFml = 12;
+    this.RULE_transform = 12;
   }
   static {
-    this.RULE_term = 13;
+    this.RULE_letStmt = 13;
   }
   static {
-    this.RULE_member = 14;
+    this.RULE_literalOrFml = 14;
   }
   static {
-    this.RULE_atom = 15;
+    this.RULE_temporalOperator = 15;
   }
   static {
-    this.RULE_atoms = 16;
+    this.RULE_term = 16;
+  }
+  static {
+    this.RULE_member = 17;
+  }
+  static {
+    this.RULE_atom = 18;
+  }
+  static {
+    this.RULE_atoms = 19;
   }
   static {
     this.literalNames = [
       null,
+      "'temporal'",
       "'.'",
       "'descr'",
       "'inclusion'",
+      "'now'",
       "':'",
-      "'{'",
-      "'}'",
       "'opt'",
       null,
       null,
-      "'\\u00E2\\u0178\\u00B8'",
+      "'\\u27F8'",
       "'Package'",
       "'Use'",
       "'Decl'",
@@ -30368,17 +31408,24 @@ var MangleParser = class _MangleParser extends Parser {
       "')'",
       "'['",
       "']'",
+      "'{'",
+      "'}'",
       "'='",
       "'!='",
       "','",
       "'!'",
-      "'<'",
       "'<='",
-      "'>'",
+      "'<'",
       "'>='",
+      "'>'",
       "':-'",
       "'\\n'",
-      "'|>'"
+      "'|>'",
+      "'@'",
+      "'<-'",
+      "'<+'",
+      "'[-'",
+      "'[+'"
     ];
   }
   static {
@@ -30404,17 +31451,26 @@ var MangleParser = class _MangleParser extends Parser {
       "RPAREN",
       "LBRACKET",
       "RBRACKET",
+      "LBRACE",
+      "RBRACE",
       "EQ",
       "BANGEQ",
       "COMMA",
       "BANG",
-      "LESS",
       "LESSEQ",
-      "GREATER",
+      "LESS",
       "GREATEREQ",
+      "GREATER",
       "COLONDASH",
       "NEWLINE",
       "PIPEGREATER",
+      "AT",
+      "DIAMONDMINUS",
+      "DIAMONDPLUS",
+      "BOXMINUS",
+      "BOXPLUS",
+      "TIMESTAMP",
+      "DURATION",
       "NUMBER",
       "FLOAT",
       "VARIABLE",
@@ -30437,10 +31493,13 @@ var MangleParser = class _MangleParser extends Parser {
       "boundsBlock",
       "constraintsBlock",
       "clause",
+      "temporalAnnotation",
+      "temporalBound",
       "clauseBody",
       "transform",
       "letStmt",
       "literalOrFml",
+      "temporalOperator",
       "term",
       "member",
       "atom",
@@ -30475,9 +31534,9 @@ var MangleParser = class _MangleParser extends Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 34;
+        this.state = 40;
         this.program();
-        this.state = 35;
+        this.state = 41;
         this.match(_MangleParser.EOF);
       }
     } catch (re) {
@@ -30499,45 +31558,45 @@ var MangleParser = class _MangleParser extends Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 38;
+        this.state = 44;
         this.errorHandler.sync(this);
         _la = this.tokenStream.LA(1);
         if (_la === 11) {
           {
-            this.state = 37;
+            this.state = 43;
             this.packageDecl();
           }
         }
-        this.state = 43;
+        this.state = 49;
         this.errorHandler.sync(this);
         _la = this.tokenStream.LA(1);
         while (_la === 12) {
           {
             {
-              this.state = 40;
+              this.state = 46;
               this.useDecl();
             }
           }
-          this.state = 45;
+          this.state = 51;
           this.errorHandler.sync(this);
           _la = this.tokenStream.LA(1);
         }
-        this.state = 50;
+        this.state = 56;
         this.errorHandler.sync(this);
         _la = this.tokenStream.LA(1);
-        while ((_la & ~31) === 0 && (1 << _la & 532512) !== 0 || (_la - 32 & ~31) === 0 && (1 << _la - 32 & 495) !== 0) {
+        while ((_la & ~31) === 0 && (1 << _la & 2629632) !== 0 || (_la - 41 & ~31) === 0 && (1 << _la - 41 & 495) !== 0) {
           {
-            this.state = 48;
+            this.state = 54;
             this.errorHandler.sync(this);
             switch (this.tokenStream.LA(1)) {
               case _MangleParser.DECL:
                 {
-                  this.state = 46;
+                  this.state = 52;
                   this.decl();
                 }
                 break;
-              case _MangleParser.T__4:
               case _MangleParser.LBRACKET:
+              case _MangleParser.LBRACE:
               case _MangleParser.NUMBER:
               case _MangleParser.FLOAT:
               case _MangleParser.VARIABLE:
@@ -30547,7 +31606,7 @@ var MangleParser = class _MangleParser extends Parser {
               case _MangleParser.STRING:
               case _MangleParser.BYTESTRING:
                 {
-                  this.state = 47;
+                  this.state = 53;
                   this.clause();
                 }
                 break;
@@ -30555,7 +31614,7 @@ var MangleParser = class _MangleParser extends Parser {
                 throw new NoViableAltException(this);
             }
           }
-          this.state = 52;
+          this.state = 58;
           this.errorHandler.sync(this);
           _la = this.tokenStream.LA(1);
         }
@@ -30579,20 +31638,20 @@ var MangleParser = class _MangleParser extends Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 53;
+        this.state = 59;
         this.match(_MangleParser.PACKAGE);
-        this.state = 54;
+        this.state = 60;
         this.match(_MangleParser.NAME);
-        this.state = 56;
+        this.state = 62;
         this.errorHandler.sync(this);
         _la = this.tokenStream.LA(1);
         if (_la === 19) {
           {
-            this.state = 55;
+            this.state = 61;
             this.atoms();
           }
         }
-        this.state = 58;
+        this.state = 64;
         this.match(_MangleParser.BANG);
       }
     } catch (re) {
@@ -30614,20 +31673,20 @@ var MangleParser = class _MangleParser extends Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 60;
+        this.state = 66;
         this.match(_MangleParser.USE);
-        this.state = 61;
+        this.state = 67;
         this.match(_MangleParser.NAME);
-        this.state = 63;
+        this.state = 69;
         this.errorHandler.sync(this);
         _la = this.tokenStream.LA(1);
         if (_la === 19) {
           {
-            this.state = 62;
+            this.state = 68;
             this.atoms();
           }
         }
-        this.state = 65;
+        this.state = 71;
         this.match(_MangleParser.BANG);
       }
     } catch (re) {
@@ -30649,32 +31708,18 @@ var MangleParser = class _MangleParser extends Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 67;
+        this.state = 73;
         this.match(_MangleParser.DECL);
-        this.state = 68;
+        this.state = 74;
         this.atom();
-        this.state = 70;
+        this.state = 76;
         this.errorHandler.sync(this);
         _la = this.tokenStream.LA(1);
-        if (_la === 2) {
+        if (_la === 1) {
           {
-            this.state = 69;
-            this.descrBlock();
+            this.state = 75;
+            this.match(_MangleParser.T__0);
           }
-        }
-        this.state = 75;
-        this.errorHandler.sync(this);
-        _la = this.tokenStream.LA(1);
-        while (_la === 14) {
-          {
-            {
-              this.state = 72;
-              this.boundsBlock();
-            }
-          }
-          this.state = 77;
-          this.errorHandler.sync(this);
-          _la = this.tokenStream.LA(1);
         }
         this.state = 79;
         this.errorHandler.sync(this);
@@ -30682,11 +31727,34 @@ var MangleParser = class _MangleParser extends Parser {
         if (_la === 3) {
           {
             this.state = 78;
+            this.descrBlock();
+          }
+        }
+        this.state = 84;
+        this.errorHandler.sync(this);
+        _la = this.tokenStream.LA(1);
+        while (_la === 14) {
+          {
+            {
+              this.state = 81;
+              this.boundsBlock();
+            }
+          }
+          this.state = 86;
+          this.errorHandler.sync(this);
+          _la = this.tokenStream.LA(1);
+        }
+        this.state = 88;
+        this.errorHandler.sync(this);
+        _la = this.tokenStream.LA(1);
+        if (_la === 4) {
+          {
+            this.state = 87;
             this.constraintsBlock();
           }
         }
-        this.state = 81;
-        this.match(_MangleParser.T__0);
+        this.state = 90;
+        this.match(_MangleParser.T__1);
       }
     } catch (re) {
       if (re instanceof RecognitionException) {
@@ -30706,9 +31774,9 @@ var MangleParser = class _MangleParser extends Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 83;
-        this.match(_MangleParser.T__1);
-        this.state = 84;
+        this.state = 92;
+        this.match(_MangleParser.T__2);
+        this.state = 93;
         this.atoms();
       }
     } catch (re) {
@@ -30731,38 +31799,38 @@ var MangleParser = class _MangleParser extends Parser {
       let alternative;
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 86;
+        this.state = 95;
         this.match(_MangleParser.BOUND);
-        this.state = 87;
+        this.state = 96;
         this.match(_MangleParser.LBRACKET);
-        this.state = 93;
+        this.state = 102;
         this.errorHandler.sync(this);
-        alternative = this.interpreter.adaptivePredict(this.tokenStream, 9, this.context);
+        alternative = this.interpreter.adaptivePredict(this.tokenStream, 10, this.context);
         while (alternative !== 2 && alternative !== ATN.INVALID_ALT_NUMBER) {
           if (alternative === 1) {
             {
               {
-                this.state = 88;
+                this.state = 97;
                 this.term();
-                this.state = 89;
+                this.state = 98;
                 this.match(_MangleParser.COMMA);
               }
             }
           }
-          this.state = 95;
+          this.state = 104;
           this.errorHandler.sync(this);
-          alternative = this.interpreter.adaptivePredict(this.tokenStream, 9, this.context);
+          alternative = this.interpreter.adaptivePredict(this.tokenStream, 10, this.context);
         }
-        this.state = 97;
+        this.state = 106;
         this.errorHandler.sync(this);
         _la = this.tokenStream.LA(1);
-        if (_la === 5 || _la === 19 || (_la - 32 & ~31) === 0 && (1 << _la - 32 & 495) !== 0) {
+        if ((_la - 19 & ~31) === 0 && (1 << _la - 19 & 2076180485) !== 0) {
           {
-            this.state = 96;
+            this.state = 105;
             this.term();
           }
         }
-        this.state = 99;
+        this.state = 108;
         this.match(_MangleParser.RBRACKET);
       }
     } catch (re) {
@@ -30783,9 +31851,9 @@ var MangleParser = class _MangleParser extends Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 101;
-        this.match(_MangleParser.T__2);
-        this.state = 102;
+        this.state = 110;
+        this.match(_MangleParser.T__3);
+        this.state = 111;
         this.atoms();
       }
     } catch (re) {
@@ -30807,27 +31875,103 @@ var MangleParser = class _MangleParser extends Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 104;
+        this.state = 113;
         this.atom();
-        this.state = 107;
+        this.state = 115;
         this.errorHandler.sync(this);
         _la = this.tokenStream.LA(1);
-        if (_la === 10 || _la === 29) {
+        if (_la === 34) {
           {
-            this.state = 105;
+            this.state = 114;
+            this.temporalAnnotation();
+          }
+        }
+        this.state = 119;
+        this.errorHandler.sync(this);
+        _la = this.tokenStream.LA(1);
+        if (_la === 10 || _la === 31) {
+          {
+            this.state = 117;
             _la = this.tokenStream.LA(1);
-            if (!(_la === 10 || _la === 29)) {
+            if (!(_la === 10 || _la === 31)) {
               this.errorHandler.recoverInline(this);
             } else {
               this.errorHandler.reportMatch(this);
               this.consume();
             }
-            this.state = 106;
+            this.state = 118;
             this.clauseBody();
           }
         }
-        this.state = 109;
-        this.match(_MangleParser.T__0);
+        this.state = 121;
+        this.match(_MangleParser.T__1);
+      }
+    } catch (re) {
+      if (re instanceof RecognitionException) {
+        this.errorHandler.reportError(this, re);
+        this.errorHandler.recover(this, re);
+      } else {
+        throw re;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localContext;
+  }
+  temporalAnnotation() {
+    let localContext = new TemporalAnnotationContext(this.context, this.state);
+    this.enterRule(localContext, 18, _MangleParser.RULE_temporalAnnotation);
+    let _la;
+    try {
+      this.enterOuterAlt(localContext, 1);
+      {
+        this.state = 123;
+        this.match(_MangleParser.AT);
+        this.state = 124;
+        this.match(_MangleParser.LBRACKET);
+        this.state = 125;
+        this.temporalBound();
+        this.state = 128;
+        this.errorHandler.sync(this);
+        _la = this.tokenStream.LA(1);
+        if (_la === 25) {
+          {
+            this.state = 126;
+            this.match(_MangleParser.COMMA);
+            this.state = 127;
+            this.temporalBound();
+          }
+        }
+        this.state = 130;
+        this.match(_MangleParser.RBRACKET);
+      }
+    } catch (re) {
+      if (re instanceof RecognitionException) {
+        this.errorHandler.reportError(this, re);
+        this.errorHandler.recover(this, re);
+      } else {
+        throw re;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localContext;
+  }
+  temporalBound() {
+    let localContext = new TemporalBoundContext(this.context, this.state);
+    this.enterRule(localContext, 20, _MangleParser.RULE_temporalBound);
+    let _la;
+    try {
+      this.enterOuterAlt(localContext, 1);
+      {
+        this.state = 132;
+        _la = this.tokenStream.LA(1);
+        if (!(_la === 5 || (_la - 39 & ~31) === 0 && (1 << _la - 39 & 19) !== 0)) {
+          this.errorHandler.recoverInline(this);
+        } else {
+          this.errorHandler.reportMatch(this);
+          this.consume();
+        }
       }
     } catch (re) {
       if (re instanceof RecognitionException) {
@@ -30843,54 +31987,54 @@ var MangleParser = class _MangleParser extends Parser {
   }
   clauseBody() {
     let localContext = new ClauseBodyContext(this.context, this.state);
-    this.enterRule(localContext, 18, _MangleParser.RULE_clauseBody);
+    this.enterRule(localContext, 22, _MangleParser.RULE_clauseBody);
     let _la;
     try {
       let alternative;
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 111;
+        this.state = 134;
         this.literalOrFml();
-        this.state = 116;
+        this.state = 139;
         this.errorHandler.sync(this);
-        alternative = this.interpreter.adaptivePredict(this.tokenStream, 12, this.context);
+        alternative = this.interpreter.adaptivePredict(this.tokenStream, 15, this.context);
         while (alternative !== 2 && alternative !== ATN.INVALID_ALT_NUMBER) {
           if (alternative === 1) {
             {
               {
-                this.state = 112;
+                this.state = 135;
                 this.match(_MangleParser.COMMA);
-                this.state = 113;
+                this.state = 136;
                 this.literalOrFml();
               }
             }
           }
-          this.state = 118;
+          this.state = 141;
           this.errorHandler.sync(this);
-          alternative = this.interpreter.adaptivePredict(this.tokenStream, 12, this.context);
+          alternative = this.interpreter.adaptivePredict(this.tokenStream, 15, this.context);
         }
-        this.state = 120;
+        this.state = 143;
         this.errorHandler.sync(this);
         _la = this.tokenStream.LA(1);
-        if (_la === 23) {
+        if (_la === 25) {
           {
-            this.state = 119;
+            this.state = 142;
             this.match(_MangleParser.COMMA);
           }
         }
-        this.state = 126;
+        this.state = 149;
         this.errorHandler.sync(this);
         _la = this.tokenStream.LA(1);
-        while (_la === 31) {
+        while (_la === 33) {
           {
             {
-              this.state = 122;
+              this.state = 145;
               this.match(_MangleParser.PIPEGREATER);
-              this.state = 123;
+              this.state = 146;
               this.transform();
             }
           }
-          this.state = 128;
+          this.state = 151;
           this.errorHandler.sync(this);
           _la = this.tokenStream.LA(1);
         }
@@ -30909,41 +32053,41 @@ var MangleParser = class _MangleParser extends Parser {
   }
   transform() {
     let localContext = new TransformContext(this.context, this.state);
-    this.enterRule(localContext, 20, _MangleParser.RULE_transform);
+    this.enterRule(localContext, 24, _MangleParser.RULE_transform);
     let _la;
     try {
-      this.state = 150;
+      this.state = 173;
       this.errorHandler.sync(this);
       switch (this.tokenStream.LA(1)) {
         case _MangleParser.DO:
           this.enterOuterAlt(localContext, 1);
           {
-            this.state = 129;
+            this.state = 152;
             this.match(_MangleParser.DO);
-            this.state = 130;
+            this.state = 153;
             this.term();
-            this.state = 140;
+            this.state = 163;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if (_la === 23) {
+            if (_la === 25) {
               {
-                this.state = 131;
+                this.state = 154;
                 this.match(_MangleParser.COMMA);
-                this.state = 132;
+                this.state = 155;
                 this.letStmt();
-                this.state = 137;
+                this.state = 160;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                while (_la === 23) {
+                while (_la === 25) {
                   {
                     {
-                      this.state = 133;
+                      this.state = 156;
                       this.match(_MangleParser.COMMA);
-                      this.state = 134;
+                      this.state = 157;
                       this.letStmt();
                     }
                   }
-                  this.state = 139;
+                  this.state = 162;
                   this.errorHandler.sync(this);
                   _la = this.tokenStream.LA(1);
                 }
@@ -30954,21 +32098,21 @@ var MangleParser = class _MangleParser extends Parser {
         case _MangleParser.LET:
           this.enterOuterAlt(localContext, 2);
           {
-            this.state = 142;
+            this.state = 165;
             this.letStmt();
-            this.state = 147;
+            this.state = 170;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            while (_la === 23) {
+            while (_la === 25) {
               {
                 {
-                  this.state = 143;
+                  this.state = 166;
                   this.match(_MangleParser.COMMA);
-                  this.state = 144;
+                  this.state = 167;
                   this.letStmt();
                 }
               }
-              this.state = 149;
+              this.state = 172;
               this.errorHandler.sync(this);
               _la = this.tokenStream.LA(1);
             }
@@ -30991,17 +32135,17 @@ var MangleParser = class _MangleParser extends Parser {
   }
   letStmt() {
     let localContext = new LetStmtContext(this.context, this.state);
-    this.enterRule(localContext, 22, _MangleParser.RULE_letStmt);
+    this.enterRule(localContext, 26, _MangleParser.RULE_letStmt);
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 152;
+        this.state = 175;
         this.match(_MangleParser.LET);
-        this.state = 153;
+        this.state = 176;
         this.match(_MangleParser.VARIABLE);
-        this.state = 154;
+        this.state = 177;
         this.match(_MangleParser.EQ);
-        this.state = 155;
+        this.state = 178;
         this.term();
       }
     } catch (re) {
@@ -31018,14 +32162,18 @@ var MangleParser = class _MangleParser extends Parser {
   }
   literalOrFml() {
     let localContext = new LiteralOrFmlContext(this.context, this.state);
-    this.enterRule(localContext, 24, _MangleParser.RULE_literalOrFml);
+    this.enterRule(localContext, 28, _MangleParser.RULE_literalOrFml);
     let _la;
     try {
-      this.state = 164;
+      this.state = 193;
       this.errorHandler.sync(this);
       switch (this.tokenStream.LA(1)) {
-        case _MangleParser.T__4:
         case _MangleParser.LBRACKET:
+        case _MangleParser.LBRACE:
+        case _MangleParser.DIAMONDMINUS:
+        case _MangleParser.DIAMONDPLUS:
+        case _MangleParser.BOXMINUS:
+        case _MangleParser.BOXPLUS:
         case _MangleParser.NUMBER:
         case _MangleParser.FLOAT:
         case _MangleParser.VARIABLE:
@@ -31036,22 +32184,40 @@ var MangleParser = class _MangleParser extends Parser {
         case _MangleParser.BYTESTRING:
           this.enterOuterAlt(localContext, 1);
           {
-            this.state = 157;
-            this.term();
-            this.state = 160;
+            this.state = 181;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if ((_la & ~31) === 0 && (1 << _la & 509607936) !== 0) {
+            if ((_la - 35 & ~31) === 0 && (1 << _la - 35 & 15) !== 0) {
               {
-                this.state = 158;
+                this.state = 180;
+                this.temporalOperator();
+              }
+            }
+            this.state = 183;
+            this.term();
+            this.state = 185;
+            this.errorHandler.sync(this);
+            _la = this.tokenStream.LA(1);
+            if (_la === 34) {
+              {
+                this.state = 184;
+                this.temporalAnnotation();
+              }
+            }
+            this.state = 189;
+            this.errorHandler.sync(this);
+            _la = this.tokenStream.LA(1);
+            if ((_la & ~31) === 0 && (1 << _la & 2038431744) !== 0) {
+              {
+                this.state = 187;
                 _la = this.tokenStream.LA(1);
-                if (!((_la & ~31) === 0 && (1 << _la & 509607936) !== 0)) {
+                if (!((_la & ~31) === 0 && (1 << _la & 2038431744) !== 0)) {
                   this.errorHandler.recoverInline(this);
                 } else {
                   this.errorHandler.reportMatch(this);
                   this.consume();
                 }
-                this.state = 159;
+                this.state = 188;
                 this.term();
               }
             }
@@ -31060,10 +32226,100 @@ var MangleParser = class _MangleParser extends Parser {
         case _MangleParser.BANG:
           this.enterOuterAlt(localContext, 2);
           {
-            this.state = 162;
+            this.state = 191;
             this.match(_MangleParser.BANG);
-            this.state = 163;
+            this.state = 192;
             this.term();
+          }
+          break;
+        default:
+          throw new NoViableAltException(this);
+      }
+    } catch (re) {
+      if (re instanceof RecognitionException) {
+        this.errorHandler.reportError(this, re);
+        this.errorHandler.recover(this, re);
+      } else {
+        throw re;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localContext;
+  }
+  temporalOperator() {
+    let localContext = new TemporalOperatorContext(this.context, this.state);
+    this.enterRule(localContext, 30, _MangleParser.RULE_temporalOperator);
+    try {
+      this.state = 223;
+      this.errorHandler.sync(this);
+      switch (this.tokenStream.LA(1)) {
+        case _MangleParser.DIAMONDMINUS:
+          this.enterOuterAlt(localContext, 1);
+          {
+            this.state = 195;
+            this.match(_MangleParser.DIAMONDMINUS);
+            this.state = 196;
+            this.match(_MangleParser.LBRACKET);
+            this.state = 197;
+            this.temporalBound();
+            this.state = 198;
+            this.match(_MangleParser.COMMA);
+            this.state = 199;
+            this.temporalBound();
+            this.state = 200;
+            this.match(_MangleParser.RBRACKET);
+          }
+          break;
+        case _MangleParser.BOXMINUS:
+          this.enterOuterAlt(localContext, 2);
+          {
+            this.state = 202;
+            this.match(_MangleParser.BOXMINUS);
+            this.state = 203;
+            this.match(_MangleParser.LBRACKET);
+            this.state = 204;
+            this.temporalBound();
+            this.state = 205;
+            this.match(_MangleParser.COMMA);
+            this.state = 206;
+            this.temporalBound();
+            this.state = 207;
+            this.match(_MangleParser.RBRACKET);
+          }
+          break;
+        case _MangleParser.DIAMONDPLUS:
+          this.enterOuterAlt(localContext, 3);
+          {
+            this.state = 209;
+            this.match(_MangleParser.DIAMONDPLUS);
+            this.state = 210;
+            this.match(_MangleParser.LBRACKET);
+            this.state = 211;
+            this.temporalBound();
+            this.state = 212;
+            this.match(_MangleParser.COMMA);
+            this.state = 213;
+            this.temporalBound();
+            this.state = 214;
+            this.match(_MangleParser.RBRACKET);
+          }
+          break;
+        case _MangleParser.BOXPLUS:
+          this.enterOuterAlt(localContext, 4);
+          {
+            this.state = 216;
+            this.match(_MangleParser.BOXPLUS);
+            this.state = 217;
+            this.match(_MangleParser.LBRACKET);
+            this.state = 218;
+            this.temporalBound();
+            this.state = 219;
+            this.match(_MangleParser.COMMA);
+            this.state = 220;
+            this.temporalBound();
+            this.state = 221;
+            this.match(_MangleParser.RBRACKET);
           }
           break;
         default:
@@ -31083,18 +32339,18 @@ var MangleParser = class _MangleParser extends Parser {
   }
   term() {
     let localContext = new TermContext(this.context, this.state);
-    this.enterRule(localContext, 26, _MangleParser.RULE_term);
+    this.enterRule(localContext, 32, _MangleParser.RULE_term);
     let _la;
     try {
       let alternative;
-      this.state = 252;
+      this.state = 311;
       this.errorHandler.sync(this);
-      switch (this.interpreter.adaptivePredict(this.tokenStream, 32, this.context)) {
+      switch (this.interpreter.adaptivePredict(this.tokenStream, 38, this.context)) {
         case 1:
           localContext = new VarContext(localContext);
           this.enterOuterAlt(localContext, 1);
           {
-            this.state = 166;
+            this.state = 225;
             this.match(_MangleParser.VARIABLE);
           }
           break;
@@ -31102,7 +32358,7 @@ var MangleParser = class _MangleParser extends Parser {
           localContext = new ConstContext(localContext);
           this.enterOuterAlt(localContext, 2);
           {
-            this.state = 167;
+            this.state = 226;
             this.match(_MangleParser.CONSTANT);
           }
           break;
@@ -31110,7 +32366,7 @@ var MangleParser = class _MangleParser extends Parser {
           localContext = new NumContext(localContext);
           this.enterOuterAlt(localContext, 3);
           {
-            this.state = 168;
+            this.state = 227;
             this.match(_MangleParser.NUMBER);
           }
           break;
@@ -31118,7 +32374,7 @@ var MangleParser = class _MangleParser extends Parser {
           localContext = new FloatContext(localContext);
           this.enterOuterAlt(localContext, 4);
           {
-            this.state = 169;
+            this.state = 228;
             this.match(_MangleParser.FLOAT);
           }
           break;
@@ -31126,7 +32382,7 @@ var MangleParser = class _MangleParser extends Parser {
           localContext = new StrContext(localContext);
           this.enterOuterAlt(localContext, 5);
           {
-            this.state = 170;
+            this.state = 229;
             this.match(_MangleParser.STRING);
           }
           break;
@@ -31134,7 +32390,7 @@ var MangleParser = class _MangleParser extends Parser {
           localContext = new BStrContext(localContext);
           this.enterOuterAlt(localContext, 6);
           {
-            this.state = 171;
+            this.state = 230;
             this.match(_MangleParser.BYTESTRING);
           }
           break;
@@ -31142,36 +32398,36 @@ var MangleParser = class _MangleParser extends Parser {
           localContext = new ListContext(localContext);
           this.enterOuterAlt(localContext, 7);
           {
-            this.state = 172;
+            this.state = 231;
             this.match(_MangleParser.LBRACKET);
-            this.state = 178;
+            this.state = 237;
             this.errorHandler.sync(this);
-            alternative = this.interpreter.adaptivePredict(this.tokenStream, 21, this.context);
+            alternative = this.interpreter.adaptivePredict(this.tokenStream, 27, this.context);
             while (alternative !== 2 && alternative !== ATN.INVALID_ALT_NUMBER) {
               if (alternative === 1) {
                 {
                   {
-                    this.state = 173;
+                    this.state = 232;
                     this.term();
-                    this.state = 174;
+                    this.state = 233;
                     this.match(_MangleParser.COMMA);
                   }
                 }
               }
-              this.state = 180;
+              this.state = 239;
               this.errorHandler.sync(this);
-              alternative = this.interpreter.adaptivePredict(this.tokenStream, 21, this.context);
+              alternative = this.interpreter.adaptivePredict(this.tokenStream, 27, this.context);
             }
-            this.state = 182;
+            this.state = 241;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if (_la === 5 || _la === 19 || (_la - 32 & ~31) === 0 && (1 << _la - 32 & 495) !== 0) {
+            if ((_la - 19 & ~31) === 0 && (1 << _la - 19 & 2076180485) !== 0) {
               {
-                this.state = 181;
+                this.state = 240;
                 this.term();
               }
             }
-            this.state = 184;
+            this.state = 243;
             this.match(_MangleParser.RBRACKET);
           }
           break;
@@ -31179,44 +32435,44 @@ var MangleParser = class _MangleParser extends Parser {
           localContext = new MapContext(localContext);
           this.enterOuterAlt(localContext, 8);
           {
-            this.state = 185;
+            this.state = 244;
             this.match(_MangleParser.LBRACKET);
-            this.state = 193;
+            this.state = 252;
             this.errorHandler.sync(this);
-            alternative = this.interpreter.adaptivePredict(this.tokenStream, 23, this.context);
+            alternative = this.interpreter.adaptivePredict(this.tokenStream, 29, this.context);
             while (alternative !== 2 && alternative !== ATN.INVALID_ALT_NUMBER) {
               if (alternative === 1) {
                 {
                   {
-                    this.state = 186;
+                    this.state = 245;
                     this.term();
-                    this.state = 187;
-                    this.match(_MangleParser.T__3);
-                    this.state = 188;
+                    this.state = 246;
+                    this.match(_MangleParser.T__5);
+                    this.state = 247;
                     this.term();
-                    this.state = 189;
+                    this.state = 248;
                     this.match(_MangleParser.COMMA);
                   }
                 }
               }
-              this.state = 195;
+              this.state = 254;
               this.errorHandler.sync(this);
-              alternative = this.interpreter.adaptivePredict(this.tokenStream, 23, this.context);
+              alternative = this.interpreter.adaptivePredict(this.tokenStream, 29, this.context);
             }
-            this.state = 200;
+            this.state = 259;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if (_la === 5 || _la === 19 || (_la - 32 & ~31) === 0 && (1 << _la - 32 & 495) !== 0) {
+            if ((_la - 19 & ~31) === 0 && (1 << _la - 19 & 2076180485) !== 0) {
               {
-                this.state = 196;
+                this.state = 255;
                 this.term();
-                this.state = 197;
-                this.match(_MangleParser.T__3);
-                this.state = 198;
+                this.state = 256;
+                this.match(_MangleParser.T__5);
+                this.state = 257;
                 this.term();
               }
             }
-            this.state = 202;
+            this.state = 261;
             this.match(_MangleParser.RBRACKET);
           }
           break;
@@ -31224,92 +32480,92 @@ var MangleParser = class _MangleParser extends Parser {
           localContext = new StructContext(localContext);
           this.enterOuterAlt(localContext, 9);
           {
-            this.state = 203;
-            this.match(_MangleParser.T__4);
-            this.state = 211;
+            this.state = 262;
+            this.match(_MangleParser.LBRACE);
+            this.state = 270;
             this.errorHandler.sync(this);
-            alternative = this.interpreter.adaptivePredict(this.tokenStream, 25, this.context);
+            alternative = this.interpreter.adaptivePredict(this.tokenStream, 31, this.context);
             while (alternative !== 2 && alternative !== ATN.INVALID_ALT_NUMBER) {
               if (alternative === 1) {
                 {
                   {
-                    this.state = 204;
+                    this.state = 263;
                     this.term();
-                    this.state = 205;
-                    this.match(_MangleParser.T__3);
-                    this.state = 206;
+                    this.state = 264;
+                    this.match(_MangleParser.T__5);
+                    this.state = 265;
                     this.term();
-                    this.state = 207;
+                    this.state = 266;
                     this.match(_MangleParser.COMMA);
                   }
                 }
               }
-              this.state = 213;
+              this.state = 272;
               this.errorHandler.sync(this);
-              alternative = this.interpreter.adaptivePredict(this.tokenStream, 25, this.context);
+              alternative = this.interpreter.adaptivePredict(this.tokenStream, 31, this.context);
             }
-            this.state = 218;
+            this.state = 277;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if (_la === 5 || _la === 19 || (_la - 32 & ~31) === 0 && (1 << _la - 32 & 495) !== 0) {
+            if ((_la - 19 & ~31) === 0 && (1 << _la - 19 & 2076180485) !== 0) {
               {
-                this.state = 214;
+                this.state = 273;
                 this.term();
-                this.state = 215;
-                this.match(_MangleParser.T__3);
-                this.state = 216;
+                this.state = 274;
+                this.match(_MangleParser.T__5);
+                this.state = 275;
                 this.term();
               }
             }
-            this.state = 220;
-            this.match(_MangleParser.T__5);
+            this.state = 279;
+            this.match(_MangleParser.RBRACE);
           }
           break;
         case 10:
           localContext = new DotTypeContext(localContext);
           this.enterOuterAlt(localContext, 10);
           {
-            this.state = 221;
+            this.state = 280;
             this.match(_MangleParser.DOT_TYPE);
-            this.state = 222;
+            this.state = 281;
             this.match(_MangleParser.LESS);
-            this.state = 228;
+            this.state = 287;
             this.errorHandler.sync(this);
-            alternative = this.interpreter.adaptivePredict(this.tokenStream, 27, this.context);
+            alternative = this.interpreter.adaptivePredict(this.tokenStream, 33, this.context);
             while (alternative !== 2 && alternative !== ATN.INVALID_ALT_NUMBER) {
               if (alternative === 1) {
                 {
                   {
-                    this.state = 223;
+                    this.state = 282;
                     this.member();
-                    this.state = 224;
+                    this.state = 283;
                     this.match(_MangleParser.COMMA);
                   }
                 }
               }
-              this.state = 230;
+              this.state = 289;
               this.errorHandler.sync(this);
-              alternative = this.interpreter.adaptivePredict(this.tokenStream, 27, this.context);
+              alternative = this.interpreter.adaptivePredict(this.tokenStream, 33, this.context);
             }
-            this.state = 235;
+            this.state = 294;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if ((_la & ~31) === 0 && (1 << _la & 524448) !== 0 || (_la - 32 & ~31) === 0 && (1 << _la - 32 & 495) !== 0) {
+            if ((_la & ~31) === 0 && (1 << _la & 2621568) !== 0 || (_la - 41 & ~31) === 0 && (1 << _la - 41 & 495) !== 0) {
               {
-                this.state = 231;
+                this.state = 290;
                 this.member();
-                this.state = 233;
+                this.state = 292;
                 this.errorHandler.sync(this);
                 _la = this.tokenStream.LA(1);
-                if (_la === 23) {
+                if (_la === 25) {
                   {
-                    this.state = 232;
+                    this.state = 291;
                     this.match(_MangleParser.COMMA);
                   }
                 }
               }
             }
-            this.state = 237;
+            this.state = 296;
             this.match(_MangleParser.GREATER);
           }
           break;
@@ -31317,38 +32573,38 @@ var MangleParser = class _MangleParser extends Parser {
           localContext = new ApplContext(localContext);
           this.enterOuterAlt(localContext, 11);
           {
-            this.state = 238;
+            this.state = 297;
             this.match(_MangleParser.NAME);
-            this.state = 239;
+            this.state = 298;
             this.match(_MangleParser.LPAREN);
-            this.state = 245;
+            this.state = 304;
             this.errorHandler.sync(this);
-            alternative = this.interpreter.adaptivePredict(this.tokenStream, 30, this.context);
+            alternative = this.interpreter.adaptivePredict(this.tokenStream, 36, this.context);
             while (alternative !== 2 && alternative !== ATN.INVALID_ALT_NUMBER) {
               if (alternative === 1) {
                 {
                   {
-                    this.state = 240;
+                    this.state = 299;
                     this.term();
-                    this.state = 241;
+                    this.state = 300;
                     this.match(_MangleParser.COMMA);
                   }
                 }
               }
-              this.state = 247;
+              this.state = 306;
               this.errorHandler.sync(this);
-              alternative = this.interpreter.adaptivePredict(this.tokenStream, 30, this.context);
+              alternative = this.interpreter.adaptivePredict(this.tokenStream, 36, this.context);
             }
-            this.state = 249;
+            this.state = 308;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if (_la === 5 || _la === 19 || (_la - 32 & ~31) === 0 && (1 << _la - 32 & 495) !== 0) {
+            if ((_la - 19 & ~31) === 0 && (1 << _la - 19 & 2076180485) !== 0) {
               {
-                this.state = 248;
+                this.state = 307;
                 this.term();
               }
             }
-            this.state = 251;
+            this.state = 310;
             this.match(_MangleParser.RPAREN);
           }
           break;
@@ -31367,14 +32623,14 @@ var MangleParser = class _MangleParser extends Parser {
   }
   member() {
     let localContext = new MemberContext(this.context, this.state);
-    this.enterRule(localContext, 28, _MangleParser.RULE_member);
+    this.enterRule(localContext, 34, _MangleParser.RULE_member);
     let _la;
     try {
-      this.state = 264;
+      this.state = 323;
       this.errorHandler.sync(this);
       switch (this.tokenStream.LA(1)) {
-        case _MangleParser.T__4:
         case _MangleParser.LBRACKET:
+        case _MangleParser.LBRACE:
         case _MangleParser.NUMBER:
         case _MangleParser.FLOAT:
         case _MangleParser.VARIABLE:
@@ -31385,16 +32641,16 @@ var MangleParser = class _MangleParser extends Parser {
         case _MangleParser.BYTESTRING:
           this.enterOuterAlt(localContext, 1);
           {
-            this.state = 254;
+            this.state = 313;
             this.term();
-            this.state = 257;
+            this.state = 316;
             this.errorHandler.sync(this);
             _la = this.tokenStream.LA(1);
-            if (_la === 4) {
+            if (_la === 6) {
               {
-                this.state = 255;
-                this.match(_MangleParser.T__3);
-                this.state = 256;
+                this.state = 314;
+                this.match(_MangleParser.T__5);
+                this.state = 315;
                 this.term();
               }
             }
@@ -31403,13 +32659,13 @@ var MangleParser = class _MangleParser extends Parser {
         case _MangleParser.T__6:
           this.enterOuterAlt(localContext, 2);
           {
-            this.state = 259;
+            this.state = 318;
             this.match(_MangleParser.T__6);
-            this.state = 260;
+            this.state = 319;
             this.term();
-            this.state = 261;
-            this.match(_MangleParser.T__3);
-            this.state = 262;
+            this.state = 320;
+            this.match(_MangleParser.T__5);
+            this.state = 321;
             this.term();
           }
           break;
@@ -31430,11 +32686,11 @@ var MangleParser = class _MangleParser extends Parser {
   }
   atom() {
     let localContext = new AtomContext(this.context, this.state);
-    this.enterRule(localContext, 30, _MangleParser.RULE_atom);
+    this.enterRule(localContext, 36, _MangleParser.RULE_atom);
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 266;
+        this.state = 325;
         this.term();
       }
     } catch (re) {
@@ -31451,42 +32707,42 @@ var MangleParser = class _MangleParser extends Parser {
   }
   atoms() {
     let localContext = new AtomsContext(this.context, this.state);
-    this.enterRule(localContext, 32, _MangleParser.RULE_atoms);
+    this.enterRule(localContext, 38, _MangleParser.RULE_atoms);
     let _la;
     try {
       let alternative;
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 268;
+        this.state = 327;
         this.match(_MangleParser.LBRACKET);
-        this.state = 274;
+        this.state = 333;
         this.errorHandler.sync(this);
-        alternative = this.interpreter.adaptivePredict(this.tokenStream, 35, this.context);
+        alternative = this.interpreter.adaptivePredict(this.tokenStream, 41, this.context);
         while (alternative !== 2 && alternative !== ATN.INVALID_ALT_NUMBER) {
           if (alternative === 1) {
             {
               {
-                this.state = 269;
+                this.state = 328;
                 this.atom();
-                this.state = 270;
+                this.state = 329;
                 this.match(_MangleParser.COMMA);
               }
             }
           }
-          this.state = 276;
+          this.state = 335;
           this.errorHandler.sync(this);
-          alternative = this.interpreter.adaptivePredict(this.tokenStream, 35, this.context);
+          alternative = this.interpreter.adaptivePredict(this.tokenStream, 41, this.context);
         }
-        this.state = 278;
+        this.state = 337;
         this.errorHandler.sync(this);
         _la = this.tokenStream.LA(1);
-        if (_la === 5 || _la === 19 || (_la - 32 & ~31) === 0 && (1 << _la - 32 & 495) !== 0) {
+        if ((_la - 19 & ~31) === 0 && (1 << _la - 19 & 2076180485) !== 0) {
           {
-            this.state = 277;
+            this.state = 336;
             this.atom();
           }
         }
-        this.state = 280;
+        this.state = 339;
         this.match(_MangleParser.RBRACKET);
       }
     } catch (re) {
@@ -31505,8 +32761,8 @@ var MangleParser = class _MangleParser extends Parser {
     this._serializedATN = [
       4,
       1,
-      40,
-      283,
+      49,
+      342,
       2,
       0,
       7,
@@ -31575,6 +32831,18 @@ var MangleParser = class _MangleParser extends Parser {
       16,
       7,
       16,
+      2,
+      17,
+      7,
+      17,
+      2,
+      18,
+      7,
+      18,
+      2,
+      19,
+      7,
+      19,
       1,
       0,
       1,
@@ -31584,22 +32852,22 @@ var MangleParser = class _MangleParser extends Parser {
       1,
       1,
       3,
-      1,
-      39,
-      8,
-      1,
-      1,
-      1,
-      5,
-      1,
-      42,
-      8,
-      1,
-      10,
-      1,
-      12,
       1,
       45,
+      8,
+      1,
+      1,
+      1,
+      5,
+      1,
+      48,
+      8,
+      1,
+      10,
+      1,
+      12,
+      1,
+      51,
       9,
       1,
       1,
@@ -31608,14 +32876,14 @@ var MangleParser = class _MangleParser extends Parser {
       1,
       5,
       1,
-      49,
+      55,
       8,
       1,
       10,
       1,
       12,
       1,
-      52,
+      58,
       9,
       1,
       1,
@@ -31626,7 +32894,7 @@ var MangleParser = class _MangleParser extends Parser {
       2,
       3,
       2,
-      57,
+      63,
       8,
       2,
       1,
@@ -31641,7 +32909,7 @@ var MangleParser = class _MangleParser extends Parser {
       3,
       3,
       3,
-      64,
+      70,
       8,
       3,
       1,
@@ -31655,23 +32923,9 @@ var MangleParser = class _MangleParser extends Parser {
       1,
       4,
       3,
-      4,
-      71,
-      8,
-      4,
-      1,
-      4,
-      5,
-      4,
-      74,
-      8,
-      4,
-      10,
-      4,
-      12,
       4,
       77,
-      9,
+      8,
       4,
       1,
       4,
@@ -31682,6 +32936,27 @@ var MangleParser = class _MangleParser extends Parser {
       4,
       1,
       4,
+      5,
+      4,
+      83,
+      8,
+      4,
+      10,
+      4,
+      12,
+      4,
+      86,
+      9,
+      4,
+      1,
+      4,
+      3,
+      4,
+      89,
+      8,
+      4,
+      1,
+      4,
       1,
       4,
       1,
@@ -31702,21 +32977,21 @@ var MangleParser = class _MangleParser extends Parser {
       6,
       5,
       6,
-      92,
+      101,
       8,
       6,
       10,
       6,
       12,
       6,
-      95,
+      104,
       9,
       6,
       1,
       6,
       3,
       6,
-      98,
+      107,
       8,
       6,
       1,
@@ -31733,11 +33008,18 @@ var MangleParser = class _MangleParser extends Parser {
       8,
       1,
       8,
+      3,
+      8,
+      116,
+      8,
+      8,
+      1,
+      8,
       1,
       8,
       3,
       8,
-      108,
+      120,
       8,
       8,
       1,
@@ -31750,346 +33032,266 @@ var MangleParser = class _MangleParser extends Parser {
       9,
       1,
       9,
-      5,
-      9,
-      115,
-      8,
-      9,
-      10,
-      9,
-      12,
-      9,
-      118,
-      9,
+      1,
       9,
       1,
       9,
       3,
       9,
-      121,
+      129,
       8,
       9,
       1,
       9,
       1,
       9,
+      1,
+      10,
+      1,
+      10,
+      1,
+      11,
+      1,
+      11,
+      1,
+      11,
       5,
-      9,
-      125,
+      11,
+      138,
       8,
-      9,
+      11,
       10,
-      9,
+      11,
       12,
-      9,
-      128,
-      9,
-      9,
-      1,
-      10,
-      1,
-      10,
-      1,
-      10,
-      1,
-      10,
-      1,
-      10,
-      1,
-      10,
-      5,
-      10,
-      136,
-      8,
-      10,
-      10,
-      10,
-      12,
-      10,
-      139,
-      9,
-      10,
-      3,
-      10,
+      11,
       141,
-      8,
-      10,
-      1,
-      10,
-      1,
-      10,
-      1,
-      10,
-      5,
-      10,
-      146,
-      8,
-      10,
-      10,
-      10,
-      12,
-      10,
-      149,
       9,
-      10,
+      11,
+      1,
+      11,
       3,
+      11,
+      144,
+      8,
+      11,
+      1,
+      11,
+      1,
+      11,
+      5,
+      11,
+      148,
+      8,
+      11,
       10,
+      11,
+      12,
+      11,
       151,
-      8,
-      10,
-      1,
-      11,
-      1,
-      11,
-      1,
-      11,
-      1,
-      11,
-      1,
-      11,
-      1,
-      12,
-      1,
-      12,
-      1,
-      12,
-      3,
-      12,
-      161,
-      8,
-      12,
-      1,
-      12,
-      1,
-      12,
-      3,
-      12,
-      165,
-      8,
-      12,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      5,
-      13,
-      177,
-      8,
-      13,
-      10,
-      13,
-      12,
-      13,
-      180,
       9,
-      13,
+      11,
       1,
-      13,
-      3,
-      13,
-      183,
-      8,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      5,
-      13,
-      192,
-      8,
-      13,
-      10,
-      13,
       12,
-      13,
-      195,
-      9,
-      13,
       1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      3,
-      13,
-      201,
-      8,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      5,
-      13,
-      210,
-      8,
-      13,
-      10,
-      13,
       12,
-      13,
-      213,
-      9,
-      13,
       1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      3,
-      13,
-      219,
-      8,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      5,
-      13,
-      227,
-      8,
-      13,
-      10,
-      13,
       12,
-      13,
-      230,
-      9,
-      13,
       1,
-      13,
+      12,
       1,
-      13,
-      3,
-      13,
-      234,
+      12,
+      1,
+      12,
+      5,
+      12,
+      159,
       8,
-      13,
+      12,
+      10,
+      12,
+      12,
+      12,
+      162,
+      9,
+      12,
       3,
+      12,
+      164,
+      8,
+      12,
+      1,
+      12,
+      1,
+      12,
+      1,
+      12,
+      5,
+      12,
+      169,
+      8,
+      12,
+      10,
+      12,
+      12,
+      12,
+      172,
+      9,
+      12,
+      3,
+      12,
+      174,
+      8,
+      12,
+      1,
       13,
+      1,
+      13,
+      1,
+      13,
+      1,
+      13,
+      1,
+      13,
+      1,
+      14,
+      3,
+      14,
+      182,
+      8,
+      14,
+      1,
+      14,
+      1,
+      14,
+      3,
+      14,
+      186,
+      8,
+      14,
+      1,
+      14,
+      1,
+      14,
+      3,
+      14,
+      190,
+      8,
+      14,
+      1,
+      14,
+      1,
+      14,
+      3,
+      14,
+      194,
+      8,
+      14,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      1,
+      15,
+      3,
+      15,
+      224,
+      8,
+      15,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      5,
+      16,
       236,
       8,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      1,
-      13,
-      5,
-      13,
-      244,
-      8,
-      13,
+      16,
       10,
-      13,
+      16,
       12,
-      13,
-      247,
+      16,
+      239,
       9,
-      13,
+      16,
       1,
-      13,
+      16,
       3,
-      13,
-      250,
+      16,
+      242,
       8,
-      13,
+      16,
       1,
-      13,
-      3,
-      13,
-      253,
-      8,
-      13,
+      16,
       1,
-      14,
+      16,
       1,
-      14,
-      1,
-      14,
-      3,
-      14,
-      258,
-      8,
-      14,
-      1,
-      14,
-      1,
-      14,
-      1,
-      14,
-      1,
-      14,
-      1,
-      14,
-      3,
-      14,
-      265,
-      8,
-      14,
-      1,
-      15,
-      1,
-      15,
+      16,
       1,
       16,
       1,
@@ -32100,21 +33302,27 @@ var MangleParser = class _MangleParser extends Parser {
       16,
       5,
       16,
-      273,
+      251,
       8,
       16,
       10,
       16,
       12,
       16,
-      276,
+      254,
       9,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
       16,
       1,
       16,
       3,
       16,
-      279,
+      260,
       8,
       16,
       1,
@@ -32123,9 +33331,181 @@ var MangleParser = class _MangleParser extends Parser {
       16,
       1,
       16,
-      0,
-      0,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      5,
+      16,
+      269,
+      8,
+      16,
+      10,
+      16,
+      12,
+      16,
+      272,
+      9,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      3,
+      16,
+      278,
+      8,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      5,
+      16,
+      286,
+      8,
+      16,
+      10,
+      16,
+      12,
+      16,
+      289,
+      9,
+      16,
+      1,
+      16,
+      1,
+      16,
+      3,
+      16,
+      293,
+      8,
+      16,
+      3,
+      16,
+      295,
+      8,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      1,
+      16,
+      5,
+      16,
+      303,
+      8,
+      16,
+      10,
+      16,
+      12,
+      16,
+      306,
+      9,
+      16,
+      1,
+      16,
+      3,
+      16,
+      309,
+      8,
+      16,
+      1,
+      16,
+      3,
+      16,
+      312,
+      8,
+      16,
+      1,
       17,
+      1,
+      17,
+      1,
+      17,
+      3,
+      17,
+      317,
+      8,
+      17,
+      1,
+      17,
+      1,
+      17,
+      1,
+      17,
+      1,
+      17,
+      1,
+      17,
+      3,
+      17,
+      324,
+      8,
+      17,
+      1,
+      18,
+      1,
+      18,
+      1,
+      19,
+      1,
+      19,
+      1,
+      19,
+      1,
+      19,
+      5,
+      19,
+      332,
+      8,
+      19,
+      10,
+      19,
+      12,
+      19,
+      335,
+      9,
+      19,
+      1,
+      19,
+      3,
+      19,
+      338,
+      8,
+      19,
+      1,
+      19,
+      1,
+      19,
+      1,
+      19,
+      0,
+      0,
+      20,
       0,
       2,
       4,
@@ -32143,1925 +33523,2326 @@ var MangleParser = class _MangleParser extends Parser {
       28,
       30,
       32,
+      34,
+      36,
+      38,
       0,
-      2,
+      3,
       2,
       0,
       10,
       10,
-      29,
-      29,
+      31,
+      31,
+      3,
+      0,
+      5,
+      5,
+      39,
+      40,
+      43,
+      43,
       2,
       0,
-      21,
+      23,
+      24,
+      27,
+      30,
+      375,
+      0,
+      40,
+      1,
+      0,
+      0,
+      0,
+      2,
+      44,
+      1,
+      0,
+      0,
+      0,
+      4,
+      59,
+      1,
+      0,
+      0,
+      0,
+      6,
+      66,
+      1,
+      0,
+      0,
+      0,
+      8,
+      73,
+      1,
+      0,
+      0,
+      0,
+      10,
+      92,
+      1,
+      0,
+      0,
+      0,
+      12,
+      95,
+      1,
+      0,
+      0,
+      0,
+      14,
+      110,
+      1,
+      0,
+      0,
+      0,
+      16,
+      113,
+      1,
+      0,
+      0,
+      0,
+      18,
+      123,
+      1,
+      0,
+      0,
+      0,
+      20,
+      132,
+      1,
+      0,
+      0,
+      0,
       22,
-      25,
+      134,
+      1,
+      0,
+      0,
+      0,
+      24,
+      173,
+      1,
+      0,
+      0,
+      0,
+      26,
+      175,
+      1,
+      0,
+      0,
+      0,
       28,
+      193,
+      1,
+      0,
+      0,
+      0,
+      30,
+      223,
+      1,
+      0,
+      0,
+      0,
+      32,
       311,
+      1,
+      0,
+      0,
       0,
       34,
+      323,
       1,
       0,
       0,
       0,
-      2,
+      36,
+      325,
+      1,
+      0,
+      0,
+      0,
       38,
+      327,
       1,
       0,
       0,
       0,
+      40,
+      41,
+      3,
+      2,
+      1,
+      0,
+      41,
+      42,
+      5,
+      0,
+      0,
+      1,
+      42,
+      1,
+      1,
+      0,
+      0,
+      0,
+      43,
+      45,
+      3,
       4,
+      2,
+      0,
+      44,
+      43,
+      1,
+      0,
+      0,
+      0,
+      44,
+      45,
+      1,
+      0,
+      0,
+      0,
+      45,
+      49,
+      1,
+      0,
+      0,
+      0,
+      46,
+      48,
+      3,
+      6,
+      3,
+      0,
+      47,
+      46,
+      1,
+      0,
+      0,
+      0,
+      48,
+      51,
+      1,
+      0,
+      0,
+      0,
+      49,
+      47,
+      1,
+      0,
+      0,
+      0,
+      49,
+      50,
+      1,
+      0,
+      0,
+      0,
+      50,
+      56,
+      1,
+      0,
+      0,
+      0,
+      51,
+      49,
+      1,
+      0,
+      0,
+      0,
+      52,
+      55,
+      3,
+      8,
+      4,
+      0,
+      53,
+      55,
+      3,
+      16,
+      8,
+      0,
+      54,
+      52,
+      1,
+      0,
+      0,
+      0,
+      54,
       53,
       1,
       0,
       0,
       0,
-      6,
+      55,
+      58,
+      1,
+      0,
+      0,
+      0,
+      56,
+      54,
+      1,
+      0,
+      0,
+      0,
+      56,
+      57,
+      1,
+      0,
+      0,
+      0,
+      57,
+      3,
+      1,
+      0,
+      0,
+      0,
+      58,
+      56,
+      1,
+      0,
+      0,
+      0,
+      59,
       60,
+      5,
+      11,
+      0,
+      0,
+      60,
+      62,
+      5,
+      44,
+      0,
+      0,
+      61,
+      63,
+      3,
+      38,
+      19,
+      0,
+      62,
+      61,
       1,
       0,
       0,
       0,
-      8,
+      62,
+      63,
+      1,
+      0,
+      0,
+      0,
+      63,
+      64,
+      1,
+      0,
+      0,
+      0,
+      64,
+      65,
+      5,
+      26,
+      0,
+      0,
+      65,
+      5,
+      1,
+      0,
+      0,
+      0,
+      66,
       67,
-      1,
-      0,
-      0,
-      0,
-      10,
-      83,
-      1,
-      0,
-      0,
-      0,
+      5,
       12,
+      0,
+      0,
+      67,
+      69,
+      5,
+      44,
+      0,
+      0,
+      68,
+      70,
+      3,
+      38,
+      19,
+      0,
+      69,
+      68,
+      1,
+      0,
+      0,
+      0,
+      69,
+      70,
+      1,
+      0,
+      0,
+      0,
+      70,
+      71,
+      1,
+      0,
+      0,
+      0,
+      71,
+      72,
+      5,
+      26,
+      0,
+      0,
+      72,
+      7,
+      1,
+      0,
+      0,
+      0,
+      73,
+      74,
+      5,
+      13,
+      0,
+      0,
+      74,
+      76,
+      3,
+      36,
+      18,
+      0,
+      75,
+      77,
+      5,
+      1,
+      0,
+      0,
+      76,
+      75,
+      1,
+      0,
+      0,
+      0,
+      76,
+      77,
+      1,
+      0,
+      0,
+      0,
+      77,
+      79,
+      1,
+      0,
+      0,
+      0,
+      78,
+      80,
+      3,
+      10,
+      5,
+      0,
+      79,
+      78,
+      1,
+      0,
+      0,
+      0,
+      79,
+      80,
+      1,
+      0,
+      0,
+      0,
+      80,
+      84,
+      1,
+      0,
+      0,
+      0,
+      81,
+      83,
+      3,
+      12,
+      6,
+      0,
+      82,
+      81,
+      1,
+      0,
+      0,
+      0,
+      83,
       86,
       1,
       0,
       0,
       0,
-      14,
-      101,
+      84,
+      82,
       1,
       0,
       0,
       0,
-      16,
-      104,
+      84,
+      85,
       1,
       0,
       0,
       0,
-      18,
-      111,
+      85,
+      88,
       1,
       0,
       0,
       0,
-      20,
-      150,
+      86,
+      84,
       1,
       0,
       0,
       0,
-      22,
-      152,
-      1,
-      0,
-      0,
-      0,
-      24,
-      164,
-      1,
-      0,
-      0,
-      0,
-      26,
-      252,
-      1,
-      0,
-      0,
-      0,
-      28,
-      264,
-      1,
-      0,
-      0,
-      0,
-      30,
-      266,
-      1,
-      0,
-      0,
-      0,
-      32,
-      268,
-      1,
-      0,
-      0,
-      0,
-      34,
-      35,
-      3,
-      2,
-      1,
-      0,
-      35,
-      36,
-      5,
-      0,
-      0,
-      1,
-      36,
-      1,
-      1,
-      0,
-      0,
-      0,
-      37,
-      39,
-      3,
-      4,
-      2,
-      0,
-      38,
-      37,
-      1,
-      0,
-      0,
-      0,
-      38,
-      39,
-      1,
-      0,
-      0,
-      0,
-      39,
-      43,
-      1,
-      0,
-      0,
-      0,
-      40,
-      42,
-      3,
-      6,
-      3,
-      0,
-      41,
-      40,
-      1,
-      0,
-      0,
-      0,
-      42,
-      45,
-      1,
-      0,
-      0,
-      0,
-      43,
-      41,
-      1,
-      0,
-      0,
-      0,
-      43,
-      44,
-      1,
-      0,
-      0,
-      0,
-      44,
-      50,
-      1,
-      0,
-      0,
-      0,
-      45,
-      43,
-      1,
-      0,
-      0,
-      0,
-      46,
-      49,
-      3,
-      8,
-      4,
-      0,
-      47,
-      49,
-      3,
-      16,
-      8,
-      0,
-      48,
-      46,
-      1,
-      0,
-      0,
-      0,
-      48,
-      47,
-      1,
-      0,
-      0,
-      0,
-      49,
-      52,
-      1,
-      0,
-      0,
-      0,
-      50,
-      48,
-      1,
-      0,
-      0,
-      0,
-      50,
-      51,
-      1,
-      0,
-      0,
-      0,
-      51,
-      3,
-      1,
-      0,
-      0,
-      0,
-      52,
-      50,
-      1,
-      0,
-      0,
-      0,
-      53,
-      54,
-      5,
-      11,
-      0,
-      0,
-      54,
-      56,
-      5,
-      35,
-      0,
-      0,
-      55,
-      57,
-      3,
-      32,
-      16,
-      0,
-      56,
-      55,
-      1,
-      0,
-      0,
-      0,
-      56,
-      57,
-      1,
-      0,
-      0,
-      0,
-      57,
-      58,
-      1,
-      0,
-      0,
-      0,
-      58,
-      59,
-      5,
-      24,
-      0,
-      0,
-      59,
-      5,
-      1,
-      0,
-      0,
-      0,
-      60,
-      61,
-      5,
-      12,
-      0,
-      0,
-      61,
-      63,
-      5,
-      35,
-      0,
-      0,
-      62,
-      64,
-      3,
-      32,
-      16,
-      0,
-      63,
-      62,
-      1,
-      0,
-      0,
-      0,
-      63,
-      64,
-      1,
-      0,
-      0,
-      0,
-      64,
-      65,
-      1,
-      0,
-      0,
-      0,
-      65,
-      66,
-      5,
-      24,
-      0,
-      0,
-      66,
-      7,
-      1,
-      0,
-      0,
-      0,
-      67,
-      68,
-      5,
-      13,
-      0,
-      0,
-      68,
-      70,
-      3,
-      30,
-      15,
-      0,
-      69,
-      71,
-      3,
-      10,
-      5,
-      0,
-      70,
-      69,
-      1,
-      0,
-      0,
-      0,
-      70,
-      71,
-      1,
-      0,
-      0,
-      0,
-      71,
-      75,
-      1,
-      0,
-      0,
-      0,
-      72,
-      74,
-      3,
-      12,
-      6,
-      0,
-      73,
-      72,
-      1,
-      0,
-      0,
-      0,
-      74,
-      77,
-      1,
-      0,
-      0,
-      0,
-      75,
-      73,
-      1,
-      0,
-      0,
-      0,
-      75,
-      76,
-      1,
-      0,
-      0,
-      0,
-      76,
-      79,
-      1,
-      0,
-      0,
-      0,
-      77,
-      75,
-      1,
-      0,
-      0,
-      0,
-      78,
-      80,
+      87,
+      89,
       3,
       14,
       7,
       0,
-      79,
-      78,
+      88,
+      87,
       1,
       0,
       0,
       0,
-      79,
-      80,
+      88,
+      89,
       1,
       0,
       0,
       0,
-      80,
-      81,
+      89,
+      90,
       1,
       0,
       0,
       0,
-      81,
-      82,
+      90,
+      91,
       5,
-      1,
+      2,
       0,
       0,
-      82,
+      91,
       9,
       1,
       0,
       0,
       0,
-      83,
-      84,
+      92,
+      93,
       5,
-      2,
-      0,
-      0,
-      84,
-      85,
       3,
-      32,
-      16,
       0,
-      85,
+      0,
+      93,
+      94,
+      3,
+      38,
+      19,
+      0,
+      94,
       11,
       1,
       0,
       0,
       0,
-      86,
-      87,
+      95,
+      96,
       5,
       14,
       0,
       0,
-      87,
-      93,
+      96,
+      102,
       5,
       19,
       0,
       0,
-      88,
-      89,
-      3,
-      26,
-      13,
-      0,
-      89,
-      90,
-      5,
-      23,
-      0,
-      0,
-      90,
-      92,
-      1,
-      0,
-      0,
-      0,
-      91,
-      88,
-      1,
-      0,
-      0,
-      0,
-      92,
-      95,
-      1,
-      0,
-      0,
-      0,
-      93,
-      91,
-      1,
-      0,
-      0,
-      0,
-      93,
-      94,
-      1,
-      0,
-      0,
-      0,
-      94,
-      97,
-      1,
-      0,
-      0,
-      0,
-      95,
-      93,
-      1,
-      0,
-      0,
-      0,
-      96,
-      98,
-      3,
-      26,
-      13,
-      0,
-      97,
-      96,
-      1,
-      0,
-      0,
-      0,
       97,
       98,
-      1,
-      0,
-      0,
+      3,
+      32,
+      16,
       0,
       98,
       99,
+      5,
+      25,
+      0,
+      0,
+      99,
+      101,
       1,
       0,
       0,
       0,
-      99,
       100,
-      5,
-      20,
-      0,
-      0,
-      100,
-      13,
+      97,
       1,
       0,
       0,
       0,
       101,
+      104,
+      1,
+      0,
+      0,
+      0,
       102,
-      5,
-      3,
+      100,
+      1,
+      0,
       0,
       0,
       102,
       103,
-      3,
-      32,
-      16,
+      1,
+      0,
+      0,
       0,
       103,
-      15,
+      106,
       1,
       0,
       0,
       0,
       104,
-      107,
-      3,
-      30,
-      15,
+      102,
+      1,
+      0,
+      0,
       0,
       105,
+      107,
+      3,
+      32,
+      16,
+      0,
       106,
-      7,
+      105,
+      1,
       0,
       0,
       0,
       106,
+      107,
+      1,
+      0,
+      0,
+      0,
+      107,
       108,
+      1,
+      0,
+      0,
+      0,
+      108,
+      109,
+      5,
+      20,
+      0,
+      0,
+      109,
+      13,
+      1,
+      0,
+      0,
+      0,
+      110,
+      111,
+      5,
+      4,
+      0,
+      0,
+      111,
+      112,
+      3,
+      38,
+      19,
+      0,
+      112,
+      15,
+      1,
+      0,
+      0,
+      0,
+      113,
+      115,
+      3,
+      36,
+      18,
+      0,
+      114,
+      116,
       3,
       18,
       9,
       0,
-      107,
-      105,
+      115,
+      114,
       1,
       0,
       0,
       0,
-      107,
-      108,
+      115,
+      116,
       1,
       0,
       0,
       0,
-      108,
-      109,
+      116,
+      119,
       1,
       0,
       0,
       0,
-      109,
-      110,
+      117,
+      118,
+      7,
+      0,
+      0,
+      0,
+      118,
+      120,
+      3,
+      22,
+      11,
+      0,
+      119,
+      117,
+      1,
+      0,
+      0,
+      0,
+      119,
+      120,
+      1,
+      0,
+      0,
+      0,
+      120,
+      121,
+      1,
+      0,
+      0,
+      0,
+      121,
+      122,
       5,
-      1,
+      2,
       0,
       0,
-      110,
+      122,
       17,
       1,
       0,
       0,
       0,
-      111,
-      116,
-      3,
-      24,
-      12,
-      0,
-      112,
-      113,
-      5,
-      23,
-      0,
-      0,
-      113,
-      115,
-      3,
-      24,
-      12,
-      0,
-      114,
-      112,
-      1,
-      0,
-      0,
-      0,
-      115,
-      118,
-      1,
-      0,
-      0,
-      0,
-      116,
-      114,
-      1,
-      0,
-      0,
-      0,
-      116,
-      117,
-      1,
-      0,
-      0,
-      0,
-      117,
-      120,
-      1,
-      0,
-      0,
-      0,
-      118,
-      116,
-      1,
-      0,
-      0,
-      0,
-      119,
-      121,
-      5,
-      23,
-      0,
-      0,
-      120,
-      119,
-      1,
-      0,
-      0,
-      0,
-      120,
-      121,
-      1,
-      0,
-      0,
-      0,
-      121,
-      126,
-      1,
-      0,
-      0,
-      0,
-      122,
       123,
+      124,
       5,
-      31,
+      34,
       0,
-      0,
-      123,
-      125,
-      3,
-      20,
-      10,
       0,
       124,
-      122,
-      1,
-      0,
+      125,
+      5,
+      19,
       0,
       0,
       125,
       128,
-      1,
-      0,
-      0,
-      0,
-      126,
-      124,
-      1,
-      0,
-      0,
+      3,
+      20,
+      10,
       0,
       126,
       127,
+      5,
+      25,
+      0,
+      0,
+      127,
+      129,
+      3,
+      20,
+      10,
+      0,
+      128,
+      126,
       1,
       0,
       0,
       0,
-      127,
+      128,
+      129,
+      1,
+      0,
+      0,
+      0,
+      129,
+      130,
+      1,
+      0,
+      0,
+      0,
+      130,
+      131,
+      5,
+      20,
+      0,
+      0,
+      131,
       19,
       1,
       0,
       0,
       0,
-      128,
-      126,
-      1,
-      0,
-      0,
-      0,
-      129,
-      130,
-      5,
-      16,
-      0,
-      0,
-      130,
-      140,
-      3,
-      26,
-      13,
-      0,
-      131,
       132,
-      5,
-      23,
-      0,
-      0,
-      132,
-      137,
-      3,
-      22,
-      11,
-      0,
       133,
-      134,
-      5,
-      23,
-      0,
-      0,
-      134,
-      136,
-      3,
-      22,
-      11,
-      0,
-      135,
-      133,
-      1,
-      0,
-      0,
-      0,
-      136,
-      139,
-      1,
-      0,
-      0,
-      0,
-      137,
-      135,
-      1,
-      0,
-      0,
-      0,
-      137,
-      138,
-      1,
-      0,
-      0,
-      0,
-      138,
-      141,
-      1,
-      0,
-      0,
-      0,
-      139,
-      137,
-      1,
-      0,
-      0,
-      0,
-      140,
-      131,
-      1,
-      0,
-      0,
-      0,
-      140,
-      141,
-      1,
-      0,
-      0,
-      0,
-      141,
-      151,
-      1,
-      0,
-      0,
-      0,
-      142,
-      147,
-      3,
-      22,
-      11,
-      0,
-      143,
-      144,
-      5,
-      23,
-      0,
-      0,
-      144,
-      146,
-      3,
-      22,
-      11,
-      0,
-      145,
-      143,
-      1,
-      0,
-      0,
-      0,
-      146,
-      149,
-      1,
-      0,
-      0,
-      0,
-      147,
-      145,
-      1,
-      0,
-      0,
-      0,
-      147,
-      148,
-      1,
-      0,
-      0,
-      0,
-      148,
-      151,
-      1,
-      0,
-      0,
-      0,
-      149,
-      147,
-      1,
-      0,
-      0,
-      0,
-      150,
-      129,
-      1,
-      0,
-      0,
-      0,
-      150,
-      142,
-      1,
-      0,
-      0,
-      0,
-      151,
-      21,
-      1,
-      0,
-      0,
-      0,
-      152,
-      153,
-      5,
-      15,
-      0,
-      0,
-      153,
-      154,
-      5,
-      34,
-      0,
-      0,
-      154,
-      155,
-      5,
-      21,
-      0,
-      0,
-      155,
-      156,
-      3,
-      26,
-      13,
-      0,
-      156,
-      23,
-      1,
-      0,
-      0,
-      0,
-      157,
-      160,
-      3,
-      26,
-      13,
-      0,
-      158,
-      159,
       7,
       1,
       0,
       0,
-      159,
-      161,
+      133,
+      21,
+      1,
+      0,
+      0,
+      0,
+      134,
+      139,
       3,
-      26,
-      13,
+      28,
+      14,
       0,
-      160,
-      158,
-      1,
-      0,
-      0,
-      0,
-      160,
-      161,
-      1,
-      0,
-      0,
-      0,
-      161,
-      165,
-      1,
-      0,
-      0,
-      0,
-      162,
-      163,
+      135,
+      136,
       5,
-      24,
-      0,
-      0,
-      163,
-      165,
-      3,
-      26,
-      13,
-      0,
-      164,
-      157,
-      1,
-      0,
-      0,
-      0,
-      164,
-      162,
-      1,
-      0,
-      0,
-      0,
-      165,
       25,
+      0,
+      0,
+      136,
+      138,
+      3,
+      28,
+      14,
+      0,
+      137,
+      135,
       1,
       0,
       0,
       0,
-      166,
-      253,
+      138,
+      141,
+      1,
+      0,
+      0,
+      0,
+      139,
+      137,
+      1,
+      0,
+      0,
+      0,
+      139,
+      140,
+      1,
+      0,
+      0,
+      0,
+      140,
+      143,
+      1,
+      0,
+      0,
+      0,
+      141,
+      139,
+      1,
+      0,
+      0,
+      0,
+      142,
+      144,
       5,
-      34,
+      25,
       0,
       0,
-      167,
-      253,
-      5,
-      38,
+      143,
+      142,
+      1,
       0,
       0,
-      168,
-      253,
-      5,
-      32,
+      0,
+      143,
+      144,
+      1,
       0,
       0,
-      169,
-      253,
+      0,
+      144,
+      149,
+      1,
+      0,
+      0,
+      0,
+      145,
+      146,
       5,
       33,
       0,
       0,
-      170,
-      253,
-      5,
-      39,
-      0,
-      0,
-      171,
-      253,
-      5,
-      40,
-      0,
-      0,
-      172,
-      178,
-      5,
-      19,
-      0,
-      0,
-      173,
-      174,
+      146,
+      148,
       3,
-      26,
-      13,
+      24,
+      12,
       0,
-      174,
-      175,
-      5,
+      147,
+      145,
+      1,
+      0,
+      0,
+      0,
+      148,
+      151,
+      1,
+      0,
+      0,
+      0,
+      149,
+      147,
+      1,
+      0,
+      0,
+      0,
+      149,
+      150,
+      1,
+      0,
+      0,
+      0,
+      150,
       23,
-      0,
-      0,
-      175,
-      177,
       1,
       0,
       0,
       0,
-      176,
-      173,
+      151,
+      149,
       1,
       0,
       0,
       0,
-      177,
-      180,
-      1,
+      152,
+      153,
+      5,
+      16,
       0,
       0,
-      0,
-      178,
-      176,
-      1,
-      0,
-      0,
-      0,
-      178,
-      179,
-      1,
-      0,
-      0,
-      0,
-      179,
-      182,
-      1,
-      0,
-      0,
-      0,
-      180,
-      178,
-      1,
-      0,
-      0,
-      0,
-      181,
-      183,
+      153,
+      163,
       3,
-      26,
-      13,
-      0,
-      182,
-      181,
-      1,
-      0,
-      0,
-      0,
-      182,
-      183,
-      1,
-      0,
-      0,
-      0,
-      183,
-      184,
-      1,
-      0,
-      0,
-      0,
-      184,
-      253,
-      5,
-      20,
-      0,
-      0,
-      185,
-      193,
-      5,
-      19,
-      0,
-      0,
-      186,
-      187,
-      3,
-      26,
-      13,
-      0,
-      187,
-      188,
-      5,
-      4,
-      0,
-      0,
-      188,
-      189,
-      3,
-      26,
-      13,
-      0,
-      189,
-      190,
-      5,
-      23,
-      0,
-      0,
-      190,
-      192,
-      1,
-      0,
-      0,
-      0,
-      191,
-      186,
-      1,
-      0,
-      0,
-      0,
-      192,
-      195,
-      1,
-      0,
-      0,
-      0,
-      193,
-      191,
-      1,
-      0,
-      0,
-      0,
-      193,
-      194,
-      1,
-      0,
-      0,
-      0,
-      194,
-      200,
-      1,
-      0,
-      0,
-      0,
-      195,
-      193,
-      1,
-      0,
-      0,
-      0,
-      196,
-      197,
-      3,
-      26,
-      13,
-      0,
-      197,
-      198,
-      5,
-      4,
-      0,
-      0,
-      198,
-      199,
-      3,
-      26,
-      13,
-      0,
-      199,
-      201,
-      1,
-      0,
-      0,
-      0,
-      200,
-      196,
-      1,
-      0,
-      0,
-      0,
-      200,
-      201,
-      1,
-      0,
-      0,
-      0,
-      201,
-      202,
-      1,
-      0,
-      0,
-      0,
-      202,
-      253,
-      5,
-      20,
-      0,
-      0,
-      203,
-      211,
-      5,
-      5,
-      0,
-      0,
-      204,
-      205,
-      3,
-      26,
-      13,
-      0,
-      205,
-      206,
-      5,
-      4,
-      0,
-      0,
-      206,
-      207,
-      3,
-      26,
-      13,
-      0,
-      207,
-      208,
-      5,
-      23,
-      0,
-      0,
-      208,
-      210,
-      1,
-      0,
-      0,
-      0,
-      209,
-      204,
-      1,
-      0,
-      0,
-      0,
-      210,
-      213,
-      1,
-      0,
-      0,
-      0,
-      211,
-      209,
-      1,
-      0,
-      0,
-      0,
-      211,
-      212,
-      1,
-      0,
-      0,
-      0,
-      212,
-      218,
-      1,
-      0,
-      0,
-      0,
-      213,
-      211,
-      1,
-      0,
-      0,
-      0,
-      214,
-      215,
-      3,
-      26,
-      13,
-      0,
-      215,
-      216,
-      5,
-      4,
-      0,
-      0,
-      216,
-      217,
-      3,
-      26,
-      13,
-      0,
-      217,
-      219,
-      1,
-      0,
-      0,
-      0,
-      218,
-      214,
-      1,
-      0,
-      0,
-      0,
-      218,
-      219,
-      1,
-      0,
-      0,
-      0,
-      219,
-      220,
-      1,
-      0,
-      0,
-      0,
-      220,
-      253,
-      5,
-      6,
-      0,
-      0,
-      221,
-      222,
-      5,
-      37,
-      0,
-      0,
-      222,
-      228,
+      32,
+      16,
+      0,
+      154,
+      155,
       5,
       25,
       0,
       0,
-      223,
-      224,
-      3,
-      28,
-      14,
-      0,
-      224,
-      225,
-      5,
-      23,
-      0,
-      0,
-      225,
-      227,
-      1,
-      0,
-      0,
-      0,
-      226,
-      223,
-      1,
-      0,
-      0,
-      0,
-      227,
-      230,
-      1,
-      0,
-      0,
-      0,
-      228,
-      226,
-      1,
-      0,
-      0,
-      0,
-      228,
-      229,
-      1,
-      0,
-      0,
-      0,
-      229,
-      235,
-      1,
-      0,
-      0,
-      0,
-      230,
-      228,
-      1,
-      0,
-      0,
-      0,
-      231,
-      233,
-      3,
-      28,
-      14,
-      0,
-      232,
-      234,
-      5,
-      23,
-      0,
-      0,
-      233,
-      232,
-      1,
-      0,
-      0,
-      0,
-      233,
-      234,
-      1,
-      0,
-      0,
-      0,
-      234,
-      236,
-      1,
-      0,
-      0,
-      0,
-      235,
-      231,
-      1,
-      0,
-      0,
-      0,
-      235,
-      236,
-      1,
-      0,
-      0,
-      0,
-      236,
-      237,
-      1,
-      0,
-      0,
-      0,
-      237,
-      253,
-      5,
-      27,
-      0,
-      0,
-      238,
-      239,
-      5,
-      35,
-      0,
-      0,
-      239,
-      245,
-      5,
-      17,
-      0,
-      0,
-      240,
-      241,
+      155,
+      160,
       3,
       26,
       13,
       0,
-      241,
-      242,
+      156,
+      157,
       5,
-      23,
+      25,
       0,
       0,
-      242,
-      244,
-      1,
-      0,
-      0,
-      0,
-      243,
-      240,
-      1,
-      0,
-      0,
-      0,
-      244,
-      247,
-      1,
-      0,
-      0,
-      0,
-      245,
-      243,
-      1,
-      0,
-      0,
-      0,
-      245,
-      246,
-      1,
-      0,
-      0,
-      0,
-      246,
-      249,
-      1,
-      0,
-      0,
-      0,
-      247,
-      245,
-      1,
-      0,
-      0,
-      0,
-      248,
-      250,
+      157,
+      159,
       3,
       26,
       13,
       0,
-      249,
-      248,
+      158,
+      156,
       1,
       0,
       0,
       0,
-      249,
-      250,
+      159,
+      162,
       1,
       0,
       0,
       0,
-      250,
-      251,
+      160,
+      158,
       1,
       0,
       0,
       0,
-      251,
-      253,
+      160,
+      161,
+      1,
+      0,
+      0,
+      0,
+      161,
+      164,
+      1,
+      0,
+      0,
+      0,
+      162,
+      160,
+      1,
+      0,
+      0,
+      0,
+      163,
+      154,
+      1,
+      0,
+      0,
+      0,
+      163,
+      164,
+      1,
+      0,
+      0,
+      0,
+      164,
+      174,
+      1,
+      0,
+      0,
+      0,
+      165,
+      170,
+      3,
+      26,
+      13,
+      0,
+      166,
+      167,
       5,
-      18,
+      25,
       0,
       0,
-      252,
+      167,
+      169,
+      3,
+      26,
+      13,
+      0,
+      168,
       166,
       1,
       0,
       0,
       0,
-      252,
-      167,
-      1,
-      0,
-      0,
-      0,
-      252,
-      168,
-      1,
-      0,
-      0,
-      0,
-      252,
       169,
-      1,
-      0,
-      0,
-      0,
-      252,
-      170,
-      1,
-      0,
-      0,
-      0,
-      252,
-      171,
-      1,
-      0,
-      0,
-      0,
-      252,
       172,
       1,
       0,
       0,
       0,
-      252,
-      185,
+      170,
+      168,
       1,
       0,
       0,
       0,
-      252,
-      203,
+      170,
+      171,
       1,
       0,
       0,
       0,
-      252,
-      221,
+      171,
+      174,
       1,
       0,
       0,
       0,
-      252,
-      238,
+      172,
+      170,
       1,
       0,
       0,
       0,
-      253,
+      173,
+      152,
+      1,
+      0,
+      0,
+      0,
+      173,
+      165,
+      1,
+      0,
+      0,
+      0,
+      174,
+      25,
+      1,
+      0,
+      0,
+      0,
+      175,
+      176,
+      5,
+      15,
+      0,
+      0,
+      176,
+      177,
+      5,
+      43,
+      0,
+      0,
+      177,
+      178,
+      5,
+      23,
+      0,
+      0,
+      178,
+      179,
+      3,
+      32,
+      16,
+      0,
+      179,
       27,
       1,
       0,
       0,
       0,
-      254,
-      257,
+      180,
+      182,
       3,
-      26,
-      13,
+      30,
+      15,
       0,
-      255,
-      256,
-      5,
-      4,
+      181,
+      180,
+      1,
       0,
       0,
-      256,
-      258,
+      0,
+      181,
+      182,
+      1,
+      0,
+      0,
+      0,
+      182,
+      183,
+      1,
+      0,
+      0,
+      0,
+      183,
+      185,
       3,
-      26,
-      13,
+      32,
+      16,
       0,
-      257,
-      255,
+      184,
+      186,
+      3,
+      18,
+      9,
+      0,
+      185,
+      184,
       1,
       0,
       0,
       0,
-      257,
-      258,
+      185,
+      186,
       1,
       0,
       0,
       0,
-      258,
-      265,
+      186,
+      189,
       1,
       0,
       0,
       0,
-      259,
-      260,
-      5,
+      187,
+      188,
       7,
+      2,
       0,
       0,
-      260,
-      261,
+      188,
+      190,
       3,
-      26,
-      13,
+      32,
+      16,
       0,
-      261,
-      262,
+      189,
+      187,
+      1,
+      0,
+      0,
+      0,
+      189,
+      190,
+      1,
+      0,
+      0,
+      0,
+      190,
+      194,
+      1,
+      0,
+      0,
+      0,
+      191,
+      192,
       5,
-      4,
-      0,
-      0,
-      262,
-      263,
-      3,
       26,
-      13,
       0,
-      263,
-      265,
+      0,
+      192,
+      194,
+      3,
+      32,
+      16,
+      0,
+      193,
+      181,
       1,
       0,
       0,
       0,
-      264,
-      254,
+      193,
+      191,
       1,
       0,
       0,
       0,
-      264,
-      259,
-      1,
-      0,
-      0,
-      0,
-      265,
+      194,
       29,
       1,
       0,
       0,
       0,
-      266,
-      267,
-      3,
-      26,
-      13,
+      195,
+      196,
+      5,
+      35,
       0,
-      267,
+      0,
+      196,
+      197,
+      5,
+      19,
+      0,
+      0,
+      197,
+      198,
+      3,
+      20,
+      10,
+      0,
+      198,
+      199,
+      5,
+      25,
+      0,
+      0,
+      199,
+      200,
+      3,
+      20,
+      10,
+      0,
+      200,
+      201,
+      5,
+      20,
+      0,
+      0,
+      201,
+      224,
+      1,
+      0,
+      0,
+      0,
+      202,
+      203,
+      5,
+      37,
+      0,
+      0,
+      203,
+      204,
+      5,
+      19,
+      0,
+      0,
+      204,
+      205,
+      3,
+      20,
+      10,
+      0,
+      205,
+      206,
+      5,
+      25,
+      0,
+      0,
+      206,
+      207,
+      3,
+      20,
+      10,
+      0,
+      207,
+      208,
+      5,
+      20,
+      0,
+      0,
+      208,
+      224,
+      1,
+      0,
+      0,
+      0,
+      209,
+      210,
+      5,
+      36,
+      0,
+      0,
+      210,
+      211,
+      5,
+      19,
+      0,
+      0,
+      211,
+      212,
+      3,
+      20,
+      10,
+      0,
+      212,
+      213,
+      5,
+      25,
+      0,
+      0,
+      213,
+      214,
+      3,
+      20,
+      10,
+      0,
+      214,
+      215,
+      5,
+      20,
+      0,
+      0,
+      215,
+      224,
+      1,
+      0,
+      0,
+      0,
+      216,
+      217,
+      5,
+      38,
+      0,
+      0,
+      217,
+      218,
+      5,
+      19,
+      0,
+      0,
+      218,
+      219,
+      3,
+      20,
+      10,
+      0,
+      219,
+      220,
+      5,
+      25,
+      0,
+      0,
+      220,
+      221,
+      3,
+      20,
+      10,
+      0,
+      221,
+      222,
+      5,
+      20,
+      0,
+      0,
+      222,
+      224,
+      1,
+      0,
+      0,
+      0,
+      223,
+      195,
+      1,
+      0,
+      0,
+      0,
+      223,
+      202,
+      1,
+      0,
+      0,
+      0,
+      223,
+      209,
+      1,
+      0,
+      0,
+      0,
+      223,
+      216,
+      1,
+      0,
+      0,
+      0,
+      224,
       31,
       1,
       0,
       0,
       0,
-      268,
-      274,
+      225,
+      312,
+      5,
+      43,
+      0,
+      0,
+      226,
+      312,
+      5,
+      47,
+      0,
+      0,
+      227,
+      312,
+      5,
+      41,
+      0,
+      0,
+      228,
+      312,
+      5,
+      42,
+      0,
+      0,
+      229,
+      312,
+      5,
+      48,
+      0,
+      0,
+      230,
+      312,
+      5,
+      49,
+      0,
+      0,
+      231,
+      237,
       5,
       19,
       0,
       0,
-      269,
-      270,
+      232,
+      233,
       3,
-      30,
-      15,
+      32,
+      16,
       0,
-      270,
-      271,
+      233,
+      234,
       5,
-      23,
+      25,
       0,
       0,
-      271,
-      273,
+      234,
+      236,
       1,
       0,
       0,
       0,
-      272,
-      269,
+      235,
+      232,
       1,
       0,
       0,
       0,
-      273,
-      276,
+      236,
+      239,
       1,
       0,
       0,
       0,
-      274,
-      272,
+      237,
+      235,
       1,
       0,
       0,
       0,
-      274,
-      275,
+      237,
+      238,
       1,
       0,
       0,
       0,
-      275,
-      278,
+      238,
+      241,
       1,
       0,
       0,
       0,
-      276,
-      274,
+      239,
+      237,
       1,
       0,
       0,
       0,
-      277,
-      279,
+      240,
+      242,
       3,
-      30,
-      15,
+      32,
+      16,
       0,
-      278,
-      277,
+      241,
+      240,
       1,
       0,
       0,
       0,
-      278,
-      279,
+      241,
+      242,
       1,
       0,
       0,
       0,
-      279,
-      280,
+      242,
+      243,
       1,
       0,
       0,
       0,
-      280,
-      281,
+      243,
+      312,
       5,
       20,
       0,
       0,
+      244,
+      252,
+      5,
+      19,
+      0,
+      0,
+      245,
+      246,
+      3,
+      32,
+      16,
+      0,
+      246,
+      247,
+      5,
+      6,
+      0,
+      0,
+      247,
+      248,
+      3,
+      32,
+      16,
+      0,
+      248,
+      249,
+      5,
+      25,
+      0,
+      0,
+      249,
+      251,
+      1,
+      0,
+      0,
+      0,
+      250,
+      245,
+      1,
+      0,
+      0,
+      0,
+      251,
+      254,
+      1,
+      0,
+      0,
+      0,
+      252,
+      250,
+      1,
+      0,
+      0,
+      0,
+      252,
+      253,
+      1,
+      0,
+      0,
+      0,
+      253,
+      259,
+      1,
+      0,
+      0,
+      0,
+      254,
+      252,
+      1,
+      0,
+      0,
+      0,
+      255,
+      256,
+      3,
+      32,
+      16,
+      0,
+      256,
+      257,
+      5,
+      6,
+      0,
+      0,
+      257,
+      258,
+      3,
+      32,
+      16,
+      0,
+      258,
+      260,
+      1,
+      0,
+      0,
+      0,
+      259,
+      255,
+      1,
+      0,
+      0,
+      0,
+      259,
+      260,
+      1,
+      0,
+      0,
+      0,
+      260,
+      261,
+      1,
+      0,
+      0,
+      0,
+      261,
+      312,
+      5,
+      20,
+      0,
+      0,
+      262,
+      270,
+      5,
+      21,
+      0,
+      0,
+      263,
+      264,
+      3,
+      32,
+      16,
+      0,
+      264,
+      265,
+      5,
+      6,
+      0,
+      0,
+      265,
+      266,
+      3,
+      32,
+      16,
+      0,
+      266,
+      267,
+      5,
+      25,
+      0,
+      0,
+      267,
+      269,
+      1,
+      0,
+      0,
+      0,
+      268,
+      263,
+      1,
+      0,
+      0,
+      0,
+      269,
+      272,
+      1,
+      0,
+      0,
+      0,
+      270,
+      268,
+      1,
+      0,
+      0,
+      0,
+      270,
+      271,
+      1,
+      0,
+      0,
+      0,
+      271,
+      277,
+      1,
+      0,
+      0,
+      0,
+      272,
+      270,
+      1,
+      0,
+      0,
+      0,
+      273,
+      274,
+      3,
+      32,
+      16,
+      0,
+      274,
+      275,
+      5,
+      6,
+      0,
+      0,
+      275,
+      276,
+      3,
+      32,
+      16,
+      0,
+      276,
+      278,
+      1,
+      0,
+      0,
+      0,
+      277,
+      273,
+      1,
+      0,
+      0,
+      0,
+      277,
+      278,
+      1,
+      0,
+      0,
+      0,
+      278,
+      279,
+      1,
+      0,
+      0,
+      0,
+      279,
+      312,
+      5,
+      22,
+      0,
+      0,
+      280,
       281,
+      5,
+      46,
+      0,
+      0,
+      281,
+      287,
+      5,
+      28,
+      0,
+      0,
+      282,
+      283,
+      3,
+      34,
+      17,
+      0,
+      283,
+      284,
+      5,
+      25,
+      0,
+      0,
+      284,
+      286,
+      1,
+      0,
+      0,
+      0,
+      285,
+      282,
+      1,
+      0,
+      0,
+      0,
+      286,
+      289,
+      1,
+      0,
+      0,
+      0,
+      287,
+      285,
+      1,
+      0,
+      0,
+      0,
+      287,
+      288,
+      1,
+      0,
+      0,
+      0,
+      288,
+      294,
+      1,
+      0,
+      0,
+      0,
+      289,
+      287,
+      1,
+      0,
+      0,
+      0,
+      290,
+      292,
+      3,
+      34,
+      17,
+      0,
+      291,
+      293,
+      5,
+      25,
+      0,
+      0,
+      292,
+      291,
+      1,
+      0,
+      0,
+      0,
+      292,
+      293,
+      1,
+      0,
+      0,
+      0,
+      293,
+      295,
+      1,
+      0,
+      0,
+      0,
+      294,
+      290,
+      1,
+      0,
+      0,
+      0,
+      294,
+      295,
+      1,
+      0,
+      0,
+      0,
+      295,
+      296,
+      1,
+      0,
+      0,
+      0,
+      296,
+      312,
+      5,
+      30,
+      0,
+      0,
+      297,
+      298,
+      5,
+      44,
+      0,
+      0,
+      298,
+      304,
+      5,
+      17,
+      0,
+      0,
+      299,
+      300,
+      3,
+      32,
+      16,
+      0,
+      300,
+      301,
+      5,
+      25,
+      0,
+      0,
+      301,
+      303,
+      1,
+      0,
+      0,
+      0,
+      302,
+      299,
+      1,
+      0,
+      0,
+      0,
+      303,
+      306,
+      1,
+      0,
+      0,
+      0,
+      304,
+      302,
+      1,
+      0,
+      0,
+      0,
+      304,
+      305,
+      1,
+      0,
+      0,
+      0,
+      305,
+      308,
+      1,
+      0,
+      0,
+      0,
+      306,
+      304,
+      1,
+      0,
+      0,
+      0,
+      307,
+      309,
+      3,
+      32,
+      16,
+      0,
+      308,
+      307,
+      1,
+      0,
+      0,
+      0,
+      308,
+      309,
+      1,
+      0,
+      0,
+      0,
+      309,
+      310,
+      1,
+      0,
+      0,
+      0,
+      310,
+      312,
+      5,
+      18,
+      0,
+      0,
+      311,
+      225,
+      1,
+      0,
+      0,
+      0,
+      311,
+      226,
+      1,
+      0,
+      0,
+      0,
+      311,
+      227,
+      1,
+      0,
+      0,
+      0,
+      311,
+      228,
+      1,
+      0,
+      0,
+      0,
+      311,
+      229,
+      1,
+      0,
+      0,
+      0,
+      311,
+      230,
+      1,
+      0,
+      0,
+      0,
+      311,
+      231,
+      1,
+      0,
+      0,
+      0,
+      311,
+      244,
+      1,
+      0,
+      0,
+      0,
+      311,
+      262,
+      1,
+      0,
+      0,
+      0,
+      311,
+      280,
+      1,
+      0,
+      0,
+      0,
+      311,
+      297,
+      1,
+      0,
+      0,
+      0,
+      312,
       33,
       1,
       0,
       0,
       0,
+      313,
+      316,
+      3,
+      32,
+      16,
+      0,
+      314,
+      315,
+      5,
+      6,
+      0,
+      0,
+      315,
+      317,
+      3,
+      32,
+      16,
+      0,
+      316,
+      314,
+      1,
+      0,
+      0,
+      0,
+      316,
+      317,
+      1,
+      0,
+      0,
+      0,
+      317,
+      324,
+      1,
+      0,
+      0,
+      0,
+      318,
+      319,
+      5,
+      7,
+      0,
+      0,
+      319,
+      320,
+      3,
+      32,
+      16,
+      0,
+      320,
+      321,
+      5,
+      6,
+      0,
+      0,
+      321,
+      322,
+      3,
+      32,
+      16,
+      0,
+      322,
+      324,
+      1,
+      0,
+      0,
+      0,
+      323,
+      313,
+      1,
+      0,
+      0,
+      0,
+      323,
+      318,
+      1,
+      0,
+      0,
+      0,
+      324,
+      35,
+      1,
+      0,
+      0,
+      0,
+      325,
+      326,
+      3,
+      32,
+      16,
+      0,
+      326,
       37,
-      38,
+      1,
+      0,
+      0,
+      0,
+      327,
+      333,
+      5,
+      19,
+      0,
+      0,
+      328,
+      329,
+      3,
+      36,
+      18,
+      0,
+      329,
+      330,
+      5,
+      25,
+      0,
+      0,
+      330,
+      332,
+      1,
+      0,
+      0,
+      0,
+      331,
+      328,
+      1,
+      0,
+      0,
+      0,
+      332,
+      335,
+      1,
+      0,
+      0,
+      0,
+      333,
+      331,
+      1,
+      0,
+      0,
+      0,
+      333,
+      334,
+      1,
+      0,
+      0,
+      0,
+      334,
+      337,
+      1,
+      0,
+      0,
+      0,
+      335,
+      333,
+      1,
+      0,
+      0,
+      0,
+      336,
+      338,
+      3,
+      36,
+      18,
+      0,
+      337,
+      336,
+      1,
+      0,
+      0,
+      0,
+      337,
+      338,
+      1,
+      0,
+      0,
+      0,
+      338,
+      339,
+      1,
+      0,
+      0,
+      0,
+      339,
+      340,
+      5,
+      20,
+      0,
+      0,
+      340,
+      39,
+      1,
+      0,
+      0,
+      0,
       43,
-      48,
-      50,
+      44,
+      49,
+      54,
       56,
-      63,
-      70,
-      75,
+      62,
+      69,
+      76,
       79,
-      93,
-      97,
-      107,
-      116,
-      120,
-      126,
-      137,
-      140,
-      147,
-      150,
+      84,
+      88,
+      102,
+      106,
+      115,
+      119,
+      128,
+      139,
+      143,
+      149,
       160,
-      164,
-      178,
-      182,
+      163,
+      170,
+      173,
+      181,
+      185,
+      189,
       193,
-      200,
-      211,
-      218,
-      228,
-      233,
-      235,
-      245,
-      249,
+      223,
+      237,
+      241,
       252,
-      257,
-      264,
-      274,
-      278
+      259,
+      270,
+      277,
+      287,
+      292,
+      294,
+      304,
+      308,
+      311,
+      316,
+      323,
+      333,
+      337
     ];
   }
   static get _ATN() {
@@ -34384,6 +36165,9 @@ var ClauseContext = class extends ParserRuleContext {
   atom() {
     return this.getRuleContext(0, AtomContext);
   }
+  temporalAnnotation() {
+    return this.getRuleContext(0, TemporalAnnotationContext);
+  }
   clauseBody() {
     return this.getRuleContext(0, ClauseBodyContext);
   }
@@ -34409,6 +36193,83 @@ var ClauseContext = class extends ParserRuleContext {
   accept(visitor) {
     if (visitor.visitClause) {
       return visitor.visitClause(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var TemporalAnnotationContext = class extends ParserRuleContext {
+  constructor(parent, invokingState) {
+    super(parent, invokingState);
+  }
+  AT() {
+    return this.getToken(MangleParser.AT, 0);
+  }
+  LBRACKET() {
+    return this.getToken(MangleParser.LBRACKET, 0);
+  }
+  temporalBound(i) {
+    if (i === void 0) {
+      return this.getRuleContexts(TemporalBoundContext);
+    }
+    return this.getRuleContext(i, TemporalBoundContext);
+  }
+  RBRACKET() {
+    return this.getToken(MangleParser.RBRACKET, 0);
+  }
+  COMMA() {
+    return this.getToken(MangleParser.COMMA, 0);
+  }
+  get ruleIndex() {
+    return MangleParser.RULE_temporalAnnotation;
+  }
+  enterRule(listener) {
+    if (listener.enterTemporalAnnotation) {
+      listener.enterTemporalAnnotation(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener.exitTemporalAnnotation) {
+      listener.exitTemporalAnnotation(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor.visitTemporalAnnotation) {
+      return visitor.visitTemporalAnnotation(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var TemporalBoundContext = class extends ParserRuleContext {
+  constructor(parent, invokingState) {
+    super(parent, invokingState);
+  }
+  TIMESTAMP() {
+    return this.getToken(MangleParser.TIMESTAMP, 0);
+  }
+  DURATION() {
+    return this.getToken(MangleParser.DURATION, 0);
+  }
+  VARIABLE() {
+    return this.getToken(MangleParser.VARIABLE, 0);
+  }
+  get ruleIndex() {
+    return MangleParser.RULE_temporalBound;
+  }
+  enterRule(listener) {
+    if (listener.enterTemporalBound) {
+      listener.enterTemporalBound(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener.exitTemporalBound) {
+      listener.exitTemporalBound(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor.visitTemporalBound) {
+      return visitor.visitTemporalBound(this);
     } else {
       return visitor.visitChildren(this);
     }
@@ -34556,6 +36417,12 @@ var LiteralOrFmlContext = class extends ParserRuleContext {
     }
     return this.getRuleContext(i, TermContext);
   }
+  temporalOperator() {
+    return this.getRuleContext(0, TemporalOperatorContext);
+  }
+  temporalAnnotation() {
+    return this.getRuleContext(0, TemporalAnnotationContext);
+  }
   EQ() {
     return this.getToken(MangleParser.EQ, 0);
   }
@@ -34593,6 +36460,58 @@ var LiteralOrFmlContext = class extends ParserRuleContext {
   accept(visitor) {
     if (visitor.visitLiteralOrFml) {
       return visitor.visitLiteralOrFml(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var TemporalOperatorContext = class extends ParserRuleContext {
+  constructor(parent, invokingState) {
+    super(parent, invokingState);
+  }
+  DIAMONDMINUS() {
+    return this.getToken(MangleParser.DIAMONDMINUS, 0);
+  }
+  LBRACKET() {
+    return this.getToken(MangleParser.LBRACKET, 0);
+  }
+  temporalBound(i) {
+    if (i === void 0) {
+      return this.getRuleContexts(TemporalBoundContext);
+    }
+    return this.getRuleContext(i, TemporalBoundContext);
+  }
+  COMMA() {
+    return this.getToken(MangleParser.COMMA, 0);
+  }
+  RBRACKET() {
+    return this.getToken(MangleParser.RBRACKET, 0);
+  }
+  BOXMINUS() {
+    return this.getToken(MangleParser.BOXMINUS, 0);
+  }
+  DIAMONDPLUS() {
+    return this.getToken(MangleParser.DIAMONDPLUS, 0);
+  }
+  BOXPLUS() {
+    return this.getToken(MangleParser.BOXPLUS, 0);
+  }
+  get ruleIndex() {
+    return MangleParser.RULE_temporalOperator;
+  }
+  enterRule(listener) {
+    if (listener.enterTemporalOperator) {
+      listener.enterTemporalOperator(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener.exitTemporalOperator) {
+      listener.exitTemporalOperator(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor.visitTemporalOperator) {
+      return visitor.visitTemporalOperator(this);
     } else {
       return visitor.visitChildren(this);
     }
@@ -34899,6 +36818,12 @@ var StructContext = class extends TermContext {
     super(ctx.parent, ctx.invokingState);
     super.copyFrom(ctx);
   }
+  LBRACE() {
+    return this.getToken(MangleParser.LBRACE, 0);
+  }
+  RBRACE() {
+    return this.getToken(MangleParser.RBRACE, 0);
+  }
   term(i) {
     if (i === void 0) {
       return this.getRuleContexts(TermContext);
@@ -35079,7 +37004,7 @@ var AtomsContext = class extends ParserRuleContext {
   }
 };
 
-// src/parser/visitor.ts
+// ../mangle-lsp/src/parser/visitor.ts
 var ERROR_SYMBOL = "$$error$$";
 function getRangeFromContext(ctx) {
   const startToken = ctx.start;
@@ -35312,6 +37237,9 @@ var MangleASTVisitor = class extends AbstractParseTreeVisitor {
   }
   visitPackageDecl(ctx) {
     const name = ctx.NAME().getText();
+    if (name !== name.toLowerCase()) {
+      this.addError(`package names have to be lower-case: ${name}`, ctx);
+    }
     const atomsCtx = ctx.atoms();
     const atoms = atomsCtx ? this.visitAtoms(atomsCtx) : null;
     return {
@@ -35336,7 +37264,26 @@ var MangleASTVisitor = class extends AbstractParseTreeVisitor {
     const atomCtx = ctx.atom();
     const declaredAtom = this.visitAtom(atomCtx);
     const descrCtx = ctx.descrBlock();
-    const descr = descrCtx ? this.visitDescrBlock(descrCtx) : null;
+    let descr = descrCtx ? this.visitDescrBlock(descrCtx) : null;
+    const ctxText = ctx.getText();
+    if (ctxText.includes("temporal")) {
+      const children = ctx.children ?? [];
+      for (const child of children) {
+        if ("getText" in child && child.getText() === "temporal") {
+          const temporalAtom = createAtom(
+            createPredicateSym(DESCRIPTORS.TEMPORAL, 0),
+            [],
+            getRangeFromContext(ctx)
+          );
+          if (descr) {
+            descr = [...descr, temporalAtom];
+          } else {
+            descr = [temporalAtom];
+          }
+          break;
+        }
+      }
+    }
     const boundsCtxs = ctx.boundsBlock();
     const bounds = boundsCtxs.length > 0 ? boundsCtxs.map((b) => this.visitBoundsBlock(b)) : null;
     const constraintsCtx = ctx.constraintsBlock();
@@ -35387,6 +37334,11 @@ var MangleASTVisitor = class extends AbstractParseTreeVisitor {
   visitClause(ctx) {
     const atomCtx = ctx.atom();
     const head = this.visitAtom(atomCtx);
+    let headTime = null;
+    const tempAnnotCtx = ctx.temporalAnnotation();
+    if (tempAnnotCtx) {
+      headTime = this.visitTemporalAnnotation(tempAnnotCtx);
+    }
     const bodyCtx = ctx.clauseBody();
     let premises = null;
     let transform = null;
@@ -35400,6 +37352,7 @@ var MangleASTVisitor = class extends AbstractParseTreeVisitor {
       head,
       premises,
       transform,
+      headTime,
       range: getRangeFromContext(ctx)
     };
   }
@@ -35426,11 +37379,11 @@ var MangleASTVisitor = class extends AbstractParseTreeVisitor {
     if (doToken) {
       const termCtx = ctx.term();
       if (termCtx) {
-        const fn = this.visitTerm(termCtx);
-        if (fn && fn.type === "ApplyFn") {
+        const fn2 = this.visitTerm(termCtx);
+        if (fn2 && fn2.type === "ApplyFn") {
           statements.push({
             variable: null,
-            fn,
+            fn: fn2,
             range: getRangeFromContext(ctx)
           });
         }
@@ -35463,10 +37416,10 @@ var MangleASTVisitor = class extends AbstractParseTreeVisitor {
         range: getRangeFromContext(ctx)
       };
     }
-    const fn = this.visitTerm(termCtx);
+    const fn2 = this.visitTerm(termCtx);
     return {
       variable,
-      fn,
+      fn: fn2,
       range: getRangeFromContext(ctx)
     };
   }
@@ -35480,11 +37433,12 @@ var MangleASTVisitor = class extends AbstractParseTreeVisitor {
       }
       const term = this.visitTerm(termCtx);
       if (term && term.type === "Atom") {
-        return {
+        const negAtom = {
           type: "NegAtom",
           atom: term,
           range: getRangeFromContext(ctx)
         };
+        return negAtom;
       }
       this.addError("Negation must be applied to an atom", ctx);
       return {
@@ -35493,6 +37447,16 @@ var MangleASTVisitor = class extends AbstractParseTreeVisitor {
         range: getRangeFromContext(ctx)
       };
     }
+    let tempOp = null;
+    const tempOpCtx = ctx.temporalOperator();
+    if (tempOpCtx) {
+      tempOp = this.visitTemporalOperator(tempOpCtx);
+    }
+    let tempAnnot = null;
+    const tempAnnotCtx = ctx.temporalAnnotation();
+    if (tempAnnotCtx) {
+      tempAnnot = this.visitTemporalAnnotation(tempAnnotCtx);
+    }
     const termCtxs = ctx.term();
     if (termCtxs.length === 1) {
       const termCtx = termCtxs[0];
@@ -35500,7 +37464,17 @@ var MangleASTVisitor = class extends AbstractParseTreeVisitor {
         this.addError("Expected term", ctx);
         return this.createErrorVariable(ctx);
       }
-      return this.visitTerm(termCtx);
+      const term = this.visitTerm(termCtx);
+      if (term && term.type === "Atom" && (tempOp !== null || tempAnnot !== null)) {
+        return {
+          type: "TemporalLiteral",
+          literal: term,
+          operator: tempOp,
+          interval: tempAnnot,
+          range: getRangeFromContext(ctx)
+        };
+      }
+      return term;
     }
     const leftCtx = termCtxs[0];
     const rightCtx = termCtxs[1];
@@ -35715,6 +37689,9 @@ var MangleASTVisitor = class extends AbstractParseTreeVisitor {
         baseterms.push(term);
       }
     }
+    if (ctx.getText().startsWith("opt")) {
+      return [createApplyFn(createFunctionSym("fn:opt", -1), baseterms, getRangeFromContext(ctx))];
+    }
     return baseterms;
   }
   visitAppl(ctx) {
@@ -35738,9 +37715,178 @@ var MangleASTVisitor = class extends AbstractParseTreeVisitor {
       range
     };
   }
+  // ========================================================================
+  // Temporal Visitor Methods (upstream parse.go:786-896)
+  // ========================================================================
+  /**
+   * Visit a temporal annotation: @[bound] or @[bound, bound]
+   * Returns a TemporalInterval.
+   * Upstream: parse.go:786-812
+   */
+  visitTemporalAnnotation(ctx) {
+    const boundCtxs = ctx.temporalBound();
+    if (boundCtxs.length === 0) {
+      this.addError("temporal annotation requires at least one bound", ctx);
+      return {
+        start: { boundType: "negativeInfinity", range: getRangeFromContext(ctx) },
+        end: { boundType: "positiveInfinity", range: getRangeFromContext(ctx) },
+        range: getRangeFromContext(ctx)
+      };
+    }
+    let start = this.visitTemporalBound(boundCtxs[0]);
+    let end;
+    if (boundCtxs.length > 1) {
+      end = this.visitTemporalBound(boundCtxs[1]);
+    } else {
+      end = { ...start };
+    }
+    if (start.boundType === "variable" && start.variable?.symbol === "_") {
+      start = { boundType: "negativeInfinity", range: start.range };
+    }
+    if (end.boundType === "variable" && end.variable?.symbol === "_") {
+      end = { boundType: "positiveInfinity", range: end.range };
+    }
+    return {
+      start,
+      end,
+      range: getRangeFromContext(ctx)
+    };
+  }
+  /**
+   * Visit a temporal bound: TIMESTAMP | DURATION | VARIABLE | 'now'
+   * Returns a TemporalBound.
+   * Upstream: parse.go:816-849
+   */
+  visitTemporalBound(ctx) {
+    const range = getRangeFromContext(ctx);
+    const tsToken = ctx.TIMESTAMP();
+    if (tsToken) {
+      const text = tsToken.getText();
+      const nanos = parseTimestamp(text);
+      if (nanos === null) {
+        this.addError(`invalid timestamp "${text}"`, ctx);
+        return { boundType: "timestamp", value: 0, rawText: text, range };
+      }
+      return { boundType: "timestamp", value: nanos, rawText: text, range };
+    }
+    const durToken = ctx.DURATION();
+    if (durToken) {
+      const text = durToken.getText();
+      const nanos = parseDuration(text);
+      if (nanos === null) {
+        this.addError(`invalid duration "${text}"`, ctx);
+        return { boundType: "duration", value: 0, rawText: text, range };
+      }
+      return { boundType: "duration", value: nanos, rawText: text, range };
+    }
+    const varToken = ctx.VARIABLE();
+    if (varToken) {
+      const text = varToken.getText();
+      const variable = {
+        type: "Variable",
+        symbol: text,
+        range: getRangeFromToken(varToken.symbol)
+      };
+      return { boundType: "variable", variable, range };
+    }
+    if (ctx.getText() === "now") {
+      return { boundType: "now", range };
+    }
+    this.addError("unknown temporal bound", ctx);
+    return { boundType: "timestamp", value: 0, range };
+  }
+  /**
+   * Visit a temporal operator: <-[b,b] | [-[b,b] | <+[b,b] | [+[b,b]
+   * Returns a TemporalOperator.
+   * Upstream: parse.go:853-896
+   */
+  visitTemporalOperator(ctx) {
+    const boundCtxs = ctx.temporalBound();
+    if (boundCtxs.length !== 2) {
+      this.addError("temporal operator requires exactly two bounds", ctx);
+      return {
+        operatorType: "diamondMinus",
+        interval: {
+          start: { boundType: "duration", value: 0, range: getRangeFromContext(ctx) },
+          end: { boundType: "duration", value: 0, range: getRangeFromContext(ctx) },
+          range: getRangeFromContext(ctx)
+        },
+        range: getRangeFromContext(ctx)
+      };
+    }
+    const start = this.visitTemporalBound(boundCtxs[0]);
+    const end = this.visitTemporalBound(boundCtxs[1]);
+    const interval = {
+      start,
+      end,
+      range: getRangeFromContext(ctx)
+    };
+    let operatorType;
+    if (ctx.DIAMONDMINUS()) {
+      operatorType = "diamondMinus";
+    } else if (ctx.BOXMINUS()) {
+      operatorType = "boxMinus";
+    } else if (ctx.DIAMONDPLUS()) {
+      operatorType = "diamondPlus";
+    } else if (ctx.BOXPLUS()) {
+      operatorType = "boxPlus";
+    } else {
+      this.addError("unknown temporal operator", ctx);
+      operatorType = "diamondMinus";
+    }
+    return {
+      operatorType,
+      interval,
+      range: getRangeFromContext(ctx)
+    };
+  }
 };
+function parseTimestamp(s) {
+  const date = new Date(s);
+  if (!isNaN(date.getTime())) {
+    return date.getTime() * 1e6;
+  }
+  const dateMatch = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+  if (dateMatch) {
+    const d = new Date(Date.UTC(
+      parseInt(dateMatch[1], 10),
+      parseInt(dateMatch[2], 10) - 1,
+      parseInt(dateMatch[3], 10)
+    ));
+    if (!isNaN(d.getTime())) {
+      return d.getTime() * 1e6;
+    }
+  }
+  return null;
+}
+function parseDuration(s) {
+  if (!s) return null;
+  const match = /^(-?\d+)(ms|d|h|m|s)$/.exec(s);
+  if (!match) return null;
+  const value = parseInt(match[1], 10);
+  const unit = match[2];
+  const NS_PER_MS = 1e6;
+  const NS_PER_SEC = 1e9;
+  const NS_PER_MIN = 60 * NS_PER_SEC;
+  const NS_PER_HOUR = 60 * NS_PER_MIN;
+  const NS_PER_DAY = 24 * NS_PER_HOUR;
+  switch (unit) {
+    case "ms":
+      return value * NS_PER_MS;
+    case "s":
+      return value * NS_PER_SEC;
+    case "m":
+      return value * NS_PER_MIN;
+    case "h":
+      return value * NS_PER_HOUR;
+    case "d":
+      return value * NS_PER_DAY;
+    default:
+      return null;
+  }
+}
 
-// src/parser/parser.ts
+// ../mangle-lsp/src/parser/parser.ts
 var MangleErrorListener = class extends BaseErrorListener {
   constructor() {
     super(...arguments);
@@ -35813,7 +37959,1520 @@ function parse(source) {
   }
 }
 
-// src/utils/position.ts
+// ../mangle-lsp/src/analysis/types.ts
+var ANY = { kind: "any" };
+var BOT = { kind: "bot" };
+function base(name) {
+  return { kind: "base", name };
+}
+function nameSingleton(value) {
+  return { kind: "singleton", constantType: "name", value };
+}
+var T = {
+  any: ANY,
+  bot: BOT,
+  number: base("number"),
+  float64: base("float64"),
+  string: base("string"),
+  bytes: base("bytes"),
+  name: base("name"),
+  time: base("time"),
+  duration: base("duration"),
+  /** `/number` or `/float64` - what float arithmetic accepts at runtime. */
+  numeric: { kind: "union", alts: [base("number"), base("float64")] },
+  /** Upstream symbols.BoolType(): fn:Union(fn:Singleton(/true), fn:Singleton(/false)). */
+  bool: { kind: "union", alts: [nameSingleton("/true"), nameSingleton("/false")] },
+  /** A time interval, represented as a pair of time instants. */
+  interval: { kind: "pair", fst: base("time"), snd: base("time") },
+  v(name) {
+    return { kind: "var", name };
+  },
+  singleton(value) {
+    return nameSingleton(value);
+  },
+  namePrefix(prefix) {
+    return { kind: "namePrefix", prefix };
+  },
+  list(elem) {
+    return { kind: "list", elem };
+  },
+  option(elem) {
+    return { kind: "option", elem };
+  },
+  pair(fst, snd) {
+    return { kind: "pair", fst, snd };
+  },
+  map(key, value) {
+    return { kind: "map", key, value };
+  },
+  struct(fields, exact = false) {
+    return { kind: "struct", fields, exact };
+  },
+  union(...alts) {
+    return { kind: "union", alts };
+  },
+  fun(result, ...params) {
+    return { kind: "fun", result, params };
+  },
+  rel(...args) {
+    return { kind: "rel", args };
+  },
+  /** fn:Tuple(T1, ..., Tn) expands to nested pairs (upstream expandTupleType). */
+  tuple(...elems) {
+    if (elems.length === 0) return ANY;
+    if (elems.length === 1) return elems[0];
+    let res = { kind: "pair", fst: elems[elems.length - 2], snd: elems[elems.length - 1] };
+    for (let j = elems.length - 3; j >= 0; j--) {
+      res = { kind: "pair", fst: elems[j], snd: res };
+    }
+    return res;
+  }
+};
+var BASE_TYPE_CONSTANTS = /* @__PURE__ */ new Map([
+  ["/any", ANY],
+  ["/bot", BOT],
+  ["/number", T.number],
+  ["/float64", T.float64],
+  ["/string", T.string],
+  ["/bytes", T.bytes],
+  ["/name", T.name],
+  ["/time", T.time],
+  ["/duration", T.duration]
+]);
+var TYPE_CONSTRUCTOR_ARITY = /* @__PURE__ */ new Map([
+  ["fn:Union", -1],
+  ["fn:Singleton", 1],
+  ["fn:List", 1],
+  ["fn:Option", 1],
+  ["fn:Pair", 2],
+  ["fn:Tuple", -1],
+  ["fn:Map", 2],
+  ["fn:Struct", -1],
+  ["fn:TaggedUnion", -1],
+  ["fn:Fun", -1],
+  ["fn:Rel", -1]
+]);
+function isNameConstant(term) {
+  return !!term && term.type === "Constant" && term.constantType === "name" && term.symbol !== void 0;
+}
+function isOptField(term) {
+  return term.type === "ApplyFn" && term.function.symbol === "fn:opt";
+}
+function structFieldsFromArgs(args) {
+  const fields = [];
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (isOptField(arg)) {
+      const key = arg.args[0];
+      const tpe2 = arg.args[1];
+      if (isNameConstant(key)) {
+        fields.push({ name: key.symbol, type: tpe2 ? typeFromBoundTerm(tpe2) : ANY, optional: true });
+      }
+      continue;
+    }
+    const tpe = args[i + 1];
+    if (isNameConstant(arg)) {
+      fields.push({ name: arg.symbol, type: tpe ? typeFromBoundTerm(tpe) : ANY, optional: false });
+    }
+    i++;
+  }
+  return fields;
+}
+function expandTaggedUnion(args) {
+  const tagField = args[0];
+  if (!isNameConstant(tagField)) return ANY;
+  const alts = [];
+  for (let i = 1; i + 1 < args.length; i += 2) {
+    const tag = args[i];
+    const variant = args[i + 1];
+    if (!isNameConstant(tag) || !variant || variant.type !== "ApplyFn") continue;
+    const fields = [
+      { name: tagField.symbol, type: nameSingleton(tag.symbol), optional: false },
+      ...structFieldsFromArgs(variant.args)
+    ];
+    alts.push({ kind: "struct", fields, exact: false });
+  }
+  return { kind: "union", alts };
+}
+function typeFromBoundTerm(term) {
+  switch (term.type) {
+    case "Variable":
+      return term.symbol === "_" ? ANY : { kind: "var", name: term.symbol };
+    case "Constant": {
+      if (term.constantType !== "name" || term.symbol === void 0) return ANY;
+      return BASE_TYPE_CONSTANTS.get(term.symbol) ?? { kind: "namePrefix", prefix: term.symbol };
+    }
+    case "ApplyFn": {
+      const args = term.args;
+      const arg = (i) => args[i] ? typeFromBoundTerm(args[i]) : ANY;
+      switch (term.function.symbol) {
+        case "fn:List":
+          return T.list(arg(0));
+        case "fn:Option":
+          return T.option(arg(0));
+        case "fn:Pair":
+          return T.pair(arg(0), arg(1));
+        case "fn:Map":
+          return T.map(arg(0), arg(1));
+        case "fn:Tuple":
+          return T.tuple(...args.map(typeFromBoundTerm));
+        case "fn:Union":
+          return { kind: "union", alts: args.map(typeFromBoundTerm) };
+        case "fn:Singleton": {
+          const c = args[0];
+          if (c && c.type === "Constant") {
+            return { kind: "singleton", constantType: c.constantType, value: constantKey(c) };
+          }
+          return ANY;
+        }
+        case "fn:Struct":
+          return { kind: "struct", fields: structFieldsFromArgs(args), exact: false };
+        case "fn:TaggedUnion":
+          return expandTaggedUnion(args);
+        case "fn:Fun":
+          return { kind: "fun", result: arg(0), params: args.slice(1).map(typeFromBoundTerm) };
+        case "fn:Rel":
+          return { kind: "rel", args: args.map(typeFromBoundTerm) };
+        default:
+          return ANY;
+      }
+    }
+  }
+}
+function constantKey(c) {
+  switch (c.constantType) {
+    case "number":
+      return String(c.numValue);
+    case "float64":
+      return String(c.floatValue);
+    default:
+      return c.symbol ?? "";
+  }
+}
+function typeOfConstant(c) {
+  switch (c.constantType) {
+    case "number":
+      return T.number;
+    case "float64":
+      return T.float64;
+    case "string":
+      return T.string;
+    case "bytes":
+      return T.bytes;
+    case "time":
+      return T.time;
+    case "duration":
+      return T.duration;
+    case "name":
+      return c.symbol !== void 0 ? nameSingleton(c.symbol) : T.name;
+    default:
+      return ANY;
+  }
+}
+function typeToString(t) {
+  switch (t.kind) {
+    case "any":
+      return "/any";
+    case "bot":
+      return "/bot";
+    case "base":
+      return `/${t.name}`;
+    case "namePrefix":
+      return t.prefix;
+    case "singleton":
+      return t.constantType === "string" ? JSON.stringify(t.value) : t.value;
+    case "var":
+      return t.name;
+    case "list":
+      return `.List<${typeToString(t.elem)}>`;
+    case "option":
+      return `.Option<${typeToString(t.elem)}>`;
+    case "pair":
+      return `.Pair<${typeToString(t.fst)}, ${typeToString(t.snd)}>`;
+    case "map":
+      return `.Map<${typeToString(t.key)}, ${typeToString(t.value)}>`;
+    case "struct": {
+      const fields = t.fields.map((f) => `${f.optional ? "opt " : ""}${f.name} : ${typeToString(f.type)}`);
+      return `.Struct<${fields.join(", ")}>`;
+    }
+    case "union": {
+      if (t.alts.length === 0) return ".Union<>";
+      return t.alts.map(typeToString).join(" | ");
+    }
+    case "fun":
+      return `(${t.params.map(typeToString).join(", ")}) -> ${typeToString(t.result)}`;
+    case "rel":
+      return `(${t.args.map(typeToString).join(", ")})`;
+  }
+}
+function valueClass(t) {
+  switch (t.kind) {
+    case "base":
+      return t.name;
+    case "namePrefix":
+      return "name";
+    case "singleton":
+      return t.constantType;
+    case "list":
+    case "pair":
+    case "map":
+    case "struct":
+    case "fun":
+    case "rel":
+      return t.kind;
+    default:
+      return null;
+  }
+}
+function isNameBelow(n2, p) {
+  return n2.startsWith(p + "/");
+}
+function nameTypesDisjoint(a, b) {
+  if (a.kind === "base" || b.kind === "base") return false;
+  if (a.kind === "namePrefix" && b.kind === "namePrefix") {
+    return !(a.prefix === b.prefix || isNameBelow(a.prefix, b.prefix) || isNameBelow(b.prefix, a.prefix));
+  }
+  if (a.kind === "namePrefix" && b.kind === "singleton") return !isNameBelow(b.value, a.prefix);
+  if (a.kind === "singleton" && b.kind === "namePrefix") return !isNameBelow(a.value, b.prefix);
+  if (a.kind === "singleton" && b.kind === "singleton") return a.value !== b.value;
+  return false;
+}
+function structsDisjoint(a, b) {
+  const bFields = new Map(b.fields.map((f) => [f.name, f]));
+  const aFields = new Map(a.fields.map((f) => [f.name, f]));
+  for (const [name, fa] of aFields) {
+    const fb = bFields.get(name);
+    if (fb && isDisjoint(fa.type, fb.type)) return true;
+  }
+  if (a.exact) {
+    for (const fb of b.fields) {
+      if (!fb.optional && !aFields.has(fb.name)) return true;
+    }
+  }
+  if (b.exact) {
+    for (const fa of a.fields) {
+      if (!fa.optional && !bFields.has(fa.name)) return true;
+    }
+  }
+  return false;
+}
+function isDisjoint(a, b) {
+  if (a.kind === "any" || b.kind === "any" || a.kind === "var" || b.kind === "var") return false;
+  if (a.kind === "bot" || b.kind === "bot") return false;
+  if (a.kind === "option" || b.kind === "option") return false;
+  if (a.kind === "union") return a.alts.length > 0 && a.alts.every((x) => isDisjoint(x, b));
+  if (b.kind === "union") return b.alts.length > 0 && b.alts.every((x) => isDisjoint(a, x));
+  const ca = valueClass(a);
+  const cb = valueClass(b);
+  if (ca === null || cb === null) return false;
+  if (ca !== cb) return true;
+  switch (ca) {
+    case "name":
+      return nameTypesDisjoint(a, b);
+    case "pair":
+      if (a.kind === "pair" && b.kind === "pair") {
+        return isDisjoint(a.fst, b.fst) || isDisjoint(a.snd, b.snd);
+      }
+      return false;
+    case "struct":
+      if (a.kind === "struct" && b.kind === "struct") return structsDisjoint(a, b);
+      return false;
+    default:
+      if (a.kind === "singleton" && b.kind === "singleton") return a.value !== b.value;
+      return false;
+  }
+}
+function isUnknownType(t) {
+  return t.kind === "any" || t.kind === "var" || t.kind === "bot" || t.kind === "union" && t.alts.length === 0;
+}
+function refineType(a, b) {
+  if (isUnknownType(a)) return b;
+  if (isUnknownType(b)) return a;
+  if (a.kind === "base" && a.name === "name" && valueClass(b) === "name") return b;
+  if (a.kind === "union" && b.kind !== "union") {
+    const kept = a.alts.filter((x) => !isDisjoint(x, b));
+    if (kept.length === 1) return refineType(kept[0], b);
+    return kept.length > 0 ? { kind: "union", alts: kept } : a;
+  }
+  return a;
+}
+function upperBound(types) {
+  if (types.length === 0) return BOT;
+  if (types.some(isUnknownType)) return ANY;
+  const reduced = [];
+  for (const t of types) {
+    if (!reduced.some((r) => typeEquals(r, t))) reduced.push(t);
+  }
+  if (reduced.length === 1) return reduced[0];
+  if (reduced.every((r) => valueClass(r) === "name")) return T.name;
+  return { kind: "union", alts: reduced };
+}
+function typeEquals(a, b) {
+  return typeToString(a) === typeToString(b) && a.kind === b.kind;
+}
+function matchTypeVars(pattern, actual, subst) {
+  if (isUnknownType(actual) && pattern.kind !== "var") return;
+  switch (pattern.kind) {
+    case "var":
+      if (!subst.has(pattern.name) && !isUnknownType(actual)) subst.set(pattern.name, actual);
+      return;
+    case "list":
+      if (actual.kind === "list") matchTypeVars(pattern.elem, actual.elem, subst);
+      return;
+    case "option":
+      if (actual.kind === "option") matchTypeVars(pattern.elem, actual.elem, subst);
+      return;
+    case "pair":
+      if (actual.kind === "pair") {
+        matchTypeVars(pattern.fst, actual.fst, subst);
+        matchTypeVars(pattern.snd, actual.snd, subst);
+      }
+      return;
+    case "map":
+      if (actual.kind === "map") {
+        matchTypeVars(pattern.key, actual.key, subst);
+        matchTypeVars(pattern.value, actual.value, subst);
+      }
+      return;
+    default:
+      return;
+  }
+}
+function applyTypeSubst(t, subst) {
+  switch (t.kind) {
+    case "var":
+      return subst.get(t.name) ?? ANY;
+    case "list":
+      return T.list(applyTypeSubst(t.elem, subst));
+    case "option":
+      return T.option(applyTypeSubst(t.elem, subst));
+    case "pair":
+      return T.pair(applyTypeSubst(t.fst, subst), applyTypeSubst(t.snd, subst));
+    case "map":
+      return T.map(applyTypeSubst(t.key, subst), applyTypeSubst(t.value, subst));
+    case "union":
+      return { kind: "union", alts: t.alts.map((x) => applyTypeSubst(x, subst)) };
+    case "struct":
+      return {
+        kind: "struct",
+        exact: t.exact,
+        fields: t.fields.map((f) => ({ ...f, type: applyTypeSubst(f.type, subst) }))
+      };
+    default:
+      return t;
+  }
+}
+function structFieldType(t, field) {
+  if (t.kind === "struct") {
+    const f = t.fields.find((x) => x.name === field);
+    return f?.type;
+  }
+  if (t.kind === "union" && t.alts.length > 0 && t.alts.every((a) => a.kind === "struct")) {
+    const projected = t.alts.map((a) => structFieldType(a, field)).filter((x) => x !== void 0);
+    if (projected.length === 0) return void 0;
+    if (projected.length === 1) return projected[0];
+    return upperBound(projected);
+  }
+  return ANY;
+}
+function collectTypeVars(term, vars) {
+  if (term.type === "Variable") {
+    if (term.symbol !== "_") vars.add(term.symbol);
+  } else if (term.type === "ApplyFn") {
+    for (const a of term.args) collectTypeVars(a, vars);
+  }
+}
+function termText(term) {
+  switch (term.type) {
+    case "Variable":
+      return term.symbol;
+    case "Constant":
+      if (term.constantType === "string") return JSON.stringify(term.symbol ?? "");
+      if (term.constantType === "number") return String(term.numValue);
+      if (term.constantType === "float64") return String(term.floatValue);
+      return term.symbol ?? term.constantType;
+    case "ApplyFn":
+      return `${term.function.symbol}(${term.args.map(termText).join(", ")})`;
+  }
+}
+function checkWellformedBound(expr) {
+  const ctx = /* @__PURE__ */ new Set();
+  collectTypeVars(expr, ctx);
+  const problems = [];
+  checkWellformedType(ctx, expr, problems);
+  return problems;
+}
+function checkWellformedType(ctx, expr, problems) {
+  const report = (message, at = expr) => {
+    problems.push({ message, range: at.range });
+  };
+  switch (expr.type) {
+    case "Constant":
+      if (expr.constantType !== "name") {
+        report(`not a base type expression: ${termText(expr)}`);
+      }
+      return;
+    case "Variable":
+      if (!ctx.has(expr.symbol)) {
+        report(`unexpected type variable: ${expr.symbol}`);
+      }
+      return;
+    case "ApplyFn": {
+      const fnName = expr.function.symbol;
+      const arity = TYPE_CONSTRUCTOR_ARITY.get(fnName);
+      if (arity === void 0) {
+        report(fnName === "fn:opt" ? `'fn:opt' may only appear inside a struct type expression` : `'${fnName}' is not a valid type constructor (not a structured type expression)`);
+        return;
+      }
+      const args = expr.args;
+      if (fnName === "fn:Fun") {
+        checkFunTypeExpression(expr, problems);
+        return;
+      }
+      if (arity !== -1 && args.length !== arity) {
+        report(`expected ${arity} argument${arity === 1 ? "" : "s"} in type expression ${termText(expr)}, got ${args.length}`);
+        return;
+      }
+      if (fnName === "fn:Union" && args.length === 0) {
+        report(`union type must not be empty: ${termText(expr)}`);
+        return;
+      }
+      if (fnName === "fn:Tuple" && args.length <= 2) {
+        report(`tuple type must have more than 2 arguments (use fn:Pair for 2): ${termText(expr)}`);
+        return;
+      }
+      if (fnName === "fn:Singleton") {
+        checkWellformedType(ctx, args[0], problems);
+        return;
+      }
+      if (fnName === "fn:Struct") {
+        checkStructTypeExpression(ctx, expr, problems);
+        return;
+      }
+      if (fnName === "fn:TaggedUnion") {
+        checkTaggedUnionTypeExpression(ctx, expr, problems);
+        return;
+      }
+      for (const arg of args) {
+        checkWellformedType(ctx, arg, problems);
+      }
+      return;
+    }
+  }
+}
+function checkStructTypeExpression(ctx, expr, problems) {
+  const required = expr.args.filter((a) => !isOptField(a));
+  if (required.length % 2 !== 0) {
+    problems.push({
+      message: `struct type must have an even number of required arguments (field, type pairs): ${termText(expr)}`,
+      range: expr.range
+    });
+    return;
+  }
+  for (let i = 0; i < required.length; i += 2) {
+    const key = required[i];
+    if (!isNameConstant(key)) {
+      problems.push({
+        message: `in a struct type expression, field names must be name constants, got ${termText(key)}`,
+        range: key.range
+      });
+      continue;
+    }
+    checkWellformedType(ctx, required[i + 1], problems);
+  }
+  for (const opt of expr.args.filter(isOptField)) {
+    if (opt.args.length !== 2 || !isNameConstant(opt.args[0])) {
+      problems.push({
+        message: `optional struct field must be 'opt /field : Type', got ${termText(opt)}`,
+        range: opt.range
+      });
+      continue;
+    }
+    checkWellformedType(ctx, opt.args[1], problems);
+  }
+}
+function checkFunTypeExpression(expr, problems) {
+  if (expr.args.length === 0) {
+    problems.push({ message: `expected at least 1 argument in function type expression ${termText(expr)}`, range: expr.range });
+    return;
+  }
+  const codomain = expr.args[0];
+  const domain = expr.args.slice(1);
+  const domainVars = /* @__PURE__ */ new Set();
+  for (const d of domain) collectTypeVars(d, domainVars);
+  const codomainVars = /* @__PURE__ */ new Set();
+  collectTypeVars(codomain, codomainVars);
+  for (const v of codomainVars) {
+    if (!domainVars.has(v)) {
+      problems.push({ message: `type variable ${v} of the result is not in the argument types`, range: codomain.range });
+      return;
+    }
+  }
+  for (const d of domain) checkWellformedType(domainVars, d, problems);
+  checkWellformedType(domainVars, codomain, problems);
+}
+function checkTaggedUnionTypeExpression(ctx, expr, problems) {
+  const args = expr.args;
+  if (args.length < 3 || args.length % 2 !== 1) {
+    problems.push({
+      message: `tagged union type must have an odd number of arguments >= 3 (tag_field, tag1, type1, ...), got ${args.length}`,
+      range: expr.range
+    });
+    return;
+  }
+  const tagField = args[0];
+  if (!isNameConstant(tagField)) {
+    problems.push({ message: `tagged union tag field must be a name constant, got ${termText(tagField)}`, range: tagField.range });
+    return;
+  }
+  const seenTags = /* @__PURE__ */ new Set();
+  for (let i = 1; i < args.length; i += 2) {
+    const tag = args[i];
+    const variant = args[i + 1];
+    if (!isNameConstant(tag)) {
+      problems.push({ message: `tagged union variant tag must be a name constant, got ${termText(tag)}`, range: tag.range });
+      continue;
+    }
+    if (seenTags.has(tag.symbol)) {
+      problems.push({ message: `duplicate variant tag ${tag.symbol} in tagged union`, range: tag.range });
+      continue;
+    }
+    seenTags.add(tag.symbol);
+    if (variant.type !== "ApplyFn" || variant.function.symbol !== "fn:Struct") {
+      problems.push({
+        message: `tagged union variant type must be a struct type, got ${termText(variant)}`,
+        range: variant.range
+      });
+      continue;
+    }
+    const before = problems.length;
+    checkStructTypeExpression(ctx, variant, problems);
+    if (problems.length > before) continue;
+    for (const f of structFieldsFromArgs(variant.args)) {
+      if (f.name === tagField.symbol) {
+        problems.push({
+          message: `variant ${tag.symbol} must not contain tag field ${tagField.symbol}`,
+          range: variant.range
+        });
+      }
+    }
+  }
+}
+
+// ../mangle-lsp/src/builtins/predicates.ts
+var X = T.v("X");
+var Y = T.v("Y");
+var I = "input";
+var O = "output";
+var IO = "input_output";
+function pred(name, params, doc, extra = {}) {
+  const typed = params.every((p) => p[2] !== void 0);
+  return {
+    name,
+    arity: params.length,
+    mode: params.map((p) => p[1]),
+    doc,
+    paramNames: params.map((p) => p[0]),
+    argTypes: typed ? params.map((p) => p[2]) : void 0,
+    example: extra.example,
+    seeAlso: extra.seeAlso
+  };
+}
+function comparison(prefix, type, typeName, seeAlso) {
+  const rel = [
+    ["lt", "<", "Less-than"],
+    ["le", "<=", "Less-than-or-equal"],
+    ["gt", ">", "Greater-than"],
+    ["ge", ">=", "Greater-than-or-equal"]
+  ];
+  return rel.map(([suffix, op, label]) => pred(
+    `${prefix}${suffix}`,
+    [["A", I, type], ["B", I, type]],
+    `${label} relation on ${typeName}. Usage: ${prefix}${suffix}(A, B) means A ${op} B. Both arguments must be bound.`,
+    { example: `${prefix}${suffix}(A, B)`, seeAlso }
+  ));
+}
+var BUILTIN_PREDICATES = [
+  // String/Name matching predicates
+  pred(
+    ":match_prefix",
+    [["Name", I, T.name], ["Prefix", I, T.name]],
+    "Matches name constants that have a given name prefix. Usage: :match_prefix(Name, /prefix). The prefix must be a name constant; for strings use :string:starts_with.",
+    { example: ":match_prefix(Id, /users)", seeAlso: [":string:starts_with"] }
+  ),
+  pred(
+    ":string:starts_with",
+    [["String", I, T.string], ["Prefix", I, T.string]],
+    "Matches strings that start with a given prefix. The prefix must be a string constant.",
+    { example: ':string:starts_with(Path, "/tmp/")', seeAlso: [":match_prefix"] }
+  ),
+  pred(
+    ":string:ends_with",
+    [["String", I, T.string], ["Suffix", I, T.string]],
+    "Matches strings that end with a given suffix. The suffix must be a string constant.",
+    { example: ':string:ends_with(File, ".mg")' }
+  ),
+  pred(
+    ":string:contains",
+    [["String", I, T.string], ["Substring", I, T.string]],
+    "Matches strings that contain a given substring. The substring must be a string constant.",
+    { example: ':string:contains(Msg, "error")' }
+  ),
+  // Filter predicate
+  pred(
+    ":filter",
+    [["BoolExpr", I, T.bool]],
+    "Turns a boolean-valued function into a filter: succeeds if the expression evaluates to /true.",
+    { example: ':filter(fn:list:contains(Tags, "urgent"))', seeAlso: [":list:member"] }
+  ),
+  // Comparison predicates (the parser maps <, <=, >, >= on /number to these)
+  ...comparison(":", T.number, "/number (int64). The operators <, <=, >, >= desugar to these", [":float:lt", ":time:lt", ":duration:lt"]),
+  // List predicates
+  pred(
+    ":list:member",
+    [["Element", IO, X], ["List", I, T.list(X)]],
+    "List membership. If Element is unbound, binds it to every element of List; if bound, checks membership (mode ?, +).",
+    { example: "tag(T) :- item(Tags), :list:member(T, Tags).", seeAlso: ["fn:list:contains"] }
+  ),
+  // Distance predicate
+  pred(
+    ":within_distance",
+    [["X", I, T.number], ["Y", I, T.number], ["Z", I, T.number]],
+    "Relation on numbers X, Y, Z satisfying |X - Y| < Z.",
+    { example: ":within_distance(A, B, 10)" }
+  ),
+  // Pattern matching predicates
+  pred(
+    ":match_pair",
+    [["Pair", I, T.pair(X, Y)], ["First", O, X], ["Second", O, Y]],
+    "Destructures a pair into its elements. First and Second must be fresh variables.",
+    { example: ":match_pair(P, A, B)", seeAlso: ["fn:pair"] }
+  ),
+  pred(
+    ":match_cons",
+    [["List", I, T.list(X)], ["Head", O, X], ["Tail", O, T.list(X)]],
+    "Destructures a non-empty list into head and tail. Head and Tail must be fresh variables.",
+    { example: ":match_cons(L, H, Rest)", seeAlso: [":match_nil", "fn:list:cons"] }
+  ),
+  pred(
+    ":match_nil",
+    [["List", I, T.list(X)]],
+    "Matches the empty list.",
+    { example: ":match_nil(L)", seeAlso: [":match_cons"] }
+  ),
+  pred(
+    ":match_entry",
+    [["Map", I, T.map(T.any, T.any)], ["Key", I, T.any], ["Value", O, T.any]],
+    "Looks up Key in Map and binds Value. Fails (no error) if the key is absent.",
+    { example: ":match_entry(M, /a, V)", seeAlso: ["fn:map:get"] }
+  ),
+  pred(
+    ":match_field",
+    [["Struct", I, T.any], ["Field", I, T.name], ["Value", O, T.any]],
+    "Looks up a /field in a struct and binds Value. Fails (no error) if the field is absent. With a declared struct or tagged-union bound, the field must exist in the type.",
+    { example: ":match_field(S, /name, N)", seeAlso: ["fn:struct:get"] }
+  ),
+  // Time comparison predicates
+  ...comparison(":time:", T.time, "/time instants", [":lt", ":duration:lt"]),
+  // Duration comparison predicates
+  ...comparison(":duration:", T.duration, "/duration values", [":lt", ":time:lt"]),
+  // Float64 comparison predicates (upstream 8edad8d)
+  ...comparison(":float:", T.float64, "/float64 values (no coercion from /number; any comparison with NaN is false)", [":lt"]),
+  // Allen's interval algebra predicates (upstream symbols/symbols.go, builtin/temporal.go)
+  pred(
+    ":interval:before",
+    [["A", I, T.interval], ["B", I, T.interval]],
+    "Allen's interval relation: interval A ends before interval B starts. Usage: :interval:before(A, B)"
+  ),
+  pred(
+    ":interval:after",
+    [["A", I, T.interval], ["B", I, T.interval]],
+    "Allen's interval relation: interval A starts after interval B ends. Usage: :interval:after(A, B)"
+  ),
+  pred(
+    ":interval:meets",
+    [["A", I, T.interval], ["B", I, T.interval]],
+    "Allen's interval relation: interval A ends exactly when interval B starts. Usage: :interval:meets(A, B)"
+  ),
+  pred(
+    ":interval:overlaps",
+    [["A", I, T.interval], ["B", I, T.interval]],
+    "Allen's interval relation: interval A overlaps with interval B. Usage: :interval:overlaps(A, B)"
+  ),
+  pred(
+    ":interval:during",
+    [["A", I, T.interval], ["B", I, T.interval]],
+    "Allen's interval relation: interval A is contained within interval B. Usage: :interval:during(A, B)"
+  ),
+  pred(
+    ":interval:contains",
+    [["A", I, T.interval], ["B", I, T.interval]],
+    "Allen's interval relation: interval A contains interval B. Usage: :interval:contains(A, B)"
+  ),
+  pred(
+    ":interval:starts",
+    [["A", I, T.interval], ["B", I, T.interval]],
+    "Allen's interval relation: interval A starts at the same time as B. Usage: :interval:starts(A, B)"
+  ),
+  pred(
+    ":interval:finishes",
+    [["A", I, T.interval], ["B", I, T.interval]],
+    "Allen's interval relation: interval A finishes at the same time as B. Usage: :interval:finishes(A, B)"
+  ),
+  pred(
+    ":interval:equals",
+    [["A", I, T.interval], ["B", I, T.interval]],
+    "Allen's interval relation: interval A equals interval B. Usage: :interval:equals(A, B)"
+  )
+];
+var BUILTIN_PREDICATE_MAP = new Map(
+  BUILTIN_PREDICATES.map((p) => [p.name, p])
+);
+function isBuiltinPredicate(name) {
+  return BUILTIN_PREDICATE_MAP.has(name);
+}
+function getBuiltinPredicate(name) {
+  return BUILTIN_PREDICATE_MAP.get(name);
+}
+function getBuiltinPredicateNames() {
+  return BUILTIN_PREDICATES.map((p) => p.name);
+}
+function modeSymbol(mode) {
+  return mode === "input" ? "+" : mode === "output" ? "-" : "?";
+}
+function formatPredicateSignature(p) {
+  const names = p.paramNames ?? [];
+  const args = p.mode.map((m2, i) => {
+    const type = p.argTypes?.[i];
+    const name = names[i] ?? `Arg${i + 1}`;
+    return `${modeSymbol(m2)}${name}${type ? `: ${typeToString(type)}` : ""}`;
+  });
+  return `${p.name}(${args.join(", ")})`;
+}
+
+// ../mangle-lsp/src/builtins/functions.ts
+function fn(name, params, result, doc, opts = {}) {
+  const variadic = opts.variadic ?? opts.rest !== void 0;
+  return {
+    name,
+    arity: variadic ? -1 : params.length,
+    isReducer: opts.reducer ?? false,
+    doc,
+    paramNames: params.map((p) => p[0]),
+    signature: { params: params.map((p) => p[1]), rest: opts.rest, result },
+    example: opts.example,
+    seeAlso: opts.seeAlso,
+    unitArg: opts.unitArg
+  };
+}
+var TIME_FORMAT_UNITS = [
+  "/year",
+  "/month",
+  "/day",
+  "/hour",
+  "/minute",
+  "/second",
+  "/millisecond",
+  "/microsecond",
+  "/nanosecond"
+];
+var TIME_TRUNC_UNITS = [
+  "/day",
+  "/hour",
+  "/minute",
+  "/second",
+  "/millisecond",
+  "/microsecond",
+  "/nanosecond"
+];
+var TIME_CIVIL_UNITS = ["/year", "/month", "/week", "/day"];
+var X2 = T.v("X");
+var Y2 = T.v("Y");
+var BUILTIN_FUNCTIONS = [
+  // Integer arithmetic (upstream EvalNumericApplyFn: arguments must be /number)
+  fn(
+    "fn:plus",
+    [["X", T.number]],
+    T.number,
+    "Integer addition. Maps X, Y1, ... to (X + Y1) + Y2 + ... fn:plus(X) returns X. All arguments must be /number; use fn:float:plus for /float64.",
+    { rest: T.number, example: "Next = fn:plus(N, 1)", seeAlso: ["fn:float:plus", "fn:sum"] }
+  ),
+  fn(
+    "fn:minus",
+    [["X", T.number]],
+    T.number,
+    "Integer subtraction. Maps X, Y1, ... to (X - Y1) - Y2 - ... fn:minus(X) returns -X.",
+    { rest: T.number, example: "Diff = fn:minus(A, B)" }
+  ),
+  fn(
+    "fn:mult",
+    [["X", T.number]],
+    T.number,
+    "Integer multiplication. Maps X, Y1, ... to (X * Y1) * Y2 * ... fn:mult(X) returns X.",
+    { rest: T.number, example: "Area = fn:mult(W, H)", seeAlso: ["fn:float:mult"] }
+  ),
+  fn(
+    "fn:div",
+    [["X", T.number]],
+    T.number,
+    "Integer division (truncating). Maps X, Y1, ... to (X / Y1) / Y2 / ... fn:div(X) returns 1/X. Division by zero is a runtime error.",
+    { rest: T.number, example: "Half = fn:div(N, 2)", seeAlso: ["fn:mod", "fn:float:div"] }
+  ),
+  fn(
+    "fn:mod",
+    [["X", T.number], ["Y", T.number]],
+    T.number,
+    "Integer remainder of X divided by Y. The result has the sign of X (Go semantics). Modulo by zero is a runtime error.",
+    { example: "IsEven = fn:mod(N, 2)", seeAlso: ["fn:div"] }
+  ),
+  fn(
+    "fn:sqrt",
+    [["X", T.numeric]],
+    T.float64,
+    "Square root. Accepts /number or /float64 and returns /float64.",
+    { example: "Root = fn:sqrt(2.0)" }
+  ),
+  // Float arithmetic (runtime valueAsFloat accepts /number and /float64)
+  fn(
+    "fn:float:plus",
+    [["X", T.numeric]],
+    T.float64,
+    "Float addition. Maps X, Y1, ... to (X + Y1) + Y2 + ... Arguments may be /number or /float64; the result is /float64.",
+    { rest: T.numeric, example: "Total = fn:float:plus(Price, Tax)", seeAlso: ["fn:plus", "fn:float:sum"] }
+  ),
+  fn(
+    "fn:float:mult",
+    [["X", T.numeric]],
+    T.float64,
+    "Float multiplication. Maps X, Y1, ... to (X * Y1) * Y2 * ... Arguments may be /number or /float64.",
+    { rest: T.numeric, example: "Scaled = fn:float:mult(X, 1.5)" }
+  ),
+  fn(
+    "fn:float:div",
+    [["X", T.numeric]],
+    T.float64,
+    "Float division. Maps X, Y1, ... to (X / Y1) / Y2 / ... Arguments may be /number or /float64.",
+    { rest: T.numeric, example: "Ratio = fn:float:div(A, B)" }
+  ),
+  // Grouping function (special - used to start a do-transform)
+  {
+    name: "fn:group_by",
+    arity: -1,
+    isReducer: false,
+    doc: "Starts an aggregation: groups all tuples by the values of the key variables. fn:group_by() with no arguments treats the whole relation as one group. Must be the first statement of a do-transform and must be followed by let-statements using reducers.",
+    paramNames: ["Key"],
+    example: "count(G, N) :- member(G, _) |> do fn:group_by(G), let N = fn:count().",
+    seeAlso: ["fn:count", "fn:sum", "fn:collect"]
+  },
+  // List functions
+  fn(
+    "fn:list",
+    [],
+    T.list(X2),
+    "Constructs a list from the arguments. Usually written as a literal: [A, B, C].",
+    { rest: X2, example: "L = [1, 2, 3]" }
+  ),
+  fn(
+    "fn:list:append",
+    [["List", T.list(X2)], ["Element", X2]],
+    T.list(X2),
+    "Returns List with Element appended at the end.",
+    { example: "NewPath = fn:list:append(Path, Node)", seeAlso: ["fn:list:cons"] }
+  ),
+  fn(
+    "fn:list:get",
+    [["List", T.list(X2)], ["Index", T.number]],
+    X2,
+    "Returns the element at a 0-based index. Out-of-bounds is a runtime error (the rule produces no fact).",
+    { example: "First = fn:list:get(L, 0)", seeAlso: [":match_cons", ":list:member"] }
+  ),
+  fn(
+    "fn:list:contains",
+    [["List", T.list(X2)], ["Member", X2]],
+    T.bool,
+    "Returns /true if Member is in List, /false otherwise. To filter rows, prefer the predicate :list:member(Member, List).",
+    { example: ':filter(fn:list:contains(Tags, "urgent"))', seeAlso: [":list:member"] }
+  ),
+  fn(
+    "fn:list:len",
+    [["List", T.list(X2)]],
+    T.number,
+    "Returns the length of a list.",
+    { example: "N = fn:list:len(L)", seeAlso: ["fn:count"] }
+  ),
+  fn(
+    "fn:list:cons",
+    [["Head", X2], ["Tail", T.list(X2)]],
+    T.list(X2),
+    "Constructs a list from a head element and a tail list.",
+    { example: "L = fn:list:cons(H, T)", seeAlso: [":match_cons"] }
+  ),
+  // Pair and tuple functions
+  fn(
+    "fn:pair",
+    [["First", X2], ["Second", Y2]],
+    T.pair(X2, Y2),
+    "Constructs a pair. Destructure with :match_pair(P, First, Second).",
+    { example: "P = fn:pair(A, B)", seeAlso: [":match_pair"] }
+  ),
+  {
+    name: "fn:tuple",
+    arity: -1,
+    isReducer: false,
+    doc: "Acts as identity (one argument), fn:pair (two arguments) or nested pairs (more): fn:tuple(A, B, C) = fn:pair(A, fn:pair(B, C)).",
+    paramNames: ["X"],
+    example: "Triple = fn:tuple(A, B, C)"
+  },
+  fn(
+    "fn:some",
+    [["Value", X2]],
+    T.option(X2),
+    "Constructs an element of an option type fn:Option(T).",
+    { example: "O = fn:some(X)" }
+  ),
+  // Map and struct functions
+  {
+    name: "fn:map",
+    arity: -1,
+    isReducer: false,
+    doc: "Constructs a map from alternating key and value arguments. Usually written as a literal: [K1: V1, K2: V2].",
+    paramNames: ["Key", "Value"],
+    example: "M = [/a: 1, /b: 2]",
+    seeAlso: ["fn:map:get", ":match_entry"]
+  },
+  fn(
+    "fn:map:get",
+    [["Map", T.map(X2, Y2)], ["Key", X2]],
+    Y2,
+    "Returns the value stored under Key. A missing key is a runtime error; use :match_entry(Map, Key, V) to test membership instead.",
+    { example: "V = fn:map:get(M, /a)", seeAlso: [":match_entry"] }
+  ),
+  {
+    name: "fn:struct",
+    arity: -1,
+    isReducer: false,
+    doc: "Constructs a struct from alternating /field and value arguments. Usually written as a literal: {/field: V, ...}.",
+    paramNames: ["Field", "Value"],
+    example: 'S = {/name: "Ada", /age: 36}',
+    seeAlso: ["fn:struct:get", ":match_field"]
+  },
+  fn(
+    "fn:struct:get",
+    [["Struct", T.any], ["Field", T.name]],
+    T.any,
+    "Returns the value of a field. A missing field is a runtime error; :match_field(S, /field, V) is the pattern-matching alternative.",
+    { example: "Name = fn:struct:get(S, /name)", seeAlso: [":match_field"] }
+  ),
+  // String functions
+  fn(
+    "fn:string:concat",
+    [],
+    T.string,
+    "Concatenates the arguments into a single string. Non-string arguments are converted to their string form.",
+    { rest: T.any, example: 'Label = fn:string:concat("user-", Id)' }
+  ),
+  fn(
+    "fn:string:replace",
+    [["Str", T.string], ["Old", T.string], ["New", T.string], ["N", T.number]],
+    T.string,
+    "Replaces the first N occurrences of Old with New (N < 0 replaces all).",
+    { example: 'Clean = fn:string:replace(S, " ", "_", -1)' }
+  ),
+  // Conversion functions
+  fn(
+    "fn:number:to_string",
+    [["N", T.number]],
+    T.string,
+    "Converts a /number to a string.",
+    { example: "S = fn:number:to_string(42)" }
+  ),
+  fn(
+    "fn:float64:to_string",
+    [["F", T.float64]],
+    T.string,
+    "Converts a /float64 to a string.",
+    { example: "S = fn:float64:to_string(3.14)" }
+  ),
+  fn(
+    "fn:name:to_string",
+    [["Name", T.name]],
+    T.string,
+    'Converts a name constant to a string, e.g. /a/b becomes "/a/b".',
+    { example: "S = fn:name:to_string(/a/b)" }
+  ),
+  fn(
+    "fn:name:root",
+    [["Name", T.name]],
+    T.name,
+    "Returns the first name part: fn:name:root(/a/b/c) = /a.",
+    { example: "Root = fn:name:root(N)" }
+  ),
+  fn(
+    "fn:name:tip",
+    [["Name", T.name]],
+    T.name,
+    "Returns the last name part: fn:name:tip(/a/b/c) = /c.",
+    { example: "Tip = fn:name:tip(N)" }
+  ),
+  fn(
+    "fn:name:list",
+    [["Name", T.name]],
+    T.list(T.name),
+    "Turns a name into the list of its parts: fn:name:list(/a/b) = [/a, /b].",
+    { example: "Parts = fn:name:list(N)" }
+  ),
+  // Time functions
+  fn(
+    "fn:time:now",
+    [],
+    T.time,
+    "Returns the current time as a /time instant. Non-deterministic: results change between evaluations.",
+    { example: "Now = fn:time:now()" }
+  ),
+  fn(
+    "fn:time:add",
+    [["Time", T.time], ["Duration", T.duration]],
+    T.time,
+    "Adds a /duration to a /time instant (absolute time, not calendar-aware).",
+    { example: "Later = fn:time:add(T, fn:duration:from_hours(1))", seeAlso: ["fn:time:add_civil"] }
+  ),
+  fn(
+    "fn:time:add_civil",
+    [["Time", T.time], ["TimeZone", T.string], ["N", T.number], ["Unit", T.name]],
+    T.time,
+    "Adds N calendar units (/year, /month, /week, /day) to a time in the given IANA timezone. N may be negative. The civil time of day is preserved across DST, so a day may be 23 or 25 hours; results are normalized (Jan 31 + 1 month = Mar 2 or 3).",
+    { example: 'NextMonth = fn:time:add_civil(T, "Europe/Berlin", 1, /month)', seeAlso: ["fn:time:add", "fn:time:trunc_civil"], unitArg: { index: 3, units: [...TIME_CIVIL_UNITS] } }
+  ),
+  fn(
+    "fn:time:sub",
+    [["Time1", T.time], ["Time2", T.time]],
+    T.duration,
+    "Subtracts two time instants and returns the /duration Time1 - Time2.",
+    { example: "Elapsed = fn:time:sub(End, Start)" }
+  ),
+  fn(
+    "fn:time:format",
+    [["Time", T.time], ["Unit", T.name]],
+    T.string,
+    "Formats a time as an RFC 3339 string in UTC, truncated to the layout of Unit (/year, /month, /day, /hour, /minute, /second, /millisecond, /microsecond, /nanosecond).",
+    { example: "Day = fn:time:format(T, /day)", seeAlso: ["fn:time:format_civil"], unitArg: { index: 1, units: [...TIME_FORMAT_UNITS] } }
+  ),
+  fn(
+    "fn:time:format_civil",
+    [["Time", T.time], ["TimeZone", T.string], ["Unit", T.name]],
+    T.string,
+    'Formats a time in the given IANA timezone (e.g. "America/Los_Angeles") using the layout of Unit.',
+    { example: 'Local = fn:time:format_civil(T, "Asia/Tokyo", /minute)', seeAlso: ["fn:time:format"], unitArg: { index: 2, units: [...TIME_FORMAT_UNITS] } }
+  ),
+  fn(
+    "fn:time:parse_rfc3339",
+    [["String", T.string]],
+    T.time,
+    'Parses an RFC 3339 timestamp such as "2024-01-15T10:30:00Z" into a /time instant.',
+    { example: 'T = fn:time:parse_rfc3339("2024-01-15T10:30:00Z")' }
+  ),
+  fn(
+    "fn:time:parse_civil",
+    [["String", T.string], ["TimeZone", T.string]],
+    T.time,
+    'Parses a civil datetime without offset (e.g. "2024-01-15T10:30:00") interpreted in the given IANA timezone.',
+    { example: 'T = fn:time:parse_civil("2024-01-15T10:30:00", "America/Los_Angeles")' }
+  ),
+  fn("fn:time:year", [["Time", T.time]], T.number, "Returns the year of a time instant (UTC).", { example: "Y = fn:time:year(T)" }),
+  fn("fn:time:month", [["Time", T.time]], T.number, "Returns the month (1-12) of a time instant (UTC).", { example: "M = fn:time:month(T)" }),
+  fn("fn:time:day", [["Time", T.time]], T.number, "Returns the day of the month (1-31) of a time instant (UTC).", { example: "D = fn:time:day(T)" }),
+  fn("fn:time:hour", [["Time", T.time]], T.number, "Returns the hour (0-23) of a time instant (UTC).", { example: "H = fn:time:hour(T)" }),
+  fn("fn:time:minute", [["Time", T.time]], T.number, "Returns the minute (0-59) of a time instant (UTC).", { example: "M = fn:time:minute(T)" }),
+  fn("fn:time:second", [["Time", T.time]], T.number, "Returns the second (0-59) of a time instant (UTC).", { example: "S = fn:time:second(T)" }),
+  fn(
+    "fn:time:weekday_civil",
+    [["Time", T.time], ["TimeZone", T.string]],
+    T.number,
+    "Returns the ISO day of the week in the given IANA timezone: Monday = 1 ... Sunday = 7.",
+    { example: 'Dow = fn:time:weekday_civil(T, "UTC"), Dow <= 5', seeAlso: ["fn:time:trunc_civil"] }
+  ),
+  fn(
+    "fn:time:from_unix_nanos",
+    [["Nanos", T.number]],
+    T.time,
+    "Creates a time instant from nanoseconds since the Unix epoch.",
+    { example: "T = fn:time:from_unix_nanos(0)" }
+  ),
+  fn(
+    "fn:time:to_unix_nanos",
+    [["Time", T.time]],
+    T.number,
+    "Returns the nanoseconds since the Unix epoch of a time instant.",
+    { example: "Ns = fn:time:to_unix_nanos(T)" }
+  ),
+  fn(
+    "fn:time:trunc",
+    [["Time", T.time], ["Unit", T.name]],
+    T.time,
+    "Truncates a time to a fixed-duration unit in UTC: /day, /hour, /minute, /second, /millisecond, /microsecond, /nanosecond. For calendar units (/week, /month, /year) or timezone-aware days use fn:time:trunc_civil.",
+    { example: "Hour = fn:time:trunc(T, /hour)", seeAlso: ["fn:time:trunc_civil"], unitArg: { index: 1, units: [...TIME_TRUNC_UNITS] } }
+  ),
+  fn(
+    "fn:time:trunc_civil",
+    [["Time", T.time], ["TimeZone", T.string], ["Unit", T.name]],
+    T.time,
+    "Truncates a time to the start of a calendar unit (/year, /month, /week, /day) in the given IANA timezone. Correct across DST; /week yields Monday 00:00 local time (ISO week).",
+    { example: 'WeekStart = fn:time:trunc_civil(T, "Europe/Paris", /week)', seeAlso: ["fn:time:trunc", "fn:time:add_civil"], unitArg: { index: 2, units: [...TIME_CIVIL_UNITS] } }
+  ),
+  // Duration functions
+  fn(
+    "fn:duration:add",
+    [["D1", T.duration], ["D2", T.duration]],
+    T.duration,
+    "Adds two durations.",
+    { example: "Total = fn:duration:add(A, B)", seeAlso: ["fn:duration:sum"] }
+  ),
+  fn(
+    "fn:duration:mult",
+    [["Duration", T.duration], ["Factor", T.number]],
+    T.duration,
+    "Multiplies a duration by an integer factor.",
+    { example: "Twice = fn:duration:mult(D, 2)" }
+  ),
+  fn(
+    "fn:duration:hours",
+    [["Duration", T.duration]],
+    T.float64,
+    "Returns the duration as floating-point hours.",
+    { example: "H = fn:duration:hours(D)" }
+  ),
+  fn(
+    "fn:duration:minutes",
+    [["Duration", T.duration]],
+    T.float64,
+    "Returns the duration as floating-point minutes.",
+    { example: "M = fn:duration:minutes(D)" }
+  ),
+  fn(
+    "fn:duration:seconds",
+    [["Duration", T.duration]],
+    T.float64,
+    "Returns the duration as floating-point seconds.",
+    { example: "S = fn:duration:seconds(D)" }
+  ),
+  fn(
+    "fn:duration:nanos",
+    [["Duration", T.duration]],
+    T.number,
+    "Returns the duration as integer nanoseconds.",
+    { example: "Ns = fn:duration:nanos(D)" }
+  ),
+  fn(
+    "fn:duration:from_nanos",
+    [["Nanos", T.number]],
+    T.duration,
+    "Creates a duration from integer nanoseconds.",
+    { example: "D = fn:duration:from_nanos(1000)" }
+  ),
+  fn(
+    "fn:duration:from_hours",
+    [["Hours", T.numeric]],
+    T.duration,
+    "Creates a duration from hours (/number or /float64).",
+    { example: "D = fn:duration:from_hours(1.5)" }
+  ),
+  fn(
+    "fn:duration:from_minutes",
+    [["Minutes", T.numeric]],
+    T.duration,
+    "Creates a duration from minutes (/number or /float64).",
+    { example: "D = fn:duration:from_minutes(30)" }
+  ),
+  fn(
+    "fn:duration:from_seconds",
+    [["Seconds", T.numeric]],
+    T.duration,
+    "Creates a duration from seconds (/number or /float64).",
+    { example: "D = fn:duration:from_seconds(90)" }
+  ),
+  fn(
+    "fn:duration:parse",
+    [["String", T.string]],
+    T.duration,
+    'Parses a Go-style duration string such as "1h30m", "500ms" or "-2h45m30s". Units: h, m, s, ms, us/\xB5s, ns.',
+    { example: 'D = fn:duration:parse("1h30m")' }
+  ),
+  // Interval functions (intervals are pairs of time instants)
+  fn(
+    "fn:interval:start",
+    [["Interval", T.interval]],
+    T.time,
+    "Returns the start time of an interval.",
+    { example: "S = fn:interval:start(I)" }
+  ),
+  fn(
+    "fn:interval:end",
+    [["Interval", T.interval]],
+    T.time,
+    "Returns the end time of an interval.",
+    { example: "E = fn:interval:end(I)" }
+  ),
+  fn(
+    "fn:interval:duration",
+    [["Interval", T.interval]],
+    T.duration,
+    "Returns the duration of an interval (end - start). Unbounded intervals are a runtime error.",
+    { example: "D = fn:interval:duration(I)" }
+  )
+];
+var REDUCER_FUNCTIONS = [
+  fn(
+    "fn:collect",
+    [["X", X2]],
+    T.list(X2),
+    "Collects the values (or tuples, for several arguments) of the group into a list [x_1, ..., x_n].",
+    { rest: T.any, reducer: true, example: "|> do fn:group_by(K), let Vs = fn:collect(V)", seeAlso: ["fn:collect_distinct", "fn:count"] }
+  ),
+  fn(
+    "fn:collect_distinct",
+    [["X", X2]],
+    T.list(X2),
+    "Collects the values of the group into a list without duplicates.",
+    { rest: T.any, reducer: true, example: "|> do fn:group_by(K), let Vs = fn:collect_distinct(V)", seeAlso: ["fn:count_distinct"] }
+  ),
+  fn(
+    "fn:collect_to_map",
+    [["Key", X2], ["Value", Y2]],
+    T.map(X2, Y2),
+    "Collects key-value pairs of the group into a map. If a key occurs several times an arbitrary value is kept.",
+    { reducer: true, example: "|> do fn:group_by(P), let M = fn:collect_to_map(Lang, /true)" }
+  ),
+  fn(
+    "fn:pick_any",
+    [["X", X2]],
+    X2,
+    "Picks an arbitrary single value from the group.",
+    { reducer: true, example: "|> do fn:group_by(K), let Any = fn:pick_any(V)" }
+  ),
+  fn(
+    "fn:max",
+    [["X", T.number]],
+    T.number,
+    "Maximum of the /number values in the group. Empty groups yield math.MinInt64.",
+    { reducer: true, example: "|> do fn:group_by(K), let M = fn:max(V)", seeAlso: ["fn:float:max", "fn:duration:max", "fn:time:max"] }
+  ),
+  fn(
+    "fn:min",
+    [["X", T.number]],
+    T.number,
+    "Minimum of the /number values in the group. Empty groups yield math.MaxInt64.",
+    { reducer: true, example: "|> do fn:group_by(K), let M = fn:min(V)", seeAlso: ["fn:float:min", "fn:duration:min", "fn:time:min"] }
+  ),
+  fn(
+    "fn:sum",
+    [["X", T.number]],
+    T.number,
+    "Sum of the /number values in the group.",
+    { reducer: true, example: "|> do fn:group_by(K), let S = fn:sum(V)", seeAlso: ["fn:float:sum", "fn:duration:sum"] }
+  ),
+  fn(
+    "fn:float:max",
+    [["X", T.float64]],
+    T.float64,
+    "Maximum of the /float64 values in the group. NaN propagates.",
+    { reducer: true, example: "|> do fn:group_by(K), let M = fn:float:max(V)" }
+  ),
+  fn(
+    "fn:float:min",
+    [["X", T.float64]],
+    T.float64,
+    "Minimum of the /float64 values in the group. NaN propagates.",
+    { reducer: true, example: "|> do fn:group_by(K), let M = fn:float:min(V)" }
+  ),
+  fn(
+    "fn:float:sum",
+    [["X", T.numeric]],
+    T.float64,
+    "Sum of the /number or /float64 values in the group, as /float64.",
+    { reducer: true, example: "|> do fn:group_by(K), let S = fn:float:sum(V)" }
+  ),
+  fn(
+    "fn:duration:max",
+    [["D", T.duration]],
+    T.duration,
+    "Longest /duration in the group.",
+    { reducer: true, example: "|> do fn:group_by(Job), let Worst = fn:duration:max(D)" }
+  ),
+  fn(
+    "fn:duration:min",
+    [["D", T.duration]],
+    T.duration,
+    "Shortest /duration in the group.",
+    { reducer: true, example: "|> do fn:group_by(Job), let Best = fn:duration:min(D)" }
+  ),
+  fn(
+    "fn:duration:sum",
+    [["D", T.duration]],
+    T.duration,
+    "Sum of all /duration values in the group.",
+    { reducer: true, example: "|> do fn:group_by(User), let Total = fn:duration:sum(D)" }
+  ),
+  fn(
+    "fn:time:max",
+    [["T", T.time]],
+    T.time,
+    "Latest /time instant in the group.",
+    { reducer: true, example: "|> do fn:group_by(User), let LastSeen = fn:time:max(T)" }
+  ),
+  fn(
+    "fn:time:min",
+    [["T", T.time]],
+    T.time,
+    "Earliest /time instant in the group.",
+    { reducer: true, example: "|> do fn:group_by(User), let FirstSeen = fn:time:min(T)" }
+  ),
+  fn(
+    "fn:count",
+    [],
+    T.number,
+    "Number of rows in the group.",
+    { reducer: true, example: "|> do fn:group_by(K), let N = fn:count()", seeAlso: ["fn:count_distinct"] }
+  ),
+  fn(
+    "fn:count_distinct",
+    [],
+    T.number,
+    "Number of distinct rows in the group.",
+    { reducer: true, example: "|> do fn:group_by(K), let N = fn:count_distinct()" }
+  ),
+  fn(
+    "fn:avg",
+    [["X", T.float64]],
+    T.float64,
+    "Average of the /float64 values in the group. /number values are rejected at runtime; convert them or use fn:float:sum / fn:count.",
+    { reducer: true, example: "|> do fn:group_by(K), let A = fn:avg(V)" }
+  )
+];
+var TYPE_CONSTRUCTOR_FUNCTIONS = [
+  {
+    name: "fn:Fun",
+    arity: -1,
+    isReducer: false,
+    doc: "Type constructor for function types. fn:Fun(Res, Arg1, ..., ArgN) represents Res <= Arg1, ..., ArgN. Type variables of Res must occur in the arguments."
+  },
+  {
+    name: "fn:Rel",
+    arity: -1,
+    isReducer: false,
+    doc: "Type constructor for relation types."
+  },
+  {
+    name: "fn:Singleton",
+    arity: 1,
+    isReducer: false,
+    doc: "Type constructor for singleton types. .Singleton</true> contains exactly /true.",
+    example: "bound [.Union<.Singleton</on>, .Singleton</off>>]"
+  },
+  {
+    name: "fn:Pair",
+    arity: 2,
+    isReducer: false,
+    doc: "Type constructor for pair types. fn:Pair(T1, T2) is the type of fn:pair(x, y) where x:T1, y:T2.",
+    example: "bound [.Pair</string, /number>]"
+  },
+  {
+    name: "fn:Tuple",
+    arity: -1,
+    isReducer: false,
+    doc: "Type constructor for tuple types (more than 2 elements; use fn:Pair for 2). Expands to nested pairs."
+  },
+  {
+    name: "fn:Option",
+    arity: 1,
+    isReducer: false,
+    doc: "Type constructor for option types. A value of fn:Option(T) is either fn:some(c) for c:T, or fn:none()."
+  },
+  {
+    name: "fn:List",
+    arity: 1,
+    isReducer: false,
+    doc: "Type constructor for list types. fn:List(T) is the type of lists with elements of type T.",
+    example: "bound [.List</string>]"
+  },
+  {
+    name: "fn:Map",
+    arity: 2,
+    isReducer: false,
+    doc: "Type constructor for map types. fn:Map(K, V) is the type of maps with keys K and values V.",
+    example: "bound [.Map</name, /number>]"
+  },
+  {
+    name: "fn:Struct",
+    arity: -1,
+    isReducer: false,
+    doc: "Type constructor for struct types. .Struct</field1 : Type1, opt /field2 : Type2> defines a struct type; `opt` marks optional fields.",
+    example: "bound [.Struct</name : /string, opt /email : /string>]"
+  },
+  {
+    name: "fn:Union",
+    arity: -1,
+    isReducer: false,
+    doc: "Type constructor for union types. fn:Union(T1, T2, ...) is the union of types T1, T2, ... (must not be empty).",
+    example: "bound [.Union</number, /string>]"
+  },
+  {
+    name: "fn:TaggedUnion",
+    arity: -1,
+    isReducer: false,
+    doc: "Type constructor for internally-tagged discriminated unions: .TaggedUnion</tag_field, /variant1 : .Struct<...>, /variant2 : .Struct<...>>. A value is a struct whose tag field holds a variant tag plus that variant's fields. Variant structs must not contain the tag field; tags must be distinct.",
+    example: "bound [.TaggedUnion</kind, /move : .Struct</x : /number>, /quit : .Struct<>>]"
+  },
+  {
+    name: "fn:opt",
+    arity: -1,
+    isReducer: false,
+    doc: "Marks a field as optional inside a struct type expression: .Struct</a : /number, opt /b : /string>. Not a type by itself."
+  }
+];
+var ALL_BUILTIN_FUNCTIONS = [
+  ...BUILTIN_FUNCTIONS,
+  ...REDUCER_FUNCTIONS,
+  ...TYPE_CONSTRUCTOR_FUNCTIONS
+];
+var BUILTIN_FUNCTION_MAP = new Map(
+  ALL_BUILTIN_FUNCTIONS.map((f) => [f.name, f])
+);
+function isBuiltinFunction(name) {
+  return BUILTIN_FUNCTION_MAP.has(name);
+}
+function isTypeConstructor(name) {
+  return TYPE_CONSTRUCTOR_FUNCTIONS.some((f) => f.name === name);
+}
+function isReducerFunction(name) {
+  const fn2 = BUILTIN_FUNCTION_MAP.get(name);
+  return fn2 !== void 0 && fn2.isReducer;
+}
+function getBuiltinFunction(name) {
+  return BUILTIN_FUNCTION_MAP.get(name);
+}
+function getBuiltinFunctionNames() {
+  return ALL_BUILTIN_FUNCTIONS.map((f) => f.name);
+}
+function formatFunctionSignature(f) {
+  const sig = f.signature;
+  if (!sig) {
+    return f.arity === -1 ? `${f.name}(...)` : `${f.name}(${(f.paramNames ?? []).join(", ")})`;
+  }
+  const names = f.paramNames ?? [];
+  const params = sig.params.map((p, i) => `${names[i] ?? `Arg${i + 1}`}: ${typeToString(p)}`);
+  if (sig.rest) {
+    params.push(`...${typeToString(sig.rest)}`);
+  }
+  return `${f.name}(${params.join(", ")}) -> ${typeToString(sig.result)}`;
+}
+function getParamType(f, index) {
+  const sig = f.signature;
+  if (!sig) return void 0;
+  if (index < sig.params.length) return sig.params[index];
+  return sig.rest;
+}
+
+// ../mangle-lsp/src/utils/position.ts
 function isWithinSourceRange(line, column, range) {
   if (line < range.start.line || line > range.end.line) {
     return false;
@@ -35827,7 +39486,7 @@ function isWithinSourceRange(line, column, range) {
   return true;
 }
 
-// src/analysis/symbols.ts
+// ../mangle-lsp/src/analysis/symbols.ts
 function calculatePredicateNameRange(atom) {
   const nameLength = atom.predicate.symbol.length;
   return {
@@ -36157,407 +39816,1850 @@ function buildSymbolTable(unit) {
   return SymbolTable.build(unit);
 }
 
-// src/builtins/predicates.ts
-var BUILTIN_PREDICATES = [
-  // String/Name matching predicates
-  {
-    name: ":match_prefix",
-    arity: 2,
-    mode: ["input", "input"],
-    doc: "Matches name constants that have a given prefix. Usage: :match_prefix(Name, Prefix)"
-  },
-  {
-    name: ":string:starts_with",
-    arity: 2,
-    mode: ["input", "input"],
-    doc: "Matches string constants that have a given prefix. Usage: :string:starts_with(String, Prefix)"
-  },
-  {
-    name: ":string:ends_with",
-    arity: 2,
-    mode: ["input", "input"],
-    doc: "Matches string constants that have a given suffix. Usage: :string:ends_with(String, Suffix)"
-  },
-  {
-    name: ":string:contains",
-    arity: 2,
-    mode: ["input", "input"],
-    doc: "Matches string constants that contain the given substring. Usage: :string:contains(String, Substring)"
-  },
-  // Filter predicate
-  {
-    name: ":filter",
-    arity: 1,
-    mode: ["input"],
-    doc: "Turns a boolean function into a predicate. Usage: :filter(BoolExpr)"
-  },
-  // Comparison predicates
-  {
-    name: ":lt",
-    arity: 2,
-    mode: ["input", "input"],
-    doc: "Less-than relation on numbers. Usage: :lt(X, Y) means X < Y"
-  },
-  {
-    name: ":le",
-    arity: 2,
-    mode: ["input", "input"],
-    doc: "Less-than-or-equal relation on numbers. Usage: :le(X, Y) means X <= Y"
-  },
-  {
-    name: ":gt",
-    arity: 2,
-    mode: ["input", "input"],
-    doc: "Greater-than relation on numbers. Usage: :gt(X, Y) means X > Y"
-  },
-  {
-    name: ":ge",
-    arity: 2,
-    mode: ["input", "input"],
-    doc: "Greater-than-or-equal relation on numbers. Usage: :ge(X, Y) means X >= Y"
-  },
-  // List predicates
-  {
-    name: ":list:member",
-    arity: 2,
-    mode: ["output", "input"],
-    doc: "Checks list membership or binds variable to every element. Usage: :list:member(Element, List)"
-  },
-  // Distance predicate
-  {
-    name: ":within_distance",
-    arity: 3,
-    mode: ["input", "input", "input"],
-    doc: "Relation on numbers X, Y, Z satisfying |X - Y| < Z. Usage: :within_distance(X, Y, Z)"
-  },
-  // Pattern matching predicates
-  {
-    name: ":match_pair",
-    arity: 3,
-    mode: ["input", "output", "output"],
-    doc: "Matches a pair to its elements. Usage: :match_pair(Pair, First, Second)"
-  },
-  {
-    name: ":match_cons",
-    arity: 3,
-    mode: ["input", "output", "output"],
-    doc: "Matches a list to head and tail. Usage: :match_cons(List, Head, Tail)"
-  },
-  {
-    name: ":match_nil",
-    arity: 1,
-    mode: ["input"],
-    doc: "Matches the empty list. Usage: :match_nil(List)"
-  },
-  {
-    name: ":match_entry",
-    arity: 3,
-    mode: ["input", "input", "output"],
-    doc: "Matches an entry in a map. Usage: :match_entry(Map, Key, Value)"
-  },
-  {
-    name: ":match_field",
-    arity: 3,
-    mode: ["input", "input", "output"],
-    doc: "Matches a field in a struct. Usage: :match_field(Struct, FieldName, Value)"
+// ../mangle-lsp/src/analysis/unionfind.ts
+function termKey(t) {
+  switch (t.type) {
+    case "Variable":
+      return `var:${t.symbol}`;
+    case "Constant": {
+      const c = t;
+      if (c.constantType === "number") return `num:${c.numValue}`;
+      if (c.constantType === "float64") return `float:${c.floatValue}`;
+      if (c.constantType === "string") return `str:${c.symbol}`;
+      if (c.constantType === "bytes") return `bytes:${c.symbol}`;
+      return `name:${c.symbol}`;
+    }
+    case "ApplyFn":
+      return `fn:${JSON.stringify(t)}`;
+    default:
+      return `unknown:${JSON.stringify(t)}`;
   }
-];
-var BUILTIN_PREDICATE_MAP = new Map(
-  BUILTIN_PREDICATES.map((p) => [p.name, p])
-);
-function isBuiltinPredicate(name) {
-  return BUILTIN_PREDICATE_MAP.has(name);
 }
-function getBuiltinPredicate(name) {
-  return BUILTIN_PREDICATE_MAP.get(name);
+function termsEqual(a, b) {
+  if (a.type !== b.type) return false;
+  if (a.type === "Variable" && b.type === "Variable") {
+    return a.symbol === b.symbol;
+  }
+  if (a.type === "Constant" && b.type === "Constant") {
+    const ac = a;
+    const bc = b;
+    if (ac.constantType !== bc.constantType) return false;
+    if (ac.constantType === "number") return ac.numValue === bc.numValue;
+    if (ac.constantType === "float64") return ac.floatValue === bc.floatValue;
+    return ac.symbol === bc.symbol;
+  }
+  return termKey(a) === termKey(b);
+}
+var UnionFind = class _UnionFind {
+  constructor() {
+    this.parent = /* @__PURE__ */ new Map();
+    this.terms = /* @__PURE__ */ new Map();
+  }
+  // key -> original term
+  /**
+   * Create a new empty UnionFind.
+   */
+  static create() {
+    return new _UnionFind();
+  }
+  /**
+   * Create a copy of this UnionFind.
+   */
+  copy() {
+    const uf = new _UnionFind();
+    for (const [k, v] of this.parent) {
+      uf.parent.set(k, v);
+    }
+    for (const [k, v] of this.terms) {
+      uf.terms.set(k, v);
+    }
+    return uf;
+  }
+  /**
+   * Find the representative element from the set of s.
+   * Uses path compression (grandparent-pointer halving).
+   *
+   * Upstream Go equivalent: unionfind.UnionFind.find()
+   */
+  find(s) {
+    const sKey = termKey(s);
+    let child = s;
+    let childKey = sKey;
+    const parentTerm = this.parent.get(childKey);
+    if (parentTerm === void 0) {
+      return null;
+    }
+    let parent = parentTerm;
+    let parentKey = termKey(parent);
+    while (childKey !== parentKey) {
+      const grandparent = this.parent.get(parentKey);
+      if (grandparent === void 0) break;
+      this.parent.set(childKey, grandparent);
+      child = grandparent;
+      childKey = termKey(child);
+      parent = this.parent.get(childKey);
+      parentKey = termKey(parent);
+    }
+    return parent;
+  }
+  /**
+   * Adds an edge, making one root point to the other.
+   * Constants are preferred as roots (biased union).
+   *
+   * Upstream Go equivalent: unionfind.UnionFind.union()
+   */
+  union(s, t) {
+    const sroot = this.find(s);
+    const troot = this.find(t);
+    if (!sroot || !troot) return;
+    if (sroot.type === "Constant") {
+      this.parent.set(termKey(troot), sroot);
+    } else {
+      this.parent.set(termKey(sroot), troot);
+    }
+  }
+  /**
+   * Returns true if variable v can be unified with term t.
+   * Updates the union-find sets.
+   *
+   * Upstream Go equivalent: unionfind.UnionFind.unify()
+   */
+  unify(v, t) {
+    let vroot = this.find(v);
+    if (vroot === null) {
+      vroot = v;
+    }
+    let troot = this.find(t);
+    if (troot === null) {
+      troot = t;
+    }
+    if (termsEqual(vroot, troot)) {
+      return true;
+    }
+    const vconst = vroot.type === "Constant";
+    const tconst = troot.type === "Constant";
+    if (vconst && tconst) {
+      return false;
+    }
+    const vKey = termKey(v);
+    const tKey = termKey(t);
+    this.parent.set(vKey, vroot);
+    this.terms.set(vKey, v);
+    this.parent.set(tKey, troot);
+    this.terms.set(tKey, t);
+    this.union(vroot, troot);
+    return true;
+  }
+  /**
+   * Get the representative for a variable.
+   * Returns the variable itself if not in the union-find.
+   *
+   * Upstream Go equivalent: unionfind.UnionFind.Get()
+   */
+  get(v) {
+    const res = this.find(v);
+    if (res !== null) {
+      return res;
+    }
+    return v;
+  }
+  /**
+   * Check if a variable is bound (has a representative that is either
+   * a constant or a bound variable).
+   */
+  isBound(v, boundVars) {
+    const rep = this.get(v);
+    if (rep.type === "Constant") {
+      return true;
+    }
+    if (rep.type === "Variable") {
+      const repVar = rep;
+      if (repVar.symbol !== v.symbol && boundVars.has(repVar.symbol)) {
+        return true;
+      }
+    }
+    return false;
+  }
+};
+
+// ../mangle-lsp/src/analysis/rewrite.ts
+function collectIntervalVars(interval, vars) {
+  if (!interval) return;
+  if (interval.start.variable && interval.start.variable.symbol !== "_") vars.add(interval.start.variable.symbol);
+  if (interval.end.variable && interval.end.variable.symbol !== "_") vars.add(interval.end.variable.symbol);
+}
+function collectVars(term, vars) {
+  switch (term.type) {
+    case "Variable": {
+      const v = term;
+      if (v.symbol !== "_") {
+        vars.add(v.symbol);
+      }
+      break;
+    }
+    case "Atom": {
+      const atom = term;
+      for (const arg of atom.args) {
+        collectVars(arg, vars);
+      }
+      break;
+    }
+    case "NegAtom": {
+      const negAtom = term;
+      collectVars(negAtom.atom, vars);
+      break;
+    }
+    case "Eq":
+    case "Ineq": {
+      const eq = term;
+      collectVars(eq.left, vars);
+      collectVars(eq.right, vars);
+      break;
+    }
+    case "ApplyFn": {
+      const applyFn = term;
+      for (const arg of applyFn.args) {
+        collectVars(arg, vars);
+      }
+      break;
+    }
+    case "TemporalLiteral": {
+      const t = term;
+      collectVars(t.literal, vars);
+      collectIntervalVars(t.interval, vars);
+      collectIntervalVars(t.operator?.interval, vars);
+      break;
+    }
+    case "TemporalAtom": {
+      const t = term;
+      collectVars(t.atom, vars);
+      collectIntervalVars(t.interval, vars);
+      break;
+    }
+  }
+}
+function rewriteClauseWithInfo(clause, preBoundVars) {
+  if (!clause.premises || clause.premises.length === 0) {
+    return { clause, droppedNegations: [] };
+  }
+  const boundVars = new Set(preBoundVars ?? []);
+  const premises = [];
+  const delayNegAtom = [];
+  const delayVars = [];
+  for (const p of clause.premises) {
+    let needsDelay = false;
+    switch (p.type) {
+      case "Atom": {
+        const defVars = /* @__PURE__ */ new Set();
+        collectVars(p, defVars);
+        for (const v of defVars) {
+          boundVars.add(v);
+        }
+        break;
+      }
+      case "TemporalLiteral":
+      case "TemporalAtom": {
+        if (p.type === "TemporalLiteral" && p.literal.type === "NegAtom") {
+          break;
+        }
+        const defVars = /* @__PURE__ */ new Set();
+        collectVars(p, defVars);
+        for (const v of defVars) {
+          boundVars.add(v);
+        }
+        break;
+      }
+      case "Eq": {
+        const eqVars = /* @__PURE__ */ new Set();
+        collectVars(p, eqVars);
+        for (const v of eqVars) {
+          boundVars.add(v);
+        }
+        break;
+      }
+      case "NegAtom": {
+        const negVars = /* @__PURE__ */ new Set();
+        collectVars(p, negVars);
+        const unboundVars = /* @__PURE__ */ new Set();
+        for (const v of negVars) {
+          if (!boundVars.has(v)) {
+            unboundVars.add(v);
+          }
+        }
+        if (unboundVars.size > 0) {
+          needsDelay = true;
+          delayNegAtom.push(p);
+          delayVars.push(unboundVars);
+        }
+        break;
+      }
+    }
+    if (!needsDelay) {
+      premises.push(p);
+      const toRemove = [];
+      for (let i = 0; i < delayVars.length; i++) {
+        const vars = delayVars[i];
+        let allBound = true;
+        for (const v of vars) {
+          if (!boundVars.has(v)) {
+            allBound = false;
+            break;
+          }
+        }
+        if (allBound) {
+          premises.push(delayNegAtom[i]);
+          toRemove.unshift(i);
+        }
+      }
+      for (const i of toRemove) {
+        delayNegAtom.splice(i, 1);
+        delayVars.splice(i, 1);
+      }
+    }
+  }
+  return {
+    clause: { ...clause, premises },
+    droppedNegations: delayNegAtom
+  };
 }
 
-// src/builtins/functions.ts
-var BUILTIN_FUNCTIONS = [
-  // Arithmetic functions
+// ../mangle-lsp/src/analysis/diagnostics.ts
+var MANGLE_DOCS_BASE = "https://mangle.readthedocs.io/en/latest/";
+var DIAGNOSTICS_DOC_URL = "https://github.com/theRebelliousNerd/MangleLSP/blob/main/docs/DIAGNOSTICS.md";
+var entries = [
+  // ------------------------------------------------------------------ io/syntax
   {
-    name: "fn:plus",
-    arity: -1,
-    isReducer: false,
-    doc: "Addition. Maps X, Y1, ... to (X + Y1) + Y2 + ... fn:plus(X) returns X."
+    code: "E000",
+    title: "File or I/O error",
+    category: "io",
+    severity: "error",
+    explanation: "The CLI could not read the input file (missing path, permissions, encoding).",
+    fix: "Check the path passed on the command line and that the file is readable UTF-8 text."
   },
   {
-    name: "fn:minus",
-    arity: -1,
-    isReducer: false,
-    doc: "Subtraction. Maps X, Y1, ... to (X - Y1) - Y2 - ... fn:minus(X) returns -X."
+    code: "P001",
+    title: "Syntax error",
+    category: "syntax",
+    severity: "error",
+    explanation: "The source does not match the Mangle grammar. Every clause must end with a period; rules are written `head :- body.`; variables start with an uppercase letter; name constants start with `/`; functions start with `fn:`; built-in predicates start with `:`.",
+    fix: "Look at the reported position: typical causes are a missing `.` at the end of the previous clause, `,` vs `.` confusion, lowercase variables, or SQL/Prolog syntax that Mangle does not have (no `if`, `or`, `;`, `not`; negation is `!pred(...)`).",
+    example: { bad: "ancestor(x, y) :- parent(x, y)", good: "ancestor(X, Y) :- parent(X, Y)." },
+    docs: "syntax.html"
+  },
+  // --------------------------------------------------------------------- safety
+  {
+    code: "E001",
+    title: "Variables in facts must be ground",
+    category: "safety",
+    severity: "error",
+    explanation: 'A fact (a clause without `:-` body) states something unconditionally true, so it cannot contain variables: `foo(X).` would mean "foo holds for every possible value", which Datalog cannot represent.',
+    fix: "Replace the variable with a constant, or turn the fact into a rule whose body binds the variable.",
+    example: { bad: "likes(X, /pizza).", good: "likes(X, /pizza) :- person(X)." }
   },
   {
-    name: "fn:mult",
-    arity: -1,
-    isReducer: false,
-    doc: "Multiplication. Maps X, Y1, ... to (X * Y1) * Y2 * ... fn:mult(X) returns X."
+    code: "E002",
+    title: "Range restriction violation",
+    category: "safety",
+    severity: "error",
+    explanation: 'Every variable in a rule head must be bound by the body: by a positive atom, by `X = <constant or bound expression>`, by a transform `let`, or by an input mode declaration. Otherwise the rule would derive infinitely many facts. This is the Datalog "safety" / range-restriction condition.',
+    fix: "Add a positive body atom that produces the variable, bind it with `=`, or compute it in a `|> let` transform. Check for typos: a head variable spelled differently from the body variable is unbound.",
+    example: { bad: "adult(Name) :- person(N, Age), Age >= 18.", good: "adult(Name) :- person(Name, Age), Age >= 18." }
   },
   {
-    name: "fn:div",
-    arity: -1,
-    isReducer: false,
-    doc: "Integer division. Maps X, Y1, ... to (X / Y1) / Y2 / ... fn:div(X) returns 1/X."
+    code: "E003",
+    title: "Variables in negation must be bound",
+    category: "safety",
+    severity: "error",
+    explanation: "Negation (`!pred(...)`) is negation-as-failure: it can only check that a *specific* tuple is absent. All its variables must be bound by positive premises of the same rule (anywhere in the body - Mangle reorders negations after the atoms that bind them). A variable that only occurs inside a negation is never bound, and upstream Mangle silently drops such a negation, changing the meaning of your rule.",
+    fix: 'Bind the variable with a positive atom, or replace it with `_` if you mean "no tuple with any value exists" - and then introduce a helper predicate that projects the columns you care about.',
+    example: {
+      bad: "lonely(X) :- person(X), !friend(X, Y).",
+      good: "has_friend(X) :- friend(X, _).\nlonely(X) :- person(X), !has_friend(X)."
+    },
+    docs: "negation.html"
   },
   {
-    name: "fn:sqrt",
-    arity: 1,
-    isReducer: false,
-    doc: "Square root of a numeric argument."
-  },
-  // Float arithmetic functions
-  {
-    name: "fn:float:plus",
-    arity: -1,
-    isReducer: false,
-    doc: "Float addition. Maps X, Y1, ... to (X + Y1) + Y2 + ..."
+    code: "E004",
+    title: "Variables in comparison must be bound",
+    category: "safety",
+    severity: "error",
+    explanation: "Comparisons (`<`, `<=`, `>`, `>=`, `!=`) only test values; they never produce them. Both sides must be bound by earlier premises.",
+    fix: "Move the comparison after the atom that binds the variable, or add such an atom.",
+    example: { bad: "big(X) :- X > 100, size(X).", good: "big(X) :- size(X), X > 100." }
   },
   {
-    name: "fn:float:mult",
-    arity: -1,
-    isReducer: false,
-    doc: "Float multiplication. Maps X, Y1, ... to (X * Y1) * Y2 * ..."
+    code: "E065",
+    title: "Output argument must be a fresh variable",
+    category: "safety",
+    severity: "error",
+    explanation: 'Some built-in predicates have output ("-") arguments: they bind a *fresh* variable, e.g. `:match_pair(P, First, Second)` binds First and Second. Passing a constant or an already-bound variable in an output position is rejected by upstream mode checking.',
+    fix: "Use a new variable in the output position and compare it afterwards with `=`.",
+    example: { bad: "p(A) :- q(P, A), :match_pair(P, A, B).", good: "p(A) :- q(P, A), :match_pair(P, A2, B), A2 = A." }
   },
   {
-    name: "fn:float:div",
-    arity: -1,
-    isReducer: false,
-    doc: "Float division. Maps X, Y1, ... to (X / Y1) / Y2 / ..."
+    code: "E066",
+    title: "Variable is never bound",
+    category: "safety",
+    severity: "error",
+    explanation: 'Every variable in a rule must get a value from somewhere. This variable only occurs in positions that consume values - input ("+") arguments of mode-declared predicates, function arguments or comparisons - so evaluation can never assign it.',
+    fix: "Bind the variable with a positive atom (in an output or unrestricted position) or an equality before it is used."
   },
-  // Grouping function (special - used to start a do-transform)
+  // -------------------------------------------------------------------- builtin
   {
-    name: "fn:group_by",
-    arity: -1,
-    isReducer: false,
-    doc: "Groups all tuples by the values of key variables. Empty group_by() treats the whole relation as a group."
-  },
-  // List functions
-  {
-    name: "fn:list",
-    arity: -1,
-    isReducer: false,
-    doc: "Constructs a list from the arguments."
-  },
-  {
-    name: "fn:list:append",
-    arity: 2,
-    isReducer: false,
-    doc: "Appends an element to a list. Usage: fn:list:append(List, Element)"
+    code: "E005",
+    title: "Unknown built-in predicate",
+    category: "builtin",
+    severity: "error",
+    explanation: "Names starting with `:` are reserved for built-in predicates, and this one does not exist. User predicates must start with a lowercase letter and must not start with `:`.",
+    fix: "Use one of the built-ins suggested in the message (hover a `:` name to see its signature), or rename your predicate without the leading colon.",
+    example: { bad: 'p(S) :- s(S), :string:startswith(S, "a").', good: 'p(S) :- s(S), :string:starts_with(S, "a").' },
+    docs: "builtins.html"
   },
   {
-    name: "fn:list:get",
-    arity: 2,
-    isReducer: false,
-    doc: "Returns element at index. Usage: fn:list:get(List, Index)"
+    code: "E006",
+    title: "Built-in predicate arity mismatch",
+    category: "builtin",
+    severity: "error",
+    explanation: "The built-in predicate was called with the wrong number of arguments.",
+    fix: "Check the signature in the message (or hover the predicate)."
   },
   {
-    name: "fn:list:contains",
-    arity: 2,
-    isReducer: false,
-    doc: "Returns /true if member is in list. Usage: fn:list:contains(List, Member)"
+    code: "E007",
+    title: "Built-in predicate input not bound",
+    category: "builtin",
+    severity: "error",
+    explanation: 'Input ("+") arguments of built-in predicates must be constants or variables bound by an earlier premise; built-ins cannot enumerate values for them. Mangle evaluates the body left to right for built-ins.',
+    fix: 'Move the built-in to the right of the atom that binds the variable ("move the subgoal to the right").',
+    example: { bad: "p(X) :- :lt(X, 10), num(X).", good: "p(X) :- num(X), :lt(X, 10)." }
   },
   {
-    name: "fn:list:len",
-    arity: 1,
-    isReducer: false,
-    doc: "Returns the length of a list."
+    code: "E008",
+    title: "Unknown built-in function",
+    category: "builtin",
+    severity: "error",
+    explanation: "Names starting with `fn:` are reserved for built-in functions and this one does not exist. Mangle has a small, fixed function library; there are no user-defined functions.",
+    fix: "Use one of the suggested functions, or express the computation with rules. Hover any `fn:` name to see its signature.",
+    docs: "builtins.html"
   },
   {
-    name: "fn:list:cons",
-    arity: 2,
-    isReducer: false,
-    doc: "Constructs a list from head and tail. Usage: fn:list:cons(Head, Tail)"
-  },
-  // Pair and tuple functions
-  {
-    name: "fn:pair",
-    arity: 2,
-    isReducer: false,
-    doc: "Constructs a pair from two elements."
+    code: "E009",
+    title: "Built-in function arity mismatch",
+    category: "builtin",
+    severity: "error",
+    explanation: "The built-in function was applied to the wrong number of arguments.",
+    fix: "Check the signature in the message (or hover the function)."
   },
   {
-    name: "fn:tuple",
-    arity: -1,
-    isReducer: false,
-    doc: "Acts as identity (one arg), pair (two args), or nested pair (more)."
+    code: "E010",
+    title: "Unbound variable in function argument",
+    category: "builtin",
+    severity: "error",
+    explanation: "Functions are evaluated, not solved: all their arguments must already have values.",
+    fix: "Bind the variable with an atom before the function application.",
+    example: { bad: "p(Y) :- Y = fn:plus(X, 1), num(X).", good: "p(Y) :- num(X), Y = fn:plus(X, 1)." }
   },
   {
-    name: "fn:some",
-    arity: 1,
-    isReducer: false,
-    doc: "Constructs an element of an option type."
-  },
-  // Map and struct functions
-  {
-    name: "fn:map",
-    arity: -1,
-    isReducer: false,
-    doc: "Constructs a map from key-value pairs."
+    code: "E014",
+    title: "Unbound variable in function application",
+    category: "builtin",
+    severity: "error",
+    explanation: "In `V = fn:f(...)`, every variable inside the function application must be bound before the equality is evaluated.",
+    fix: "Bind the arguments first, then compute."
   },
   {
-    name: "fn:map:get",
-    arity: 2,
-    isReducer: false,
-    doc: "Returns element at key. Usage: fn:map:get(Map, Key)"
+    code: "E018",
+    title: "Wrong function casing",
+    category: "builtin",
+    severity: "error",
+    explanation: "Built-in function names are case-sensitive and lowercase after `fn:` (`fn:sum`, not `fn:Sum`). Only type constructors used in `bound [...]` are capitalized (`fn:List`, `fn:Struct`, ...).",
+    fix: "Use the lowercase spelling given in the message.",
+    example: { bad: "let S = fn:Sum(X)", good: "let S = fn:sum(X)" }
   },
   {
-    name: "fn:struct",
-    arity: -1,
-    isReducer: false,
-    doc: "Constructs a struct from field-value pairs."
+    code: "E020",
+    title: "Function does not exist in Mangle",
+    category: "builtin",
+    severity: "error",
+    explanation: "This is a function that exists in SQL, Prolog, Python or other languages but not in Mangle. Mangle is a Datalog: control flow is expressed with rules, alternatives with several rules for the same head, and missing data with negation.",
+    fix: "Follow the replacement given in the message."
   },
   {
-    name: "fn:struct:get",
-    arity: 2,
-    isReducer: false,
-    doc: "Returns the value of a field. Usage: fn:struct:get(Struct, FieldName)"
-  },
-  // String functions
-  {
-    name: "fn:string:concat",
-    arity: -1,
-    isReducer: false,
-    doc: "Concatenates arguments into a single string."
+    code: "E030",
+    title: "Pattern argument must be a constant",
+    category: "builtin",
+    severity: "error",
+    explanation: "The prefix/suffix/substring argument of `:match_prefix`, `:string:starts_with`, `:string:ends_with` and `:string:contains` must be a constant in upstream Mangle.",
+    fix: "Write the pattern as a literal constant."
   },
   {
-    name: "fn:string:replace",
-    arity: 4,
-    isReducer: false,
-    doc: "Replaces old with new in first n occurrences. Usage: fn:string:replace(Str, Old, New, N)"
-  },
-  // Conversion functions
-  {
-    name: "fn:number:to_string",
-    arity: 1,
-    isReducer: false,
-    doc: "Converts a number to a string."
+    code: "E033",
+    title: "Destructuring target must be a variable",
+    category: "builtin",
+    severity: "error",
+    explanation: "`:match_pair(P, A, B)` and `:match_cons(L, H, T)` bind their 2nd and 3rd arguments; these must be variables.",
+    fix: "Use variables, then constrain them with `=` if needed.",
+    example: { bad: ":match_cons(L, 1, T)", good: ":match_cons(L, H, T), H = 1" }
   },
   {
-    name: "fn:float64:to_string",
-    arity: 1,
-    isReducer: false,
-    doc: "Converts a float64 to a string."
+    code: "E034",
+    title: "Field selector must be a constant",
+    category: "builtin",
+    severity: "error",
+    explanation: "The field/key argument of `:match_field` / `:match_entry` selects what to look up and must be a constant (e.g. `/name`).",
+    fix: "Use a name constant for struct fields: `:match_field(S, /name, N)`."
   },
   {
-    name: "fn:name:to_string",
-    arity: 1,
-    isReducer: false,
-    doc: "Converts a name constant to a string."
+    code: "E035",
+    title: "Division by zero",
+    category: "builtin",
+    severity: "error",
+    explanation: "The divisor of `fn:div`, `fn:float:div` or `fn:mod` is the constant 0; evaluation always fails with a division-by-zero error.",
+    fix: "Use a non-zero divisor, or guard the computation with a condition such as `D != 0` before dividing by a variable."
   },
   {
-    name: "fn:name:root",
-    arity: 1,
-    isReducer: false,
-    doc: "Returns the first name part of a name."
+    code: "E067",
+    title: "Invalid unit for time function",
+    category: "builtin",
+    severity: "error",
+    explanation: "Time functions take their unit as a name constant, and each accepts only specific units: `fn:time:trunc` supports fixed-duration units (/day, /hour, /minute, /second, /millisecond, /microsecond, /nanosecond) in UTC; calendar units (/year, /month, /week, /day) need `fn:time:trunc_civil` / `fn:time:add_civil` with a timezone; `fn:time:format[_civil]` supports /year ... /nanosecond.",
+    fix: "Use one of the listed units, or switch to the `_civil` variant for calendar units.",
+    example: { bad: "W = fn:time:trunc(T, /week)", good: 'W = fn:time:trunc_civil(T, "UTC", /week)' },
+    docs: "basictypes.html"
+  },
+  // ----------------------------------------------------------------------- type
+  {
+    code: "E068",
+    title: "Function argument type mismatch",
+    category: "type",
+    severity: "error",
+    explanation: "An argument of a built-in function has a type the function cannot accept at runtime (e.g. a /string passed to `fn:plus`, or a /number where a /duration is expected). Types come from constants, declared `bound [...]`s of body predicates, and results of other built-ins.",
+    fix: "Convert the value (e.g. `fn:duration:from_seconds(N)`, `fn:number:to_string(N)`), use the variant for the right type (`fn:float:plus` for floats), or fix the declaration that gave the variable its type.",
+    example: { bad: "later(T2) :- ev(T), T2 = fn:time:add(T, 60).", good: "later(T2) :- ev(T), T2 = fn:time:add(T, fn:duration:from_seconds(60))." },
+    docs: "basictypes.html"
   },
   {
-    name: "fn:name:tip",
-    arity: 1,
-    isReducer: false,
-    doc: "Returns the last name part of a name."
+    code: "E069",
+    title: "Predicate argument type mismatch",
+    category: "type",
+    severity: "error",
+    explanation: "An argument of a built-in predicate has the wrong type. Comparisons are type-specific in Mangle: `<`/`:lt` compare /number only, `:float:lt` compares /float64 (no coercion), `:time:lt` compares /time and `:duration:lt` compares /duration.",
+    fix: "Use the comparison predicate for the value type, or convert the value first.",
+    example: { bad: "hot(X) :- temp(X, C), C > 30.5.", good: "hot(X) :- temp(X, C), :float:gt(C, 30.5)." }
   },
   {
-    name: "fn:name:list",
-    arity: 1,
-    isReducer: false,
-    doc: "Turns a name into a list of name parts."
+    code: "E070",
+    title: "Fact does not match declared bounds",
+    category: "type",
+    severity: "error",
+    explanation: "The predicate has a `Decl ... bound [...]` and this fact matches none of its bound alternatives. A name constant used as a type (e.g. `/person`) admits only names strictly below it (`/person/alice`); a struct type requires its non-optional fields; a tagged union requires a valid tag.",
+    fix: "Fix the constant (often a missing name prefix) or widen the declaration.",
+    example: { bad: "Decl works_at(P, C) bound [/person, /company].\nworks_at(/alice, /acme).", good: "Decl works_at(P, C) bound [/person, /company].\nworks_at(/person/alice, /company/acme)." },
+    docs: "declarations.html"
+  },
+  {
+    code: "E071",
+    title: "Rule result does not match declared bounds",
+    category: "type",
+    severity: "error",
+    explanation: "The types inferred for this rule's head (from its body) are incompatible with the predicate's declared bounds, so every fact it could derive would violate the declaration.",
+    fix: "Fix the rule body (wrong join column or conversion) or the declaration."
+  },
+  {
+    code: "E072",
+    title: "Variable has conflicting types",
+    category: "type",
+    severity: "error",
+    explanation: "The same variable is required to have two incompatible types (for example it joins a /number column with a /string column). No value can satisfy both, so the rule can never produce a result. Upstream bounds checking rejects such rules.",
+    fix: "Check that the join uses the right columns; use different variables if the values are unrelated.",
+    example: { bad: "Decl age(P, A) bound [/name, /number].\nDecl email(P, E) bound [/name, /string].\nbad(P) :- age(P, X), email(P, X).", good: "ok(P) :- age(P, _), email(P, _)." }
+  },
+  {
+    code: "E073",
+    title: "Comparison of incompatible types",
+    category: "type",
+    severity: "warning",
+    explanation: 'The two sides of `=` or `!=` can never hold the same value because their types are disjoint (e.g. a /string and a /number). Mangle equality is syntactic and never converts: `"1" = 1` is false. An `=` like this makes the rule dead; a `!=` is always true and redundant.',
+    fix: 'Convert one side (e.g. `fn:number:to_string(N)`), or compare against a constant of the right type (`/active` is a name, `"active"` is a string).',
+    example: { bad: 'active(U) :- status(U, S), S = "active".   # S is declared /name', good: "active(U) :- status(U, S), S = /active." }
+  },
+  // ------------------------------------------------------------------ transform
+  {
+    code: "E011",
+    title: "Invalid transform structure",
+    category: "transform",
+    severity: "error",
+    explanation: "A `do` statement in a transform must be `do fn:group_by(...)` and it must come first. Aggregation in Mangle is written: `head :- body |> do fn:group_by(Keys...), let Agg = fn:reducer(...).`",
+    fix: "Start the transform with `do fn:group_by(...)`, or use only `let` statements for per-row computation.",
+    example: { bad: "total(S) :- sale(X) |> let S = fn:sum(X).", good: "total(S) :- sale(X) |> do fn:group_by(), let S = fn:sum(X)." },
+    docs: "aggregation.html"
+  },
+  {
+    code: "E012",
+    title: "Unbound variable in group_by",
+    category: "transform",
+    severity: "error",
+    explanation: "Grouping keys must be variables bound by the rule body.",
+    fix: "Group by variables that appear in positive body atoms."
+  },
+  {
+    code: "E036",
+    title: "group_by arguments must be variables",
+    category: "transform",
+    severity: "error",
+    explanation: "`fn:group_by` takes the key variables of the aggregation; constants or expressions are not allowed.",
+    fix: "Compute the key in the body (`K = fn:...`) and group by K."
+  },
+  {
+    code: "E037",
+    title: "Duplicate variable in group_by",
+    category: "transform",
+    severity: "error",
+    explanation: "Each grouping key must be distinct.",
+    fix: "Remove the duplicate variable."
+  },
+  {
+    code: "E043",
+    title: "Transform redefines a body variable",
+    category: "transform",
+    severity: "error",
+    explanation: "`let X = ...` in a transform introduces a new variable; X must not already be bound by the rule body.",
+    fix: "Pick a new variable name for the transform result.",
+    example: { bad: "p(X) :- q(X) |> let X = fn:plus(X, 1).", good: "p(Y) :- q(X) |> let Y = fn:plus(X, 1)." }
+  },
+  {
+    code: "E045",
+    title: "Transform without body",
+    category: "transform",
+    severity: "error",
+    explanation: "A transform (`|> ...`) operates on the rows produced by a rule body; a fact has no rows.",
+    fix: "Add a body, or compute the value directly in a fact."
+  },
+  {
+    code: "E047",
+    title: "Variable not available after group_by",
+    category: "transform",
+    severity: "error",
+    explanation: "After grouping, only the group keys and values defined by earlier `let` statements exist; per-row body variables are gone (they were aggregated away).",
+    fix: "Add the variable to fn:group_by(...), or aggregate it with a reducer first.",
+    example: { bad: "|> do fn:group_by(K), let Y = fn:plus(V, 1)", good: "|> do fn:group_by(K), let S = fn:sum(V), let Y = fn:plus(S, 1)" }
+  },
+  {
+    code: "E048",
+    title: "Multiple chained transforms",
+    category: "transform",
+    severity: "error",
+    explanation: "Mangle supports at most one transform per rule (`|> ... |> ...` is not implemented upstream).",
+    fix: "Split the computation into two rules: the first aggregates into a helper predicate, the second transforms it."
+  },
+  {
+    code: "E049",
+    title: "Head variable not grouped or aggregated",
+    category: "transform",
+    severity: "error",
+    explanation: 'In an aggregating rule every head variable must be a group_by key or defined by a `let` in the transform, exactly like SQL\'s "must appear in GROUP BY or an aggregate".',
+    fix: "Add the variable to fn:group_by(...) or define it with `let`.",
+    example: { bad: "c(Dept, Name, N) :- emp(Dept, Name) |> do fn:group_by(Dept), let N = fn:count().", good: "c(Dept, N) :- emp(Dept, _) |> do fn:group_by(Dept), let N = fn:count()." }
+  },
+  {
+    code: "E050",
+    title: "Reducer in let-transform",
+    category: "transform",
+    severity: "error",
+    explanation: "A transform that starts with `let` is a per-row transform; reducers (and `do` statements) are only meaningful after `do fn:group_by(...)`.",
+    fix: "Start the transform with `do fn:group_by(...)` to aggregate."
+  },
+  {
+    code: "E060",
+    title: "Reducer needs an argument",
+    category: "transform",
+    severity: "error",
+    explanation: "Variable-arity reducers such as fn:collect need at least one argument (what to collect).",
+    fix: "Pass the variable(s) to collect: `fn:collect(X)`. Use fn:count() to count rows."
+  },
+  // ---------------------------------------------------------------- declaration
+  {
+    code: "E024",
+    title: "Declaration arguments must be variables",
+    category: "declaration",
+    severity: "error",
+    explanation: "`Decl pred(A, B, ...)` names the columns of a predicate; its arguments must be distinct variables. Types go into `bound [...]`.",
+    fix: "Use variables in the declared atom and put types in a bound list.",
+    example: { bad: "Decl age(/person, /number).", good: "Decl age(Person, Years) bound [/name, /number]." },
+    docs: "declarations.html"
+  },
+  {
+    code: "E025",
+    title: "Bound count does not match arity",
+    category: "declaration",
+    severity: "error",
+    explanation: "Each `bound [...]` list must contain exactly one type per argument of the declared predicate.",
+    fix: "Add or remove types so the bound list has one entry per argument (use /any for unconstrained columns)."
+  },
+  {
+    code: "E026",
+    title: "External predicate needs exactly one mode",
+    category: "declaration",
+    severity: "error",
+    explanation: "Predicates marked `external()` are computed by host code, which needs to know which arguments are inputs; they must declare exactly one `mode(...)`.",
+    fix: "Add a single mode descriptor, e.g. `descr [external(), mode('+', '-')]`."
+  },
+  {
+    code: "E031",
+    title: "Package name must be lowercase",
+    category: "declaration",
+    severity: "error",
+    explanation: "Package names are part of predicate names, which are lowercase in Mangle.",
+    fix: "Rename the package to lowercase."
+  },
+  {
+    code: "E040",
+    title: "Predicate arity mismatch",
+    category: "declaration",
+    severity: "error",
+    explanation: "In Mangle a predicate is identified by name *and* arity; `p/2` and `p/3` are different predicates. This call uses an arity for which no clause or declaration exists.",
+    fix: "Pass the number of arguments listed in the message (use `_` for columns you do not need).",
+    example: { bad: "edge(/a, /b).\nstart(X) :- edge(X).", good: "edge(/a, /b).\nstart(X) :- edge(X, _)." }
+  },
+  {
+    code: "E041",
+    title: "Private predicate used from another package",
+    category: "declaration",
+    severity: "error",
+    explanation: "Predicates declared with `descr [private()]` are only visible inside their own package (the part of the name before the last `.`).",
+    fix: "Use a public predicate of that package, or remove `private()` from its declaration."
+  },
+  {
+    code: "E044",
+    title: "Duplicate declaration",
+    category: "declaration",
+    severity: "error",
+    explanation: "A predicate (name/arity) may be declared only once (upstream issue #25).",
+    fix: "Merge the declarations; use several `bound [...]` lists in one Decl for alternatives.",
+    example: { bad: "Decl p(X) bound [/number].\nDecl p(X) bound [/string].", good: "Decl p(X) bound [/number] bound [/string]." }
+  },
+  {
+    code: "E046",
+    title: "Declaration arity mismatch",
+    category: "declaration",
+    severity: "error",
+    explanation: "The declared arity differs from every clause that defines the predicate.",
+    fix: "Make the Decl and the clauses use the same number of arguments."
+  },
+  {
+    code: "E051",
+    title: "Multiple doc descriptors",
+    category: "declaration",
+    severity: "error",
+    explanation: "`descr [...]` may contain at most one `doc(...)` atom.",
+    fix: 'Merge the documentation strings into one doc("...", "...") atom.'
+  },
+  {
+    code: "E052",
+    title: "Empty doc descriptor",
+    category: "declaration",
+    severity: "error",
+    explanation: "`doc()` must contain at least one string.",
+    fix: 'Write `doc("what this predicate means")`.'
+  },
+  {
+    code: "E053",
+    title: "Descriptor argument must be a string",
+    category: "declaration",
+    severity: "error",
+    explanation: "Arguments of `doc(...)` and the descriptions in `arg(Var, ...)` must be string constants.",
+    fix: "Quote the text."
+  },
+  {
+    code: "E054",
+    title: "arg descriptor needs two arguments",
+    category: "declaration",
+    severity: "error",
+    explanation: '`arg(Var, "description")` documents one column and needs the variable and at least one string.',
+    fix: "Add the description string."
+  },
+  {
+    code: "E055",
+    title: "arg descriptor must start with a variable",
+    category: "declaration",
+    severity: "error",
+    explanation: "The first argument of `arg(...)` names the documented column and must be one of the declared variables.",
+    fix: 'Write `arg(X, "...")` with X from the declared atom.'
+  },
+  {
+    code: "E056",
+    title: "arg descriptor for unknown variable",
+    category: "declaration",
+    severity: "error",
+    explanation: "The variable in `arg(...)` does not occur in the declared atom.",
+    fix: "Use one of the declared variables (check spelling)."
+  },
+  {
+    code: "E057",
+    title: "Missing arg descriptors",
+    category: "declaration",
+    severity: "warning",
+    explanation: "If any column is documented with `arg(...)`, upstream requires all of them to be documented.",
+    fix: "Add `arg(...)` for the listed variables."
+  },
+  {
+    code: "E061",
+    title: "Malformed type expression",
+    category: "declaration",
+    severity: "error",
+    explanation: "Each entry of `bound [...]` must be a type: a base type (/any, /number, /float64, /string, /bytes, /name, /time, /duration), a name prefix such as /person, a type variable, or a structured type built with .List<T>, .Map<K, V>, .Pair<A, B>, .Tuple<A, B, C...>, .Option<T>, .Struct</field : T, opt /f : T>, .Union<T1, ...>, .Singleton</c>, .TaggedUnion</tag, /variant : .Struct<...>, ...>, .Fun<...> or .Rel<...>.",
+    fix: "Fix the constructor name, its number of arguments or the shape of its fields as described in the message.",
+    example: { bad: "Decl p(X) bound [.List</string, /number>].", good: "Decl p(X) bound [.List</string>]." },
+    docs: "typeexpressions.html"
+  },
+  {
+    code: "E075",
+    title: "Undefined predicate",
+    category: "declaration",
+    severity: "warning",
+    explanation: "The predicate is used in a rule body but has no clause and no declaration in this file. Upstream Mangle rejects programs that use undefined predicates; it is fine only if the predicate is defined in another file of the same program or supplied externally.",
+    fix: "Check the spelling (see the suggestion in the message), define the predicate, or add a `Decl` for it (with `descr [extensional()]` for predicates loaded from data)."
+  },
+  {
+    code: "E078",
+    title: "Unknown declaration descriptor",
+    category: "declaration",
+    severity: "warning",
+    explanation: "Unknown atoms inside `descr [...]` are silently ignored by upstream Mangle, so a misspelled descriptor has no effect.",
+    fix: "Use one of: doc, arg, mode, external, extensional, private, reflects, fundep, merge, deferred, temporal, name, synthetic, desugared."
+  },
+  {
+    code: "E079",
+    title: "Invalid mode declaration",
+    category: "declaration",
+    severity: "warning",
+    explanation: "A `mode(...)` descriptor needs one quoted '+' (input), '-' (output) or '?' (either) per argument. Upstream silently ignores malformed modes, so the declaration would have no effect.",
+    fix: "Write e.g. mode('+', '-') with one entry per argument of the declared predicate."
+  },
+  // ------------------------------------------------------------- stratification
+  {
+    code: "E015",
+    title: "Negation cycle (unstratifiable program)",
+    category: "stratification",
+    severity: "error",
+    explanation: "A predicate depends on its own negation through a cycle of rules, e.g. `p :- !q.` and `q :- !p.`. Mangle evaluates negation stratum by stratum, which requires that negated predicates are fully computed first; cycles through negation have no well-defined meaning.",
+    fix: "Break the cycle: introduce a base predicate that does not depend on the negated one, or restructure the logic so negation only refers to lower strata.",
+    docs: "negation.html"
+  },
+  {
+    code: "E016",
+    title: "Recursion without base case",
+    category: "stratification",
+    severity: "warning",
+    explanation: "All clauses of this predicate are recursive, so it can never derive a first fact (bottom-up evaluation starts from base cases).",
+    fix: "Add a non-recursive clause, e.g. `path(X, Y) :- edge(X, Y).` next to the recursive one."
+  },
+  {
+    code: "E017",
+    title: "Recursion generates unbounded values",
+    category: "stratification",
+    severity: "warning",
+    explanation: "A recursive rule computes new values with arithmetic (e.g. N+1) without a bounding comparison, so the fixpoint may never be reached.",
+    fix: "Add a bound such as `N < 100`, or derive the value from finite data instead of counting up.",
+    example: { bad: "nat(0).\nnat(M) :- nat(N), M = fn:plus(N, 1).", good: "nat(0).\nnat(M) :- nat(N), N < 100, M = fn:plus(N, 1)." }
+  },
+  // ---------------------------------------------------------------- temporal
+  {
+    code: "E058",
+    title: "Temporal annotation on non-temporal predicate",
+    category: "temporal",
+    severity: "error",
+    explanation: "The clause uses `@[...]` interval annotations, but the predicate is declared without `temporal()`.",
+    fix: "Add `descr [temporal()]` to the Decl, or remove the annotation.",
+    docs: "temporal.html"
+  },
+  {
+    code: "E059",
+    title: "Temporal predicate without annotation",
+    category: "temporal",
+    severity: "error",
+    explanation: "Rules for predicates declared `temporal()` must say when the derived fact holds (`head(...)@[S, E] :- ...`).",
+    fix: "Add a head interval annotation.",
+    docs: "temporal.html"
+  },
+  {
+    code: "E062",
+    title: "Self-recursive temporal predicate",
+    category: "temporal",
+    severity: "warning",
+    explanation: "A temporal predicate that depends on itself can create an ever-growing number of intervals (interval explosion) unless intervals are coalesced or bounded.",
+    fix: "Bound the recursion with interval limits or make sure derived intervals are coalesced.",
+    docs: "temporal.html"
+  },
+  {
+    code: "E063",
+    title: "Mutual recursion through temporal predicates",
+    category: "temporal",
+    severity: "error",
+    explanation: "Several predicates, at least one temporal, depend on each other in a cycle; upstream temporal evaluation may not terminate.",
+    fix: "Break the cycle or make only one predicate of the cycle temporal.",
+    docs: "temporal.html"
+  },
+  {
+    code: "E064",
+    title: "Future operator in recursive temporal rule",
+    category: "temporal",
+    severity: "error",
+    explanation: "Future operators (`<+`, `[+`) inside a recursive temporal rule can generate facts arbitrarily far into the future.",
+    fix: "Use past operators (`<-`, `[-`) in recursive rules, or remove the recursion.",
+    docs: "temporal.html"
+  },
+  // --------------------------------------------------------------- performance
+  {
+    code: "E019",
+    title: "Cartesian product in rule body",
+    category: "performance",
+    severity: "warning",
+    explanation: "This atom shares no variable with the atoms before it, so evaluation pairs every row so far with every row of this atom (N x M intermediate tuples) before later premises filter them.",
+    fix: "Reorder the body so each atom joins on a variable already bound (the message names a premise that can be moved earlier), or split the rule through a helper predicate.",
+    example: { bad: "p(X, Z) :- a(X), b(Z), link(X, Z).", good: "p(X, Z) :- a(X), link(X, Z), b(Z)." }
+  },
+  {
+    code: "E021",
+    title: "Late filtering",
+    category: "performance",
+    severity: "warning",
+    explanation: "A comparison appears only after several joins even though its variables are available earlier. Filters shrink intermediate results; applying them as early as possible is the single most effective Datalog optimization.",
+    fix: "Move the comparison directly after the atom that binds its variables.",
+    example: { bad: "p(X) :- big(X), a(X, Y), b(Y, Z), X > 10.", good: "p(X) :- big(X), X > 10, a(X, Y), b(Y, Z)." }
+  },
+  {
+    code: "E022",
+    title: "Late negation",
+    category: "performance",
+    severity: "warning",
+    explanation: "A negation that could filter rows right after the first atom is placed after further joins, which then process rows that will be discarded.",
+    fix: "Move the negated atom right after the atom that binds its variables."
+  },
+  {
+    code: "E023",
+    title: "Massive Cartesian product",
+    category: "performance",
+    severity: "warning",
+    explanation: "Three or more body atoms share no variables at all, producing an N x M x K product.",
+    fix: "Join through shared variables; if the product is intended, consider whether a smaller helper relation can be precomputed."
+  },
+  {
+    code: "E076",
+    title: "Use fn:count instead of collecting",
+    category: "performance",
+    severity: "info",
+    explanation: "Collecting all values of a group into a list only to take its length materializes every value; fn:collect keeps one entry per row, so the fn:count() reducer computes the same number directly.",
+    fix: "Replace `let L = fn:collect(X), let N = fn:list:len(L)` with `let N = fn:count()`. (fn:list:len(fn:collect_distinct(X)) counts distinct X values, which fn:count_distinct() does not match when rows have other columns, so it is left alone.)",
+    example: { bad: "|> do fn:group_by(K), let L = fn:collect(V), let N = fn:list:len(L)", good: "|> do fn:group_by(K), let N = fn:count()" },
+    docs: "aggregation.html"
+  },
+  {
+    code: "E077",
+    title: "Duplicate premise",
+    category: "performance",
+    severity: "warning",
+    explanation: "The same premise occurs twice in one rule body. It never changes the result but repeats the work.",
+    fix: "Remove the repetition."
+  },
+  {
+    code: "E080",
+    title: "Wildcard merges rows before aggregation",
+    category: "performance",
+    severity: "warning",
+    explanation: "Upstream Mangle evaluates an aggregation whose body is more than one atom by first materializing the body into an internal relation over its named variables; `_` columns are not part of that relation (rewrite/rewrite.go). Relations are sets, so rows that differ only in `_` columns become one row before fn:count, fn:sum, fn:avg or fn:collect run - a silent under-count. (For the same reason, a variable used only once in an aggregating rule is not redundant: it keeps rows apart.)",
+    fix: "Name the column that distinguishes rows (e.g. an id) if every row must count; keep `_` only when merging such rows is what you want.",
+    example: {
+      bad: "total(S) :- sale(_, Amount), valid(Amount) |> do fn:group_by(), let S = fn:sum(Amount).",
+      good: "total(S) :- sale(Id, Amount), valid(Amount) |> do fn:group_by(), let S = fn:sum(Amount)."
+    },
+    docs: "aggregation.html"
+  },
+  // --------------------------------------------------------------------- style
+  {
+    code: "E032",
+    title: "Invalid name constant",
+    category: "style",
+    severity: "error",
+    explanation: "Name constants are `/`-separated paths of non-empty parts, like /a/b/c.",
+    fix: "Remove empty parts (`//`) and trailing slashes."
+  },
+  {
+    code: "E038",
+    title: "Invalid string escape",
+    category: "style",
+    severity: "error",
+    explanation: `Supported escapes: \\n \\t \\r \\\\ \\" \\' \\xHH and \\u{HHHH}.`,
+    fix: "Fix or double the backslash."
+  },
+  {
+    code: "E039",
+    title: "Wildcard in rule head",
+    category: "style",
+    severity: "warning",
+    explanation: "`_` in a head produces a column without a value; this is almost always a mistake.",
+    fix: "Use a variable bound in the body, or drop the column from the head predicate."
+  },
+  {
+    code: "E027",
+    title: "Odd number of key/value arguments",
+    category: "style",
+    severity: "error",
+    explanation: "`fn:map` and `fn:struct` take alternating keys and values.",
+    fix: "Use literal syntax: `[k1: v1, k2: v2]` for maps and `{/f1: v1, /f2: v2}` for structs."
+  },
+  {
+    code: "E074",
+    title: "Variable used only once",
+    category: "style",
+    severity: "warning",
+    explanation: "A named variable that occurs exactly once in a clause does not connect anything; it is usually a typo of another variable (e.g. `Person` vs `Persn`), which silently turns a join into a cross product or leaves a filter ineffective.",
+    fix: 'If you mean "any value", write `_` instead. Otherwise fix the spelling so it matches the other occurrence. (Not reported in aggregating rules, where every named body variable keeps rows apart - see E080.)',
+    example: { bad: "owns(P, C) :- person(P), car(Cr), owner(Cr, P).", good: "owns(P, C) :- person(P), car(C), owner(C, P)." }
   }
 ];
-var REDUCER_FUNCTIONS = [
-  {
-    name: "fn:collect",
-    arity: -1,
-    isReducer: true,
-    doc: "Collects tuples into a list [tuple_1, ..., tuple_n]."
-  },
-  {
-    name: "fn:collect_distinct",
-    arity: -1,
-    isReducer: true,
-    doc: "Collects tuples into a list with distinct elements."
-  },
-  {
-    name: "fn:collect_to_map",
-    arity: 2,
-    isReducer: true,
-    doc: "Collects key-value pairs into a map. Usage: fn:collect_to_map(Key, Value)"
-  },
-  {
-    name: "fn:pick_any",
-    arity: 1,
-    isReducer: true,
-    doc: "Reduces a set {x_1, ..., x_n} to a single {x_i}."
-  },
-  {
-    name: "fn:max",
-    arity: 1,
-    isReducer: true,
-    doc: "Returns the maximum value from a set of numbers."
-  },
-  {
-    name: "fn:min",
-    arity: 1,
-    isReducer: true,
-    doc: "Returns the minimum value from a set of numbers."
-  },
-  {
-    name: "fn:sum",
-    arity: 1,
-    isReducer: true,
-    doc: "Returns the sum of a set of numbers."
-  },
-  {
-    name: "fn:float:max",
-    arity: 1,
-    isReducer: true,
-    doc: "Returns the maximum value from a set of float64."
-  },
-  {
-    name: "fn:float:min",
-    arity: 1,
-    isReducer: true,
-    doc: "Returns the minimum value from a set of float64."
-  },
-  {
-    name: "fn:float:sum",
-    arity: 1,
-    isReducer: true,
-    doc: "Returns the sum of a set of float64."
-  },
-  {
-    name: "fn:count",
-    arity: 0,
-    isReducer: true,
-    doc: "Returns the count of elements in a set."
-  },
-  {
-    name: "fn:count_distinct",
-    arity: 0,
-    isReducer: true,
-    doc: "Returns the count of unique elements in a set."
-  },
-  {
-    name: "fn:avg",
-    arity: 1,
-    isReducer: true,
-    doc: "Returns the average of a set of numbers."
-  }
-];
-var ALL_BUILTIN_FUNCTIONS = [
-  ...BUILTIN_FUNCTIONS,
-  ...REDUCER_FUNCTIONS
-];
-var BUILTIN_FUNCTION_MAP = new Map(
-  ALL_BUILTIN_FUNCTIONS.map((f) => [f.name, f])
-);
-function isBuiltinFunction(name) {
-  return BUILTIN_FUNCTION_MAP.has(name);
+var DIAGNOSTIC_CATALOG = new Map(entries.map((e) => [e.code, e]));
+function getAllDiagnosticInfos() {
+  return [...DIAGNOSTIC_CATALOG.values()].sort((a, b) => a.code.localeCompare(b.code));
 }
-function getBuiltinFunction(name) {
-  return BUILTIN_FUNCTION_MAP.get(name);
+function getDiagnosticInfo(code) {
+  return DIAGNOSTIC_CATALOG.get(code.toUpperCase());
+}
+function diagnosticDocUrl(code) {
+  return `${DIAGNOSTICS_DOC_URL}#${code.toLowerCase()}`;
+}
+function renderExplanation(info, markdown = false) {
+  const lines = [];
+  if (markdown) {
+    lines.push(`## ${info.code}`);
+    lines.push("");
+    lines.push(`**${info.title}** - ${info.category}, default severity: ${info.severity}`);
+  } else {
+    lines.push(`${info.code}: ${info.title}  [${info.category}, ${info.severity}]`);
+  }
+  lines.push("");
+  lines.push(info.explanation);
+  lines.push("");
+  lines.push(markdown ? `**How to fix:** ${info.fix}` : `How to fix: ${info.fix}`);
+  if (info.example) {
+    lines.push("");
+    if (markdown) {
+      lines.push("Instead of:");
+      lines.push("```mangle");
+      lines.push(info.example.bad);
+      lines.push("```");
+      lines.push("write:");
+      lines.push("```mangle");
+      lines.push(info.example.good);
+      lines.push("```");
+    } else {
+      lines.push("Instead of:");
+      lines.push(indent(info.example.bad));
+      lines.push("write:");
+      lines.push(indent(info.example.good));
+    }
+  }
+  if (info.docs) {
+    lines.push("");
+    lines.push(`${markdown ? "**Upstream docs:** " : "Upstream docs: "}${MANGLE_DOCS_BASE}${info.docs}`);
+  }
+  return lines.join("\n");
+}
+function indent(text) {
+  return text.split("\n").map((l) => `    ${l}`).join("\n");
+}
+function renderDiagnosticsMarkdown() {
+  const lines = [];
+  lines.push("# Mangle LSP diagnostics reference");
+  lines.push("");
+  lines.push("<!-- Generated from mangle-lsp/src/analysis/diagnostics.ts by `mangle-cli explain --all --markdown`. Do not edit by hand. -->");
+  lines.push("");
+  lines.push("Every diagnostic reported by the Mangle language server and `mangle-cli check` has a stable code.");
+  lines.push("Run `mangle-cli explain <CODE>` for the same text in a terminal.");
+  lines.push("");
+  lines.push("| Code | Title | Category | Severity |");
+  lines.push("|------|-------|----------|----------|");
+  for (const info of getAllDiagnosticInfos()) {
+    lines.push(`| [${info.code}](#${info.code.toLowerCase()}) | ${info.title} | ${info.category} | ${info.severity} |`);
+  }
+  lines.push("");
+  for (const info of getAllDiagnosticInfos()) {
+    lines.push(renderExplanation(info, true));
+    lines.push("");
+  }
+  return lines.join("\n");
+}
+function editDistance(a, b) {
+  const m2 = a.length;
+  const n2 = b.length;
+  if (m2 === 0) return n2;
+  if (n2 === 0) return m2;
+  let prev = new Array(n2 + 1);
+  let cur = new Array(n2 + 1);
+  for (let j = 0; j <= n2; j++) prev[j] = j;
+  for (let i = 1; i <= m2; i++) {
+    cur[0] = i;
+    for (let j = 1; j <= n2; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + cost);
+    }
+    [prev, cur] = [cur, prev];
+  }
+  return prev[n2];
+}
+function suggestSimilar(name, candidates, max = 3) {
+  const lower = name.toLowerCase();
+  const tail = (s) => s.slice(s.lastIndexOf(":") + 1).replace(/_/g, "");
+  const scored = [];
+  for (const c of candidates) {
+    if (c === name) continue;
+    const d = editDistance(lower, c.toLowerCase());
+    const len = Math.min(name.length, c.length);
+    const threshold = len <= 3 ? 1 : len <= 6 ? 2 : Math.max(2, Math.floor(len / 3));
+    if (d <= threshold && d < len) {
+      scored.push({ c, d });
+    } else if (tail(c).length >= 3 && tail(c) === tail(lower)) {
+      scored.push({ c, d: threshold + 1 });
+    }
+  }
+  scored.sort((x, y) => x.d - y.d || x.c.localeCompare(y.c));
+  return scored.slice(0, max).map((s) => s.c);
+}
+function didYouMean(suggestions) {
+  if (suggestions.length === 0) return void 0;
+  if (suggestions.length === 1) return `did you mean '${suggestions[0]}'?`;
+  return `did you mean one of: ${suggestions.map((s) => `'${s}'`).join(", ")}?`;
 }
 
-// src/analysis/validation.ts
+// ../mangle-lsp/src/analysis/boundscheck.ts
+var COMPARISON_FAMILIES = /* @__PURE__ */ new Map([
+  ["number", ":"],
+  ["float64", ":float:"],
+  ["time", ":time:"],
+  ["duration", ":duration:"]
+]);
+function checkBounds(unit, decls, errors) {
+  const relTypes = collectRelTypes(decls);
+  const checker = new BoundsChecker(relTypes, decls, errors);
+  for (const clause of unit.clauses) {
+    try {
+      if (!clause.premises || clause.premises.length === 0) {
+        checker.checkFact(clause);
+      } else {
+        checker.checkRule(clause);
+      }
+    } catch {
+    }
+  }
+}
+function collectRelTypes(decls) {
+  const rel = /* @__PURE__ */ new Map();
+  for (const [key, decl] of decls) {
+    const arity = decl.declaredAtom.args.length;
+    const alternatives = [];
+    for (const bd of decl.bounds ?? []) {
+      if (bd.bounds.length !== arity) continue;
+      alternatives.push(bd.bounds.map(typeFromBoundTerm));
+    }
+    if (alternatives.length > 0) rel.set(key, alternatives);
+  }
+  return rel;
+}
+function predKey(atom) {
+  return `${atom.predicate.symbol}/${atom.predicate.arity}`;
+}
+function ordinal(i) {
+  return `argument ${i + 1}`;
+}
+function alternativesAt(alts, i) {
+  const types = alts.map((a) => a[i] ?? T.any);
+  if (types.length === 1) return types[0];
+  if (types.some(isUnknownType)) return T.any;
+  return { kind: "union", alts: types };
+}
+function conversionHint(actual, expected, context) {
+  const a = actual.kind === "singleton" ? actual.constantType : actual.kind === "base" ? actual.name : actual.kind === "namePrefix" ? "name" : actual.kind;
+  const expectedStr = typeToString(expected);
+  const want = (t) => expectedStr === `/${t}` || expectedStr.split(" | ").includes(`/${t}`);
+  if (want("duration") && a === "number") return "convert with fn:duration:from_seconds(N), fn:duration:from_minutes(N), fn:duration:from_hours(N) or fn:duration:from_nanos(N)";
+  if (want("duration") && a === "string") return 'parse it with fn:duration:parse("1h30m")';
+  if (want("time") && a === "string") return "parse it with fn:time:parse_rfc3339(S) or fn:time:parse_civil(S, TimeZone)";
+  if (want("time") && a === "number") return "convert Unix nanoseconds with fn:time:from_unix_nanos(N)";
+  if (want("string") && a === "number") return "convert with fn:number:to_string(N), or use fn:string:concat, which converts its arguments";
+  if (want("string") && a === "float64") return "convert with fn:float64:to_string(F)";
+  if (want("string") && a === "name") return 'convert with fn:name:to_string(N); note that /foo is a name constant, "foo" is a string';
+  if (want("name") && a === "string") return "name constants are written /like_this, not as strings; a string cannot be converted to a name";
+  if (want("number") && a === "float64") {
+    return context?.startsWith("fn:") ? "use the float variants fn:float:plus, fn:float:mult, fn:float:div for /float64 arithmetic" : "integer comparisons (<, <=, >, >=) only accept /number; use :float:lt, :float:le, :float:gt, :float:ge for /float64";
+  }
+  if (want("float64") && a === "number") {
+    return context?.startsWith(":float:") ? `:float:* comparisons do not coerce /number; write the constant with a decimal point (e.g. 30.0) or use ${context.replace(":float:", ":")} for integers` : "this function only accepts /float64 values here; write the constant with a decimal point (e.g. 2.0)";
+  }
+  if ((want("number") || want("float64")) && (a === "time" || a === "duration")) {
+    return `for /${a} values use the ${a === "time" ? ":time:lt / fn:time:*" : ":duration:lt / fn:duration:*"} built-ins`;
+  }
+  if (actual.kind !== "list" && expected.kind === "list") return "this position expects a list; wrap a single value as [X]";
+  return void 0;
+}
+var BoundsChecker = class {
+  constructor(relTypes, decls, errors) {
+    this.relTypes = relTypes;
+    this.decls = decls;
+    this.errors = errors;
+  }
+  report(e) {
+    this.errors.push(e);
+  }
+  // ------------------------------------------------------------------ facts
+  checkFact(clause) {
+    const env = /* @__PURE__ */ new Map();
+    const argTypes = clause.head.args.map((arg2) => this.typeOf(arg2, env));
+    const alts = this.relTypes.get(predKey(clause.head));
+    if (!alts) return;
+    const mismatch = this.firstMismatchPerAlternative(argTypes, alts);
+    if (mismatch === null) return;
+    const { index, expected, actual } = mismatch;
+    const arg = clause.head.args[index];
+    this.report({
+      code: "E070",
+      message: `Fact ${termToString(clause.head)} does not match the declared bounds of ${predKey(clause.head)}: ${ordinal(index)} ${termToString(arg)} is not a ${typeToString(expected)}`,
+      range: arg.range,
+      severity: "error",
+      hint: this.boundMismatchHint(arg, actual, expected, alts.length)
+    });
+  }
+  /**
+   * Returns null if some alternative is compatible with `types`, otherwise
+   * the first mismatch of the first alternative.
+   */
+  firstMismatchPerAlternative(types, alts) {
+    let first = null;
+    for (const alt of alts) {
+      const idx = types.findIndex((t, i) => alt[i] !== void 0 && isDisjoint(t, alt[i]));
+      if (idx === -1) return null;
+      if (!first) first = { index: idx, expected: alt[idx], actual: types[idx] };
+    }
+    return first;
+  }
+  boundMismatchHint(arg, actual, expected, altCount) {
+    const suffix = altCount > 1 ? ` (none of the ${altCount} bound alternatives match)` : "";
+    if (expected.kind === "namePrefix" && actual.kind === "singleton" && actual.constantType === "name") {
+      return `values of type ${expected.prefix} are names below it, e.g. ${expected.prefix}${actual.value}${suffix}`;
+    }
+    if (arg.type === "ApplyFn" && arg.function.symbol === "fn:struct") {
+      const detail = describeStructMismatch(actual, expected);
+      if (detail) return detail + suffix;
+    }
+    return (conversionHint(actual, expected) ?? `expected ${typeToString(expected)}, got ${typeToString(actual)}`) + suffix;
+  }
+  // ------------------------------------------------------------------ rules
+  checkRule(clause) {
+    const env = /* @__PURE__ */ new Map();
+    const headAlts = this.relTypes.get(predKey(clause.head));
+    const decl = this.decls.get(predKey(clause.head));
+    if (decl && headAlts) {
+      const modeAtoms = (decl.descr ?? []).filter((d) => d.predicate.symbol === "mode");
+      if (modeAtoms.length === 1) {
+        modeAtoms[0].args.forEach((m2, i) => {
+          const arg = clause.head.args[i];
+          if (m2.type === "Constant" && m2.symbol === "+" && arg && arg.type === "Variable" && arg.symbol !== "_") {
+            env.set(arg.symbol, { type: alternativesAt(headAlts, i), source: `the declaration of ${predKey(clause.head)}` });
+          }
+        });
+      }
+    }
+    for (const premise of clause.premises ?? []) {
+      this.checkPremise(premise, env);
+    }
+    if (clause.headTime) {
+      this.bindInterval(clause.headTime, env);
+    }
+    let transform = clause.transform;
+    while (transform) {
+      for (const stmt of transform.statements) {
+        const t = this.typeOfApply(stmt.fn, env, true);
+        if (stmt.variable && stmt.variable.symbol !== "_") {
+          env.set(stmt.variable.symbol, { type: t, source: `let ${stmt.variable.symbol} = ${stmt.fn.function.symbol}(...)` });
+        }
+      }
+      transform = transform.next;
+    }
+    if (headAlts) {
+      const headTypes = clause.head.args.map((arg) => this.typeOf(arg, env));
+      const mismatch = this.firstMismatchPerAlternative(headTypes, headAlts);
+      if (mismatch !== null) {
+        const arg = clause.head.args[mismatch.index];
+        const src = arg.type === "Variable" ? env.get(arg.symbol)?.source : void 0;
+        this.report({
+          code: "E071",
+          message: `Rule for ${predKey(clause.head)} derives ${ordinal(mismatch.index)} of type ${typeToString(mismatch.actual)}${src ? ` (from ${src})` : ""}, but the declaration requires ${typeToString(mismatch.expected)}`,
+          range: arg.range,
+          severity: "error",
+          hint: conversionHint(mismatch.actual, mismatch.expected) ?? "check that the head uses the right body variable, or fix the declaration"
+        });
+      }
+    }
+  }
+  bindInterval(interval, env) {
+    if (!interval) return;
+    for (const b of [interval.start, interval.end]) {
+      if (b.boundType === "variable" && b.variable && b.variable.symbol !== "_") {
+        this.bindVar(b.variable.symbol, T.time, "a temporal interval", env, b.range);
+      }
+    }
+  }
+  /** Assigns/refines a variable's type, reporting E072 on conflicts. */
+  bindVar(v, type, source, env, range) {
+    if (v === "_" || isUnknownType(type)) return;
+    const existing = env.get(v);
+    if (!existing) {
+      env.set(v, { type, source });
+      return;
+    }
+    if (isDisjoint(existing.type, type)) {
+      this.report({
+        code: "E072",
+        message: `Variable '${v}' cannot be both ${typeToString(existing.type)} (from ${existing.source}) and ${typeToString(type)} (from ${source}); this rule can never produce a result`,
+        range,
+        severity: "error",
+        hint: "check that the join uses the right columns; use different variables if the values are unrelated"
+      });
+      return;
+    }
+    env.set(v, { type: refineType(existing.type, type), source: existing.source });
+  }
+  checkPremise(premise, env) {
+    switch (premise.type) {
+      case "Atom":
+        this.checkAtom(premise, env, true);
+        return;
+      case "NegAtom":
+        this.checkAtom(premise.atom, env, false);
+        return;
+      case "Eq":
+      case "Ineq": {
+        const eq = premise;
+        const lt = this.typeOf(eq.left, env);
+        const rt = this.typeOf(eq.right, env);
+        if (eq.type === "Eq") {
+          if (eq.left.type === "Variable" && !env.has(eq.left.symbol)) {
+            this.bindVar(eq.left.symbol, rt, `${termToString(eq.right)}`, env, eq.left.range);
+            return;
+          }
+          if (eq.right.type === "Variable" && !env.has(eq.right.symbol)) {
+            this.bindVar(eq.right.symbol, lt, `${termToString(eq.left)}`, env, eq.right.range);
+            return;
+          }
+        }
+        if (isDisjoint(lt, rt)) {
+          const isEq = eq.type === "Eq";
+          this.report({
+            code: "E073",
+            message: `${termToString(eq.left)} ${isEq ? "=" : "!="} ${termToString(eq.right)} compares ${typeToString(lt)} with ${typeToString(rt)}; ${isEq ? "this is never true, so the rule can never fire" : "this is always true and has no effect"}`,
+            range: eq.range,
+            severity: "warning",
+            hint: equalityHint(lt, rt)
+          });
+        }
+        return;
+      }
+      case "TemporalLiteral": {
+        const tl = premise;
+        this.checkPremise(tl.literal, env);
+        this.bindInterval(tl.interval, env);
+        this.bindInterval(tl.operator?.interval ?? null, env);
+        return;
+      }
+      case "TemporalAtom": {
+        const ta = premise;
+        this.checkAtom(ta.atom, env, true);
+        this.bindInterval(ta.interval, env);
+        return;
+      }
+      default:
+        return;
+    }
+  }
+  checkAtom(atom, env, positive) {
+    const sym = atom.predicate.symbol;
+    if (sym.startsWith(":")) {
+      this.checkBuiltinAtom(atom, env, positive);
+      return;
+    }
+    const argTypes = atom.args.map((a) => this.typeOf(a, env));
+    const alts = this.relTypes.get(predKey(atom));
+    if (!alts) return;
+    const mismatch = this.firstMismatchPerAlternative(argTypes, alts);
+    if (mismatch !== null) {
+      const arg = atom.args[mismatch.index];
+      if (arg.type === "Variable") {
+        const existing = env.get(arg.symbol);
+        this.report({
+          code: "E072",
+          message: `Variable '${arg.symbol}' has type ${typeToString(mismatch.actual)}${existing ? ` (from ${existing.source})` : ""} but ${ordinal(mismatch.index)} of ${predKey(atom)} is declared ${typeToString(mismatch.expected)}; this ${positive ? "rule can never produce a result" : "negation is always true"}`,
+          range: arg.range,
+          severity: "error",
+          hint: "check that the join uses the right columns; use different variables if the values are unrelated"
+        });
+      } else {
+        this.report({
+          code: "E069",
+          message: `${ordinal(mismatch.index)} of ${predKey(atom)} is declared ${typeToString(mismatch.expected)}, so ${termToString(arg)} can never match`,
+          range: arg.range,
+          severity: positive ? "error" : "warning",
+          hint: this.boundMismatchHint(arg, mismatch.actual, mismatch.expected, alts.length)
+        });
+      }
+      return;
+    }
+    if (!positive) return;
+    atom.args.forEach((arg, i) => {
+      if (arg.type === "Variable") {
+        this.bindVar(arg.symbol, alternativesAt(alts, i), `${ordinal(i)} of ${predKey(atom)}`, env, arg.range);
+      }
+    });
+  }
+  checkBuiltinAtom(atom, env, positive) {
+    const sym = atom.predicate.symbol;
+    const builtin = getBuiltinPredicate(sym);
+    if (!builtin || builtin.arity !== atom.args.length) return;
+    const actual = atom.args.map((a) => this.typeOf(a, env));
+    if (positive) {
+      if (sym === ":match_field") {
+        this.checkMatchField(atom, actual, env);
+        return;
+      }
+      if (sym === ":match_pair" && actual[0].kind === "pair") {
+        const p = actual[0];
+        this.bindOutput(atom, 1, p.fst, env);
+        this.bindOutput(atom, 2, p.snd, env);
+      }
+      if (sym === ":match_cons" && actual[0].kind === "list") {
+        const l = actual[0];
+        this.bindOutput(atom, 1, l.elem, env);
+        this.bindOutput(atom, 2, l, env);
+      }
+      if (sym === ":match_entry" && actual[0].kind === "map") {
+        const m2 = actual[0];
+        this.bindOutput(atom, 2, m2.value, env);
+      }
+    }
+    const expected = builtin.argTypes;
+    if (!expected) return;
+    const subst = /* @__PURE__ */ new Map();
+    expected.forEach((e, i) => matchTypeVars(e, actual[i], subst));
+    for (let i = 0; i < expected.length; i++) {
+      const exp = applyTypeSubst(expected[i], subst);
+      const act = actual[i];
+      if (isDisjoint(act, exp)) {
+        const arg = atom.args[i];
+        this.report({
+          code: "E069",
+          message: `${ordinal(i)} of ${sym} has type ${typeToString(act)}, but ${typeToString(exp)} is expected`,
+          range: arg.range,
+          severity: "error",
+          hint: builtinPredicateHint(sym, act, exp)
+        });
+        return;
+      }
+    }
+    if (positive && sym === ":list:member" && actual[1].kind === "list") {
+      const elem = actual[1].elem;
+      const x = atom.args[0];
+      if (x.type === "Variable") this.bindVar(x.symbol, elem, `the elements of ${termToString(atom.args[1])}`, env, x.range);
+    }
+  }
+  bindOutput(atom, index, type, env) {
+    const arg = atom.args[index];
+    if (arg && arg.type === "Variable") {
+      this.bindVar(arg.symbol, type, `${atom.predicate.symbol}(...)`, env, arg.range);
+    }
+  }
+  /** Upstream infercontext: :match_field on a known struct type must name an existing field. */
+  checkMatchField(atom, actual, env) {
+    const scrutinee = actual[0];
+    const field = atom.args[1];
+    if (!field || field.type !== "Constant" || field.constantType !== "name" || field.symbol === void 0) return;
+    if (isUnknownType(scrutinee)) return;
+    if (scrutinee.kind !== "struct" && !(scrutinee.kind === "union" && scrutinee.alts.every((a) => a.kind === "struct"))) {
+      if (isDisjoint(scrutinee, T.struct([]))) {
+        this.report({
+          code: "E069",
+          message: `argument 1 of :match_field has type ${typeToString(scrutinee)}, which is not a struct`,
+          range: atom.args[0].range,
+          severity: "error",
+          hint: "only structs ({/field: value}) have fields; for maps use :match_entry(Map, Key, Value)"
+        });
+      }
+      return;
+    }
+    const ft = structFieldType(scrutinee, field.symbol);
+    if (ft === void 0) {
+      const fields = collectFieldNames(scrutinee);
+      this.report({
+        code: "E069",
+        message: `${termToString(atom.args[0])} has type ${typeToString(scrutinee)}, which has no field ${field.symbol}`,
+        range: field.range,
+        severity: "error",
+        hint: fields.length > 0 ? `available fields: ${fields.join(", ")}` : "this struct type has no fields"
+      });
+      return;
+    }
+    this.bindOutput(atom, 2, ft, env);
+  }
+  // ---------------------------------------------------------------- terms
+  /** Type of a term; function applications are checked along the way. */
+  typeOf(term, env, check = true) {
+    switch (term.type) {
+      case "Variable":
+        return term.symbol === "_" ? T.any : env.get(term.symbol)?.type ?? T.any;
+      case "Constant":
+        return typeOfConstant(term);
+      case "ApplyFn":
+        return this.typeOfApply(term, env, check);
+    }
+  }
+  typeOfApply(app, env, check) {
+    const name = app.function.symbol;
+    const argTypes = app.args.map((a) => this.typeOf(a, env, check));
+    switch (name) {
+      case "fn:list":
+        return app.args.length === 0 ? T.list(T.bot) : T.list(upperBound(argTypes));
+      case "fn:map": {
+        const keys = argTypes.filter((_, i) => i % 2 === 0);
+        const vals = argTypes.filter((_, i) => i % 2 === 1);
+        return T.map(upperBound(keys), upperBound(vals));
+      }
+      case "fn:struct": {
+        const fields = [];
+        for (let i = 0; i + 1 < app.args.length; i += 2) {
+          const key = app.args[i];
+          if (key.type !== "Constant" || key.constantType !== "name" || key.symbol === void 0) {
+            return T.struct([], false);
+          }
+          fields.push({ name: key.symbol, type: argTypes[i + 1], optional: false });
+        }
+        return T.struct(fields, true);
+      }
+      case "fn:tuple":
+        return T.tuple(...argTypes);
+      case "fn:struct:get": {
+        const field = app.args[1];
+        if (field && field.type === "Constant" && field.constantType === "name" && field.symbol !== void 0) {
+          return structFieldType(argTypes[0], field.symbol) ?? T.any;
+        }
+        return T.any;
+      }
+      case "fn:collect":
+      case "fn:collect_distinct":
+        if (app.args.length !== 1) return T.list(T.any);
+        break;
+      default:
+        break;
+    }
+    const f = getBuiltinFunction(name);
+    if (!f || !f.signature) return T.any;
+    const subst = /* @__PURE__ */ new Map();
+    argTypes.forEach((t, i) => {
+      const p = getParamType(f, i);
+      if (p) matchTypeVars(p, t, subst);
+    });
+    if (check) {
+      for (let i = 0; i < argTypes.length; i++) {
+        const p = getParamType(f, i);
+        if (!p) continue;
+        const arg = app.args[i];
+        if (f.unitArg && f.unitArg.index === i && arg.type === "Constant") continue;
+        const expected = applyTypeSubst(p, subst);
+        if (isDisjoint(argTypes[i], expected)) {
+          const names = f.paramNames ?? [];
+          const src = arg.type === "Variable" ? env.get(arg.symbol)?.source : void 0;
+          this.report({
+            code: "E068",
+            message: `${ordinal(i)}${names[i] ? ` (${names[i]})` : ""} of ${name} has type ${typeToString(argTypes[i])}${src ? ` (from ${src})` : ""}, but ${typeToString(expected)} is expected`,
+            range: arg.range,
+            severity: "error",
+            hint: conversionHint(argTypes[i], expected, name) ?? `signature: ${formatFunctionSignature(f)}`
+          });
+          break;
+        }
+      }
+    }
+    return applyTypeSubst(f.signature.result, subst);
+  }
+};
+function collectFieldNames(t) {
+  const names = /* @__PURE__ */ new Set();
+  const visit = (x) => {
+    if (x.kind === "struct") x.fields.forEach((f) => names.add(f.name));
+    if (x.kind === "union") x.alts.forEach(visit);
+  };
+  visit(t);
+  return [...names];
+}
+function describeStructMismatch(actual, expected) {
+  if (actual.kind !== "struct") return void 0;
+  const alts = expected.kind === "union" ? expected.alts : [expected];
+  const structs = alts.filter((a) => a.kind === "struct");
+  if (structs.length === 0) return void 0;
+  const tagField = structs[0].fields.find((f) => f.type.kind === "singleton" && structs.every((s) => s.fields.some((g) => g.name === f.name && g.type.kind === "singleton")));
+  if (tagField && structs.length > 0) {
+    const tags = structs.map((s) => {
+      const f = s.fields.find((g) => g.name === tagField.name);
+      return typeToString(f.type);
+    });
+    const litTag = actual.fields.find((f) => f.name === tagField.name);
+    if (!litTag) return `tagged union value must set the tag field ${tagField.name} to one of ${tags.join(", ")}`;
+    const tagStr = typeToString(litTag.type);
+    const variant = structs.find((s) => {
+      const f = s.fields.find((g) => g.name === tagField.name);
+      return typeToString(f.type) === tagStr;
+    });
+    if (!variant) return `unknown tag ${tagStr} for ${tagField.name}; valid tags: ${tags.join(", ")}`;
+    return describeStructFields(actual, variant, `variant ${tagStr}`);
+  }
+  return describeStructFields(actual, structs[0], "the struct type");
+}
+function describeStructFields(literal, type, what) {
+  const missing = type.fields.filter((f) => !f.optional && !literal.fields.some((g) => g.name === f.name)).map((f) => f.name);
+  if (missing.length > 0) return `${what} requires field${missing.length > 1 ? "s" : ""} ${missing.join(", ")}`;
+  for (const f of literal.fields) {
+    const tf = type.fields.find((g) => g.name === f.name);
+    if (tf && isDisjoint(f.type, tf.type)) {
+      return `field ${f.name} of ${what} must be ${typeToString(tf.type)}, got ${typeToString(f.type)}`;
+    }
+  }
+  return `expected ${typeToString(type)}`;
+}
+function builtinPredicateHint(sym, actual, expected) {
+  const cls = actual.kind === "base" ? actual.name : actual.kind === "singleton" ? actual.constantType : actual.kind === "namePrefix" ? "name" : void 0;
+  const rel = /^(?::|:float:|:time:|:duration:)(lt|le|gt|ge)$/.exec(sym);
+  if (rel && cls && COMPARISON_FAMILIES.has(cls)) {
+    const right = `${COMPARISON_FAMILIES.get(cls)}${rel[1]}`;
+    if (right !== sym) {
+      const extra = sym.startsWith(":float:") && cls === "number" ? " (:float:* comparisons do not coerce /number; write float constants like 30.0)" : "";
+      return `use ${right} to compare ${typeToString(T[cls])} values${extra}`;
+    }
+  }
+  if (sym === ":match_prefix" && cls === "string") return 'use :string:starts_with(S, "prefix") for strings; :match_prefix is for name constants';
+  if (sym.startsWith(":string:") && cls === "name") return "names are not strings; use :match_prefix(N, /prefix) for name prefixes, or convert with fn:name:to_string(N)";
+  return conversionHint(actual, expected, sym);
+}
+function equalityHint(a, b) {
+  const classOf = (t) => t.kind === "base" ? t.name : t.kind === "singleton" ? t.constantType : t.kind === "namePrefix" ? "name" : void 0;
+  const ca = classOf(a);
+  const cb = classOf(b);
+  if (ca === "name" && cb === "string" || ca === "string" && cb === "name") {
+    return '/active is a name constant and "active" is a string; they are never equal - use the same kind on both sides';
+  }
+  if (ca === "number" && cb === "float64" || ca === "float64" && cb === "number") {
+    return "equality never converts: 1 and 1.0 are different values; convert explicitly or write the constant in the matching form";
+  }
+  if (ca === "number" && cb === "string" || ca === "string" && cb === "number") {
+    return 'equality never converts: "1" and 1 are different values; use fn:number:to_string(N) to compare as strings';
+  }
+  return "Mangle equality is syntactic and never converts between types";
+}
+
+// ../mangle-lsp/src/analysis/lints.ts
+function checkClauseLints(unit, errors) {
+  for (const clause of unit.clauses) {
+    if (!clause.premises || clause.premises.length === 0) continue;
+    if (!isAggregation(clause)) {
+      checkSingletonVariables(clause, errors);
+    }
+    checkDuplicatePremises(clause, errors);
+    checkCollectThenLen(clause, errors);
+    checkWildcardsInAggregation(clause, errors);
+  }
+}
+function isAggregation(clause) {
+  const first = clause.transform?.statements[0];
+  return !!first && first.variable === null && first.fn.function.symbol === "fn:group_by";
+}
+var MULTIPLICITY_SENSITIVE_REDUCERS = /* @__PURE__ */ new Set([
+  "fn:count",
+  "fn:sum",
+  "fn:float:sum",
+  "fn:duration:sum",
+  "fn:avg",
+  "fn:collect"
+]);
+function checkWildcardsInAggregation(clause, errors) {
+  if (!isAggregation(clause)) return;
+  const premises = clause.premises ?? [];
+  const singleAtom = premises.length === 1 && premises[0].type === "Atom";
+  if (singleAtom) return;
+  const reducers = (clause.transform?.statements ?? []).map((s) => s.fn.function.symbol).filter((n2) => MULTIPLICITY_SENSITIVE_REDUCERS.has(n2));
+  if (reducers.length === 0) return;
+  for (const p of premises) {
+    const atom = p.type === "Atom" ? p : p.type === "TemporalLiteral" && p.literal.type === "Atom" ? p.literal : null;
+    if (!atom || atom.predicate.symbol.startsWith(":")) continue;
+    const wildcards = atom.args.filter((a) => a.type === "Variable" && a.symbol === "_");
+    if (wildcards.length === 0) continue;
+    errors.push({
+      code: "E080",
+      message: `'_' in '${termToString(atom)}' is dropped before aggregating: rows that differ only in those columns are merged, so ${[...new Set(reducers)].join(", ")} ${reducers.length > 1 ? "see" : "sees"} each distinct combination of named variables once`,
+      range: wildcards[0].range,
+      severity: "warning",
+      hint: `if every ${atom.predicate.symbol} row must count, name the column (e.g. ${atom.predicate.symbol === "sale" ? "Id" : "Row"}); keep '_' only if merging such rows is intended`
+    });
+  }
+}
+function addOcc(map, name, range, kind) {
+  if (name === "_") return;
+  const list = map.get(name) ?? [];
+  list.push({ range, kind });
+  map.set(name, list);
+}
+function visitTerm(term, kind, map) {
+  if (term.type === "Variable") {
+    addOcc(map, term.symbol, term.range, kind);
+  } else if (term.type === "ApplyFn") {
+    for (const arg of term.args) visitTerm(arg, kind, map);
+  }
+}
+function visitInterval(interval, kind, map) {
+  if (!interval) return;
+  for (const b of [interval.start, interval.end]) {
+    if (b.boundType === "variable" && b.variable) addOcc(map, b.variable.symbol, b.variable.range, kind);
+  }
+}
+function visitPremise(premise, map) {
+  switch (premise.type) {
+    case "Atom": {
+      const atom = premise;
+      const kind = atom.predicate.symbol.startsWith(":") ? "other" : "positive";
+      for (const arg of atom.args) {
+        visitTerm(arg, arg.type === "Variable" ? kind : "other", map);
+      }
+      return;
+    }
+    case "NegAtom":
+      for (const arg of premise.atom.args) visitTerm(arg, "other", map);
+      return;
+    case "Eq":
+    case "Ineq": {
+      const eq = premise;
+      visitTerm(eq.left, "other", map);
+      visitTerm(eq.right, "other", map);
+      return;
+    }
+    case "TemporalLiteral": {
+      const tl = premise;
+      visitPremise(tl.literal, map);
+      visitInterval(tl.interval, "positive", map);
+      visitInterval(tl.operator?.interval, "positive", map);
+      return;
+    }
+    case "TemporalAtom": {
+      const ta = premise;
+      visitPremise(ta.atom, map);
+      visitInterval(ta.interval, "positive", map);
+      return;
+    }
+    default:
+      return;
+  }
+}
+function checkSingletonVariables(clause, errors) {
+  const occ = /* @__PURE__ */ new Map();
+  for (const arg of clause.head.args) visitTerm(arg, "head", occ);
+  visitInterval(clause.headTime, "head", occ);
+  for (const p of clause.premises ?? []) visitPremise(p, occ);
+  let transform = clause.transform;
+  while (transform) {
+    for (const stmt of transform.statements) {
+      if (stmt.variable) addOcc(occ, stmt.variable.symbol, stmt.variable.range, "letDef");
+      visitTerm(stmt.fn, "other", occ);
+    }
+    transform = transform.next;
+  }
+  const multi = [...occ.entries()].filter(([, list]) => list.length > 1).map(([name]) => name);
+  for (const [name, list] of occ) {
+    if (list.length !== 1) continue;
+    const only = list[0];
+    if (only.kind === "positive") {
+      const similar = suggestSimilar(name, multi, 1);
+      errors.push({
+        code: "E074",
+        message: `Variable '${name}' is used only once in this rule`,
+        range: only.range,
+        severity: "warning",
+        hint: similar.length > 0 ? `is it a typo of '${similar[0]}'? If the value is irrelevant, write '_' instead` : `if the value is irrelevant write '_'; otherwise it is probably meant to join with another premise or appear in the head`,
+        fixes: [
+          ...similar.length > 0 ? [{ title: `Rename to '${similar[0]}'`, range: only.range, newText: similar[0] }] : [],
+          { title: `Replace '${name}' with '_'`, range: only.range, newText: "_" }
+        ]
+      });
+    } else if (only.kind === "letDef") {
+      errors.push({
+        code: "E074",
+        message: `Transform result '${name}' is computed but never used`,
+        range: only.range,
+        severity: "warning",
+        hint: `add '${name}' to the head of the rule, or remove the let-statement`
+      });
+    }
+  }
+}
+function checkDuplicatePremises(clause, errors) {
+  const seen = /* @__PURE__ */ new Set();
+  for (const p of clause.premises ?? []) {
+    const key = termToString(p);
+    if (seen.has(key)) {
+      errors.push({
+        code: "E077",
+        message: `Premise '${key}' appears more than once in this rule`,
+        range: p.range,
+        severity: "warning",
+        hint: "the repetition never changes the result; remove it"
+      });
+    }
+    seen.add(key);
+  }
+}
+function checkCollectThenLen(clause, errors) {
+  const transform = clause.transform;
+  if (!transform) return;
+  const headVars = /* @__PURE__ */ new Set();
+  for (const arg of clause.head.args) {
+    const occ = /* @__PURE__ */ new Map();
+    visitTerm(arg, "head", occ);
+    for (const v of occ.keys()) headVars.add(v);
+  }
+  const collected = /* @__PURE__ */ new Map();
+  for (const stmt of transform.statements) {
+    const fnName = stmt.fn.function.symbol;
+    if (stmt.variable && fnName === "fn:collect") {
+      collected.set(stmt.variable.symbol, fnName);
+      continue;
+    }
+    if (fnName === "fn:list:len" && stmt.fn.args.length === 1) {
+      const arg = stmt.fn.args[0];
+      if (arg.type !== "Variable") continue;
+      const reducer = collected.get(arg.symbol);
+      if (!reducer || headVars.has(arg.symbol)) continue;
+      const usedElsewhere = transform.statements.some((s) => s !== stmt && s.fn.args.some((a) => termUsesVar(a, arg.symbol)) && !(s.variable?.symbol === arg.symbol));
+      if (usedElsewhere) continue;
+      const replacement = "fn:count()";
+      errors.push({
+        code: "E076",
+        message: `'${arg.symbol}' is collected only to take its length; use ${replacement} instead`,
+        range: stmt.fn.range,
+        severity: "info",
+        hint: `replace 'let ${arg.symbol} = ${reducer}(...)' and '${stmt.variable ? `let ${stmt.variable.symbol} = ` : ""}fn:list:len(${arg.symbol})' with '${stmt.variable ? `let ${stmt.variable.symbol} = ` : ""}${replacement}'`,
+        fixes: [{ title: `Use ${replacement}`, range: stmt.fn.range, newText: replacement }]
+      });
+    }
+  }
+}
+function termUsesVar(term, name) {
+  if (term.type === "Variable") return term.symbol === name;
+  if (term.type === "ApplyFn") return term.args.some((a) => termUsesVar(a, name));
+  return false;
+}
+
+// ../mangle-lsp/src/analysis/validation.ts
 var STRING_CONSTANT_PREDICATES = /* @__PURE__ */ new Set([
   ":match_prefix",
   ":string:starts_with",
@@ -36572,20 +41674,6 @@ var FIELD_SELECTOR_PREDICATES = /* @__PURE__ */ new Set([
   ":match_field",
   ":match_entry"
 ]);
-var REDUCER_FUNCTIONS2 = /* @__PURE__ */ new Set([
-  "fn:sum",
-  "fn:count",
-  "fn:max",
-  "fn:min",
-  "fn:avg",
-  "fn:collect",
-  "fn:collect_distinct",
-  "fn:collect_to_map",
-  "fn:pick_any",
-  "fn:float:sum",
-  "fn:float:max",
-  "fn:float:min"
-]);
 var VALID_ESCAPES = /* @__PURE__ */ new Set(["n", "t", "r", "\\", '"', "'"]);
 function validate(unit) {
   const errors = [];
@@ -36594,27 +41682,92 @@ function validate(unit) {
   for (const decl of unit.decls) {
     const key = `${decl.declaredAtom.predicate.symbol}/${decl.declaredAtom.predicate.arity}`;
     if (declaredPredicates.has(key)) {
+      const first = declaredPredicates.get(key);
       errors.push({
         code: "E044",
-        message: `Predicate '${key}' declared more than once`,
+        message: `Predicate '${key}' declared more than once (first declaration on line ${first.range.start.line})`,
         range: decl.range,
-        severity: "error"
+        severity: "error",
+        hint: "merge the declarations into one Decl; alternative type signatures are written as several bound [...] lists on the same Decl"
       });
+      continue;
     }
     declaredPredicates.set(key, decl);
   }
   for (const decl of unit.decls) {
     validateDeclaration(decl, errors);
   }
+  const reportedUndefined = /* @__PURE__ */ new Set();
   for (const clause of unit.clauses) {
-    validateClause(clause, symbolTable, errors);
+    validateClause(clause, symbolTable, errors, declaredPredicates, reportedUndefined);
+  }
+  for (const clause of unit.clauses) {
+    const pred2 = clause.head.predicate;
+    const predKey2 = `${pred2.symbol}/${pred2.arity}`;
+    const decl = declaredPredicates.get(predKey2);
+    if (decl && clause.headTime && !isEternalInterval(clause.headTime)) {
+      if (!isDeclTemporal(decl) && !isDeclMaybeTemporal(decl)) {
+        errors.push({
+          code: "E058",
+          message: `Predicate '${pred2.symbol}' is not declared temporal but used with temporal annotation`,
+          range: clause.head.range,
+          severity: "error"
+        });
+      }
+    }
+    if (decl && (isDeclTemporal(decl) || isDeclMaybeTemporal(decl))) {
+      if (!clause.headTime && clause.premises && clause.premises.length > 0) {
+        errors.push({
+          code: "E059",
+          message: `Temporal predicate '${pred2.symbol}' defined without temporal annotation`,
+          range: clause.head.range,
+          severity: "error"
+        });
+      }
+    }
   }
   validateArityConsistency(unit, errors);
+  checkClauseLints(unit, errors);
+  checkBounds(unit, declaredPredicates, errors);
   return { errors, symbolTable };
 }
+var MODE_SYMBOLS = /* @__PURE__ */ new Map([
+  ["+", "input"],
+  ["-", "output"],
+  ["?", "input_output"]
+]);
+function getDeclaredModes(decl) {
+  const modes = [];
+  for (const d of decl.descr ?? []) {
+    if (d.predicate.symbol !== "mode") continue;
+    const mode = [];
+    let ok = d.args.length > 0;
+    for (const a of d.args) {
+      const m2 = a.type === "Constant" && a.constantType === "string" ? MODE_SYMBOLS.get(a.symbol ?? "") : void 0;
+      if (!m2) {
+        ok = false;
+        break;
+      }
+      mode.push(m2);
+    }
+    if (ok) modes.push(mode);
+  }
+  return modes;
+}
+function unifyModes(modes) {
+  if (modes.length === 0) return [];
+  const first = modes[0];
+  return first.map((m2, i) => modes.every((other) => other[i] === m2) ? m2 : "input_output");
+}
+function packageOf(symbol) {
+  const lastDot = symbol.lastIndexOf(".");
+  return lastDot === -1 ? "" : symbol.slice(0, lastDot);
+}
+var KNOWN_DESCRIPTORS = new Set(Object.values(DESCRIPTORS));
 function validateDeclaration(decl, errors) {
   const declAtom = decl.declaredAtom;
   const descriptors = decl.descr || [];
+  const expectedArgs = /* @__PURE__ */ new Map();
   for (let i = 0; i < declAtom.args.length; i++) {
     const arg = declAtom.args[i];
     if (arg && arg.type !== "Variable") {
@@ -36624,16 +41777,140 @@ function validateDeclaration(decl, errors) {
         range: arg.range,
         severity: "error"
       });
+    } else if (arg && arg.type === "Variable") {
+      expectedArgs.set(arg.symbol, arg);
     }
   }
   if (decl.bounds && decl.bounds.length > 0) {
-    if (decl.bounds.length !== declAtom.args.length) {
+    for (const boundDecl of decl.bounds) {
+      if (boundDecl.bounds.length !== declAtom.args.length) {
+        errors.push({
+          code: "E025",
+          message: `Declaration has ${declAtom.args.length} arguments but ${boundDecl.bounds.length} bounds`,
+          range: declAtom.range,
+          severity: "error"
+        });
+      }
+      for (let i = 0; i < boundDecl.bounds.length; i++) {
+        const bound = boundDecl.bounds[i];
+        if (!bound) continue;
+        for (const problem of checkWellformedBound(bound)) {
+          const hint = bound.type === "ApplyFn" || problem.message.includes("type constructor") ? typeConstructorHint(problem.message) : void 0;
+          errors.push({
+            code: "E061",
+            message: `In bound declaration (argument ${i + 1}): ${problem.message}`,
+            range: problem.range,
+            severity: "error",
+            hint
+          });
+        }
+      }
+    }
+  }
+  for (const descrAtom of descriptors) {
+    const sym = descrAtom.predicate.symbol;
+    if (!KNOWN_DESCRIPTORS.has(sym)) {
+      const hint = didYouMean(suggestSimilar(sym, KNOWN_DESCRIPTORS));
       errors.push({
-        code: "E025",
-        message: `Declaration has ${declAtom.args.length} arguments but ${decl.bounds.length} bounds`,
-        range: declAtom.range,
-        severity: "error"
+        code: "E078",
+        message: `Unknown descriptor '${sym}' in descr[...] is ignored by Mangle`,
+        range: descrAtom.range,
+        severity: "warning",
+        hint: hint ?? `known descriptors: ${[...KNOWN_DESCRIPTORS].filter((d) => !d.startsWith("internal:")).join(", ")}`
       });
+    }
+  }
+  for (const descrAtom of descriptors) {
+    if (descrAtom.predicate.symbol !== "mode") continue;
+    const bad = descrAtom.args.filter((a) => !(a.type === "Constant" && a.constantType === "string" && MODE_SYMBOLS.has(a.symbol ?? "")));
+    if (bad.length > 0 || descrAtom.args.length !== declAtom.args.length) {
+      const example = `mode(${declAtom.args.map(() => "'+'").join(", ")})`;
+      errors.push({
+        code: "E079",
+        message: bad.length > 0 ? `Invalid mode declaration: each argument must be the string '+', '-' or '?'` : `Invalid mode declaration: expected ${declAtom.args.length} modes (one per argument), got ${descrAtom.args.length}`,
+        range: descrAtom.range,
+        severity: "warning",
+        hint: `write the modes as quoted strings, one per argument, e.g. ${example}; '+' = input (must be bound), '-' = output, '?' = either`
+      });
+    }
+  }
+  let seenDoc = false;
+  const expectedArgsForArgCheck = new Map(expectedArgs);
+  let hasAnyArgDescr = false;
+  for (const descrAtom of descriptors) {
+    const sym = descrAtom.predicate.symbol;
+    if (sym === "doc") {
+      if (seenDoc) {
+        errors.push({
+          code: "E051",
+          message: `descr[] can only have one doc atom`,
+          range: descrAtom.range,
+          severity: "error"
+        });
+      }
+      seenDoc = true;
+      if (descrAtom.args.length === 0) {
+        errors.push({
+          code: "E052",
+          message: `descr atom must not be empty`,
+          range: descrAtom.range,
+          severity: "error"
+        });
+        continue;
+      }
+      for (const docArg of descrAtom.args) {
+        if (docArg.type !== "Constant" || docArg.constantType !== "string") {
+          errors.push({
+            code: "E053",
+            message: `expected string constant in doc(), got ${docArg.type}`,
+            range: docArg.range,
+            severity: "error"
+          });
+        }
+      }
+    } else if (sym === "arg") {
+      hasAnyArgDescr = true;
+      if (descrAtom.args.length < 2) {
+        errors.push({
+          code: "E054",
+          message: `arg atom must have at least 2 args`,
+          range: descrAtom.range,
+          severity: "error"
+        });
+        continue;
+      }
+      const firstArg = descrAtom.args[0];
+      if (firstArg.type !== "Variable") {
+        errors.push({
+          code: "E055",
+          message: `arg atom must have variable as first arg, got ${firstArg.type}`,
+          range: firstArg.range,
+          severity: "error"
+        });
+        continue;
+      }
+      const varName = firstArg.symbol;
+      if (!expectedArgsForArgCheck.has(varName)) {
+        errors.push({
+          code: "E056",
+          message: `arg atom for an unknown variable ${varName}`,
+          range: firstArg.range,
+          severity: "error"
+        });
+        continue;
+      }
+      expectedArgsForArgCheck.delete(varName);
+      for (let i = 1; i < descrAtom.args.length; i++) {
+        const argArg = descrAtom.args[i];
+        if (argArg.type !== "Constant" || argArg.constantType !== "string") {
+          errors.push({
+            code: "E053",
+            message: `expected string constant in arg(), got ${argArg.type}`,
+            range: argArg.range,
+            severity: "error"
+          });
+        }
+      }
     }
   }
   const isExternal = descriptors.some(
@@ -36648,49 +41925,101 @@ function validateDeclaration(decl, errors) {
         code: "E026",
         message: `External predicate must have exactly one mode declaration, got ${modeCount}`,
         range: declAtom.range,
-        severity: "error"
+        severity: "error",
+        hint: `add exactly one descriptor such as mode(${declAtom.args.map((_, i) => i === 0 ? "'+'" : "'-'").join(", ")}) to tell the host which arguments are inputs`
       });
     }
   }
-  if (declAtom.predicate.symbol === "Package") {
-    for (const desc of descriptors) {
-      if (desc.predicate.symbol === "name" && desc.args.length > 0) {
-        const nameArg = desc.args[0];
-        if (nameArg && nameArg.type === "Constant") {
-          const constant = nameArg;
-          if (constant.symbol && constant.symbol !== constant.symbol.toLowerCase()) {
-            errors.push({
-              code: "E031",
-              message: `Package names must be lowercase: '${constant.symbol}'`,
-              range: nameArg.range,
-              severity: "error"
-            });
-          }
-        }
+  const isSynthetic = descriptors.some((d) => d.predicate.symbol === "synthetic");
+  if (!isSynthetic && hasAnyArgDescr && expectedArgsForArgCheck.size > 0 && expectedArgsForArgCheck.size !== declAtom.args.length) {
+    const missingVars = [...expectedArgsForArgCheck.keys()].join(", ");
+    errors.push({
+      code: "E057",
+      message: `missing arg atoms for arguments: ${missingVars}`,
+      range: declAtom.range,
+      severity: "warning"
+    });
+  }
+  const nameDescr = descriptors.find((d) => d.predicate.symbol === "name");
+  if (nameDescr && nameDescr.args.length > 0) {
+    const nameArg = nameDescr.args[0];
+    if (nameArg && nameArg.type === "Constant") {
+      const nameVal = nameArg.symbol ?? "";
+      if (nameVal !== nameVal.toLowerCase()) {
+        errors.push({
+          code: "E031",
+          message: `Package name '${nameVal}' must be lowercase`,
+          range: nameArg.range,
+          severity: "error"
+        });
       }
     }
   }
 }
-function validateClause(clause, symbolTable, errors) {
-  const boundVars = /* @__PURE__ */ new Set();
+function nameRangeOf(range, name) {
+  return {
+    start: range.start,
+    end: {
+      line: range.start.line,
+      column: range.start.column + name.length,
+      offset: range.start.offset + name.length
+    }
+  };
+}
+function validateClause(clause, symbolTable, errors, declaredPredicates, reportedUndefined = /* @__PURE__ */ new Set()) {
+  const decls = declaredPredicates ?? /* @__PURE__ */ new Map();
+  const headKey = `${clause.head.predicate.symbol}/${clause.head.predicate.arity}`;
+  const headDecl = decls.get(headKey);
+  const headMode = headDecl ? unifyModes(getDeclaredModes(headDecl)) : [];
+  const inputHeadVars = [];
+  const preBoundForRewrite = [];
+  headMode.forEach((m2, i) => {
+    const arg = clause.head.args[i];
+    if (arg && arg.type === "Variable" && arg.symbol !== "_") {
+      if (m2 === "input") inputHeadVars.push(arg.symbol);
+      if (m2 === "input" || m2 === "input_output") preBoundForRewrite.push(arg.symbol);
+    }
+  });
+  const { clause: rewritten, droppedNegations } = rewriteClauseWithInfo(clause, preBoundForRewrite);
+  const boundVars = new Set(inputHeadVars);
   const headVars = /* @__PURE__ */ new Set();
-  collectAtomVariables(clause.head, headVars);
-  for (const arg of clause.head.args) {
+  const uf = UnionFind.create();
+  const ctx = {
+    symbolTable,
+    errors,
+    decls,
+    uf,
+    headPackage: packageOf(clause.head.predicate.symbol),
+    inputPositionVars: /* @__PURE__ */ new Map(),
+    reportedUndefined
+  };
+  collectAtomVariables(rewritten.head, headVars);
+  if (rewritten.headTime) {
+    if (rewritten.headTime.start.boundType === "variable" && rewritten.headTime.start.variable) {
+      headVars.add(rewritten.headTime.start.variable.symbol);
+    }
+    if (rewritten.headTime.end.boundType === "variable" && rewritten.headTime.end.variable) {
+      headVars.add(rewritten.headTime.end.variable.symbol);
+    }
+  }
+  for (const arg of rewritten.head.args) {
     if (arg.type === "Variable" && arg.symbol === "_") {
       errors.push({
         code: "E039",
         message: `Wildcard '_' in head is unusual - this argument will be unbound in derived facts`,
         range: arg.range,
-        severity: "warning"
+        severity: "warning",
+        hint: "use a variable that is bound in the body, or remove this column from the head predicate"
       });
     }
   }
-  if (clause.transform && (!clause.premises || clause.premises.length === 0)) {
+  if (rewritten.transform && (!rewritten.premises || rewritten.premises.length === 0)) {
     errors.push({
       code: "E045",
       message: `Cannot have a transform without a body`,
-      range: clause.transform.range,
-      severity: "error"
+      range: rewritten.transform.range,
+      severity: "error",
+      hint: "a transform (|> ...) post-processes the rows of a rule body; add a body or compute the value directly"
     });
   }
   if (!clause.premises || clause.premises.length === 0) {
@@ -36699,56 +42028,106 @@ function validateClause(clause, symbolTable, errors) {
         errors.push({
           code: "E001",
           message: `Variable '${v}' in fact head must be ground (facts cannot have variables)`,
-          range: clause.head.range,
-          severity: "error"
+          range: rewritten.head.range,
+          severity: "error",
+          hint: `replace '${v}' with a constant, or add a body that binds it: ${clause.head.predicate.symbol}(...) :- source(${v}).`
         });
       }
     }
     return;
   }
-  for (const premise of clause.premises) {
-    validatePremise(premise, boundVars, symbolTable, errors);
+  for (const premise of rewritten.premises ?? []) {
+    validatePremise(premise, boundVars, ctx);
+  }
+  for (const dropped of droppedNegations) {
+    const negAtom = dropped.type === "NegAtom" ? dropped : null;
+    if (!negAtom) continue;
+    const negVars = /* @__PURE__ */ new Set();
+    collectAtomVariables(negAtom.atom, negVars);
+    const unbound = [...negVars].filter((v) => !boundVars.has(v));
+    for (const v of unbound) {
+      errors.push({
+        code: "E003",
+        message: `Variable '${v}' in negated atom '!${negAtom.atom.predicate.symbol}(...)' is never bound by a positive premise; upstream Mangle silently drops this negation`,
+        range: negAtom.range,
+        severity: "error",
+        hint: `bind '${v}' with a positive atom, or if you mean "no ${negAtom.atom.predicate.symbol} with any ${v}", replace '${v}' with '_' (and project the columns you need through a helper predicate)`
+      });
+    }
+    validateAtom(negAtom.atom, boundVars, ctx, { suppressUnbound: true });
   }
   const bodyVars = /* @__PURE__ */ new Set();
   for (const premise of clause.premises) {
     collectPremiseVariables(premise, bodyVars);
   }
-  if (clause.transform) {
-    validateTransform(clause.transform, boundVars, errors, bodyVars);
-  }
-  for (const v of headVars) {
-    if (v !== "_" && !boundVars.has(v)) {
+  if (rewritten.transform) {
+    if (rewritten.transform.next) {
       errors.push({
-        code: "E002",
-        message: `Variable '${v}' in head is not bound in the body (range restriction violation)`,
-        range: clause.head.range,
-        severity: "error"
+        code: "E048",
+        message: "Composing multiple transforms is not supported",
+        range: rewritten.transform.next.range,
+        severity: "error",
+        hint: "split the computation into two rules: the first derives a helper predicate with one transform, the second applies the next transform to it"
       });
     }
+    validateTransform(rewritten.transform, boundVars, errors, bodyVars, headVars);
+  }
+  for (const v of headVars) {
+    if (v === "_") continue;
+    if (boundVars.has(v)) continue;
+    const dummyVar = { type: "Variable", symbol: v, range: rewritten.head.range };
+    if (uf.isBound(dummyVar, boundVars)) continue;
+    const similar = suggestSimilar(v, [...bodyVars].filter((b) => !headVars.has(b)), 1);
+    const headArg = rewritten.head.args.find((a) => a.type === "Variable" && a.symbol === v);
+    errors.push({
+      code: "E002",
+      message: `Variable '${v}' in head is not bound in the body (range restriction violation)`,
+      range: rewritten.head.range,
+      severity: "error",
+      hint: similar.length > 0 ? `the body has a similarly named variable '${similar[0]}' - is '${v}' a typo? Otherwise bind '${v}' with a positive body atom, an equality or a |> let transform` : `bind '${v}' with a positive body atom (e.g. source(${v})), an equality (${v} = ...), or a |> let transform`,
+      fixes: similar.length > 0 && headArg ? [{ title: `Rename '${v}' to '${similar[0]}'`, range: headArg.range, newText: similar[0] }] : void 0
+    });
+  }
+  for (const [v, range] of ctx.inputPositionVars) {
+    if (boundVars.has(v) || headVars.has(v)) continue;
+    const dummyVar = { type: "Variable", symbol: v, range };
+    if (uf.isBound(dummyVar, boundVars)) continue;
+    errors.push({
+      code: "E066",
+      message: `Variable '${v}' is never bound: it only appears in input ('+') positions of mode-declared predicates`,
+      range,
+      severity: "error",
+      hint: `bind '${v}' with a positive atom or an equality before this premise`
+    });
   }
 }
-function validatePremise(premise, boundVars, symbolTable, errors) {
+function validatePremise(premise, boundVars, ctx) {
+  const errors = ctx.errors;
   switch (premise.type) {
     case "Atom": {
       const atom = premise;
       if (isComparisonAtom(atom)) {
+        const unbound = /* @__PURE__ */ new Set();
         for (const arg of atom.args) {
           const argVars = /* @__PURE__ */ new Set();
           collectTermVariables(arg, argVars);
           for (const v of argVars) {
-            if (v !== "_" && !boundVars.has(v)) {
-              errors.push({
-                code: "E004",
-                message: `Variable '${v}' must be bound before comparison`,
-                range: atom.range,
-                severity: "error"
-              });
-            }
+            if (v !== "_" && !boundVars.has(v)) unbound.add(v);
           }
         }
+        for (const v of unbound) {
+          errors.push({
+            code: "E004",
+            message: `Variable '${v}' must be bound before comparison`,
+            range: atom.range,
+            severity: "error",
+            hint: `comparisons only test values; move this comparison after the premise that binds '${v}', or bind '${v}' with a positive atom`
+          });
+        }
+        validateAtom(atom, boundVars, ctx, { suppressUnbound: unbound.size > 0 });
       } else {
-        validateAtom(atom, boundVars, symbolTable, errors);
-        collectAtomVariables(atom, boundVars);
+        validateAtom(atom, boundVars, ctx);
+        bindAtomVariables(atom, boundVars, ctx);
       }
       break;
     }
@@ -36756,66 +42135,127 @@ function validatePremise(premise, boundVars, symbolTable, errors) {
       const negAtom = premise;
       const negVars = /* @__PURE__ */ new Set();
       collectAtomVariables(negAtom.atom, negVars);
+      let anyUnbound = false;
       for (const v of negVars) {
         if (v !== "_" && !boundVars.has(v)) {
+          anyUnbound = true;
           errors.push({
             code: "E003",
             message: `Variable '${v}' in negated atom must be bound before the negation`,
             range: negAtom.range,
-            severity: "error"
+            severity: "error",
+            hint: `bind '${v}' with a positive atom of the same rule; use '_' for "any value"`
           });
         }
       }
-      validateAtom(negAtom.atom, boundVars, symbolTable, errors);
+      validateAtom(negAtom.atom, boundVars, ctx, { suppressUnbound: anyUnbound });
       break;
     }
     case "Eq": {
       const eq = premise;
-      handleEquality(eq.left, eq.right, boundVars, errors, eq.range);
+      handleEquality(eq.left, eq.right, boundVars, errors, eq.range, ctx.uf);
       break;
     }
     case "Ineq": {
       const ineq = premise;
-      const leftVars = /* @__PURE__ */ new Set();
-      const rightVars = /* @__PURE__ */ new Set();
-      collectTermVariables(ineq.left, leftVars);
-      collectTermVariables(ineq.right, rightVars);
-      for (const v of leftVars) {
+      const vars = /* @__PURE__ */ new Set();
+      collectTermVariables(ineq.left, vars);
+      collectTermVariables(ineq.right, vars);
+      for (const v of vars) {
         if (v !== "_" && !boundVars.has(v)) {
           errors.push({
             code: "E004",
             message: `Variable '${v}' must be bound before comparison`,
             range: ineq.range,
-            severity: "error"
+            severity: "error",
+            hint: `'!=' only tests values; move it after the premise that binds '${v}'`
           });
         }
       }
-      for (const v of rightVars) {
-        if (v !== "_" && !boundVars.has(v)) {
-          errors.push({
-            code: "E004",
-            message: `Variable '${v}' must be bound before comparison`,
-            range: ineq.range,
-            severity: "error"
-          });
+      for (const side of [ineq.left, ineq.right]) {
+        if (side.type === "ApplyFn") {
+          validateApplyFn(side, boundVars, errors, { reportUnbound: false });
+        } else if (side.type === "Constant") {
+          validateNameConstant(side, errors);
         }
       }
       break;
     }
     default:
+      if (isTemporalLiteral(premise)) {
+        const temporal = premise;
+        validatePremise(temporal.literal, boundVars, ctx);
+        if (temporal.interval) {
+          if (temporal.interval.start.boundType === "variable" && temporal.interval.start.variable) {
+            boundVars.add(temporal.interval.start.variable.symbol);
+          }
+          if (temporal.interval.end.boundType === "variable" && temporal.interval.end.variable) {
+            boundVars.add(temporal.interval.end.variable.symbol);
+          }
+        }
+        if (temporal.operator && temporal.operator.interval) {
+          if (temporal.operator.interval.start.boundType === "variable" && temporal.operator.interval.start.variable) {
+            boundVars.add(temporal.operator.interval.start.variable.symbol);
+          }
+          if (temporal.operator.interval.end.boundType === "variable" && temporal.operator.interval.end.variable) {
+            boundVars.add(temporal.operator.interval.end.variable.symbol);
+          }
+        }
+        break;
+      }
+      if (isTemporalAtom(premise)) {
+        const ta = premise;
+        validatePremise(ta.atom, boundVars, ctx);
+        if (ta.interval) {
+          if (ta.interval.start.boundType === "variable" && ta.interval.start.variable) {
+            boundVars.add(ta.interval.start.variable.symbol);
+          }
+          if (ta.interval.end.boundType === "variable" && ta.interval.end.variable) {
+            boundVars.add(ta.interval.end.variable.symbol);
+          }
+        }
+        break;
+      }
       break;
   }
 }
-function validateAtom(atom, boundVars, symbolTable, errors) {
+function bindAtomVariables(atom, boundVars, ctx) {
+  const sym = atom.predicate.symbol;
+  if (!sym.startsWith(":")) {
+    const decl = ctx.decls.get(`${sym}/${atom.predicate.arity}`);
+    const modes = decl ? getDeclaredModes(decl) : [];
+    if (modes.length > 0) {
+      const mode = unifyModes(modes);
+      atom.args.forEach((arg, i) => {
+        const m2 = mode[i];
+        if (arg.type !== "Variable" || arg.symbol === "_") return;
+        if (m2 === "output" || m2 === "input_output") {
+          boundVars.add(arg.symbol);
+        } else if (m2 === "input" && !boundVars.has(arg.symbol) && !ctx.inputPositionVars.has(arg.symbol)) {
+          ctx.inputPositionVars.set(arg.symbol, arg.range);
+        }
+      });
+      return;
+    }
+  }
+  collectAtomVariables(atom, boundVars);
+}
+function validateAtom(atom, boundVars, ctx, opts = {}) {
+  const errors = ctx.errors;
+  const symbolTable = ctx.symbolTable;
   const predName = atom.predicate.symbol;
   const arity = atom.predicate.arity;
   if (predName.startsWith(":")) {
     if (!isBuiltinPredicate(predName)) {
+      const suggestions = suggestSimilar(predName, getBuiltinPredicateNames());
+      const nameRange = nameRangeOf(atom.range, predName);
       errors.push({
         code: "E005",
         message: `Unknown built-in predicate '${predName}'`,
         range: atom.range,
-        severity: "error"
+        severity: "error",
+        hint: didYouMean(suggestions) ?? 'names starting with ":" are reserved for built-in predicates; user predicates start with a lowercase letter',
+        fixes: suggestions.slice(0, 1).map((sug) => ({ title: `Replace with '${sug}'`, range: nameRange, newText: sug }))
       });
       return;
     }
@@ -36825,14 +42265,17 @@ function validateAtom(atom, boundVars, symbolTable, errors) {
         code: "E006",
         message: `Built-in predicate '${predName}' expects ${builtin.arity} arguments, got ${arity}`,
         range: atom.range,
-        severity: "error"
+        severity: "error",
+        hint: `signature: ${formatPredicateSignature(builtin)}`
       });
     }
     if (builtin) {
       for (let i = 0; i < builtin.mode.length && i < atom.args.length; i++) {
         const mode = builtin.mode[i];
         const arg = atom.args[i];
-        if (mode === "input" && arg) {
+        if (!arg) continue;
+        if (mode === "input") {
+          if (opts.suppressUnbound) continue;
           const argVars = /* @__PURE__ */ new Set();
           collectTermVariables(arg, argVars);
           for (const v of argVars) {
@@ -36841,9 +42284,31 @@ function validateAtom(atom, boundVars, symbolTable, errors) {
                 code: "E007",
                 message: `Argument ${i + 1} of '${predName}' requires bound variable, but '${v}' is unbound`,
                 range: arg.range,
-                severity: "error"
+                severity: "error",
+                hint: `built-ins cannot enumerate values: move '${predName}(...)' to the right of the premise that binds '${v}'`
               });
             }
+          }
+        } else if (mode === "output") {
+          if (arg.type === "Variable") {
+            const v = arg.symbol;
+            if (v !== "_" && boundVars.has(v)) {
+              errors.push({
+                code: "E065",
+                message: `Argument ${i + 1} of '${predName}' is an output and must be a fresh variable, but '${v}' is already bound`,
+                range: arg.range,
+                severity: "error",
+                hint: `use a new variable and compare afterwards, e.g. ${predName}(..., ${v}2, ...), ${v}2 = ${v}`
+              });
+            }
+          } else if (!DESTRUCTURING_PREDICATES.has(predName)) {
+            errors.push({
+              code: "E065",
+              message: `Argument ${i + 1} of '${predName}' is an output and must be a variable, got ${arg.type}`,
+              range: arg.range,
+              severity: "error",
+              hint: `bind a variable and compare it: ${predName}(..., V, ...), V = <value>`
+            });
           }
         }
       }
@@ -36855,7 +42320,8 @@ function validateAtom(atom, boundVars, symbolTable, errors) {
           code: "E030",
           message: `Second argument of '${predName}' must be a constant pattern, not a ${secondArg.type}`,
           range: secondArg.range,
-          severity: "error"
+          severity: "error",
+          hint: predName === ":match_prefix" ? "write the prefix as a name constant, e.g. :match_prefix(X, /users)" : `write the pattern as a string literal, e.g. ${predName}(S, "abc")`
         });
       }
     }
@@ -36867,7 +42333,8 @@ function validateAtom(atom, boundVars, symbolTable, errors) {
           code: "E033",
           message: `Second argument of '${predName}' must be a variable for destructuring, got ${arg2.type}`,
           range: arg2.range,
-          severity: "error"
+          severity: "error",
+          hint: `destructure into a variable and constrain it afterwards, e.g. ${predName}(X, A, B), A = <value>`
         });
       }
       if (arg3 && arg3.type !== "Variable") {
@@ -36875,7 +42342,8 @@ function validateAtom(atom, boundVars, symbolTable, errors) {
           code: "E033",
           message: `Third argument of '${predName}' must be a variable for destructuring, got ${arg3.type}`,
           range: arg3.range,
-          severity: "error"
+          severity: "error",
+          hint: `destructure into a variable and constrain it afterwards, e.g. ${predName}(X, A, B), B = <value>`
         });
       }
     }
@@ -36886,43 +42354,78 @@ function validateAtom(atom, boundVars, symbolTable, errors) {
           code: "E034",
           message: `Field selector (argument 2) of '${predName}' must be a constant, got ${fieldArg.type}`,
           range: fieldArg.range,
-          severity: "error"
+          severity: "error",
+          hint: predName === ":match_field" ? "struct fields are name constants, e.g. :match_field(S, /name, N)" : "use a constant key, e.g. :match_entry(M, /key, V)"
         });
       }
     }
   }
   if (!predName.startsWith(":") && !predName.startsWith("fn:")) {
-    const predKey = `${predName}/${arity}`;
-    const predInfo = symbolTable.getPredicateInfo(predKey);
-    if (!predInfo) {
+    const predKey2 = `${predName}/${arity}`;
+    const predInfo = symbolTable.getPredicateInfo(predKey2);
+    const hasDefs = predInfo && (predInfo.definitions.length > 0 || predInfo.declLocation);
+    if (!hasDefs) {
       const availableArities = symbolTable.getPredicateArities(predName);
-      if (availableArities && availableArities.length > 0 && !availableArities.includes(arity)) {
+      const definedArities = availableArities?.filter((a) => {
+        const info = symbolTable.getPredicateInfo(`${predName}/${a}`);
+        return info && (info.definitions.length > 0 || info.declLocation);
+      });
+      if (definedArities && definedArities.length > 0 && !definedArities.includes(arity)) {
         errors.push({
           code: "E040",
-          message: `Predicate '${predName}' called with ${arity} arguments, but available arities are: ${availableArities.join(", ")}`,
+          message: `Predicate '${predName}' called with ${arity} arguments, but available arities are: ${definedArities.join(", ")}`,
           range: atom.range,
-          severity: "error"
+          severity: "error",
+          hint: `predicates are identified by name and arity; call ${predName}/${definedArities[0]} with ${definedArities[0]} arguments (use '_' for columns you do not need)`
         });
+      } else if (!definedArities || definedArities.length === 0) {
+        reportUndefinedPredicate(atom, ctx);
       }
     } else {
-      if (predInfo.isPrivate) {
+      if (predInfo.isPrivate && packageOf(predName) !== ctx.headPackage) {
         errors.push({
           code: "E041",
-          message: `Predicate '${predName}' is marked private and may not be accessible from other packages`,
+          message: `Predicate '${predName}' is private to package '${packageOf(predName) || "(root)"}' and not visible from '${ctx.headPackage || "(root)"}'`,
           range: atom.range,
-          severity: "error"
+          severity: "error",
+          hint: `use a public predicate of that package, or remove private() from the declaration of '${predName}'`
         });
       }
     }
   }
   for (const arg of atom.args) {
     if (arg.type === "ApplyFn") {
-      validateApplyFn(arg, boundVars, errors);
+      validateApplyFn(arg, boundVars, errors, { reportUnbound: !opts.suppressUnbound });
     }
     if (arg.type === "Constant") {
       validateNameConstant(arg, errors);
     }
   }
+}
+function reportUndefinedPredicate(atom, ctx) {
+  const predName = atom.predicate.symbol;
+  const key = `${predName}/${atom.predicate.arity}`;
+  const pkg = packageOf(predName);
+  if (pkg !== "" && pkg !== ctx.headPackage) return;
+  if (ctx.reportedUndefined.has(key)) return;
+  ctx.reportedUndefined.add(key);
+  const known = /* @__PURE__ */ new Set();
+  for (const info of ctx.symbolTable.getAllPredicates()) {
+    if ((info.definitions.length > 0 || info.declLocation) && info.symbol.arity === atom.predicate.arity) {
+      known.add(info.symbol.symbol);
+    }
+  }
+  const suggestions = suggestSimilar(predName, known);
+  const nameRange = nameRangeOf(atom.range, predName);
+  ctx.errors.push({
+    code: "E075",
+    message: `Predicate '${key}' is not defined or declared in this file`,
+    range: nameRange,
+    // A likely typo is worth a warning; otherwise the facts probably come from elsewhere.
+    severity: suggestions.length > 0 ? "warning" : "info",
+    hint: suggestions.length > 0 ? `${didYouMean(suggestions)} If '${predName}' is supplied by another file or the host program, add a Decl for it` : `define it with facts or rules, or declare it (Decl ${predName}(${atom.args.map((_, i) => `A${i + 1}`).join(", ")}) descr [extensional()].) if its facts are loaded from elsewhere; a Decl with bound [...] also enables type checking`,
+    fixes: suggestions.slice(0, 1).map((sug) => ({ title: `Replace with '${sug}'`, range: nameRange, newText: sug }))
+  });
 }
 var COMMON_FUNCTION_CASING_ERRORS = /* @__PURE__ */ new Map([
   ["fn:Sum", "fn:sum"],
@@ -36937,26 +42440,59 @@ var COMMON_FUNCTION_CASING_ERRORS = /* @__PURE__ */ new Map([
   ["fn:Collect", "fn:collect"],
   ["fn:Group_by", "fn:group_by"],
   ["fn:GROUP_BY", "fn:group_by"],
-  ["fn:Pair", "fn:pair"],
-  ["fn:List", "fn:list"],
-  ["fn:Map", "fn:map"],
-  ["fn:Struct", "fn:struct"]
+  ["fn:GroupBy", "fn:group_by"],
+  ["fn:groupBy", "fn:group_by"],
+  ["fn:groupby", "fn:group_by"]
 ]);
 var HALLUCINATED_FUNCTIONS = /* @__PURE__ */ new Map([
   // String functions that don't exist
-  ["fn:string_contains", "Mangle has no substring search. Use :match_prefix or implement in Go"],
-  ["fn:contains", "Mangle has no contains function. Use :match_prefix for prefix matching"],
-  ["fn:substring", "Mangle has no substring function. Process strings in Go"],
-  ["fn:match", "Mangle has no regex matching. Use :match_prefix or implement in Go"],
-  ["fn:regex", "Mangle has no regex support. Implement pattern matching in Go"],
-  ["fn:lower", "Mangle has no case conversion. Normalize strings in Go before loading"],
-  ["fn:upper", "Mangle has no case conversion. Normalize strings in Go before loading"],
-  ["fn:trim", "Mangle has no trim function. Clean strings in Go before loading"],
-  ["fn:split", "Mangle has no split function. Parse strings in Go before loading"],
-  ["fn:startswith", "Use the :match_prefix built-in predicate instead"],
-  ["fn:endswith", "Mangle has no endswith. Implement in Go or reverse string matching"],
-  ["fn:join", "Use fn:string:concat for concatenation"],
-  ["fn:format", "Mangle has no format function. Use fn:string:concat or format in Go"],
+  ["fn:string_contains", 'Use the predicate :string:contains(Str, "sub") in the rule body'],
+  ["fn:string:contains", 'String matching is done with predicates, not functions: use :string:contains(Str, "sub") in the rule body'],
+  ["fn:string:starts_with", 'Use the predicate :string:starts_with(Str, "prefix") in the rule body'],
+  ["fn:string:ends_with", 'Use the predicate :string:ends_with(Str, "suffix") in the rule body'],
+  ["fn:contains", 'For strings use the predicate :string:contains(Str, "sub"); for lists use :list:member(X, List) or fn:list:contains(List, X)'],
+  ["fn:substring", "Mangle has no substring function; test with :string:starts_with / :string:ends_with / :string:contains, or extract substrings in host code before loading facts"],
+  ["fn:substr", "Mangle has no substring function; test with :string:starts_with / :string:ends_with / :string:contains"],
+  ["fn:match", "Mangle has no regex matching; use :string:contains, :string:starts_with, :string:ends_with or :match_prefix (names)"],
+  ["fn:regex", "Mangle has no regex support; use :string:contains / :string:starts_with / :string:ends_with, or pre-process in host code"],
+  ["fn:lower", "Mangle has no case conversion; normalize strings in host code before loading facts"],
+  ["fn:upper", "Mangle has no case conversion; normalize strings in host code before loading facts"],
+  ["fn:trim", "Mangle has no trim function; clean strings in host code before loading facts"],
+  ["fn:split", "Mangle has no split function; parse strings in host code, or model the parts as separate facts"],
+  ["fn:startswith", 'Use the predicate :string:starts_with(Str, "prefix") for strings or :match_prefix(Name, /prefix) for names'],
+  ["fn:endswith", 'Use the predicate :string:ends_with(Str, "suffix")'],
+  ["fn:join", "Use fn:string:concat(A, B, ...) for concatenation"],
+  ["fn:concat", "Use fn:string:concat(...) for strings or fn:list:append(List, X) for lists"],
+  ["fn:format", "Use fn:string:concat(...); for times use fn:time:format(T, /unit)"],
+  ["fn:to_string", "Use fn:number:to_string, fn:float64:to_string or fn:name:to_string (or fn:string:concat, which converts its arguments)"],
+  ["fn:str", "Use fn:number:to_string, fn:float64:to_string or fn:name:to_string"],
+  ["fn:string", "Use fn:number:to_string, fn:float64:to_string or fn:name:to_string"],
+  // Arithmetic
+  ["fn:modulo", "Use fn:mod(X, Y)"],
+  ["fn:rem", "Use fn:mod(X, Y)"],
+  ["fn:remainder", "Use fn:mod(X, Y)"],
+  ["fn:abs", "Mangle has no fn:abs; write two rules (one for X >= 0, one for X < 0 using fn:minus(X)), or use :within_distance(X, Y, D) for |X - Y| < D"],
+  ["fn:round", "Mangle has no rounding functions; integer division fn:div truncates, or round in host code"],
+  ["fn:floor", "Mangle has no fn:floor; integer division fn:div truncates towards zero"],
+  ["fn:ceil", "Mangle has no fn:ceil; compute with fn:div and fn:mod"],
+  ["fn:pow", "Mangle has no power function; use fn:mult repeatedly or precompute in host code"],
+  // Lists / maps
+  ["fn:len", "Use fn:list:len(List) for lists"],
+  ["fn:length", "Use fn:list:len(List) for lists"],
+  ["fn:size", "Use fn:list:len(List) for lists"],
+  ["fn:append", "Use fn:list:append(List, X)"],
+  ["fn:first", "Use :match_cons(List, Head, _) or fn:list:get(List, 0)"],
+  ["fn:head", "Use :match_cons(List, Head, _) or fn:list:get(List, 0)"],
+  ["fn:get", "Use fn:list:get(List, I), fn:map:get(Map, K) or fn:struct:get(S, /field)"],
+  ["fn:keys", "Mangle has no fn:keys; enumerate entries with :match_entry or keep keys as separate facts"],
+  ["fn:distinct", "Use the reducers fn:collect_distinct(X) or fn:count_distinct() after do fn:group_by(...)"],
+  // Time
+  ["fn:now", "Use fn:time:now()"],
+  ["fn:date", 'Use fn:time:parse_rfc3339("2024-01-15T00:00:00Z") or fn:time:parse_civil(S, TimeZone)'],
+  ["fn:weekday", 'Use fn:time:weekday_civil(T, "UTC") (Monday = 1 ... Sunday = 7)'],
+  ["fn:time:weekday", 'Use fn:time:weekday_civil(T, "UTC") (Monday = 1 ... Sunday = 7)'],
+  ["fn:dayofweek", 'Use fn:time:weekday_civil(T, "UTC") (Monday = 1 ... Sunday = 7)'],
+  ["fn:time:diff", "Use fn:time:sub(T1, T2), which returns a /duration"],
   // SQL-style aggregates
   ["sum", "Use fn:sum (with fn: prefix) inside a |> let transform"],
   ["count", "Use fn:count (with fn: prefix) inside a |> let transform"],
@@ -36964,25 +42500,42 @@ var HALLUCINATED_FUNCTIONS = /* @__PURE__ */ new Map([
   ["min", "Use fn:min (with fn: prefix) inside a |> let transform"],
   ["avg", "Use fn:avg (with fn: prefix) inside a |> let transform"],
   ["group_by", "Use fn:group_by inside a |> do transform"],
+  ["fn:mean", "Use the reducer fn:avg(X) after do fn:group_by(...)"],
+  ["fn:average", "Use the reducer fn:avg(X) after do fn:group_by(...)"],
+  ["fn:group", "Use do fn:group_by(Keys...) to start an aggregation"],
   // Other hallucinations
-  ["fn:filter", "Filtering is done with body predicates, not fn:filter"],
+  ["fn:filter", "Filtering is done with body premises (comparisons, negation) or the predicate :filter(BoolExpr), not fn:filter"],
   ["fn:if", "Mangle has no conditionals. Use multiple rules instead"],
   ["fn:case", "Mangle has no case expressions. Use multiple rules instead"],
   ["fn:when", "Mangle has no when expressions. Use multiple rules instead"],
   ["fn:otherwise", "Mangle has no otherwise. Use multiple rules with negation"],
   ["fn:null", "Mangle has no NULL. Use closed-world assumption with negation"],
-  ["fn:coalesce", "Mangle has no coalesce. Handle missing data with multiple rules"]
+  ["fn:coalesce", "Mangle has no coalesce. Handle missing data with multiple rules"],
+  ["fn:not", "Negation is written on atoms: !pred(X)"],
+  ["fn:exists", "Existence is a positive body atom pred(X, _); non-existence is !pred(X, _) via a helper predicate"]
 ]);
-function validateApplyFn(applyFn, boundVars, errors) {
+function typeConstructorHint(message) {
+  const m2 = /'(fn:[A-Za-z_:]+)'/.exec(message);
+  if (!m2) return void 0;
+  const name = m2[1];
+  const constructors = ["fn:Union", "fn:Singleton", "fn:List", "fn:Option", "fn:Pair", "fn:Tuple", "fn:Map", "fn:Struct", "fn:TaggedUnion", "fn:Fun", "fn:Rel"];
+  const sug = suggestSimilar(name, constructors);
+  return didYouMean(sug) ?? `type constructors are: ${constructors.map((c) => "." + c.slice(3)).join(", ")}`;
+}
+function validateApplyFn(applyFn, boundVars, errors, opts = {}) {
+  const reportUnbound = opts.reportUnbound ?? true;
   const fnName = applyFn.function.symbol;
   const arity = applyFn.function.arity;
-  const correctCasing = COMMON_FUNCTION_CASING_ERRORS.get(fnName);
+  const nameRange = nameRangeOf(applyFn.range, fnName);
+  const correctCasing = COMMON_FUNCTION_CASING_ERRORS.get(fnName) ?? (!isBuiltinFunction(fnName) && isBuiltinFunction(fnName.toLowerCase()) ? fnName.toLowerCase() : void 0);
   if (correctCasing) {
     errors.push({
       code: "E018",
       message: `Function '${fnName}' has wrong casing. Use '${correctCasing}' instead (all lowercase after 'fn:')`,
       range: applyFn.range,
-      severity: "error"
+      severity: "error",
+      hint: `built-in function names are lowercase; only type constructors in bound [...] are capitalized`,
+      fixes: [{ title: `Replace with '${correctCasing}'`, range: nameRange, newText: correctCasing }]
     });
     return;
   }
@@ -36992,26 +42545,32 @@ function validateApplyFn(applyFn, boundVars, errors) {
       code: "E020",
       message: `Function '${fnName}' does not exist in Mangle. ${hallucination}`,
       range: applyFn.range,
-      severity: "error"
+      severity: "error",
+      hint: hallucination
     });
     return;
   }
   if (!isBuiltinFunction(fnName)) {
+    const suggestions = suggestSimilar(fnName, getBuiltinFunctionNames());
     errors.push({
       code: "E008",
       message: `Unknown built-in function '${fnName}'`,
       range: applyFn.range,
-      severity: "error"
+      severity: "error",
+      hint: didYouMean(suggestions) ?? "Mangle has a fixed library of fn: functions and no user-defined functions; hover a fn: name or run `mangle-cli explain E008`",
+      fixes: suggestions.slice(0, 1).map((sug) => ({ title: `Replace with '${sug}'`, range: nameRange, newText: sug }))
     });
     return;
   }
   const builtin = getBuiltinFunction(fnName);
-  if (builtin && builtin.arity !== -1 && builtin.arity !== arity) {
+  const actualArity = arity === -1 ? applyFn.args.length : arity;
+  if (builtin && builtin.arity !== -1 && builtin.arity !== actualArity && arity !== -1) {
     errors.push({
       code: "E009",
       message: `Built-in function '${fnName}' expects ${builtin.arity} arguments, got ${arity}`,
       range: applyFn.range,
-      severity: "error"
+      severity: "error",
+      hint: `signature: ${formatFunctionSignature(builtin)}${builtin.example ? `; example: ${builtin.example}` : ""}`
     });
   }
   if (fnName === "fn:struct" || fnName === "fn:map") {
@@ -37021,50 +42580,104 @@ function validateApplyFn(applyFn, boundVars, errors) {
         code: "E027",
         message: `${fnName} requires even number of arguments (key-value pairs). Use ${syntax} syntax`,
         range: applyFn.range,
-        severity: "error"
+        severity: "error",
+        hint: `write the literal form ${syntax}`
       });
     }
   }
-  if (fnName === "fn:div" && applyFn.args.length >= 2) {
-    const divisor = applyFn.args[1];
-    if (divisor && divisor.type === "Constant") {
-      const constant = divisor;
-      if (constant.numValue === 0 || constant.floatValue === 0) {
+  if (fnName === "fn:div" || fnName === "fn:float:div" || fnName === "fn:mod") {
+    const divisors = applyFn.args.length === 1 && fnName !== "fn:mod" ? applyFn.args : applyFn.args.slice(1);
+    for (const divisor of divisors) {
+      if (divisor.type === "Constant") {
+        const constant = divisor;
+        if (constant.numValue === 0 || constant.floatValue === 0) {
+          errors.push({
+            code: "E035",
+            message: fnName === "fn:mod" ? `Modulo by zero: divisor is constant 0` : `Division by zero: divisor is constant 0`,
+            range: divisor.range,
+            severity: "error",
+            hint: "evaluation always fails; use a non-zero divisor (guard variable divisors with D != 0 first)"
+          });
+        }
+      }
+    }
+  }
+  if (builtin?.unitArg) {
+    const unitArg = applyFn.args[builtin.unitArg.index];
+    if (unitArg && unitArg.type === "Constant") {
+      const units = builtin.unitArg.units;
+      const c = unitArg;
+      if (c.constantType === "name" && c.symbol !== void 0 && !units.includes(c.symbol)) {
+        const civil = TIME_CIVIL_UNITS.includes(c.symbol);
+        let hint = `supported units for ${fnName}: ${units.join(", ")}`;
+        if (fnName === "fn:time:trunc" && civil) {
+          hint = `${c.symbol} is a calendar unit; use fn:time:trunc_civil(T, "UTC", ${c.symbol}) (or another IANA timezone)`;
+        } else if (fnName === "fn:time:add_civil" && ["/hour", "/minute", "/second"].includes(c.symbol)) {
+          hint = `for fixed durations use fn:time:add(T, fn:duration:from_${c.symbol.slice(1)}s(N))`;
+        } else {
+          const sug = suggestSimilar(c.symbol, units, 1);
+          if (sug.length > 0) hint = `did you mean '${sug[0]}'? ${hint}`;
+        }
         errors.push({
-          code: "E035",
-          message: `Division by zero: divisor is constant 0`,
-          range: divisor.range,
-          severity: "error"
+          code: "E067",
+          message: `Unit '${c.symbol}' is not supported by ${fnName}`,
+          range: unitArg.range,
+          severity: "error",
+          hint
+        });
+      } else if (c.constantType === "string") {
+        const asName = `/${(c.symbol ?? "").replace(/^\//, "")}`;
+        const valid = units.includes(asName);
+        errors.push({
+          code: "E067",
+          message: `Units are name constants, not strings: ${fnName} expects one of ${units.join(", ")}`,
+          range: unitArg.range,
+          severity: "error",
+          hint: valid ? `write ${asName} instead of "${c.symbol}"` : `supported units: ${units.join(", ")}`,
+          fixes: valid ? [{ title: `Replace with ${asName}`, range: unitArg.range, newText: asName }] : void 0
         });
       }
     }
   }
-  if (REDUCER_FUNCTIONS2.has(fnName)) {
+  if (isReducerFunction(fnName)) {
+    const reducerDef = getBuiltinFunction(fnName);
+    if (reducerDef && reducerDef.arity === -1 && applyFn.args.length === 0) {
+      errors.push({
+        code: "E060",
+        message: `Reducer function '${fnName}' expects at least one argument`,
+        range: applyFn.range,
+        severity: "error",
+        hint: `pass what to collect, e.g. ${fnName}(X); to count rows use fn:count()`
+      });
+    }
   }
-  for (const arg of applyFn.args) {
-    const argVars = /* @__PURE__ */ new Set();
-    collectTermVariables(arg, argVars);
-    for (const v of argVars) {
-      if (v !== "_" && !boundVars.has(v)) {
-        errors.push({
-          code: "E010",
-          message: `Variable '${v}' in function '${fnName}' must be bound`,
-          range: arg.range,
-          severity: "error"
-        });
+  if (reportUnbound) {
+    for (const arg of applyFn.args) {
+      const argVars = /* @__PURE__ */ new Set();
+      collectTermVariables(arg, argVars);
+      for (const v of argVars) {
+        if (v !== "_" && !boundVars.has(v)) {
+          errors.push({
+            code: "E010",
+            message: `Variable '${v}' in function '${fnName}' must be bound`,
+            range: arg.range,
+            severity: "error",
+            hint: `functions are evaluated, never solved: bind '${v}' in an earlier premise`
+          });
+        }
       }
     }
   }
   for (const arg of applyFn.args) {
     if (arg.type === "ApplyFn") {
-      validateApplyFn(arg, boundVars, errors);
+      validateApplyFn(arg, boundVars, errors, { reportUnbound: false });
     }
     if (arg.type === "Constant") {
       validateNameConstant(arg, errors);
     }
   }
 }
-function validateTransform(transform, boundVars, errors, bodyVars) {
+function validateTransform(transform, boundVars, errors, bodyVars, headVars) {
   if (bodyVars) {
     let checkTransform = transform;
     while (checkTransform) {
@@ -37074,7 +42687,8 @@ function validateTransform(transform, boundVars, errors, bodyVars) {
             code: "E043",
             message: `Transform redefines variable '${stmt.variable.symbol}' from rule body`,
             range: stmt.variable.range,
-            severity: "error"
+            severity: "error",
+            hint: `let introduces a new variable; pick a fresh name such as '${stmt.variable.symbol}2' (and use it in the head)`
           });
         }
       }
@@ -37096,7 +42710,8 @@ function validateTransform(transform, boundVars, errors, bodyVars) {
                 code: "E036",
                 message: `Arguments to fn:group_by must be variables, got ${arg.type}`,
                 range: arg.range,
-                severity: "error"
+                severity: "error",
+                hint: "compute the key in the rule body (K = ...) and group by K"
               });
             } else {
               const v = arg.symbol;
@@ -37105,7 +42720,8 @@ function validateTransform(transform, boundVars, errors, bodyVars) {
                   code: "E037",
                   message: `Duplicate variable '${v}' in fn:group_by - all arguments must be distinct`,
                   range: arg.range,
-                  severity: "error"
+                  severity: "error",
+                  hint: `remove the repeated '${v}'`
                 });
               }
               groupByVars.add(v);
@@ -37116,7 +42732,8 @@ function validateTransform(transform, boundVars, errors, bodyVars) {
             code: "E011",
             message: `Transform must start with 'do fn:group_by(...)', found '${fnName}'`,
             range: stmt.fn.range,
-            severity: "error"
+            severity: "error",
+            hint: "aggregations are written '|> do fn:group_by(Keys...), let V = fn:reducer(...)'; for per-row values use 'let' without 'do'"
           });
         }
         for (const arg of stmt.fn.args) {
@@ -37128,7 +42745,8 @@ function validateTransform(transform, boundVars, errors, bodyVars) {
                 code: "E012",
                 message: `Variable '${v}' in group_by must be bound in the body`,
                 range: arg.range,
-                severity: "error"
+                severity: "error",
+                hint: `group by variables that appear in positive body atoms`
               });
             }
           }
@@ -37138,21 +42756,95 @@ function validateTransform(transform, boundVars, errors, bodyVars) {
           boundVars.add(stmt.variable.symbol);
         }
         const fnName = stmt.fn.function.symbol;
-        if (hasGroupBy && !fnName.startsWith("fn:")) {
-          errors.push({
-            code: "E013",
-            message: `Function '${fnName}' in let-statement must be a reducer function`,
-            range: stmt.fn.range,
-            severity: "warning"
-          });
+        if (hasGroupBy && isBuiltinFunction(fnName) && !isReducerFunction(fnName) && fnName !== "fn:group_by") {
+          const groupByVars = /* @__PURE__ */ new Set();
+          for (const s of current.statements) {
+            if (s.variable === null && s.fn.function.symbol === "fn:group_by") {
+              for (const arg of s.fn.args) {
+                if (arg.type === "Variable") {
+                  groupByVars.add(arg.symbol);
+                }
+              }
+              break;
+            }
+          }
+          const transformDefs = /* @__PURE__ */ new Set();
+          for (const s of current.statements) {
+            if (s === stmt) break;
+            if (s.variable && s.variable.symbol !== "_") {
+              transformDefs.add(s.variable.symbol);
+            }
+          }
+          const usedVars = /* @__PURE__ */ new Set();
+          collectTermVariables(stmt.fn, usedVars);
+          for (const v of usedVars) {
+            if (!groupByVars.has(v) && !transformDefs.has(v)) {
+              errors.push({
+                code: "E047",
+                message: `Variable '${v}' in function '${fnName}' must be either part of group_by or defined in the transform`,
+                range: stmt.fn.range,
+                severity: "error",
+                hint: `'${fnName}' is not a reducer, so after grouping it cannot see per-row values: add '${v}' to fn:group_by(...), or aggregate it first (e.g. let Agg = fn:sum(${v}), let ${stmt.variable.symbol} = ${fnName}(Agg, ...))`
+              });
+            }
+          }
         }
         validateApplyFn(stmt.fn, boundVars, errors);
       }
     }
     current = current.next;
   }
+  if (hasGroupBy && headVars) {
+    const groupByVarSet = /* @__PURE__ */ new Set();
+    const transformDefSet = /* @__PURE__ */ new Set();
+    for (const stmt of transform.statements) {
+      if (stmt.variable === null && stmt.fn.function.symbol === "fn:group_by") {
+        for (const arg of stmt.fn.args) {
+          if (arg.type === "Variable") {
+            groupByVarSet.add(arg.symbol);
+          }
+        }
+      }
+      if (stmt.variable && stmt.variable.symbol !== "_") {
+        transformDefSet.add(stmt.variable.symbol);
+      }
+    }
+    for (const v of headVars) {
+      if (v === "_") continue;
+      if (groupByVarSet.has(v)) continue;
+      if (transformDefSet.has(v)) continue;
+      errors.push({
+        code: "E049",
+        message: `Head variable '${v}' is neither part of group_by nor defined in the transform`,
+        range: transform.range,
+        severity: "error",
+        hint: `add '${v}' to fn:group_by(...), aggregate it (let ${v}s = fn:collect(${v})), or drop it from the head`
+      });
+    }
+  }
+  if (!hasGroupBy && transform.statements.length > 0 && transform.statements[0].variable !== null) {
+    for (const stmt of transform.statements.slice(1)) {
+      if (stmt.variable === null) {
+        errors.push({
+          code: "E050",
+          message: "All statements in a let-transform must be let-statements",
+          range: stmt.fn.range,
+          severity: "error",
+          hint: "a 'do' statement is only valid as the first statement: '|> do fn:group_by(...), let ...'"
+        });
+      } else if (isReducerFunction(stmt.fn.function.symbol)) {
+        errors.push({
+          code: "E050",
+          message: `Reducer function '${stmt.fn.function.symbol}' is not allowed in a let-transform`,
+          range: stmt.fn.range,
+          severity: "error",
+          hint: "start the transform with 'do fn:group_by(Keys...)' (or 'do fn:group_by()' for the whole relation) to aggregate"
+        });
+      }
+    }
+  }
 }
-function handleEquality(left, right, boundVars, errors, range) {
+function handleEquality(left, right, boundVars, errors, range, uf) {
   if (left.type === "Variable" && left.symbol !== "_") {
     const v = left.symbol;
     if (right.type === "Constant" || isGroundOrBound(right, boundVars)) {
@@ -37174,10 +42866,12 @@ function handleEquality(left, right, boundVars, errors, range) {
           code: "E014",
           message: `Variable '${v}' in function application must be bound`,
           range,
-          severity: "error"
+          severity: "error",
+          hint: `functions are evaluated left to right, never solved: bind '${v}' in an earlier premise`
         });
       }
     }
+    validateApplyFn(left, boundVars, errors, { reportUnbound: false });
     if (right.type === "Variable" && right.symbol !== "_") {
       boundVars.add(right.symbol);
     }
@@ -37191,12 +42885,27 @@ function handleEquality(left, right, boundVars, errors, range) {
           code: "E014",
           message: `Variable '${v}' in function application must be bound`,
           range,
-          severity: "error"
+          severity: "error",
+          hint: `functions are evaluated left to right, never solved: bind '${v}' in an earlier premise`
         });
       }
     }
+    validateApplyFn(right, boundVars, errors, { reportUnbound: false });
     if (left.type === "Variable" && left.symbol !== "_") {
       boundVars.add(left.symbol);
+    }
+  }
+  if (left.type === "Constant") {
+    validateNameConstant(left, errors);
+  }
+  if (right.type === "Constant") {
+    validateNameConstant(right, errors);
+  }
+  if (uf && left.type === "Variable" && right.type === "Variable") {
+    const leftVar = left;
+    const rightVar = right;
+    if (leftVar.symbol !== "_" && rightVar.symbol !== "_") {
+      uf.unify(leftVar, rightVar);
     }
   }
 }
@@ -37356,6 +43065,40 @@ function collectPremiseVariables(premise, vars) {
       break;
     }
     default:
+      if (isTemporalLiteral(premise)) {
+        const temporal = premise;
+        collectPremiseVariables(temporal.literal, vars);
+        if (temporal.interval) {
+          if (temporal.interval.start.variable) {
+            vars.add(temporal.interval.start.variable.symbol);
+          }
+          if (temporal.interval.end.variable) {
+            vars.add(temporal.interval.end.variable.symbol);
+          }
+        }
+        if (temporal.operator && temporal.operator.interval) {
+          if (temporal.operator.interval.start.variable) {
+            vars.add(temporal.operator.interval.start.variable.symbol);
+          }
+          if (temporal.operator.interval.end.variable) {
+            vars.add(temporal.operator.interval.end.variable.symbol);
+          }
+        }
+        break;
+      }
+      if (isTemporalAtom(premise)) {
+        const ta = premise;
+        collectAtomVariables(ta.atom, vars);
+        if (ta.interval) {
+          if (ta.interval.start.variable) {
+            vars.add(ta.interval.start.variable.symbol);
+          }
+          if (ta.interval.end.variable) {
+            vars.add(ta.interval.end.variable.symbol);
+          }
+        }
+        break;
+      }
       collectTermVariables(premise, vars);
       break;
   }
@@ -37385,7 +43128,7 @@ function validateArityConsistency(unit, errors) {
   }
 }
 
-// src/analysis/stratification.ts
+// ../mangle-lsp/src/analysis/stratification.ts
 function checkStratification(unit) {
   const errors = [];
   const edges = buildDependencyGraph(unit);
@@ -37456,10 +43199,17 @@ function addEdgesFromPremise(headPred, premise, range, edges, clause) {
       }
       break;
     }
+    default: {
+      if (isTemporalLiteral(premise)) {
+        const temporal = premise;
+        addEdgesFromPremise(headPred, temporal.literal, range, edges, clause);
+      }
+      break;
+    }
   }
 }
-function predicateKey(pred) {
-  return `${pred.symbol}/${pred.arity}`;
+function predicateKey(pred2) {
+  return `${pred2.symbol}/${pred2.arity}`;
 }
 function findSCCs(edges) {
   const adj = /* @__PURE__ */ new Map();
@@ -37531,29 +43281,29 @@ function checkUnboundedRecursion(unit) {
     clauses.push(clause);
     predicateClauses.set(key, clauses);
   }
-  for (const [predKey, clauses] of predicateClauses) {
-    const recursiveClauses = clauses.filter((c) => isRecursive(c, predKey));
+  for (const [predKey2, clauses] of predicateClauses) {
+    const recursiveClauses = clauses.filter((c) => isRecursive(c, predKey2));
     if (recursiveClauses.length > 0) {
       const firstRecursive = recursiveClauses[0];
       if (!firstRecursive) continue;
-      const hasBaseCase = clauses.some((c) => !isRecursive(c, predKey));
+      const hasBaseCase = clauses.some((c) => !isRecursive(c, predKey2));
       if (!hasBaseCase) {
         warnings.push({
           code: "E016",
-          message: `Predicate '${predKey}' has recursive rules but no base case - may not terminate`,
+          message: `Predicate '${predKey2}' has recursive rules but no base case - may not terminate`,
           range: firstRecursive.head.range,
           severity: "warning",
-          cycle: [predKey]
+          cycle: [predKey2]
         });
       }
       for (const clause of recursiveClauses) {
-        if (hasUnboundedGeneration(clause, predKey)) {
+        if (hasUnboundedGeneration(clause, predKey2)) {
           warnings.push({
             code: "E017",
             message: `Recursive rule may generate unbounded values - ensure termination condition exists`,
             range: clause.head.range,
             severity: "warning",
-            cycle: [predKey]
+            cycle: [predKey2]
           });
         }
       }
@@ -37561,27 +43311,27 @@ function checkUnboundedRecursion(unit) {
   }
   return warnings;
 }
-function isRecursive(clause, predKey) {
+function isRecursive(clause, predKey2) {
   if (!clause.premises) return false;
   for (const premise of clause.premises) {
     if (premise.type === "Atom") {
       const atom = premise;
-      if (predicateKey(atom.predicate) === predKey) {
+      if (predicateKey(atom.predicate) === predKey2) {
         return true;
       }
     }
   }
   return false;
 }
-function hasUnboundedGeneration(clause, predKey) {
+function hasUnboundedGeneration(clause, predKey2) {
   if (!clause.premises) return false;
   let hasArithmeticIncrement = false;
   for (const premise of clause.premises) {
     if (premise.type === "Eq") {
       const eq = premise;
       if (eq.right.type === "ApplyFn") {
-        const fn = eq.right;
-        if (fn.function.symbol === "fn:plus" || fn.function.symbol === "fn:minus") {
+        const fn2 = eq.right;
+        if (fn2.function.symbol === "fn:plus" || fn2.function.symbol === "fn:minus") {
           hasArithmeticIncrement = true;
         }
       }
@@ -37595,46 +43345,101 @@ function hasUnboundedGeneration(clause, predKey) {
   }
   return false;
 }
+function premiseVars(premise) {
+  const vars = /* @__PURE__ */ new Set();
+  const visit = (t) => {
+    switch (t.type) {
+      case "Variable":
+        if (t.symbol !== "_") vars.add(t.symbol);
+        return;
+      case "ApplyFn":
+        t.args.forEach(visit);
+        return;
+      case "Atom":
+        t.args.forEach(visit);
+        return;
+      case "NegAtom":
+        visit(t.atom);
+        return;
+      case "Eq":
+      case "Ineq": {
+        const e = t;
+        visit(e.left);
+        visit(e.right);
+        return;
+      }
+      case "TemporalLiteral": {
+        const tl = t;
+        visit(tl.literal);
+        for (const iv of [tl.interval, tl.operator?.interval]) {
+          if (!iv) continue;
+          if (iv.start.variable && iv.start.variable.symbol !== "_") vars.add(iv.start.variable.symbol);
+          if (iv.end.variable && iv.end.variable.symbol !== "_") vars.add(iv.end.variable.symbol);
+        }
+        return;
+      }
+      default:
+        return;
+    }
+  };
+  visit(premise);
+  return vars;
+}
+function userAtomOf(premise) {
+  if (premise.type === "Atom" && !premise.predicate.symbol.startsWith(":")) return premise;
+  if (premise.type === "TemporalLiteral") {
+    const lit = premise.literal;
+    if (lit.type === "Atom" && !lit.predicate.symbol.startsWith(":")) return lit;
+  }
+  return null;
+}
+function varsBoundBy(premise) {
+  if (premise.type === "NegAtom" || premise.type === "Ineq") return /* @__PURE__ */ new Set();
+  if (premise.type === "Atom" && isComparisonAtom(premise)) return /* @__PURE__ */ new Set();
+  return premiseVars(premise);
+}
 function checkCartesianExplosion(unit) {
   const warnings = [];
   for (const clause of unit.clauses) {
-    if (!clause.premises || clause.premises.length < 2) {
+    const premises = clause.premises;
+    if (!premises || premises.length < 2) {
       continue;
     }
-    const atoms = [];
-    for (const premise of clause.premises) {
-      if (premise.type === "Atom") {
-        const atom = premise;
-        if (atom.predicate.symbol.startsWith(":")) {
-          continue;
+    const bound = /* @__PURE__ */ new Set();
+    let producers = 0;
+    let lastProducer = null;
+    for (let i = 0; i < premises.length; i++) {
+      const premise = premises[i];
+      const atom = userAtomOf(premise);
+      if (atom) {
+        const hasVarArgs = atom.args.some((a) => a.type === "Variable");
+        const vars = premiseVars(premise);
+        const shares = [...vars].some((v) => bound.has(v));
+        if (producers > 0 && hasVarArgs && !shares && lastProducer) {
+          let suggestion;
+          for (let j = i + 1; j < premises.length; j++) {
+            const later = userAtomOf(premises[j]);
+            if (!later) continue;
+            const lv = premiseVars(later);
+            const shared = [...lv].find((v) => bound.has(v));
+            if (shared) {
+              suggestion = `move '${termToString(premises[j])}' before '${termToString(premise)}' so it joins on '${shared}' first`;
+              break;
+            }
+          }
+          warnings.push({
+            code: "E019",
+            message: `Potential Cartesian explosion: '${atom.predicate.symbol}' shares no variables with the premises before it (e.g. '${lastProducer.predicate.symbol}'), so every earlier row is combined with every '${atom.predicate.symbol}' row`,
+            range: atom.range,
+            severity: "warning",
+            cycle: [lastProducer.predicate.symbol, atom.predicate.symbol],
+            hint: suggestion ?? `if the product is intended, keep it; otherwise add the missing join variable, or precompute a smaller relation in a helper predicate`
+          });
         }
-        const vars = /* @__PURE__ */ new Set();
-        for (const arg of atom.args) {
-          collectVarsFromTerm(arg, vars);
-        }
-        atoms.push({ atom, vars });
+        producers++;
+        lastProducer = atom;
       }
-    }
-    for (let i = 0; i < atoms.length - 1; i++) {
-      const current = atoms[i];
-      const next = atoms[i + 1];
-      if (!current || !next) continue;
-      let hasSharedVar = false;
-      for (const v of current.vars) {
-        if (v !== "_" && next.vars.has(v)) {
-          hasSharedVar = true;
-          break;
-        }
-      }
-      if (!hasSharedVar && current.vars.size > 0 && next.vars.size > 0) {
-        warnings.push({
-          code: "E019",
-          message: `Potential Cartesian explosion: predicates '${current.atom.predicate.symbol}' and '${next.atom.predicate.symbol}' have no shared variables. Consider reordering body atoms to join on shared variables first.`,
-          range: next.atom.range,
-          severity: "warning",
-          cycle: [current.atom.predicate.symbol, next.atom.predicate.symbol]
-        });
-      }
+      for (const v of varsBoundBy(premise)) bound.add(v);
     }
   }
   return warnings;
@@ -37647,102 +43452,89 @@ function collectVarsFromTerm(term, vars) {
       break;
     }
     case "ApplyFn": {
-      const fn = term;
-      for (const arg of fn.args) {
+      const fn2 = term;
+      for (const arg of fn2.args) {
         collectVarsFromTerm(arg, vars);
       }
       break;
     }
   }
 }
+function bindingPoint(premises, upTo, vars) {
+  if (vars.size === 0) return -1;
+  const remaining = new Set(vars);
+  for (let k = 0; k < upTo; k++) {
+    for (const v of varsBoundBy(premises[k])) remaining.delete(v);
+    if (remaining.size === 0) return k;
+  }
+  return null;
+}
+function atomsBetween(premises, from, to) {
+  const between = [];
+  for (let k = from + 1; k < to; k++) {
+    if (userAtomOf(premises[k])) between.push(premises[k]);
+  }
+  return between;
+}
+function isFilterPremise(premise) {
+  if (premise.type === "Ineq") return true;
+  if (premise.type !== "Atom") return false;
+  const sym = premise.predicate.symbol;
+  return isComparisonAtom(premise) || /^:(float|time|duration):(lt|le|gt|ge)$/.test(sym) || sym === ":match_prefix" || sym.startsWith(":string:") || sym === ":filter" || sym === ":within_distance";
+}
 function checkLateFiltering(unit) {
   const warnings = [];
   for (const clause of unit.clauses) {
-    if (!clause.premises || clause.premises.length < 3) {
+    const premises = clause.premises;
+    if (!premises || premises.length < 3) {
       continue;
     }
-    let predicateCount = 0;
-    let allVarsSoFar = /* @__PURE__ */ new Set();
-    for (const premise of clause.premises) {
-      if (premise.type === "Ineq") {
-        if (predicateCount >= 2) {
-          const cmp = premise;
-          warnings.push({
-            code: "E021",
-            message: `Late filtering: comparison appears after ${predicateCount} predicates. Consider moving filters earlier to reduce intermediate result size.`,
-            range: cmp.range,
-            severity: "warning",
-            cycle: []
-          });
-        }
-      } else if (premise.type === "Atom") {
-        const atom = premise;
-        const predSymbol = atom.predicate.symbol;
-        if (predSymbol === ":lt" || predSymbol === ":le" || predSymbol === ":gt" || predSymbol === ":ge") {
-          if (predicateCount >= 2) {
-            warnings.push({
-              code: "E021",
-              message: `Late filtering: comparison appears after ${predicateCount} predicates. Consider moving filters earlier to reduce intermediate result size.`,
-              range: atom.range,
-              severity: "warning",
-              cycle: []
-            });
-          }
-        } else if (!predSymbol.startsWith(":")) {
-          predicateCount++;
-        }
+    premises.forEach((premise, i) => {
+      if (!isFilterPremise(premise)) return;
+      const vars = premiseVars(premise);
+      const point = bindingPoint(premises, i, vars);
+      if (point === null) return;
+      const between = atomsBetween(premises, point, i);
+      if (between.length >= 2) {
+        const where = point >= 0 ? `right after '${termToString(premises[point])}'` : "at the start of the body";
+        warnings.push({
+          code: "E021",
+          message: `Late filtering: '${termToString(premise)}' only depends on variables bound ${point >= 0 ? `by '${termToString(premises[point])}'` : "at the start"}, but runs after ${between.length} more joins (${between.map((b) => `'${userAtomOf(b).predicate.symbol}'`).join(", ")}). Consider moving filters earlier to reduce intermediate result size.`,
+          range: premise.range,
+          severity: "warning",
+          cycle: [],
+          hint: `move '${termToString(premise)}' ${where}; filters shrink intermediate results only when they run early`
+        });
       }
-    }
+    });
   }
   return warnings;
 }
 function checkLateNegation(unit) {
   const warnings = [];
   for (const clause of unit.clauses) {
-    if (!clause.premises || clause.premises.length < 3) {
+    const premises = clause.premises;
+    if (!premises || premises.length < 3) {
       continue;
     }
-    let predicateCount = 0;
-    for (const premise of clause.premises) {
-      if (premise.type === "NegAtom") {
-        if (predicateCount >= 2) {
-          const negAtom = premise;
-          const negVars = /* @__PURE__ */ new Set();
-          for (const arg of negAtom.atom.args) {
-            collectVarsFromTerm(arg, negVars);
-          }
-          const firstPremise = clause.premises[0];
-          if (firstPremise && firstPremise.type === "Atom") {
-            const firstAtom = firstPremise;
-            const firstVars = /* @__PURE__ */ new Set();
-            for (const arg of firstAtom.args) {
-              collectVarsFromTerm(arg, firstVars);
-            }
-            let allBound = true;
-            for (const v of negVars) {
-              if (v !== "_" && !firstVars.has(v)) {
-                allBound = false;
-                break;
-              }
-            }
-            if (allBound) {
-              warnings.push({
-                code: "E022",
-                message: `Late negation: '!${negAtom.atom.predicate.symbol}' appears after ${predicateCount} predicates but its variables are bound by the first predicate. Consider moving negation earlier to filter sooner.`,
-                range: negAtom.range,
-                severity: "warning",
-                cycle: []
-              });
-            }
-          }
-        }
-      } else if (premise.type === "Atom") {
-        const atom = premise;
-        if (!atom.predicate.symbol.startsWith(":")) {
-          predicateCount++;
-        }
+    premises.forEach((premise, i) => {
+      if (premise.type !== "NegAtom") return;
+      const negAtom = premise;
+      const vars = premiseVars(premise);
+      const point = bindingPoint(premises, i, vars);
+      if (point === null || point < 0) return;
+      const between = atomsBetween(premises, point, i);
+      if (between.length >= 2) {
+        warnings.push({
+          code: "E022",
+          message: `Late negation: '!${negAtom.atom.predicate.symbol}' appears after ${between.length} more joins but its variables are all bound by '${termToString(premises[point])}'. Consider moving negation earlier to filter sooner.`,
+          range: negAtom.range,
+          severity: "warning",
+          cycle: [],
+          hint: `move '${termToString(premise)}' right after '${termToString(premises[point])}'`
+        });
       }
-    }
+    });
   }
   return warnings;
 }
@@ -37792,17 +43584,226 @@ function checkMultipleIndependentVars(unit) {
         range: third.atom.range,
         severity: "warning",
         // Performance warning, not a semantic error
-        cycle: [first.atom.predicate.symbol, second.atom.predicate.symbol, third.atom.predicate.symbol]
+        cycle: [first.atom.predicate.symbol, second.atom.predicate.symbol, third.atom.predicate.symbol],
+        hint: "if these relations are meant to be related, add the join variables; if not, precompute the combination you need in a helper predicate"
       });
     }
   }
   return warnings;
 }
+function checkTemporalRecursion(unit) {
+  const warnings = [];
+  const temporalPreds = /* @__PURE__ */ new Set();
+  for (const decl of unit.decls) {
+    if (decl.descr?.some((d) => d.predicate.symbol === DESCRIPTORS.TEMPORAL)) {
+      temporalPreds.add(predicateKey(decl.declaredAtom.predicate));
+    }
+  }
+  for (const clause of unit.clauses) {
+    if (clause.headTime) {
+      temporalPreds.add(predicateKey(clause.head.predicate));
+    }
+  }
+  if (temporalPreds.size === 0) {
+    return warnings;
+  }
+  const edges = buildDependencyGraph(unit);
+  const sccs = findSCCs(edges);
+  for (const scc of sccs) {
+    if (scc.length === 1) {
+      const pred2 = scc[0];
+      if (temporalPreds.has(pred2) && hasSelfLoop(pred2, edges)) {
+        warnings.push({
+          code: "E062",
+          hint: "bound the recursion (e.g. with interval limits or a temporal operator window such as <-[0d, 7d]) so derived intervals stay finite",
+          message: `Self-recursive temporal predicate '${pred2}' may cause interval explosion; ensure coalescing or use interval limits`,
+          range: findPredicateRange(unit, pred2),
+          severity: "warning",
+          cycle: [pred2]
+        });
+      }
+    } else {
+      const hasTemporalPred = scc.some((p) => temporalPreds.has(p));
+      if (hasTemporalPred) {
+        const temporalPredInScc = scc.find((p) => temporalPreds.has(p)) ?? scc[0];
+        warnings.push({
+          code: "E063",
+          hint: "break the cycle, or make only one predicate of the cycle temporal",
+          message: `Mutual recursion through temporal predicates may cause non-termination; ${scc.length} predicates in cycle: ${scc.join(" -> ")}`,
+          range: findPredicateRange(unit, temporalPredInScc),
+          severity: "error",
+          cycle: scc
+        });
+      }
+    }
+  }
+  for (const clause of unit.clauses) {
+    const headKey = predicateKey(clause.head.predicate);
+    if (!temporalPreds.has(headKey) || !clause.premises) continue;
+    for (const premise of clause.premises) {
+      if (isTemporalLiteral(premise)) {
+        const temporal = premise;
+        if (temporal.operator) {
+          const opType = temporal.operator.operatorType;
+          if (opType === "diamondPlus" || opType === "boxPlus") {
+            let litPredKey = null;
+            if (temporal.literal.type === "Atom") {
+              litPredKey = predicateKey(temporal.literal.predicate);
+            } else if (temporal.literal.type === "NegAtom") {
+              litPredKey = predicateKey(temporal.literal.atom.predicate);
+            }
+            if (litPredKey && isInSameSCC(headKey, litPredKey, sccs)) {
+              warnings.push({
+                code: "E064",
+                hint: "use past operators (<-, [-) in recursive rules; future operators can derive facts arbitrarily far ahead",
+                message: `Future operator in recursive temporal rule may cause unbounded fact generation`,
+                range: temporal.range,
+                severity: "error",
+                cycle: [headKey, litPredKey]
+              });
+            }
+          }
+        }
+      }
+    }
+  }
+  return warnings;
+}
+function isInSameSCC(pred1, pred2, sccs) {
+  for (const scc of sccs) {
+    if (scc.includes(pred1) && scc.includes(pred2)) {
+      return true;
+    }
+  }
+  return false;
+}
+function findPredicateRange(unit, predKey2) {
+  for (const clause of unit.clauses) {
+    if (predicateKey(clause.head.predicate) === predKey2) {
+      return clause.head.range;
+    }
+  }
+  return { start: { line: 1, column: 0, offset: 0 }, end: { line: 1, column: 0, offset: 0 } };
+}
 
-// src/cli/commands/check.ts
+// ../mangle-lsp/src/analysis/pipeline.ts
+function analyzeUnit(unit) {
+  const validation = validate(unit);
+  const diagnostics = validation.errors.map((e) => ({
+    code: e.code,
+    message: e.message,
+    range: e.range,
+    severity: e.severity,
+    source: "mangle-semantic",
+    hint: e.hint,
+    fixes: e.fixes
+  }));
+  const stratChecks = [
+    checkStratification,
+    checkUnboundedRecursion,
+    checkCartesianExplosion,
+    checkLateFiltering,
+    checkLateNegation,
+    checkMultipleIndependentVars,
+    checkTemporalRecursion
+  ];
+  for (const check of stratChecks) {
+    for (const e of check(unit)) {
+      diagnostics.push({
+        code: e.code,
+        message: e.message,
+        range: e.range,
+        severity: e.severity,
+        source: "mangle-stratification",
+        hint: e.hint
+      });
+    }
+  }
+  diagnostics.sort((a, b) => a.range.start.line - b.range.start.line || a.range.start.column - b.range.start.column);
+  return { validation, diagnostics };
+}
+
+// ../mangle-lsp/src/cli/diagnostics.ts
+function toCLIRange(range) {
+  return {
+    start: { line: range.start.line, column: range.start.column },
+    end: { line: range.end.line, column: range.end.column }
+  };
+}
+function lineContext(lines, line) {
+  const text = (lines[line - 1] || "").trim();
+  return text.length > 0 ? text : void 0;
+}
+function enrichDiagnostic(diag, explain) {
+  const info = getDiagnosticInfo(diag.code);
+  if (!info) return diag;
+  const enriched = {
+    ...diag,
+    title: info.title,
+    category: info.category,
+    docs: diagnosticDocUrl(info.code)
+  };
+  if (explain) {
+    enriched.explanation = info.explanation;
+    enriched.fix = info.fix;
+    if (info.example) enriched.example = { ...info.example };
+  }
+  return enriched;
+}
+function analysisToCLIDiagnostic(error, lines, explain = false) {
+  const fixes = error.fixes?.map((f) => ({
+    title: f.title,
+    range: toCLIRange(f.range),
+    newText: f.newText
+  }));
+  const diag = {
+    severity: error.severity,
+    code: error.code,
+    source: error.source,
+    message: error.message,
+    range: toCLIRange(error.range),
+    context: lineContext(lines, error.range.start.line)
+  };
+  if (error.hint) diag.hint = error.hint;
+  if (fixes && fixes.length > 0) diag.fixes = fixes;
+  return enrichDiagnostic(diag, explain);
+}
+function parseErrorToCLIDiagnostic(error, lines, explain = false) {
+  const diag = {
+    severity: "error",
+    code: "P001",
+    source: error.source === "lexer" ? "mangle-lexer" : "mangle-parse",
+    message: error.message,
+    range: {
+      start: { line: error.line, column: error.column },
+      end: { line: error.line, column: error.column + error.length }
+    },
+    context: lineContext(lines, error.line)
+  };
+  const hint = parseErrorHint(error.message, lines[error.line - 1] ?? "");
+  if (hint) diag.hint = hint;
+  return enrichDiagnostic(diag, explain);
+}
+function parseErrorHint(message, lineText) {
+  const trimmed = lineText.trim();
+  if (/\bnot\s+[a-z]/.test(trimmed)) return "negation is written with '!', e.g. !parent(X, Y)";
+  if (/\\\+/.test(trimmed)) return "negation is written with '!' (not Prolog's \\+)";
+  if (/;/.test(trimmed) && !/["'`][^"'`]*;[^"'`]*["'`]/.test(trimmed)) return "Mangle has no disjunction ';' - write one rule per alternative";
+  if (/\b(if|then|else)\b/.test(trimmed)) return "Mangle has no if/then/else - express alternatives as separate rules";
+  if (/\b[a-z]\w*\s*\([^)]*\b[a-z]\w*\b/.test(trimmed) && /missing|extraneous|mismatched|no viable/.test(message) && /\(\s*[a-z]/.test(trimmed)) {
+    return "variables must start with an uppercase letter (X, Person); lowercase identifiers are predicates, /names are constants";
+  }
+  if (trimmed.length > 0 && !/[.!]\s*(#.*)?$/.test(trimmed) && /missing '\.'|expecting '\.'|extraneous input/.test(message)) {
+    return "every clause and declaration must end with '.'";
+  }
+  if (/<EOF>/.test(message)) return "the file ends in the middle of a clause - check for a missing '.' or an unclosed bracket";
+  return void 0;
+}
+
+// ../mangle-lsp/src/cli/commands/check.ts
 function runCheck(files, options) {
   const result = {
-    version: "1.0",
+    version: "1.1",
     files: [],
     summary: {
       totalFiles: 0,
@@ -37870,59 +43871,17 @@ function runCheck(files, options) {
 function checkFile(filePath, source, options) {
   const diagnostics = [];
   const lines = source.split("\n");
+  const explain = !!options.explain;
   const parseResult = parse(source);
   for (const error of parseResult.errors) {
-    const diag = parseErrorToDiagnostic(error, lines);
+    const diag = parseErrorToCLIDiagnostic(error, lines, explain);
     if (shouldInclude(diag.severity, options.severity)) {
       diagnostics.push(diag);
     }
   }
   if (parseResult.unit) {
-    const validationResult = validate(parseResult.unit);
-    for (const error of validationResult.errors) {
-      const diag = semanticErrorToDiagnostic(error, lines);
-      if (shouldInclude(diag.severity, options.severity)) {
-        diagnostics.push(diag);
-      }
-    }
-    const stratErrors = checkStratification(parseResult.unit);
-    for (const error of stratErrors) {
-      const diag = stratificationErrorToDiagnostic(error, lines);
-      if (shouldInclude(diag.severity, options.severity)) {
-        diagnostics.push(diag);
-      }
-    }
-    const recursionWarnings = checkUnboundedRecursion(parseResult.unit);
-    for (const warning of recursionWarnings) {
-      const diag = stratificationErrorToDiagnostic(warning, lines);
-      if (shouldInclude(diag.severity, options.severity)) {
-        diagnostics.push(diag);
-      }
-    }
-    const cartesianWarnings = checkCartesianExplosion(parseResult.unit);
-    for (const warning of cartesianWarnings) {
-      const diag = stratificationErrorToDiagnostic(warning, lines);
-      if (shouldInclude(diag.severity, options.severity)) {
-        diagnostics.push(diag);
-      }
-    }
-    const lateFilterWarnings = checkLateFiltering(parseResult.unit);
-    for (const warning of lateFilterWarnings) {
-      const diag = stratificationErrorToDiagnostic(warning, lines);
-      if (shouldInclude(diag.severity, options.severity)) {
-        diagnostics.push(diag);
-      }
-    }
-    const lateNegationWarnings = checkLateNegation(parseResult.unit);
-    for (const warning of lateNegationWarnings) {
-      const diag = stratificationErrorToDiagnostic(warning, lines);
-      if (shouldInclude(diag.severity, options.severity)) {
-        diagnostics.push(diag);
-      }
-    }
-    const multiIndepWarnings = checkMultipleIndependentVars(parseResult.unit);
-    for (const warning of multiIndepWarnings) {
-      const diag = stratificationErrorToDiagnostic(warning, lines);
+    for (const error of analyzeUnit(parseResult.unit).diagnostics) {
+      const diag = analysisToCLIDiagnostic(error, lines, explain);
       if (shouldInclude(diag.severity, options.severity)) {
         diagnostics.push(diag);
       }
@@ -37931,51 +43890,6 @@ function checkFile(filePath, source, options) {
   return {
     path: (0, import_path.relative)(process.cwd(), filePath),
     diagnostics
-  };
-}
-function parseErrorToDiagnostic(error, lines) {
-  const line = lines[error.line - 1] || "";
-  const context = line.trim();
-  return {
-    severity: "error",
-    code: "P001",
-    source: error.source === "lexer" ? "mangle-lexer" : "mangle-parse",
-    message: error.message,
-    range: {
-      start: { line: error.line, column: error.column },
-      end: { line: error.line, column: error.column + error.length }
-    },
-    context: context.length > 0 ? context : void 0
-  };
-}
-function semanticErrorToDiagnostic(error, lines) {
-  const line = lines[error.range.start.line - 1] || "";
-  const context = line.trim();
-  return {
-    severity: error.severity,
-    code: error.code,
-    source: "mangle-semantic",
-    message: error.message,
-    range: {
-      start: { line: error.range.start.line, column: error.range.start.column },
-      end: { line: error.range.end.line, column: error.range.end.column }
-    },
-    context: context.length > 0 ? context : void 0
-  };
-}
-function stratificationErrorToDiagnostic(error, lines) {
-  const line = lines[error.range.start.line - 1] || "";
-  const context = line.trim();
-  return {
-    severity: error.severity,
-    code: error.code,
-    source: "mangle-stratification",
-    message: error.message,
-    range: {
-      start: { line: error.range.start.line, column: error.range.start.column },
-      end: { line: error.range.end.line, column: error.range.end.column }
-    },
-    context: context.length > 0 ? context : void 0
   };
 }
 function shouldInclude(severity, minSeverity) {
@@ -37995,11 +43909,11 @@ function getExitCode(result, options) {
   return 0;
 }
 
-// src/cli/commands/symbols.ts
+// ../mangle-lsp/src/cli/commands/symbols.ts
 var import_fs2 = require("fs");
 var import_path2 = require("path");
 
-// src/services/symbols.ts
+// ../mangle-lsp/src/services/symbols.ts
 var import_node = __toESM(require_node3());
 function getDocumentSymbols(unit) {
   const symbols = [];
@@ -38121,7 +44035,7 @@ function combineRanges(ranges) {
   };
 }
 
-// src/cli/commands/symbols.ts
+// ../mangle-lsp/src/cli/commands/symbols.ts
 var import_node2 = __toESM(require_node3());
 function runSymbols(file, _options) {
   const filePath = (0, import_path2.resolve)(file);
@@ -38195,11 +44109,11 @@ function mapSymbolKind(kind) {
   }
 }
 
-// src/cli/commands/hover.ts
+// ../mangle-lsp/src/cli/commands/hover.ts
 var import_fs3 = require("fs");
 var import_path3 = require("path");
 
-// src/services/hover.ts
+// ../mangle-lsp/src/services/hover.ts
 var import_node3 = __toESM(require_node3());
 function getHover(unit, symbolTable, position) {
   const line = position.line + 1;
@@ -38295,6 +44209,19 @@ function findBuiltinInTerm(term, line, column) {
   if (term.type === "ApplyFn") {
     return findBuiltinInApplyFn(term, line, column);
   }
+  if (term.type === "Eq" || term.type === "Ineq") {
+    const eq = term;
+    return findBuiltinInTerm(eq.left, line, column) ?? findBuiltinInTerm(eq.right, line, column);
+  }
+  if (term.type === "TemporalLiteral") {
+    const temporal = term;
+    if (temporal.literal.type === "Atom") {
+      return findBuiltinInAtom(temporal.literal, line, column);
+    }
+    if (temporal.literal.type === "NegAtom") {
+      return findBuiltinInAtom(temporal.literal.atom, line, column);
+    }
+  }
   return null;
 }
 function findBuiltinInAtom(atom, line, column) {
@@ -38309,7 +44236,7 @@ function findBuiltinInAtom(atom, line, column) {
     if (isWithinSourceRange(line, column, predicateNameRange)) {
       const builtin = getBuiltinPredicate(atom.predicate.symbol);
       if (builtin) {
-        return createBuiltinPredicateHover(builtin.name, builtin.doc, builtin.arity, builtin.mode);
+        return createBuiltinPredicateHover(builtin);
       }
     }
   }
@@ -38326,18 +44253,29 @@ function findBuiltinInApplyFn(applyFn, line, column) {
   if (isWithinSourceRange(line, column, functionNameRange)) {
     const builtin = getBuiltinFunction(applyFn.function.symbol);
     if (builtin) {
-      return createBuiltinFunctionHover(builtin.name, builtin.doc, builtin.arity, builtin.isReducer);
+      return createBuiltinFunctionHover(builtin);
     }
   }
   return null;
 }
-function createBuiltinPredicateHover(name, doc, arity, mode) {
+function createBuiltinPredicateHover(builtin) {
   const lines = [];
-  lines.push(`**Built-in Predicate: ${name}/${arity}**`);
+  lines.push(`**Built-in Predicate: ${builtin.name}/${builtin.arity}**`);
   lines.push("");
-  lines.push(doc);
+  lines.push("```mangle");
+  lines.push(formatPredicateSignature(builtin));
+  lines.push("```");
+  lines.push(builtin.doc);
   lines.push("");
-  lines.push(`*Mode: (${mode.join(", ")})*`);
+  lines.push(`*Mode: (${builtin.mode.map(modeSymbol).join(", ")})* - \`+\` input (must be bound), \`-\` output (fresh variable), \`?\` either`);
+  if (builtin.example) {
+    lines.push("");
+    lines.push(`**Example:** \`${builtin.example}\``);
+  }
+  if (builtin.seeAlso && builtin.seeAlso.length > 0) {
+    lines.push("");
+    lines.push(`**See also:** ${builtin.seeAlso.map((s) => `\`${s}\``).join(", ")}`);
+  }
   return {
     contents: {
       kind: import_node3.MarkupKind.Markdown,
@@ -38345,15 +44283,33 @@ function createBuiltinPredicateHover(name, doc, arity, mode) {
     }
   };
 }
-function createBuiltinFunctionHover(name, doc, arity, isReducer) {
+function createBuiltinFunctionHover(builtin) {
   const lines = [];
-  const arityStr = arity === -1 ? "variadic" : `${arity}`;
-  lines.push(`**Built-in Function: ${name}** (${arityStr})`);
+  const arityStr = builtin.arity === -1 ? "variadic" : `${builtin.arity}`;
+  const kind = isTypeConstructor(builtin.name) ? "Built-in Type Constructor" : "Built-in Function";
+  lines.push(`**${kind}: ${builtin.name}** (${arityStr})${builtin.isReducer ? " - reducer" : ""}`);
   lines.push("");
-  lines.push(doc);
-  if (isReducer) {
+  if (builtin.signature) {
+    lines.push("```mangle");
+    lines.push(formatFunctionSignature(builtin));
+    lines.push("```");
+  }
+  lines.push(builtin.doc);
+  if (builtin.isReducer) {
     lines.push("");
-    lines.push("*This is a reducer function (used in aggregations)*");
+    lines.push("*This is a reducer function (used in aggregations): use it in `let` statements after `|> do fn:group_by(...)`.*");
+  }
+  if (builtin.unitArg) {
+    lines.push("");
+    lines.push(`**Units:** ${builtin.unitArg.units.map((u) => `\`${u}\``).join(", ")}`);
+  }
+  if (builtin.example) {
+    lines.push("");
+    lines.push(`**Example:** \`${builtin.example}\``);
+  }
+  if (builtin.seeAlso && builtin.seeAlso.length > 0) {
+    lines.push("");
+    lines.push(`**See also:** ${builtin.seeAlso.map((s) => `\`${s}\``).join(", ")}`);
   }
   return {
     contents: {
@@ -38373,7 +44329,7 @@ function calculateNameRange(expressionRange, name) {
   };
 }
 
-// src/cli/commands/hover.ts
+// ../mangle-lsp/src/cli/commands/hover.ts
 function runHover(file, options) {
   const filePath = (0, import_path3.resolve)(file);
   if (!(0, import_fs3.existsSync)(filePath)) {
@@ -38417,11 +44373,11 @@ function runHover(file, options) {
   return result;
 }
 
-// src/cli/commands/definition.ts
+// ../mangle-lsp/src/cli/commands/definition.ts
 var import_fs4 = require("fs");
 var import_path4 = require("path");
 
-// src/services/definition.ts
+// ../mangle-lsp/src/services/definition.ts
 function getDefinition(uri, symbolTable, position) {
   const line = position.line + 1;
   const column = position.character;
@@ -38456,7 +44412,7 @@ function createLocation(uri, range) {
   };
 }
 
-// src/cli/commands/definition.ts
+// ../mangle-lsp/src/cli/commands/definition.ts
 function runDefinition(file, options) {
   const filePath = (0, import_path4.resolve)(file);
   const result = { locations: [] };
@@ -38501,11 +44457,11 @@ function runDefinition(file, options) {
   return result;
 }
 
-// src/cli/commands/references.ts
+// ../mangle-lsp/src/cli/commands/references.ts
 var import_fs5 = require("fs");
 var import_path5 = require("path");
 
-// src/services/references.ts
+// ../mangle-lsp/src/services/references.ts
 function findReferences(uri, symbolTable, position, context) {
   const line = position.line + 1;
   const column = position.character;
@@ -38551,7 +44507,7 @@ function createLocation2(uri, range) {
   };
 }
 
-// src/cli/commands/references.ts
+// ../mangle-lsp/src/cli/commands/references.ts
 function runReferences(file, options) {
   const filePath = (0, import_path5.resolve)(file);
   const result = { locations: [] };
@@ -38593,11 +44549,11 @@ function runReferences(file, options) {
   return result;
 }
 
-// src/cli/commands/completion.ts
+// ../mangle-lsp/src/cli/commands/completion.ts
 var import_fs6 = require("fs");
 var import_path6 = require("path");
 
-// src/services/completion.ts
+// ../mangle-lsp/src/services/completion.ts
 var import_node4 = __toESM(require_node3());
 function getCompletions(document, unit, symbolTable, position) {
   const items = [];
@@ -38727,24 +44683,24 @@ function isInsideString(lineText) {
   return inString;
 }
 function getBuiltinPredicateCompletions(prefix, replaceRange) {
-  return BUILTIN_PREDICATES.filter((p) => p.name.includes(prefix)).map((pred, index) => ({
-    label: pred.name,
+  return BUILTIN_PREDICATES.filter((p) => p.name.includes(prefix)).map((pred2, index) => ({
+    label: pred2.name,
     kind: import_node4.CompletionItemKind.Function,
-    detail: `Built-in predicate (${pred.mode.join(", ")})`,
-    documentation: pred.doc,
-    textEdit: import_node4.TextEdit.replace(replaceRange, createPredicateSnippet(pred.name, pred.arity)),
+    detail: `Built-in predicate (${pred2.mode.map(modeSymbol).join(", ")}) ${formatPredicateSignature(pred2)}`,
+    documentation: builtinPredicateDocs(pred2),
+    textEdit: import_node4.TextEdit.replace(replaceRange, createPredicateSnippet(pred2.name, pred2.arity, pred2.paramNames)),
     insertTextFormat: import_node4.InsertTextFormat.Snippet,
     sortText: `0${index.toString().padStart(3, "0")}`
     // Sort built-ins first
   }));
 }
 function getBuiltinFunctionCompletions(prefix, replaceRange) {
-  return ALL_BUILTIN_FUNCTIONS.filter((f) => f.name.replace("fn:", "").startsWith(prefix)).map((fn, index) => ({
-    label: fn.name,
+  return ALL_BUILTIN_FUNCTIONS.filter((f) => f.name.replace("fn:", "").startsWith(prefix)).map((fn2, index) => ({
+    label: fn2.name,
     kind: import_node4.CompletionItemKind.Function,
-    detail: fn.isReducer ? "Reducer function" : "Built-in function",
-    documentation: fn.doc,
-    textEdit: import_node4.TextEdit.replace(replaceRange, createFunctionSnippet(fn.name, fn.arity)),
+    detail: functionDetail(fn2),
+    documentation: builtinFunctionDocs(fn2),
+    textEdit: import_node4.TextEdit.replace(replaceRange, createFunctionSnippet(fn2.name, fn2.arity, fn2.paramNames)),
     insertTextFormat: import_node4.InsertTextFormat.Snippet,
     sortText: `0${index.toString().padStart(3, "0")}`
   }));
@@ -38761,35 +44717,35 @@ function getTransformDoCompletions(replaceRange) {
       sortText: "000"
       // First
     },
-    ...ALL_BUILTIN_FUNCTIONS.filter((f) => f.name !== "fn:group_by").map((fn, index) => ({
-      label: fn.name,
+    ...ALL_BUILTIN_FUNCTIONS.filter((f) => f.name !== "fn:group_by").map((fn2, index) => ({
+      label: fn2.name,
       kind: import_node4.CompletionItemKind.Function,
-      detail: fn.isReducer ? "Reducer function" : "Built-in function",
-      documentation: fn.doc,
-      textEdit: import_node4.TextEdit.replace(replaceRange, createFunctionSnippet(fn.name, fn.arity)),
+      detail: functionDetail(fn2),
+      documentation: builtinFunctionDocs(fn2),
+      textEdit: import_node4.TextEdit.replace(replaceRange, createFunctionSnippet(fn2.name, fn2.arity, fn2.paramNames)),
       insertTextFormat: import_node4.InsertTextFormat.Snippet,
       sortText: `1${index.toString().padStart(3, "0")}`
     }))
   ];
 }
 function getReducerFunctionCompletions(replaceRange) {
-  return REDUCER_FUNCTIONS.map((fn, index) => ({
-    label: fn.name,
+  return REDUCER_FUNCTIONS.map((fn2, index) => ({
+    label: fn2.name,
     kind: import_node4.CompletionItemKind.Function,
-    detail: "Reducer function",
-    documentation: fn.doc,
-    textEdit: import_node4.TextEdit.replace(replaceRange, createFunctionSnippet(fn.name, fn.arity)),
+    detail: `Reducer function ${formatFunctionSignature(fn2)}`,
+    documentation: builtinFunctionDocs(fn2),
+    textEdit: import_node4.TextEdit.replace(replaceRange, createFunctionSnippet(fn2.name, fn2.arity, fn2.paramNames)),
     insertTextFormat: import_node4.InsertTextFormat.Snippet,
     sortText: `0${index.toString().padStart(3, "0")}`
   }));
 }
 function getPredicateCompletions(symbolTable, prefix, replaceRange) {
-  return symbolTable.getAllPredicates().filter((p) => !p.symbol.symbol.startsWith(":")).filter((p) => p.symbol.symbol.startsWith(prefix)).map((pred, index) => ({
-    label: pred.symbol.symbol,
+  return symbolTable.getAllPredicates().filter((p) => !p.symbol.symbol.startsWith(":")).filter((p) => p.symbol.symbol.startsWith(prefix)).map((pred2, index) => ({
+    label: pred2.symbol.symbol,
     kind: import_node4.CompletionItemKind.Method,
-    detail: `${pred.symbol.symbol}/${pred.symbol.arity}`,
-    documentation: pred.documentation || void 0,
-    textEdit: import_node4.TextEdit.replace(replaceRange, createPredicateSnippet(pred.symbol.symbol, pred.symbol.arity)),
+    detail: `${pred2.symbol.symbol}/${pred2.symbol.arity}`,
+    documentation: pred2.documentation || void 0,
+    textEdit: import_node4.TextEdit.replace(replaceRange, createPredicateSnippet(pred2.symbol.symbol, pred2.symbol.arity)),
     insertTextFormat: import_node4.InsertTextFormat.Snippet,
     sortText: `1${index.toString().padStart(3, "0")}`
   }));
@@ -38910,12 +44866,73 @@ function getKeywordCompletions(replaceRange) {
       sortText: "308"
     },
     {
+      label: "temporal",
+      kind: import_node4.CompletionItemKind.Keyword,
+      detail: "Mark predicate as temporal",
+      textEdit: import_node4.TextEdit.replace(replaceRange, "temporal"),
+      insertTextFormat: import_node4.InsertTextFormat.PlainText,
+      sortText: "309"
+    },
+    {
+      label: "now",
+      kind: import_node4.CompletionItemKind.Keyword,
+      detail: "Current evaluation time (temporal bound)",
+      textEdit: import_node4.TextEdit.replace(replaceRange, "now"),
+      insertTextFormat: import_node4.InsertTextFormat.PlainText,
+      sortText: "309a"
+    },
+    {
+      label: "@[",
+      kind: import_node4.CompletionItemKind.Snippet,
+      detail: "Temporal interval annotation",
+      documentation: "Temporal annotation: @[start, end] or @[T] for a point interval",
+      textEdit: import_node4.TextEdit.replace(replaceRange, "@[${1:Start}, ${2:End}]"),
+      insertTextFormat: import_node4.InsertTextFormat.Snippet,
+      sortText: "309b"
+    },
+    {
+      label: "<-[",
+      kind: import_node4.CompletionItemKind.Snippet,
+      detail: "Diamond minus (eventually in the past)",
+      documentation: "Temporal operator: <-[start, end] - there exists a time in the past interval where the predicate holds",
+      textEdit: import_node4.TextEdit.replace(replaceRange, "<-[${1:0s}, ${2:duration}] ${3:predicate}(${4:args})"),
+      insertTextFormat: import_node4.InsertTextFormat.Snippet,
+      sortText: "309c"
+    },
+    {
+      label: "[-[",
+      kind: import_node4.CompletionItemKind.Snippet,
+      detail: "Box minus (always in the past)",
+      documentation: "Temporal operator: [-[start, end] - for all times in the past interval, the predicate holds",
+      textEdit: import_node4.TextEdit.replace(replaceRange, "[-[${1:0s}, ${2:duration}] ${3:predicate}(${4:args})"),
+      insertTextFormat: import_node4.InsertTextFormat.Snippet,
+      sortText: "309d"
+    },
+    {
+      label: "<+[",
+      kind: import_node4.CompletionItemKind.Snippet,
+      detail: "Diamond plus (eventually in the future)",
+      documentation: "Temporal operator: <+[start, end] - there exists a time in the future interval where the predicate holds",
+      textEdit: import_node4.TextEdit.replace(replaceRange, "<+[${1:0s}, ${2:duration}] ${3:predicate}(${4:args})"),
+      insertTextFormat: import_node4.InsertTextFormat.Snippet,
+      sortText: "309e"
+    },
+    {
+      label: "[+[",
+      kind: import_node4.CompletionItemKind.Snippet,
+      detail: "Box plus (always in the future)",
+      documentation: "Temporal operator: [+[start, end] - for all times in the future interval, the predicate holds",
+      textEdit: import_node4.TextEdit.replace(replaceRange, "[+[${1:0s}, ${2:duration}] ${3:predicate}(${4:args})"),
+      insertTextFormat: import_node4.InsertTextFormat.Snippet,
+      sortText: "309f"
+    },
+    {
       label: "mode",
       kind: import_node4.CompletionItemKind.Keyword,
       detail: "Mode declaration for predicate",
       textEdit: import_node4.TextEdit.replace(replaceRange, "mode(${1:+,-})"),
       insertTextFormat: import_node4.InsertTextFormat.Snippet,
-      sortText: "309"
+      sortText: "310"
     },
     {
       label: "doc",
@@ -38923,7 +44940,7 @@ function getKeywordCompletions(replaceRange) {
       detail: "Documentation string",
       textEdit: import_node4.TextEdit.replace(replaceRange, 'doc("${1:description}")'),
       insertTextFormat: import_node4.InsertTextFormat.Snippet,
-      sortText: "310"
+      sortText: "311"
     },
     {
       label: "arg",
@@ -38931,29 +44948,46 @@ function getKeywordCompletions(replaceRange) {
       detail: "Argument documentation",
       textEdit: import_node4.TextEdit.replace(replaceRange, 'arg("${1:name}", "${2:description}")'),
       insertTextFormat: import_node4.InsertTextFormat.Snippet,
-      sortText: "311"
+      sortText: "312"
     }
   ];
 }
-function createPredicateSnippet(name, arity) {
+function createPredicateSnippet(name, arity, paramNames) {
   if (arity === 0) {
     return name;
   }
-  const args = Array.from({ length: arity }, (_, i) => `\${${i + 1}:arg${i + 1}}`);
+  const args = Array.from({ length: arity }, (_, i) => `\${${i + 1}:${paramNames?.[i] ?? `arg${i + 1}`}}`);
   return `${name}(${args.join(", ")})`;
 }
-function createFunctionSnippet(name, arity) {
+function createFunctionSnippet(name, arity, paramNames) {
   if (arity === 0) {
     return `${name}()`;
   }
   if (arity === -1) {
-    return `${name}(\${1:args})`;
+    return `${name}(\${1:${paramNames?.[0] ?? "args"}})`;
   }
-  const args = Array.from({ length: arity }, (_, i) => `\${${i + 1}:arg${i + 1}}`);
+  const args = Array.from({ length: arity }, (_, i) => `\${${i + 1}:${paramNames?.[i] ?? `arg${i + 1}`}}`);
   return `${name}(${args.join(", ")})`;
 }
+function functionDetail(fn2) {
+  const kind = fn2.isReducer ? "Reducer function" : "Built-in function";
+  return fn2.signature ? `${kind} ${formatFunctionSignature(fn2)}` : kind;
+}
+function builtinFunctionDocs(fn2) {
+  const parts = [fn2.doc];
+  if (fn2.unitArg) parts.push(`Units: ${fn2.unitArg.units.join(", ")}`);
+  if (fn2.example) parts.push(`Example: \`${fn2.example}\``);
+  if (fn2.seeAlso?.length) parts.push(`See also: ${fn2.seeAlso.join(", ")}`);
+  return { kind: import_node4.MarkupKind.Markdown, value: parts.join("\n\n") };
+}
+function builtinPredicateDocs(pred2) {
+  const parts = [pred2.doc];
+  if (pred2.example) parts.push(`Example: \`${pred2.example}\``);
+  if (pred2.seeAlso?.length) parts.push(`See also: ${pred2.seeAlso.join(", ")}`);
+  return { kind: import_node4.MarkupKind.Markdown, value: parts.join("\n\n") };
+}
 
-// node_modules/vscode-languageserver-textdocument/lib/esm/main.js
+// ../node_modules/vscode-languageserver-textdocument/lib/esm/main.js
 var FullTextDocument = class _FullTextDocument {
   constructor(uri, languageId, version, content) {
     this._uri = uri;
@@ -39055,6 +45089,30 @@ var FullTextDocument = class _FullTextDocument {
     const nextLineOffset = position.line + 1 < lineOffsets.length ? lineOffsets[position.line + 1] : this._content.length;
     const offset = Math.min(lineOffset + position.character, nextLineOffset);
     return this.ensureBeforeEOL(offset, lineOffset);
+  }
+  getLineRange(line) {
+    const lineOffsets = this.getLineOffsets();
+    if (line >= lineOffsets.length) {
+      const lastLine = lineOffsets.length - 1;
+      return { start: { line: lastLine, character: 0 }, end: { line: lastLine, character: this._content.length - lineOffsets[lastLine] } };
+    } else if (line < 0) {
+      return { start: { line: 0, character: 0 }, end: { line: 0, character: 0 } };
+    }
+    const startOffset = lineOffsets[line];
+    const nextLineOffset = line + 1 < lineOffsets.length ? lineOffsets[line + 1] : this._content.length;
+    const endOffset = this.ensureBeforeEOL(nextLineOffset, startOffset);
+    return { start: { line, character: 0 }, end: { line, character: endOffset - startOffset } };
+  }
+  getEOLCharacters(line) {
+    const lineOffsets = this.getLineOffsets();
+    if (line >= lineOffsets.length) {
+      return "";
+    } else if (line < 0) {
+      return "";
+    }
+    const nextLineOffset = line + 1 < lineOffsets.length ? lineOffsets[line + 1] : this._content.length;
+    const eolOffset = this.ensureBeforeEOL(nextLineOffset, lineOffsets[line]);
+    return this._content.substring(eolOffset, nextLineOffset);
   }
   ensureBeforeEOL(offset, lineOffset) {
     while (offset > lineOffset && isEOL(this._content.charCodeAt(offset - 1))) {
@@ -39177,7 +45235,7 @@ function getWellformedEdit(textEdit) {
   return textEdit;
 }
 
-// src/cli/commands/completion.ts
+// ../mangle-lsp/src/cli/commands/completion.ts
 var import_node5 = __toESM(require_node3());
 function runCompletion(file, options) {
   const filePath = (0, import_path6.resolve)(file);
@@ -39241,11 +45299,11 @@ function mapCompletionKind(kind) {
   }
 }
 
-// src/cli/commands/format.ts
+// ../mangle-lsp/src/cli/commands/format.ts
 var import_fs7 = require("fs");
 var import_path7 = require("path");
 
-// src/services/formatting.ts
+// ../mangle-lsp/src/services/formatting.ts
 function extractComments(text) {
   const comments = /* @__PURE__ */ new Map();
   const lines = text.split("\n");
@@ -39309,7 +45367,7 @@ function formatDocument(document, unit, options) {
 }
 function formatSourceUnit(unit, options) {
   const lines = [];
-  const indent = options.insertSpaces ? " ".repeat(options.tabSize) : "	";
+  const indent2 = options.insertSpaces ? " ".repeat(options.tabSize) : "	";
   if (unit.packageDecl) {
     lines.push(`Package ${unit.packageDecl.name}.`);
     lines.push("");
@@ -39321,7 +45379,7 @@ function formatSourceUnit(unit, options) {
     lines.push("");
   }
   for (const decl of unit.decls) {
-    lines.push(formatDecl(decl, indent));
+    lines.push(formatDecl(decl, indent2));
   }
   if (unit.decls.length > 0) {
     lines.push("");
@@ -39343,40 +45401,43 @@ function formatSourceUnit(unit, options) {
     }
     isFirst = false;
     for (const clause of clauses) {
-      lines.push(formatClause(clause, indent));
+      lines.push(formatClause(clause, indent2));
     }
   }
   return lines.join("\n") + "\n";
 }
-function formatDecl(decl, indent) {
+function formatDecl(decl, indent2) {
   const atom = formatAtom(decl.declaredAtom);
   let result = `Decl ${atom}`;
   if (decl.descr && decl.descr.length > 0) {
     const descrParts = decl.descr.map((a) => formatAtom(a));
     result += `
-${indent}descr [`;
+${indent2}descr [`;
     for (let i = 0; i < descrParts.length; i++) {
       result += `
-${indent}    ${descrParts[i]}${i < descrParts.length - 1 ? "," : ""}`;
+${indent2}    ${descrParts[i]}${i < descrParts.length - 1 ? "," : ""}`;
     }
     result += `
-${indent}]`;
+${indent2}]`;
   }
   if (decl.bounds && decl.bounds.length > 0) {
     for (const boundDecl of decl.bounds) {
       const boundsStr = boundDecl.bounds.map(formatTerm).join(", ");
       result += `
-${indent}bound [${boundsStr}]`;
+${indent2}bound [${boundsStr}]`;
     }
   }
   result += ".";
   return result;
 }
-function formatClause(clause, indent) {
-  const head = formatAtom(clause.head);
+function formatClause(clause, indent2) {
+  let head = formatAtom(clause.head);
+  if (clause.headTime && !isEternalInterval(clause.headTime)) {
+    head += temporalIntervalToString(clause.headTime);
+  }
   if (!clause.premises || clause.premises.length === 0) {
     if (clause.transform) {
-      return `${head} |> ${formatTransform(clause.transform, indent)}.`;
+      return `${head} |> ${formatTransform(clause.transform, indent2)}.`;
     }
     return `${head}.`;
   }
@@ -39389,22 +45450,22 @@ function formatClause(clause, indent) {
 `;
   for (let i = 0; i < premises.length; i++) {
     const isLast = i === premises.length - 1;
-    result += `${indent}${premises[i]}${isLast ? "" : ","}
+    result += `${indent2}${premises[i]}${isLast ? "" : ","}
 `;
   }
   if (clause.transform) {
-    result += `${indent}|> ${formatTransform(clause.transform, indent)}`;
+    result += `${indent2}|> ${formatTransform(clause.transform, indent2)}`;
   }
   result = result.trimEnd() + ".";
   return result;
 }
 function formatAtom(atom) {
-  const pred = atom.predicate.symbol;
+  const pred2 = atom.predicate.symbol;
   if (atom.args.length === 0) {
-    return `${pred}()`;
+    return `${pred2}()`;
   }
   const args = atom.args.map(formatTerm).join(", ");
-  return `${pred}(${args})`;
+  return `${pred2}(${args})`;
 }
 function formatTerm(term) {
   switch (term.type) {
@@ -39447,40 +45508,53 @@ function formatTerm(term) {
           const sndStr = c.snd ? formatTerm(c.snd) : "";
           return `fn:pair(${fstStr}, ${sndStr})`;
         }
+        case "time": {
+          if (c.numValue !== void 0) {
+            const ms = c.numValue / 1e6;
+            const iso = new Date(ms).toISOString();
+            return `fn:time:parse_rfc3339("${iso}")`;
+          }
+          return 'fn:time:parse_rfc3339("?")';
+        }
+        case "duration": {
+          if (c.symbol) return `fn:duration:parse("${c.symbol}")`;
+          if (c.numValue !== void 0) return `fn:duration:parse("${c.numValue}ns")`;
+          return 'fn:duration:parse("?")';
+        }
         default:
           return c.symbol ?? "";
       }
     }
     case "ApplyFn": {
-      const fn = term;
-      if (fn.function.symbol === "fn:list") {
-        const elements = fn.args.map(formatTerm).join(", ");
+      const fn2 = term;
+      if (fn2.function.symbol === "fn:list") {
+        const elements = fn2.args.map(formatTerm).join(", ");
         return `[${elements}]`;
       }
-      if (fn.function.symbol === "fn:map") {
+      if (fn2.function.symbol === "fn:map") {
         const pairs = [];
-        for (let i = 0; i < fn.args.length; i += 2) {
-          const key = fn.args[i];
-          const value = fn.args[i + 1];
+        for (let i = 0; i < fn2.args.length; i += 2) {
+          const key = fn2.args[i];
+          const value = fn2.args[i + 1];
           if (key && value) {
             pairs.push(`${formatTerm(key)}: ${formatTerm(value)}`);
           }
         }
         return `[${pairs.join(", ")}]`;
       }
-      if (fn.function.symbol === "fn:struct") {
+      if (fn2.function.symbol === "fn:struct") {
         const pairs = [];
-        for (let i = 0; i < fn.args.length; i += 2) {
-          const key = fn.args[i];
-          const value = fn.args[i + 1];
+        for (let i = 0; i < fn2.args.length; i += 2) {
+          const key = fn2.args[i];
+          const value = fn2.args[i + 1];
           if (key && value) {
             pairs.push(`${formatTerm(key)}: ${formatTerm(value)}`);
           }
         }
         return `{${pairs.join(", ")}}`;
       }
-      const fnName = fn.function.symbol;
-      const args = fn.args.map(formatTerm).join(", ");
+      const fnName = fn2.function.symbol;
+      const args = fn2.args.map(formatTerm).join(", ");
       return `${fnName}(${args})`;
     }
     case "Atom": {
@@ -39519,6 +45593,30 @@ function formatTerm(term) {
       const neg = term;
       return `!${formatAtom(neg.atom)}`;
     }
+    case "TemporalLiteral": {
+      const tl = term;
+      let result = "";
+      if (tl.operator) {
+        result += temporalOperatorToString(tl.operator) + " ";
+      }
+      if (tl.literal.type === "NegAtom") {
+        result += `!${formatAtom(tl.literal.atom)}`;
+      } else {
+        result += formatAtom(tl.literal);
+      }
+      if (tl.interval && !isEternalInterval(tl.interval)) {
+        result += temporalIntervalToString(tl.interval);
+      }
+      return result;
+    }
+    case "TemporalAtom": {
+      const ta = term;
+      let result = formatAtom(ta.atom);
+      if (ta.interval && !isEternalInterval(ta.interval)) {
+        result += temporalIntervalToString(ta.interval);
+      }
+      return result;
+    }
     case "Eq": {
       const eq = term;
       return `${formatTerm(eq.left)} = ${formatTerm(eq.right)}`;
@@ -39547,7 +45645,7 @@ function formatTerm(term) {
       return "";
   }
 }
-function formatTransform(transform, indent) {
+function formatTransform(transform, indent2) {
   const parts = [];
   let current = transform;
   while (current) {
@@ -39559,22 +45657,22 @@ function formatTransform(transform, indent) {
   return parts.join(", ");
 }
 function formatTransformStmt(stmt) {
-  const fn = formatApplyFn(stmt.fn);
+  const fn2 = formatApplyFn(stmt.fn);
   if (stmt.variable === null) {
-    return `do ${fn}`;
+    return `do ${fn2}`;
   }
-  return `let ${stmt.variable.symbol} = ${fn}`;
+  return `let ${stmt.variable.symbol} = ${fn2}`;
 }
-function formatApplyFn(fn) {
-  const fnName = fn.function.symbol;
-  const args = fn.args.map(formatTerm).join(", ");
+function formatApplyFn(fn2) {
+  const fnName = fn2.function.symbol;
+  const args = fn2.args.map(formatTerm).join(", ");
   return `${fnName}(${args})`;
 }
 function escapeString(s) {
   return s.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\n/g, "\\n").replace(/\r/g, "\\r").replace(/\t/g, "\\t");
 }
 
-// src/cli/commands/format.ts
+// ../mangle-lsp/src/cli/commands/format.ts
 function runFormat(files, options) {
   const results = [];
   for (const file of files) {
@@ -39706,7 +45804,7 @@ function getFormatExitCode(results, options) {
   return errors.length > 0 ? 1 : 0;
 }
 
-// src/cli/commands/batch.ts
+// ../mangle-lsp/src/cli/commands/batch.ts
 var import_fs8 = require("fs");
 var import_path8 = require("path");
 var fileCache = /* @__PURE__ */ new Map();
@@ -39895,31 +45993,16 @@ function processSymbols(cache) {
   };
 }
 function processDiagnostics(cache) {
-  const parseErrors = cache.parseResult.errors.map((e) => ({
-    code: "P001",
-    source: e.source === "lexer" ? "mangle-lexer" : "mangle-parse",
-    severity: "error",
-    message: e.message,
-    range: {
-      start: { line: e.line, column: e.column },
-      end: { line: e.line, column: e.column + e.length }
-    }
-  }));
-  const semanticErrors = cache.validationResult?.errors.map((e) => ({
-    code: e.code,
-    source: "mangle-semantic",
-    severity: e.severity,
-    message: e.message,
-    range: {
-      start: { line: e.range.start.line, column: e.range.start.column },
-      end: { line: e.range.end.line, column: e.range.end.column }
-    }
-  })) ?? [];
+  const lines = cache.source.split("\n");
+  const parseErrors = cache.parseResult.errors.map((e) => parseErrorToCLIDiagnostic(e, lines));
+  const analysis = cache.parseResult.unit ? analyzeUnit(cache.parseResult.unit).diagnostics : [];
+  const semanticErrors = analysis.map((e) => analysisToCLIDiagnostic(e, lines));
   return {
     parseErrors,
     semanticErrors,
     totalErrors: parseErrors.length + semanticErrors.filter((e) => e.severity === "error").length,
-    totalWarnings: semanticErrors.filter((e) => e.severity === "warning").length
+    totalWarnings: semanticErrors.filter((e) => e.severity === "warning").length,
+    totalInfo: semanticErrors.filter((e) => e.severity === "info").length
   };
 }
 function processFormat(cache) {
@@ -39978,7 +46061,7 @@ function parseBatchInput(input) {
   return queries;
 }
 
-// src/cli/formatters/json.ts
+// ../mangle-lsp/src/cli/formatters/json.ts
 function formatCheckResultJson(result) {
   return JSON.stringify(result, null, 2);
 }
@@ -40004,7 +46087,7 @@ function formatFormatResultJson(results) {
   return JSON.stringify({ files: results }, null, 2);
 }
 
-// src/cli/formatters/text.ts
+// ../mangle-lsp/src/cli/formatters/text.ts
 var COLORS = {
   reset: "\x1B[0m",
   red: "\x1B[31m",
@@ -40043,6 +46126,29 @@ function formatDiagnostic(diag, filePath) {
     output += `
   ${color("|", COLORS.gray)} ${diag.context}`;
   }
+  if (diag.hint) {
+    output += `
+  ${color("= help:", COLORS.cyan)} ${diag.hint}`;
+  }
+  for (const fix of diag.fixes ?? []) {
+    const at = `${fix.range.start.line}:${fix.range.start.column}-${fix.range.end.line}:${fix.range.end.column}`;
+    output += `
+  ${color("= fix:", COLORS.cyan)} ${fix.title} ${color(`(${at} -> ${JSON.stringify(fix.newText)})`, COLORS.gray)}`;
+  }
+  if (diag.explanation) {
+    output += `
+  ${color("= note:", COLORS.gray)} ${diag.explanation}`;
+    if (diag.fix) {
+      output += `
+  ${color("= how to fix:", COLORS.gray)} ${diag.fix}`;
+    }
+    if (diag.example) {
+      output += `
+  ${color("= instead of:", COLORS.gray)} ${diag.example.bad.replace(/\n/g, "\n                  ")}`;
+      output += `
+  ${color("= write:", COLORS.gray)}      ${diag.example.good.replace(/\n/g, "\n                  ")}`;
+    }
+  }
   return output;
 }
 function formatCheckResultText(result) {
@@ -40064,6 +46170,11 @@ function formatCheckResultText(result) {
     }
     if (result.summary.totalInfo > 0) {
       lines.push(`  Info: ${result.summary.totalInfo}`);
+    }
+    const codes = [...new Set(result.files.flatMap((f) => f.diagnostics.map((d) => d.code)))].filter((c) => c !== "E000").sort();
+    if (codes.length > 0) {
+      lines.push("");
+      lines.push(color(`For more information about a code, run 'mangle-cli explain <CODE>' (${codes.join(", ")}).`, COLORS.gray));
     }
   } else {
     lines.push(color("No issues found.", COLORS.gray));
@@ -40171,7 +46282,11 @@ function formatFormatResultText(results) {
   return lines.join("\n");
 }
 
-// src/cli/formatters/sarif.ts
+// ../mangle-lsp/src/version.ts
+var VERSION = "1.1.0";
+var UPSTREAM_MANGLE_REVISION = "77780a5 (2026-09-19)";
+
+// ../mangle-lsp/src/cli/formatters/sarif.ts
 var SARIF_SCHEMA = "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json";
 var SARIF_VERSION = "2.1.0";
 function mapSeverityToLevel(severity) {
@@ -40191,81 +46306,81 @@ function collectRules(result) {
   for (const file of result.files) {
     for (const diag of file.diagnostics) {
       if (!rules.has(diag.code)) {
-        rules.set(diag.code, {
+        const info = getDiagnosticInfo(diag.code);
+        const rule = {
           id: diag.code,
           shortDescription: { text: getRuleDescription(diag.code) },
           defaultConfiguration: {
-            level: mapSeverityToLevel(diag.severity)
+            level: mapSeverityToLevel(info?.severity ?? diag.severity)
           }
-        });
+        };
+        if (info) {
+          rule.name = toRuleName(info.title);
+          rule.fullDescription = { text: info.explanation };
+          const example = info.example ? `
+
+Instead of:
+${info.example.bad}
+
+write:
+${info.example.good}` : "";
+          const exampleMd = info.example ? `
+
+Instead of:
+\`\`\`
+${info.example.bad}
+\`\`\`
+write:
+\`\`\`
+${info.example.good}
+\`\`\`` : "";
+          rule.help = { text: `${info.fix}${example}`, markdown: `${info.fix}${exampleMd}` };
+          rule.helpUri = diagnosticDocUrl(info.code);
+          rule.properties = { category: info.category };
+        }
+        rules.set(diag.code, rule);
       }
     }
   }
   return rules;
 }
 function getRuleDescription(code) {
-  const descriptions = {
-    "E000": "File or I/O error",
-    "E001": "Variables in facts must be ground",
-    "E002": "Range restriction violation",
-    "E003": "Variables in negation must be bound",
-    "E004": "Variables in comparison must be bound",
-    "E005": "Unknown built-in predicate",
-    "E006": "Built-in predicate arity mismatch",
-    "E007": "Built-in predicate mode violation",
-    "E008": "Unknown built-in function",
-    "E009": "Built-in function arity mismatch",
-    "E010": "Unbound variable in function",
-    "E011": "Invalid transform structure",
-    "E012": "Unbound variable in group_by",
-    "E013": "Invalid function in let-transform",
-    "E014": "Unbound variable in function application",
-    "E015": "Stratification violation (negation cycle)",
-    "E018": "Wrong function casing",
-    "E020": "Hallucinated function",
-    "E023": "Stratification warning",
-    "E024": "Invalid declaration argument",
-    "E025": "Declaration bounds count mismatch",
-    "E026": "External predicate mode error",
-    "E027": "Invalid key-value pair count",
-    "E030": "Invalid pattern argument type",
-    "E031": "Package name must be lowercase",
-    "E032": "Invalid name constant format",
-    "E033": "Invalid destructuring argument",
-    "E034": "Invalid field selector type",
-    "E035": "Division by zero",
-    "E036": "Invalid group_by argument type",
-    "E037": "Duplicate variable in group_by",
-    "E038": "Invalid string escape sequence",
-    "E039": "Wildcard in head warning",
-    "E040": "Predicate arity mismatch",
-    "E041": "Private predicate access",
-    "E043": "Transform redefines body variable",
-    "E044": "Duplicate predicate declaration",
-    "E045": "Transform without body",
-    "E046": "Declaration arity mismatch",
-    "P001": "Parse error"
+  return getDiagnosticInfo(code)?.title ?? `Mangle diagnostic ${code}`;
+}
+function toRuleName(title) {
+  return title.replace(/[^A-Za-z0-9 ]/g, " ").split(/\s+/).filter(Boolean).map((w) => w[0].toUpperCase() + w.slice(1)).join("");
+}
+function toRegion(range) {
+  return {
+    startLine: range.start.line,
+    startColumn: range.start.column + 1,
+    // SARIF uses 1-indexed columns
+    endLine: range.end.line,
+    endColumn: range.end.column + 1
   };
-  return descriptions[code] || `Mangle diagnostic ${code}`;
 }
 function diagnosticToResult(diag, filePath) {
-  return {
+  const result = {
     ruleId: diag.code,
     level: mapSeverityToLevel(diag.severity),
-    message: { text: diag.message },
+    message: { text: diag.hint ? `${diag.message}. Help: ${diag.hint}` : diag.message },
     locations: [{
       physicalLocation: {
         artifactLocation: { uri: filePath },
-        region: {
-          startLine: diag.range.start.line,
-          startColumn: diag.range.start.column + 1,
-          // SARIF uses 1-indexed columns
-          endLine: diag.range.end.line,
-          endColumn: diag.range.end.column + 1
-        }
+        region: toRegion(diag.range)
       }
     }]
   };
+  if (diag.fixes && diag.fixes.length > 0) {
+    result.fixes = diag.fixes.map((f) => ({
+      description: { text: f.title },
+      artifactChanges: [{
+        artifactLocation: { uri: filePath },
+        replacements: [{ deletedRegion: toRegion(f.range), insertedContent: { text: f.newText } }]
+      }]
+    }));
+  }
+  return result;
 }
 function formatCheckResultSarif(result) {
   const rules = collectRules(result);
@@ -40282,7 +46397,7 @@ function formatCheckResultSarif(result) {
       tool: {
         driver: {
           name: "mangle-cli",
-          version: "1.0.0",
+          version: VERSION,
           informationUri: "https://github.com/theRebelliousNerd/MangleLSP",
           rules: Array.from(rules.values())
         }
@@ -40293,11 +46408,23 @@ function formatCheckResultSarif(result) {
   return JSON.stringify(sarif, null, 2);
 }
 
-// src/cli.ts
-var VERSION = "1.0.0";
+// ../mangle-lsp/src/cli.ts
+var BOOLEAN_FLAGS = /* @__PURE__ */ new Set([
+  "quiet",
+  "help",
+  "version",
+  "write",
+  "check",
+  "diff",
+  "include-declaration",
+  "explain",
+  "all",
+  "markdown",
+  "list"
+]);
 function printUsage() {
   console.log(`
-Mangle CLI v${VERSION}
+Mangle CLI v${VERSION} (tracks upstream Mangle ${UPSTREAM_MANGLE_REVISION})
 
 Usage: mangle-cli <command> [options] <files...>
 
@@ -40311,6 +46438,7 @@ Commands:
   format        Format Mangle source files
   batch         Run multiple queries in one call (for agents)
   file-info     Get complete analysis of a file
+  explain       Explain a diagnostic code: what it means, how to fix it, example
 
 Global Options:
   --format, -f    Output format: json | text | sarif (default: json)
@@ -40321,6 +46449,12 @@ Global Options:
 Check Options:
   --severity      Minimum severity: error | warning | info (default: info)
   --fail-on       Exit non-zero on: error | warning | never (default: error)
+  --explain       Include the full explanation, fix and example of every code
+
+Explain Options:
+  mangle-cli explain E002          Explain one code
+  mangle-cli explain --list        One line per code
+  mangle-cli explain --all         Every code in full (--markdown for docs)
 
 Position Options (hover, definition, references, completion):
   --line          Line number (1-indexed, required)
@@ -40340,6 +46474,9 @@ Examples:
 
   # Check with human-readable output
   mangle-cli check --format text src/**/*.mg
+
+  # Explain a diagnostic code
+  mangle-cli explain E003
 
   # Get symbols from a file
   mangle-cli symbols src/main.mg
@@ -40389,9 +46526,15 @@ function parseArgs(args) {
       continue;
     }
     if (arg.startsWith("--")) {
+      const eq = arg.indexOf("=");
+      if (eq !== -1) {
+        result.options[arg.slice(2, eq)] = arg.slice(eq + 1);
+        i++;
+        continue;
+      }
       const key = arg.slice(2);
       const next = args[i + 1];
-      if (next && !next.startsWith("-")) {
+      if (!BOOLEAN_FLAGS.has(key) && next && !next.startsWith("-")) {
         result.options[key] = next;
         i += 2;
       } else {
@@ -40449,7 +46592,7 @@ function expandGlobs(patterns) {
 function main() {
   const args = parseArgs(process.argv.slice(2));
   if (args.options["version"]) {
-    console.log(`mangle-cli v${VERSION}`);
+    console.log(`mangle-cli v${VERSION} (upstream Mangle ${UPSTREAM_MANGLE_REVISION})`);
     process.exit(0);
   }
   if (args.options["help"] || !args.command) {
@@ -40488,6 +46631,9 @@ function main() {
       case "file-info":
         handleFileInfo(files[0] || "", outputFormat, args.options);
         break;
+      case "explain":
+        handleExplain(args.files, args.options["format"] || "text", args.options);
+        break;
       default:
         console.error(`Unknown command: ${args.command}`);
         printUsage();
@@ -40509,7 +46655,8 @@ function handleCheck(files, format, options) {
     format,
     quiet: !!options["quiet"],
     severity: options["severity"] || "info",
-    failOn: options["fail-on"] || "error"
+    failOn: options["fail-on"] || "error",
+    explain: !!options["explain"]
   };
   const result = runCheck(files, checkOptions);
   switch (format) {
@@ -40523,6 +46670,43 @@ function handleCheck(files, format, options) {
       console.log(formatCheckResultJson(result));
   }
   process.exit(getExitCode(result, checkOptions));
+}
+function handleExplain(codes, format, options) {
+  const all = getAllDiagnosticInfos();
+  if (options["markdown"]) {
+    console.log(renderDiagnosticsMarkdown());
+    return;
+  }
+  if (options["list"]) {
+    if (format === "json") {
+      console.log(JSON.stringify(all.map((i) => ({ code: i.code, title: i.title, category: i.category, severity: i.severity })), null, 2));
+    } else {
+      for (const i of all) {
+        console.log(`${i.code}  ${i.severity.padEnd(7)}  ${i.category.padEnd(14)}  ${i.title}`);
+      }
+    }
+    return;
+  }
+  const selected = options["all"] ? all : codes.map((c) => c.toUpperCase());
+  if (selected.length === 0) {
+    console.error("Error: specify a code (e.g. mangle-cli explain E002), --list or --all");
+    process.exit(1);
+  }
+  const infos = [];
+  for (const item of selected) {
+    const info = typeof item === "string" ? getDiagnosticInfo(item) : item;
+    if (!info) {
+      const hint = didYouMean(suggestSimilar(String(item), all.map((i) => i.code)));
+      console.error(`Unknown diagnostic code: ${item}${hint ? ` (${hint})` : ""}. Run 'mangle-cli explain --list' to see all codes.`);
+      process.exit(1);
+    }
+    infos.push(info);
+  }
+  if (format === "json") {
+    console.log(JSON.stringify(infos.length === 1 ? infos[0] : infos, null, 2));
+  } else {
+    console.log(infos.map((i) => renderExplanation(i, format === "markdown")).join("\n\n---\n\n"));
+  }
 }
 function handleSymbols(file, format, options) {
   if (!file) {
@@ -40741,12 +46925,12 @@ AST:`);
   if (info.predicates && info.predicates.length > 0) {
     lines.push(`
 Predicates (${info.predicates.length}):`);
-    for (const pred of info.predicates) {
+    for (const pred2 of info.predicates) {
       const attrs = [];
-      if (pred.isExternal) attrs.push("external");
-      if (pred.isPrivate) attrs.push("private");
+      if (pred2.isExternal) attrs.push("external");
+      if (pred2.isPrivate) attrs.push("private");
       const attrStr = attrs.length > 0 ? ` [${attrs.join(", ")}]` : "";
-      lines.push(`  ${pred.name}/${pred.arity}${attrStr} - ${pred.definitionCount} def, ${pred.referenceCount} ref`);
+      lines.push(`  ${pred2.name}/${pred2.arity}${attrStr} - ${pred2.definitionCount} def, ${pred2.referenceCount} ref`);
     }
   }
   if (info.symbols && info.symbols.length > 0) {
