@@ -14,6 +14,8 @@ import { getDocumentSymbols } from '../../services/symbols';
 import { formatDocument } from '../../services/formatting';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { CommonOptions } from '../types';
+import { analyzeUnit, AnalysisDiagnostic } from '../../analysis/pipeline';
+import { analysisToCLIDiagnostic, parseErrorToCLIDiagnostic } from '../diagnostics';
 
 /**
  * Batch query types.
@@ -320,33 +322,19 @@ function processSymbols(cache: FileCache): any {
  * Process diagnostics query.
  */
 function processDiagnostics(cache: FileCache): any {
-    const parseErrors = cache.parseResult.errors.map(e => ({
-        code: 'P001',
-        source: e.source === 'lexer' ? 'mangle-lexer' : 'mangle-parse',
-        severity: 'error',
-        message: e.message,
-        range: {
-            start: { line: e.line, column: e.column },
-            end: { line: e.line, column: e.column + e.length },
-        },
-    }));
+    const lines = cache.source.split('\n');
+    const parseErrors = cache.parseResult.errors.map(e => parseErrorToCLIDiagnostic(e, lines));
 
-    const semanticErrors = cache.validationResult?.errors.map(e => ({
-        code: e.code,
-        source: 'mangle-semantic',
-        severity: e.severity,
-        message: e.message,
-        range: {
-            start: { line: e.range.start.line, column: e.range.start.column },
-            end: { line: e.range.end.line, column: e.range.end.column },
-        },
-    })) ?? [];
+    // Full pipeline: semantic validation, type checking, stratification and advice.
+    const analysis: AnalysisDiagnostic[] = cache.parseResult.unit ? analyzeUnit(cache.parseResult.unit).diagnostics : [];
+    const semanticErrors = analysis.map(e => analysisToCLIDiagnostic(e, lines));
 
     return {
         parseErrors,
         semanticErrors,
         totalErrors: parseErrors.length + semanticErrors.filter(e => e.severity === 'error').length,
         totalWarnings: semanticErrors.filter(e => e.severity === 'warning').length,
+        totalInfo: semanticErrors.filter(e => e.severity === 'info').length,
     };
 }
 

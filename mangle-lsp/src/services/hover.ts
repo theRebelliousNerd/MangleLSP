@@ -195,6 +195,11 @@ function findBuiltinInTerm(term: Term, line: number, column: number): Hover | nu
     if (term.type === 'ApplyFn') {
         return findBuiltinInApplyFn(term as ApplyFn, line, column);
     }
+    if (term.type === 'Eq' || term.type === 'Ineq') {
+        // Functions most often appear in equalities: X = fn:plus(Y, 1)
+        const eq = term as { left: Term; right: Term };
+        return findBuiltinInTerm(eq.left, line, column) ?? findBuiltinInTerm(eq.right, line, column);
+    }
     if (term.type === 'TemporalLiteral') {
         const temporal = term as TemporalLiteral;
         if (temporal.literal.type === 'Atom') {

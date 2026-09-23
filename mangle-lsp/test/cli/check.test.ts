@@ -51,7 +51,7 @@ another_rule(Y) :- !unknown_pred(Y).
 
         const result = runCheck([validFile], options);
 
-        expect(result.version).toBe('1.0');
+        expect(result.version).toBe('1.1');
         expect(result.summary.totalFiles).toBe(1);
         expect(result.summary.totalErrors).toBe(0);
     });

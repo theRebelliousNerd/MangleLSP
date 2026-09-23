@@ -242,11 +242,6 @@ const entries: DiagnosticInfo[] = [
         fix: 'Group by variables that appear in positive body atoms.',
     },
     {
-        code: 'E013', title: 'Non-reducer function after group_by', category: 'transform', severity: 'warning',
-        explanation: 'After `do fn:group_by(...)`, `let` statements normally aggregate with reducers (fn:count, fn:sum, fn:collect, fn:max, ...). A plain function is allowed only on group keys or previously aggregated values.',
-        fix: 'Use a reducer, or compute per-row values in the body before the transform (e.g. `V2 = fn:mult(V, 2)`).',
-    },
-    {
         code: 'E036', title: 'group_by arguments must be variables', category: 'transform', severity: 'error',
         explanation: '`fn:group_by` takes the key variables of the aggregation; constants or expressions are not allowed.',
         fix: 'Compute the key in the body (`K = fn:...`) and group by K.',
@@ -637,8 +632,10 @@ export function suggestSimilar(name: string, candidates: Iterable<string>, max =
     for (const c of candidates) {
         if (c === name) continue;
         const d = editDistance(lower, c.toLowerCase());
-        const threshold = Math.max(2, Math.floor(Math.max(name.length, c.length) / 4));
-        if (d <= threshold) {
+        // Short names need near-exact matches: 'ev' must not suggest 'wk'.
+        const len = Math.min(name.length, c.length);
+        const threshold = len <= 3 ? 1 : len <= 6 ? 2 : Math.max(2, Math.floor(len / 3));
+        if (d <= threshold && d < len) {
             scored.push({ c, d });
         } else if (tail(c).length >= 3 && tail(c) === tail(lower)) {
             scored.push({ c, d: threshold + 1 });

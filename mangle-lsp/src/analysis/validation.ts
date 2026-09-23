@@ -156,8 +156,9 @@ export function validate(unit: SourceUnit): ValidationResult {
     }
 
     // Validate each clause
+    const reportedUndefined = new Set<string>();
     for (const clause of unit.clauses) {
-        validateClause(clause, symbolTable, errors, declaredPredicates);
+        validateClause(clause, symbolTable, errors, declaredPredicates, reportedUndefined);
     }
 
     // EnsureDecl temporal consistency (upstream validation.go:239-270)
@@ -514,6 +515,8 @@ interface ClauseCtx {
      * that were not bound at that point, with their first location.
      */
     readonly inputPositionVars: Map<string, SourceRange>;
+    /** Undefined predicates already reported in this unit (report once each). */
+    readonly reportedUndefined: Set<string>;
 }
 
 /** Range covering only the name at the start of an expression. */
@@ -535,7 +538,8 @@ function validateClause(
     clause: Clause,
     symbolTable: SymbolTable,
     errors: SemanticError[],
-    declaredPredicates?: Map<string, Decl>
+    declaredPredicates?: Map<string, Decl>,
+    reportedUndefined: Set<string> = new Set()
 ): void {
     const decls = declaredPredicates ?? new Map<string, Decl>();
 
@@ -572,6 +576,7 @@ function validateClause(
         uf,
         headPackage: packageOf(clause.head.predicate.symbol),
         inputPositionVars: new Map(),
+        reportedUndefined,
     };
 
     // Collect variables from head
@@ -1097,22 +1102,30 @@ function validateAtom(
  */
 function reportUndefinedPredicate(atom: Atom, ctx: ClauseCtx): void {
     const predName = atom.predicate.symbol;
+    const key = `${predName}/${atom.predicate.arity}`;
     // Package-qualified predicates from another package live in other files.
     const pkg = packageOf(predName);
     if (pkg !== '' && pkg !== ctx.headPackage) return;
+    if (ctx.reportedUndefined.has(key)) return;
+    ctx.reportedUndefined.add(key);
+    // Typo candidates: defined/declared predicates with the same arity.
     const known = new Set<string>();
     for (const info of ctx.symbolTable.getAllPredicates()) {
-        if (info.definitions.length > 0 || info.declLocation) known.add(info.symbol.symbol);
+        if ((info.definitions.length > 0 || info.declLocation) && info.symbol.arity === atom.predicate.arity) {
+            known.add(info.symbol.symbol);
+        }
     }
     const suggestions = suggestSimilar(predName, known);
     const nameRange = nameRangeOf(atom.range, predName);
     ctx.errors.push({
         code: 'E075',
-        message: `Predicate '${predName}/${atom.predicate.arity}' is not defined or declared in this file`,
+        message: `Predicate '${key}' is not defined or declared in this file`,
         range: nameRange,
-        severity: 'warning',
-        hint: didYouMean(suggestions)
-            ?? `define it with facts or rules, or declare it (Decl ${predName}(${atom.args.map((_, i) => `A${i + 1}`).join(', ')}) descr [extensional()].) if its facts are loaded from elsewhere`,
+        // A likely typo is worth a warning; otherwise the facts probably come from elsewhere.
+        severity: suggestions.length > 0 ? 'warning' : 'info',
+        hint: suggestions.length > 0
+            ? `${didYouMean(suggestions)} If '${predName}' is supplied by another file or the host program, add a Decl for it`
+            : `define it with facts or rules, or declare it (Decl ${predName}(${atom.args.map((_, i) => `A${i + 1}`).join(', ')}) descr [extensional()].) if its facts are loaded from elsewhere; a Decl with bound [...] also enables type checking`,
         fixes: suggestions.slice(0, 1).map(sug => ({ title: `Replace with '${sug}'`, range: nameRange, newText: sug })),
     });
 }
@@ -1525,7 +1538,8 @@ function validateTransform(
                 // are from the group_by key or defined by earlier transform statements.
                 // This matches upstream behavior from commit a77833b.
                 const fnName = stmt.fn.function.symbol;
-                if (hasGroupBy && !isReducerFunction(fnName) && fnName !== 'fn:group_by') {
+                // Unknown or miscased functions are reported by validateApplyFn (E008/E018/E020).
+                if (hasGroupBy && isBuiltinFunction(fnName) && !isReducerFunction(fnName) && fnName !== 'fn:group_by') {
                     // Check that all variables used in this function are either
                     // in the group_by key or defined by previous let-statements in the transform.
                     const groupByVars = new Set<string>();
@@ -1558,7 +1572,7 @@ function validateTransform(
                                 message: `Variable '${v}' in function '${fnName}' must be either part of group_by or defined in the transform`,
                                 range: stmt.fn.range,
                                 severity: 'error',
-                                hint: `'${fnName}' is not a reducer, so after grouping it cannot see per-row values: add '${v}' to fn:group_by(...), or aggregate it first (e.g. let S = fn:sum(${v}), let ${stmt.variable.symbol} = ${fnName}(S, ...))`,
+                                hint: `'${fnName}' is not a reducer, so after grouping it cannot see per-row values: add '${v}' to fn:group_by(...), or aggregate it first (e.g. let Agg = fn:sum(${v}), let ${stmt.variable.symbol} = ${fnName}(Agg, ...))`,
                             });
                         }
                     }

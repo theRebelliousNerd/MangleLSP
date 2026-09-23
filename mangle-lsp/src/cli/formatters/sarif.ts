@@ -4,6 +4,8 @@
  */
 
 import { CheckResult, CLIDiagnostic } from '../types';
+import { getDiagnosticInfo, diagnosticDocUrl } from '../../analysis/diagnostics';
+import { VERSION } from '../../version';
 
 /**
  * SARIF schema version.
@@ -37,12 +39,36 @@ function mapSeverityToLevel(severity: string): SarifLevel {
  */
 interface SarifRule {
     id: string;
+    name?: string;
     shortDescription: { text: string };
     fullDescription?: { text: string };
+    help?: { text: string; markdown?: string };
     helpUri?: string;
+    properties?: { category: string };
     defaultConfiguration?: {
         level: SarifLevel;
     };
+}
+
+/**
+ * SARIF region (1-indexed lines and columns).
+ */
+interface SarifRegion {
+    startLine: number;
+    startColumn: number;
+    endLine: number;
+    endColumn: number;
+}
+
+/**
+ * SARIF fix (replacement edits).
+ */
+interface SarifFix {
+    description: { text: string };
+    artifactChanges: {
+        artifactLocation: { uri: string };
+        replacements: { deletedRegion: SarifRegion; insertedContent: { text: string } }[];
+    }[];
 }
 
 /**
@@ -52,6 +78,7 @@ interface SarifResult {
     ruleId: string;
     level: SarifLevel;
     message: { text: string };
+    fixes?: SarifFix[];
     locations: {
         physicalLocation: {
             artifactLocation: { uri: string };
@@ -93,13 +120,28 @@ function collectRules(result: CheckResult): Map<string, SarifRule> {
     for (const file of result.files) {
         for (const diag of file.diagnostics) {
             if (!rules.has(diag.code)) {
-                rules.set(diag.code, {
+                const info = getDiagnosticInfo(diag.code);
+                const rule: SarifRule = {
                     id: diag.code,
                     shortDescription: { text: getRuleDescription(diag.code) },
                     defaultConfiguration: {
-                        level: mapSeverityToLevel(diag.severity),
+                        level: mapSeverityToLevel(info?.severity ?? diag.severity),
                     },
-                });
+                };
+                if (info) {
+                    rule.name = toRuleName(info.title);
+                    rule.fullDescription = { text: info.explanation };
+                    const example = info.example
+                        ? `\n\nInstead of:\n${info.example.bad}\n\nwrite:\n${info.example.good}`
+                        : '';
+                    const exampleMd = info.example
+                        ? `\n\nInstead of:\n\`\`\`\n${info.example.bad}\n\`\`\`\nwrite:\n\`\`\`\n${info.example.good}\n\`\`\``
+                        : '';
+                    rule.help = { text: `${info.fix}${example}`, markdown: `${info.fix}${exampleMd}` };
+                    rule.helpUri = diagnosticDocUrl(info.code);
+                    rule.properties = { category: info.category };
+                }
+                rules.set(diag.code, rule);
             }
         }
     }
@@ -108,75 +150,56 @@ function collectRules(result: CheckResult): Map<string, SarifRule> {
 }
 
 /**
- * Get a description for a rule code.
+ * Get a description for a rule code (from the diagnostic catalog).
  */
 function getRuleDescription(code: string): string {
-    const descriptions: Record<string, string> = {
-        'E000': 'File or I/O error',
-        'E001': 'Variables in facts must be ground',
-        'E002': 'Range restriction violation',
-        'E003': 'Variables in negation must be bound',
-        'E004': 'Variables in comparison must be bound',
-        'E005': 'Unknown built-in predicate',
-        'E006': 'Built-in predicate arity mismatch',
-        'E007': 'Built-in predicate mode violation',
-        'E008': 'Unknown built-in function',
-        'E009': 'Built-in function arity mismatch',
-        'E010': 'Unbound variable in function',
-        'E011': 'Invalid transform structure',
-        'E012': 'Unbound variable in group_by',
-        'E013': 'Invalid function in let-transform',
-        'E014': 'Unbound variable in function application',
-        'E015': 'Stratification violation (negation cycle)',
-        'E018': 'Wrong function casing',
-        'E020': 'Hallucinated function',
-        'E023': 'Stratification warning',
-        'E024': 'Invalid declaration argument',
-        'E025': 'Declaration bounds count mismatch',
-        'E026': 'External predicate mode error',
-        'E027': 'Invalid key-value pair count',
-        'E030': 'Invalid pattern argument type',
-        'E031': 'Package name must be lowercase',
-        'E032': 'Invalid name constant format',
-        'E033': 'Invalid destructuring argument',
-        'E034': 'Invalid field selector type',
-        'E035': 'Division by zero',
-        'E036': 'Invalid group_by argument type',
-        'E037': 'Duplicate variable in group_by',
-        'E038': 'Invalid string escape sequence',
-        'E039': 'Wildcard in head warning',
-        'E040': 'Predicate arity mismatch',
-        'E041': 'Private predicate access',
-        'E043': 'Transform redefines body variable',
-        'E044': 'Duplicate predicate declaration',
-        'E045': 'Transform without body',
-        'E046': 'Declaration arity mismatch',
-        'P001': 'Parse error',
-    };
+    return getDiagnosticInfo(code)?.title ?? `Mangle diagnostic ${code}`;
+}
 
-    return descriptions[code] || `Mangle diagnostic ${code}`;
+/** PascalCase rule name from a title, as SARIF viewers expect. */
+function toRuleName(title: string): string {
+    return title
+        .replace(/[^A-Za-z0-9 ]/g, ' ')
+        .split(/\s+/)
+        .filter(Boolean)
+        .map(w => w[0]!.toUpperCase() + w.slice(1))
+        .join('');
+}
+
+function toRegion(range: CLIDiagnostic['range']): SarifRegion {
+    return {
+        startLine: range.start.line,
+        startColumn: range.start.column + 1, // SARIF uses 1-indexed columns
+        endLine: range.end.line,
+        endColumn: range.end.column + 1,
+    };
 }
 
 /**
  * Convert a diagnostic to SARIF result.
  */
 function diagnosticToResult(diag: CLIDiagnostic, filePath: string): SarifResult {
-    return {
+    const result: SarifResult = {
         ruleId: diag.code,
         level: mapSeverityToLevel(diag.severity),
-        message: { text: diag.message },
+        message: { text: diag.hint ? `${diag.message}. Help: ${diag.hint}` : diag.message },
         locations: [{
             physicalLocation: {
                 artifactLocation: { uri: filePath },
-                region: {
-                    startLine: diag.range.start.line,
-                    startColumn: diag.range.start.column + 1, // SARIF uses 1-indexed columns
-                    endLine: diag.range.end.line,
-                    endColumn: diag.range.end.column + 1,
-                },
+                region: toRegion(diag.range),
             },
         }],
     };
+    if (diag.fixes && diag.fixes.length > 0) {
+        result.fixes = diag.fixes.map(f => ({
+            description: { text: f.title },
+            artifactChanges: [{
+                artifactLocation: { uri: filePath },
+                replacements: [{ deletedRegion: toRegion(f.range), insertedContent: { text: f.newText } }],
+            }],
+        }));
+    }
+    return result;
 }
 
 /**
@@ -199,7 +222,7 @@ export function formatCheckResultSarif(result: CheckResult): string {
             tool: {
                 driver: {
                     name: 'mangle-cli',
-                    version: '1.0.0',
+                    version: VERSION,
                     informationUri: 'https://github.com/theRebelliousNerd/MangleLSP',
                     rules: Array.from(rules.values()),
                 },
