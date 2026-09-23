@@ -83,6 +83,7 @@ Run `mangle-cli explain <CODE>` for the same text in a terminal.
 | [E077](#e077) | Duplicate premise | performance | warning |
 | [E078](#e078) | Unknown declaration descriptor | declaration | warning |
 | [E079](#e079) | Invalid mode declaration | declaration | warning |
+| [E080](#e080) | Wildcard merges rows before aggregation | performance | warning |
 | [P001](#p001) | Syntax error | syntax | error |
 
 ## E000
@@ -934,7 +935,7 @@ active(U) :- status(U, S), S = /active.
 
 A named variable that occurs exactly once in a clause does not connect anything; it is usually a typo of another variable (e.g. `Person` vs `Persn`), which silently turns a join into a cross product or leaves a filter ineffective.
 
-**How to fix:** If you mean "any value", write `_` instead. Otherwise fix the spelling so it matches the other occurrence.
+**How to fix:** If you mean "any value", write `_` instead. Otherwise fix the spelling so it matches the other occurrence. (Not reported in aggregating rules, where every named body variable keeps rows apart - see E080.)
 
 Instead of:
 ```mangle
@@ -957,9 +958,9 @@ The predicate is used in a rule body but has no clause and no declaration in thi
 
 **Use fn:count instead of collecting** - performance, default severity: info
 
-Collecting all values of a group into a list only to take its length materializes every value; the fn:count() / fn:count_distinct() reducers compute the same number directly.
+Collecting all values of a group into a list only to take its length materializes every value; fn:collect keeps one entry per row, so the fn:count() reducer computes the same number directly.
 
-**How to fix:** Replace `let L = fn:collect(X), let N = fn:list:len(L)` with `let N = fn:count()` (or fn:count_distinct() for fn:collect_distinct).
+**How to fix:** Replace `let L = fn:collect(X), let N = fn:list:len(L)` with `let N = fn:count()`. (fn:list:len(fn:collect_distinct(X)) counts distinct X values, which fn:count_distinct() does not match when rows have other columns, so it is left alone.)
 
 Instead of:
 ```mangle
@@ -995,6 +996,25 @@ Unknown atoms inside `descr [...]` are silently ignored by upstream Mangle, so a
 A `mode(...)` descriptor needs one quoted '+' (input), '-' (output) or '?' (either) per argument. Upstream silently ignores malformed modes, so the declaration would have no effect.
 
 **How to fix:** Write e.g. mode('+', '-') with one entry per argument of the declared predicate.
+
+## E080
+
+**Wildcard merges rows before aggregation** - performance, default severity: warning
+
+Upstream Mangle evaluates an aggregation whose body is more than one atom by first materializing the body into an internal relation over its named variables; `_` columns are not part of that relation (rewrite/rewrite.go). Relations are sets, so rows that differ only in `_` columns become one row before fn:count, fn:sum, fn:avg or fn:collect run - a silent under-count. (For the same reason, a variable used only once in an aggregating rule is not redundant: it keeps rows apart.)
+
+**How to fix:** Name the column that distinguishes rows (e.g. an id) if every row must count; keep `_` only when merging such rows is what you want.
+
+Instead of:
+```mangle
+total(S) :- sale(_, Amount), valid(Amount) |> do fn:group_by(), let S = fn:sum(Amount).
+```
+write:
+```mangle
+total(S) :- sale(Id, Amount), valid(Amount) |> do fn:group_by(), let S = fn:sum(Amount).
+```
+
+**Upstream docs:** https://mangle.readthedocs.io/en/latest/aggregation.html
 
 ## P001
 

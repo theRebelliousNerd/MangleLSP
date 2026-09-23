@@ -23,7 +23,7 @@ To invoke: Reference the skill or use `/mangle-lsp`
 
 ## Key Implementation Notes
 
-- Depends on `@mangle/mangle-ts` for parsing and analysis
+- Self-contained: parser (`src/parser`), analysis (`src/analysis`) and builtins (`src/builtins`) live in this package
 - Uses `vscode-languageserver` library
 - Entry point: `src/server.ts`
 - Must handle incomplete/invalid code gracefully
@@ -40,6 +40,14 @@ To invoke: Reference the skill or use `/mangle-lsp`
 | Find References | `textDocument/references` | P2 |
 | Document Symbols | `textDocument/documentSymbol` | P2 |
 | Formatting | `textDocument/formatting` | P3 |
+| Quick fixes | `textDocument/codeAction` | Implemented (fixes carried in `Diagnostic.data`) |
+| Rename | `textDocument/rename` | Implemented |
+
+## Diagnostics contract
+
+- Codes and their long-form docs live in `src/analysis/diagnostics.ts` (tested for completeness).
+- All surfaces use `src/analysis/pipeline.ts` (`analyzeUnit`), so editor and CLI agree.
+- Prefer an instance `hint` plus `fixes` over a longer message.
 
 ## Skill References
 

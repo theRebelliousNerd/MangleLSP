@@ -43,6 +43,7 @@ Options:
   --format, -f    Output format: json | text | sarif (default: json)
   --severity      Minimum severity: error | warning | info (default: info)
   --fail-on       Exit non-zero on: error | warning | never (default: error)
+  --explain       Include explanation, general fix and example for every code
   --quiet, -q     Suppress non-essential output
 ```
 
@@ -62,23 +63,27 @@ mangle-cli check --fail-on warning src/**/*.mg
 mangle-cli check --format sarif src/**/*.mg > results.sarif
 ```
 
-**JSON Output Schema:**
+**JSON Output Schema** (`version` `"1.1"`; fields after `context` are additive over 1.0):
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "files": [{
     "path": "src/rules.mg",
     "diagnostics": [{
       "severity": "error",
-      "code": "E001",
+      "code": "E068",
       "source": "mangle-semantic",
-      "message": "Variables in facts must be ground",
+      "message": "argument 2 (Duration) of fn:time:add has type /number, but /duration is expected",
       "range": {
-        "start": { "line": 10, "column": 5 },
-        "end": { "line": 10, "column": 15 }
+        "start": { "line": 3, "column": 40 },
+        "end": { "line": 3, "column": 42 }
       },
-      "context": "my_fact(X)."
+      "context": "later(T2) :- ev(T), T2 = fn:time:add(T, 60).",
+      "hint": "convert with fn:duration:from_seconds(N), fn:duration:from_minutes(N), fn:duration:from_hours(N) or fn:duration:from_nanos(N)",
+      "title": "Function argument type mismatch",
+      "category": "type",
+      "docs": "https://github.com/theRebelliousNerd/MangleLSP/blob/main/docs/DIAGNOSTICS.md#e068"
     }]
   }],
   "summary": {
@@ -89,6 +94,27 @@ mangle-cli check --format sarif src/**/*.mg > results.sarif
   }
 }
 ```
+
+- `hint` — instance-specific, actionable suggestion (present on most diagnostics).
+- `fixes` — machine-applicable edits: replace `range` (1-indexed line, 0-indexed column) with `newText`.
+  Present when the fix is unambiguous (e.g. `fn:Sum` → `fn:sum`, `"hour"` → `/hour`, a typo'd predicate).
+- `title`, `category`, `docs` — from the diagnostic catalog.
+- With `--explain`: `explanation`, `fix` and `example: { bad, good }` as well.
+
+Text output prints the same information as `= help:` / `= fix:` lines (and `= note:` with `--explain`).
+
+#### `explain` - Explain Diagnostic Codes
+
+```bash
+mangle-cli explain E003            # what it means, how to fix it, example
+mangle-cli explain E003 E068       # several codes
+mangle-cli explain --list          # one line per code
+mangle-cli explain --all           # everything
+mangle-cli explain --markdown      # regenerate docs/DIAGNOSTICS.md
+mangle-cli explain E003 -f json    # catalog entry as JSON
+```
+
+The default output format of `explain` is text.
 
 #### `symbols` - List Document Symbols
 
@@ -367,6 +393,7 @@ These commands can be invoked via the Command Palette or programmatically:
 | `mangle.checkWorkspace` | Check all .mg files in the workspace |
 | `mangle.exportDiagnostics` | Export diagnostics as JSON |
 | `mangle.exportToFile` | Export diagnostics to a file |
+| `mangle.explainDiagnostic` | Explain a diagnostic code (defaults to the diagnostic under the cursor) |
 
 ### Programmatic API
 
@@ -411,6 +438,9 @@ const checkAll = await vscode.commands.executeCommand('mangle.api.checkAll');
 
 // Get workspace summary (all predicates, files)
 const summary = await vscode.commands.executeCommand('mangle.api.getWorkspaceSummary');
+
+// Explain a diagnostic code (catalog entry as JSON)
+const explanation = await vscode.commands.executeCommand('mangle.api.explain', 'E003');
 ```
 
 ### Extension Settings
@@ -446,6 +476,28 @@ Get detailed diagnostics for a file.
   "stratificationErrors": [...]
 }
 ```
+
+Each semantic/stratification entry carries `code`, `title`, `category`, `severity`,
+`message`, `hint`, `fixes`, `docs` and `range` (1-indexed lines). Parse errors carry a `hint`
+for common syntax mistakes.
+
+### `mangle/explain`
+
+Explain a diagnostic code.
+
+**Request:**
+```json
+{ "code": "E003" }
+```
+
+**Response:** the catalog entry (`code`, `title`, `category`, `severity`, `explanation`, `fix`,
+`example`, `docs`) plus `markdown`, a rendered explanation. Unknown codes return `{ "code", "error" }`.
+
+### Quick fixes
+
+Diagnostics with fixes carry them in `Diagnostic.data.fixes`; the server offers each as a
+`quickfix` code action (`textDocument/codeAction`). Diagnostics also set `codeDescription.href`
+to the code's section in [DIAGNOSTICS.md](DIAGNOSTICS.md).
 
 ### `mangle/checkFiles`
 
@@ -659,7 +711,7 @@ The SARIF output follows the SARIF 2.1.0 specification:
     "tool": {
       "driver": {
         "name": "mangle-cli",
-        "version": "1.0.0",
+        "version": "1.1.0",
         "rules": [...]
       }
     },
@@ -672,16 +724,6 @@ The SARIF output follows the SARIF 2.1.0 specification:
 
 ## Error Codes Reference
 
-| Code | Category | Description |
-|------|----------|-------------|
-| P001 | Parse | Syntax error |
-| E001 | Semantic | Variables in facts must be ground |
-| E002 | Semantic | Range restriction violation |
-| E003 | Semantic | Variables in negation must be bound |
-| E004 | Semantic | Variables in comparison must be bound |
-| E005-E009 | Semantic | Built-in predicate/function errors |
-| E015 | Stratification | Negation cycle detected |
-| E023 | Stratification | Stratification warning |
-| E030-E046 | Semantic | Various semantic errors |
-
-See the full list in the SARIF formatter source code.
+Every code, with explanation, fix and example, is listed in [DIAGNOSTICS.md](DIAGNOSTICS.md)
+(generated from `mangle-lsp/src/analysis/diagnostics.ts`). Run `mangle-cli explain --list`
+for a one-line summary of each code.

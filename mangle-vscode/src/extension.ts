@@ -464,6 +464,47 @@ function registerCommands(context: ExtensionContext): void {
         })
     );
 
+    // Command: Explain a diagnostic code (what it means, how to fix it, example)
+    context.subscriptions.push(
+        commands.registerCommand('mangle.explainDiagnostic', async (code?: string) => {
+            let target = code;
+            if (!target) {
+                // Default to the code of a diagnostic under the cursor, if any.
+                const editor = window.activeTextEditor;
+                const here = editor
+                    ? languages.getDiagnostics(editor.document.uri).find(d => d.range.contains(editor.selection.active))
+                    : undefined;
+                const hereCode = here && typeof here.code === 'object' ? String(here.code.value) : here?.code?.toString();
+                target = await window.showInputBox({
+                    prompt: 'Mangle diagnostic code to explain (e.g. E002)',
+                    value: hereCode ?? '',
+                });
+            }
+            if (!target) {
+                return;
+            }
+            const result = await client.sendRequest('mangle/explain', { code: target }) as { markdown?: string; error?: string };
+            if (result.error || !result.markdown) {
+                window.showWarningMessage(result.error ?? `No explanation for ${target}`);
+                return result;
+            }
+            const doc = await workspace.openTextDocument({ language: 'markdown', content: result.markdown });
+            await window.showTextDocument(doc, { preview: true });
+            return result;
+        })
+    );
+
+    // Command (API): Explain a diagnostic code, returning the catalog entry as JSON
+    context.subscriptions.push(
+        commands.registerCommand('mangle.api.explain', async (code: string) => {
+            try {
+                return await client.sendRequest('mangle/explain', { code });
+            } catch (e) {
+                return { error: String(e) };
+            }
+        })
+    );
+
     outputChannel.appendLine('CLI commands registered');
 }
 

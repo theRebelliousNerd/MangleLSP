@@ -469,8 +469,8 @@ const entries: DiagnosticInfo[] = [
     },
     {
         code: 'E076', title: 'Use fn:count instead of collecting', category: 'performance', severity: 'info',
-        explanation: 'Collecting all values of a group into a list only to take its length materializes every value; the fn:count() / fn:count_distinct() reducers compute the same number directly.',
-        fix: 'Replace `let L = fn:collect(X), let N = fn:list:len(L)` with `let N = fn:count()` (or fn:count_distinct() for fn:collect_distinct).',
+        explanation: 'Collecting all values of a group into a list only to take its length materializes every value; fn:collect keeps one entry per row, so the fn:count() reducer computes the same number directly.',
+        fix: 'Replace `let L = fn:collect(X), let N = fn:list:len(L)` with `let N = fn:count()`. (fn:list:len(fn:collect_distinct(X)) counts distinct X values, which fn:count_distinct() does not match when rows have other columns, so it is left alone.)',
         example: { bad: '|> do fn:group_by(K), let L = fn:collect(V), let N = fn:list:len(L)', good: '|> do fn:group_by(K), let N = fn:count()' },
         docs: 'aggregation.html',
     },
@@ -478,6 +478,17 @@ const entries: DiagnosticInfo[] = [
         code: 'E077', title: 'Duplicate premise', category: 'performance', severity: 'warning',
         explanation: 'The same premise occurs twice in one rule body. It never changes the result but repeats the work.',
         fix: 'Remove the repetition.',
+    },
+
+    {
+        code: 'E080', title: 'Wildcard merges rows before aggregation', category: 'performance', severity: 'warning',
+        explanation: 'Upstream Mangle evaluates an aggregation whose body is more than one atom by first materializing the body into an internal relation over its named variables; `_` columns are not part of that relation (rewrite/rewrite.go). Relations are sets, so rows that differ only in `_` columns become one row before fn:count, fn:sum, fn:avg or fn:collect run - a silent under-count. (For the same reason, a variable used only once in an aggregating rule is not redundant: it keeps rows apart.)',
+        fix: 'Name the column that distinguishes rows (e.g. an id) if every row must count; keep `_` only when merging such rows is what you want.',
+        example: {
+            bad: 'total(S) :- sale(_, Amount), valid(Amount) |> do fn:group_by(), let S = fn:sum(Amount).',
+            good: 'total(S) :- sale(Id, Amount), valid(Amount) |> do fn:group_by(), let S = fn:sum(Amount).',
+        },
+        docs: 'aggregation.html',
     },
 
     // --------------------------------------------------------------------- style
@@ -504,7 +515,7 @@ const entries: DiagnosticInfo[] = [
     {
         code: 'E074', title: 'Variable used only once', category: 'style', severity: 'warning',
         explanation: 'A named variable that occurs exactly once in a clause does not connect anything; it is usually a typo of another variable (e.g. `Person` vs `Persn`), which silently turns a join into a cross product or leaves a filter ineffective.',
-        fix: 'If you mean "any value", write `_` instead. Otherwise fix the spelling so it matches the other occurrence.',
+        fix: 'If you mean "any value", write `_` instead. Otherwise fix the spelling so it matches the other occurrence. (Not reported in aggregating rules, where every named body variable keeps rows apart - see E080.)',
         example: { bad: 'owns(P, C) :- person(P), car(Cr), owner(Cr, P).', good: 'owns(P, C) :- person(P), car(C), owner(C, P).' },
     },
 ];

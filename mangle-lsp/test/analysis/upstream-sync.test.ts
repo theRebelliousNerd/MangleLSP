@@ -392,10 +392,23 @@ describe('Advice lints', () => {
         expect(e?.fixes?.map(f => f.newText)).toEqual(['Car', '_']);
     });
 
-    it('E074: unused let result', () => {
-        const e074 = diagnostics('p(K) :- q(K, _) |> do fn:group_by(K), let N = fn:count().').filter(e => e.code === 'E074');
+    it('E074: unused let result in a let-transform', () => {
+        const e074 = diagnostics('p(K) :- q(K) |> let N = fn:plus(K, 1).').filter(e => e.code === 'E074');
         expect(e074).toHaveLength(1);
         expect(e074[0]!.message).toContain("'N'");
+    });
+
+    it('E074 is not reported in aggregations, where single-use variables keep rows apart', () => {
+        expect(codes('total(S) :- sale(Id, Amount) |> do fn:group_by(), let S = fn:sum(Amount).')).not.toContain('E074');
+    });
+
+    it('E080: wildcards in a multi-premise aggregation body merge rows', () => {
+        const e = find('total(S) :- sale(_, A), valid(A) |> do fn:group_by(), let S = fn:sum(A).', 'E080');
+        expect(e?.severity).toBe('warning');
+        expect(e?.message).toContain('fn:sum');
+        // Single-atom bodies are aggregated fact by fact; duplicate-insensitive reducers are fine.
+        expect(codes('total(S) :- sale(_, A) |> do fn:group_by(), let S = fn:sum(A).')).not.toContain('E080');
+        expect(codes('m(M) :- sale(_, A), valid(A) |> do fn:group_by(), let M = fn:max(A).')).not.toContain('E080');
     });
 
     it('E074 is not reported for wildcards or joined variables', () => {

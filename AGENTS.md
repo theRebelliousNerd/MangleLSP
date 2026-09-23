@@ -1,7 +1,7 @@
 # Project Intent
 
-This repository exists to contribute to the Google Mangle project:
-https://github.com/google/mangle
+This repository exists to contribute to the Mangle project:
+https://codeberg.org/TauCeti/mangle-go (mirror: https://github.com/google/mangle)
 
 Primary goals:
 - Create TypeScript and Python implementations of Mangle.
@@ -9,8 +9,10 @@ Primary goals:
 
 # Upstream Reference
 
-The most current reference version of Mangle is located at:
-`C:\CodeProjects\MangleTSandPython\upstream`
+Upstream Mangle is developed at https://codeberg.org/TauCeti/mangle-go. This repository is
+synced with upstream commit `77780a5` (2026-09-19); see `mangle-lsp/src/version.ts` and
+`CHANGELOG.md`. A local copy may exist at `C:\CodeProjects\MangleTSandPython\upstream`;
+otherwise clone upstream.
 
 Use it as the source of truth for parser/AST behavior, semantic analysis,
 evaluation, builtins, diagnostics, and tests.

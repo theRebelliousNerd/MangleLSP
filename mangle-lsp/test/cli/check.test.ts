@@ -9,7 +9,7 @@ import { runCheck, getExitCode } from '../../src/cli/commands/check';
 import { CheckOptions } from '../../src/cli/types';
 
 describe('CLI check command', () => {
-    const testDir = join(__dirname, 'test-files');
+    const testDir = join(__dirname, 'test-files-check'); // per-suite dir: suites run in parallel
     const validFile = join(testDir, 'valid.mg');
     const errorFile = join(testDir, 'error.mg');
 

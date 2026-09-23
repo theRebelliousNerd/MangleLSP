@@ -9,6 +9,7 @@
  * - E074: a named variable that occurs only once in a clause (likely a typo)
  * - E076: `fn:collect` followed by `fn:list:len` instead of `fn:count()`
  * - E077: the same premise twice in one rule body
+ * - E080: '_' in a multi-premise aggregation body silently merges rows
  */
 
 import {
@@ -40,9 +41,59 @@ interface Occurrence {
 export function checkClauseLints(unit: SourceUnit, errors: SemanticError[]): void {
     for (const clause of unit.clauses) {
         if (!clause.premises || clause.premises.length === 0) continue;
-        checkSingletonVariables(clause, errors);
+        // In aggregations every named body variable decides row multiplicity
+        // (upstream rewrite.go projects the body onto them), so a single-use
+        // variable is meaningful there and must not be turned into '_'.
+        if (!isAggregation(clause)) {
+            checkSingletonVariables(clause, errors);
+        }
         checkDuplicatePremises(clause, errors);
         checkCollectThenLen(clause, errors);
+        checkWildcardsInAggregation(clause, errors);
+    }
+}
+
+/** True for rules with a `|> do fn:group_by(...)` transform. */
+function isAggregation(clause: Clause): boolean {
+    const first = clause.transform?.statements[0];
+    return !!first && first.variable === null && first.fn.function.symbol === 'fn:group_by';
+}
+
+/** Reducers whose result depends on how many rows there are (not just which values). */
+const MULTIPLICITY_SENSITIVE_REDUCERS = new Set([
+    'fn:count', 'fn:sum', 'fn:float:sum', 'fn:duration:sum', 'fn:avg', 'fn:collect',
+]);
+
+/**
+ * E080: upstream evaluates an aggregation whose body is not a single atom by
+ * first materializing the body into an internal relation over its *named*
+ * variables (rewrite/rewrite.go: "Wildcard variables _ do not correspond to
+ * any column"). That relation is a set, so rows that differ only in '_'
+ * columns collapse into one before fn:count / fn:sum / ... see them.
+ */
+function checkWildcardsInAggregation(clause: Clause, errors: SemanticError[]): void {
+    if (!isAggregation(clause)) return;
+    const premises = clause.premises ?? [];
+    const singleAtom = premises.length === 1 && premises[0]!.type === 'Atom';
+    if (singleAtom) return; // single-atom bodies are aggregated fact by fact
+    const reducers = (clause.transform?.statements ?? [])
+        .map(s => s.fn.function.symbol)
+        .filter(n => MULTIPLICITY_SENSITIVE_REDUCERS.has(n));
+    if (reducers.length === 0) return;
+    for (const p of premises) {
+        const atom = p.type === 'Atom' ? (p as Atom)
+            : p.type === 'TemporalLiteral' && (p as TemporalLiteral).literal.type === 'Atom' ? (p as TemporalLiteral).literal as Atom
+            : null;
+        if (!atom || atom.predicate.symbol.startsWith(':')) continue;
+        const wildcards = atom.args.filter(a => a.type === 'Variable' && a.symbol === '_');
+        if (wildcards.length === 0) continue;
+        errors.push({
+            code: 'E080',
+            message: `'_' in '${termToString(atom)}' is dropped before aggregating: rows that differ only in those columns are merged, so ${[...new Set(reducers)].join(', ')} ${reducers.length > 1 ? 'see' : 'sees'} each distinct combination of named variables once`,
+            range: wildcards[0]!.range,
+            severity: 'warning',
+            hint: `if every ${atom.predicate.symbol} row must count, name the column (e.g. ${atom.predicate.symbol === 'sale' ? 'Id' : 'Row'}); keep '_' only if merging such rows is intended`,
+        });
     }
 }
 

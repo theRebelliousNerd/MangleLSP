@@ -19,13 +19,19 @@ MangleLSP/
 ├── mangle-lsp/           # Standalone LSP server library
 │   ├── src/              # TypeScript source
 │   │   ├── parser/       # ANTLR-based parser
-│   │   ├── analysis/     # Semantic analysis
+│   │   ├── analysis/     # Validation, bounds checking, lints, diagnostic catalog
+│   │   ├── builtins/     # Typed catalog of upstream built-ins
+│   │   ├── services/     # Hover, completion, definition, formatting, ...
 │   │   └── cli.ts        # CLI entry point
-│   └── Mangle.g4         # ANTLR grammar
-└── mangle-vscode/        # VS Code extension
-    ├── src/              # Extension client source
-    ├── server/           # Bundled LSP server
-    └── syntaxes/         # TextMate grammar
+│   ├── test/fixtures/upstream/  # Upstream conformance programs (Apache-2.0)
+│   └── Mangle.g4         # ANTLR grammar (identical to upstream)
+├── mangle-vscode/        # VS Code extension
+│   ├── src/              # Extension client source
+│   ├── server/           # esbuild bundles of the LSP server and CLI
+│   └── syntaxes/         # TextMate grammar
+└── docs/
+    ├── DIAGNOSTICS.md    # Generated reference of every diagnostic code
+    └── CLI-API.md        # CLI, VS Code API and custom LSP requests
 ```
 
 ## Installation
@@ -74,7 +80,20 @@ npm run build:vscode
 
 # Run tests
 npm test
+
+# Explain a diagnostic code
+node mangle-vscode/server/cli.bundle.js explain E003
 ```
+
+### Syncing with upstream Mangle
+
+1. Clone the latest upstream (`git clone https://codeberg.org/TauCeti/mangle-go`).
+2. Diff `parse/gen/Mangle.g4` against `mangle-lsp/Mangle.g4`, and `symbols/symbols.go` /
+   `builtin/builtin.go` against `mangle-lsp/src/builtins/`.
+3. Re-copy `examples/*.mg` and `analysis/test_cases/*.mg` into
+   `mangle-lsp/test/fixtures/upstream/` and run `npm test` — the conformance suite holds
+   the LSP to upstream's accept/reject verdicts.
+4. Update `UPSTREAM_MANGLE_REVISION` in `mangle-lsp/src/version.ts` and the CHANGELOG.
 
 ## Requirements
 
@@ -106,4 +125,4 @@ Contributions are welcome! Please open an issue or submit a pull request.
 
 ## Related
 
-- [Mangle](https://github.com/google/mangle) - The original Mangle language by Google
+- [Mangle](https://codeberg.org/TauCeti/mangle-go) - The Mangle language (originally developed at Google, [github.com/google/mangle](https://github.com/google/mangle))
