@@ -14,7 +14,30 @@ import {
     Atom,
     NegAtom,
     Variable,
+    TemporalLiteral,
+    TemporalAtom,
+    TemporalInterval,
 } from '../parser/ast';
+
+/**
+ * Result of rewriting a clause.
+ */
+export interface RewriteResult {
+    /** The rewritten clause (negations delayed until their variables are bound). */
+    clause: Clause;
+    /**
+     * Negated atoms whose variables are never bound by the body. Upstream
+     * silently drops these, which changes the meaning of the rule; the LSP
+     * reports them (E003).
+     */
+    droppedNegations: Term[];
+}
+
+function collectIntervalVars(interval: TemporalInterval | null | undefined, vars: Set<string>): void {
+    if (!interval) return;
+    if (interval.start.variable && interval.start.variable.symbol !== '_') vars.add(interval.start.variable.symbol);
+    if (interval.end.variable && interval.end.variable.symbol !== '_') vars.add(interval.end.variable.symbol);
+}
 
 /**
  * Collect all non-wildcard variable names from a term.
@@ -54,6 +77,19 @@ function collectVars(term: Term, vars: Set<string>): void {
             }
             break;
         }
+        case 'TemporalLiteral': {
+            const t = term as TemporalLiteral;
+            collectVars(t.literal, vars);
+            collectIntervalVars(t.interval, vars);
+            collectIntervalVars(t.operator?.interval, vars);
+            break;
+        }
+        case 'TemporalAtom': {
+            const t = term as TemporalAtom;
+            collectVars(t.atom, vars);
+            collectIntervalVars(t.interval, vars);
+            break;
+        }
     }
 }
 
@@ -74,17 +110,24 @@ function collectVars(term: Term, vars: Set<string>): void {
  *
  * Upstream Go equivalent: analysis.RewriteClause()
  */
-export function rewriteClause(clause: Clause): Clause {
+export function rewriteClause(clause: Clause, preBoundVars?: Iterable<string>): Clause {
+    return rewriteClauseWithInfo(clause, preBoundVars).clause;
+}
+
+/**
+ * Like {@link rewriteClause}, but also reports negated atoms that could never
+ * be scheduled because some of their variables are never bound.
+ *
+ * @param preBoundVars head variables that are bound on entry because the
+ *   head predicate declares them as input ('+' or '?') via mode(...)
+ *   (upstream: variablesForArgMode(clause.Head, mode, Input|InputOutput)).
+ */
+export function rewriteClauseWithInfo(clause: Clause, preBoundVars?: Iterable<string>): RewriteResult {
     if (!clause.premises || clause.premises.length === 0) {
-        return clause;
+        return { clause, droppedNegations: [] };
     }
 
-    const boundVars = new Set<string>();
-    // Head variables are initially considered bound for the purpose of
-    // negation delay (they might be input-mode variables).
-    // Note: The upstream version checks modes from declarations here.
-    // We don't have declaration access in this simplified version,
-    // so we DON'T pre-bind head variables. This is the conservative approach.
+    const boundVars = new Set<string>(preBoundVars ?? []);
 
     const premises: Term[] = [];
     const delayNegAtom: Term[] = [];
@@ -96,6 +139,20 @@ export function rewriteClause(clause: Clause): Clause {
         switch (p.type) {
             case 'Atom': {
                 // Positive atoms bind all their variables
+                const defVars = new Set<string>();
+                collectVars(p, defVars);
+                for (const v of defVars) {
+                    boundVars.add(v);
+                }
+                break;
+            }
+            case 'TemporalLiteral':
+            case 'TemporalAtom': {
+                // Temporal literals bind the variables of their inner atom and
+                // interval (upstream CheckRule binds them the same way).
+                if (p.type === 'TemporalLiteral' && (p as TemporalLiteral).literal.type === 'NegAtom') {
+                    break;
+                }
                 const defVars = new Set<string>();
                 collectVars(p, defVars);
                 for (const v of defVars) {
@@ -158,11 +215,12 @@ export function rewriteClause(clause: Clause): Clause {
         }
     }
 
-    // Any remaining delayed negated atoms that never got their variables bound
-    // are silently dropped (same as upstream behavior).
+    // Any remaining delayed negated atoms never got their variables bound.
+    // Upstream silently drops them; we drop them from the rewritten clause
+    // too (to mirror evaluation) but hand them back so they can be reported.
 
     return {
-        ...clause,
-        premises,
+        clause: { ...clause, premises },
+        droppedNegations: delayNegAtom,
     };
 }

@@ -17,8 +17,20 @@ import {
     TemporalLiteral,
 } from '../parser/ast';
 import { SymbolTable, PredicateInfo, VariableInfo } from '../analysis/symbols';
-import { getBuiltinPredicate, BUILTIN_PREDICATES } from '../builtins/predicates';
-import { getBuiltinFunction, ALL_BUILTIN_FUNCTIONS } from '../builtins/functions';
+import {
+    getBuiltinPredicate,
+    BUILTIN_PREDICATES,
+    BuiltinPredicate,
+    formatPredicateSignature,
+    modeSymbol,
+} from '../builtins/predicates';
+import {
+    getBuiltinFunction,
+    ALL_BUILTIN_FUNCTIONS,
+    BuiltinFunction,
+    formatFunctionSignature,
+    isTypeConstructor,
+} from '../builtins/functions';
 import { isWithinSourceRange } from '../utils/position';
 
 /**
@@ -216,7 +228,7 @@ function findBuiltinInAtom(atom: Atom, line: number, column: number): Hover | nu
         if (isWithinSourceRange(line, column, predicateNameRange)) {
             const builtin = getBuiltinPredicate(atom.predicate.symbol);
             if (builtin) {
-                return createBuiltinPredicateHover(builtin.name, builtin.doc, builtin.arity, builtin.mode);
+                return createBuiltinPredicateHover(builtin);
             }
         }
     }
@@ -245,7 +257,7 @@ function findBuiltinInApplyFn(applyFn: ApplyFn, line: number, column: number): H
     if (isWithinSourceRange(line, column, functionNameRange)) {
         const builtin = getBuiltinFunction(applyFn.function.symbol);
         if (builtin) {
-            return createBuiltinFunctionHover(builtin.name, builtin.doc, builtin.arity, builtin.isReducer);
+            return createBuiltinFunctionHover(builtin);
         }
     }
 
@@ -253,21 +265,28 @@ function findBuiltinInApplyFn(applyFn: ApplyFn, line: number, column: number): H
 }
 
 /**
- * Create hover for a built-in predicate.
+ * Create hover for a built-in predicate: signature with modes and types,
+ * documentation, example and related built-ins.
  */
-function createBuiltinPredicateHover(
-    name: string,
-    doc: string,
-    arity: number,
-    mode: string[]
-): Hover {
+function createBuiltinPredicateHover(builtin: BuiltinPredicate): Hover {
     const lines: string[] = [];
 
-    lines.push(`**Built-in Predicate: ${name}/${arity}**`);
+    lines.push(`**Built-in Predicate: ${builtin.name}/${builtin.arity}**`);
     lines.push('');
-    lines.push(doc);
+    lines.push('```mangle');
+    lines.push(formatPredicateSignature(builtin));
+    lines.push('```');
+    lines.push(builtin.doc);
     lines.push('');
-    lines.push(`*Mode: (${mode.join(', ')})*`);
+    lines.push(`*Mode: (${builtin.mode.map(modeSymbol).join(', ')})* - \`+\` input (must be bound), \`-\` output (fresh variable), \`?\` either`);
+    if (builtin.example) {
+        lines.push('');
+        lines.push(`**Example:** \`${builtin.example}\``);
+    }
+    if (builtin.seeAlso && builtin.seeAlso.length > 0) {
+        lines.push('');
+        lines.push(`**See also:** ${builtin.seeAlso.map(s => `\`${s}\``).join(', ')}`);
+    }
 
     return {
         contents: {
@@ -278,23 +297,37 @@ function createBuiltinPredicateHover(
 }
 
 /**
- * Create hover for a built-in function.
+ * Create hover for a built-in function: typed signature, documentation,
+ * example and related built-ins.
  */
-function createBuiltinFunctionHover(
-    name: string,
-    doc: string,
-    arity: number,
-    isReducer: boolean
-): Hover {
+function createBuiltinFunctionHover(builtin: BuiltinFunction): Hover {
     const lines: string[] = [];
 
-    const arityStr = arity === -1 ? 'variadic' : `${arity}`;
-    lines.push(`**Built-in Function: ${name}** (${arityStr})`);
+    const arityStr = builtin.arity === -1 ? 'variadic' : `${builtin.arity}`;
+    const kind = isTypeConstructor(builtin.name) ? 'Built-in Type Constructor' : 'Built-in Function';
+    lines.push(`**${kind}: ${builtin.name}** (${arityStr})${builtin.isReducer ? ' - reducer' : ''}`);
     lines.push('');
-    lines.push(doc);
-    if (isReducer) {
+    if (builtin.signature) {
+        lines.push('```mangle');
+        lines.push(formatFunctionSignature(builtin));
+        lines.push('```');
+    }
+    lines.push(builtin.doc);
+    if (builtin.isReducer) {
         lines.push('');
-        lines.push('*This is a reducer function (used in aggregations)*');
+        lines.push('*This is a reducer function (used in aggregations): use it in `let` statements after `|> do fn:group_by(...)`.*');
+    }
+    if (builtin.unitArg) {
+        lines.push('');
+        lines.push(`**Units:** ${builtin.unitArg.units.map(u => `\`${u}\``).join(', ')}`);
+    }
+    if (builtin.example) {
+        lines.push('');
+        lines.push(`**Example:** \`${builtin.example}\``);
+    }
+    if (builtin.seeAlso && builtin.seeAlso.length > 0) {
+        lines.push('');
+        lines.push(`**See also:** ${builtin.seeAlso.map(s => `\`${s}\``).join(', ')}`);
     }
 
     return {

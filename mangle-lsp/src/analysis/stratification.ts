@@ -6,6 +6,7 @@
  */
 
 import {
+    termToString,
     SourceUnit,
     SourceRange,
     Clause,
@@ -33,6 +34,8 @@ export interface StratificationError {
     severity: 'error' | 'warning';
     /** Predicates involved in the cycle */
     cycle: string[];
+    /** Instance-specific, actionable suggestion ("help:" line) */
+    hint?: string;
 }
 
 /**
@@ -387,60 +390,118 @@ function hasUnboundedGeneration(clause: Clause, predKey: string): boolean {
 }
 
 /**
+ * Variables of a premise (excluding '_').
+ */
+function premiseVars(premise: Term): Set<string> {
+    const vars = new Set<string>();
+    const visit = (t: Term): void => {
+        switch (t.type) {
+            case 'Variable':
+                if ((t as Variable).symbol !== '_') vars.add((t as Variable).symbol);
+                return;
+            case 'ApplyFn':
+                (t as ApplyFn).args.forEach(visit);
+                return;
+            case 'Atom':
+                (t as Atom).args.forEach(visit);
+                return;
+            case 'NegAtom':
+                visit((t as NegAtom).atom);
+                return;
+            case 'Eq':
+            case 'Ineq': {
+                const e = t as { left: Term; right: Term };
+                visit(e.left);
+                visit(e.right);
+                return;
+            }
+            case 'TemporalLiteral': {
+                const tl = t as TemporalLiteral;
+                visit(tl.literal);
+                for (const iv of [tl.interval, tl.operator?.interval]) {
+                    if (!iv) continue;
+                    if (iv.start.variable && iv.start.variable.symbol !== '_') vars.add(iv.start.variable.symbol);
+                    if (iv.end.variable && iv.end.variable.symbol !== '_') vars.add(iv.end.variable.symbol);
+                }
+                return;
+            }
+            default:
+                return;
+        }
+    };
+    visit(premise);
+    return vars;
+}
+
+/** The atom a premise ranges over, if it is a (temporal) positive user atom. */
+function userAtomOf(premise: Term): Atom | null {
+    if (premise.type === 'Atom' && !(premise as Atom).predicate.symbol.startsWith(':')) return premise as Atom;
+    if (premise.type === 'TemporalLiteral') {
+        const lit = (premise as TemporalLiteral).literal;
+        if (lit.type === 'Atom' && !lit.predicate.symbol.startsWith(':')) return lit;
+    }
+    return null;
+}
+
+/** Variables a premise binds for the premises after it. */
+function varsBoundBy(premise: Term): Set<string> {
+    if (premise.type === 'NegAtom' || premise.type === 'Ineq') return new Set();
+    if (premise.type === 'Atom' && isComparisonAtom(premise)) return new Set();
+    return premiseVars(premise);
+}
+
+/**
  * Check for potential Cartesian explosion patterns.
- * Returns warnings when multiple body predicates don't share variables.
+ *
+ * A positive atom that shares no variable with anything bound before it (by
+ * atoms, equalities or built-ins) pairs every earlier row with every one of
+ * its rows. When a later premise could join instead, the hint names it.
  */
 export function checkCartesianExplosion(unit: SourceUnit): StratificationError[] {
     const warnings: StratificationError[] = [];
 
     for (const clause of unit.clauses) {
-        if (!clause.premises || clause.premises.length < 2) {
+        const premises = clause.premises;
+        if (!premises || premises.length < 2) {
             continue;
         }
 
-        // Collect atoms (predicates) from premises
-        const atoms: { atom: Atom; vars: Set<string> }[] = [];
-
-        for (const premise of clause.premises) {
-            if (premise.type === 'Atom') {
-                const atom = premise as Atom;
-                // Skip built-in predicates
-                if (atom.predicate.symbol.startsWith(':')) {
-                    continue;
+        const bound = new Set<string>();
+        let producers = 0;
+        let lastProducer: Atom | null = null;
+        for (let i = 0; i < premises.length; i++) {
+            const premise = premises[i]!;
+            const atom = userAtomOf(premise);
+            if (atom) {
+                const hasVarArgs = atom.args.some(a => a.type === 'Variable');
+                const vars = premiseVars(premise);
+                const shares = [...vars].some(v => bound.has(v));
+                if (producers > 0 && hasVarArgs && !shares && lastProducer) {
+                    // Is there a later premise that would join with what is bound so far?
+                    let suggestion: string | undefined;
+                    for (let j = i + 1; j < premises.length; j++) {
+                        const later = userAtomOf(premises[j]!);
+                        if (!later) continue;
+                        const lv = premiseVars(later);
+                        const shared = [...lv].find(v => bound.has(v));
+                        if (shared) {
+                            suggestion = `move '${termToString(premises[j]!)}' before '${termToString(premise)}' so it joins on '${shared}' first`;
+                            break;
+                        }
+                    }
+                    warnings.push({
+                        code: 'E019',
+                        message: `Potential Cartesian explosion: '${atom.predicate.symbol}' shares no variables with the premises before it (e.g. '${lastProducer.predicate.symbol}'), so every earlier row is combined with every '${atom.predicate.symbol}' row`,
+                        range: atom.range,
+                        severity: 'warning',
+                        cycle: [lastProducer.predicate.symbol, atom.predicate.symbol],
+                        hint: suggestion ?? `if the product is intended, keep it; otherwise add the missing join variable, or precompute a smaller relation in a helper predicate`,
+                    });
                 }
-                const vars = new Set<string>();
-                for (const arg of atom.args) {
-                    collectVarsFromTerm(arg, vars);
-                }
-                atoms.push({ atom, vars });
+                producers++;
+                lastProducer = atom;
             }
-        }
-
-        // Check consecutive atoms for shared variables
-        for (let i = 0; i < atoms.length - 1; i++) {
-            const current = atoms[i];
-            const next = atoms[i + 1];
-
-            if (!current || !next) continue;
-
-            // Check if there are any shared variables
-            let hasSharedVar = false;
-            for (const v of current.vars) {
-                if (v !== '_' && next.vars.has(v)) {
-                    hasSharedVar = true;
-                    break;
-                }
-            }
-
-            if (!hasSharedVar && current.vars.size > 0 && next.vars.size > 0) {
-                warnings.push({
-                    code: 'E019',
-                    message: `Potential Cartesian explosion: predicates '${current.atom.predicate.symbol}' and '${next.atom.predicate.symbol}' have no shared variables. Consider reordering body atoms to join on shared variables first.`,
-                    range: next.atom.range,
-                    severity: 'warning',
-                    cycle: [current.atom.predicate.symbol, next.atom.predicate.symbol],
-                });
-            }
+            for (const v of varsBoundBy(premise)) bound.add(v);
         }
     }
 
@@ -468,55 +529,72 @@ function collectVarsFromTerm(term: Term, vars: Set<string>): void {
 }
 
 /**
+ * For each premise, the index of the premise after which all of `vars` are
+ * bound (-1 if bound from the start / no variables, null if never bound).
+ */
+function bindingPoint(premises: Term[], upTo: number, vars: Set<string>): number | null {
+    if (vars.size === 0) return -1;
+    const remaining = new Set(vars);
+    for (let k = 0; k < upTo; k++) {
+        for (const v of varsBoundBy(premises[k]!)) remaining.delete(v);
+        if (remaining.size === 0) return k;
+    }
+    return null;
+}
+
+/** Number of positive user atoms strictly between two premise indexes. */
+function atomsBetween(premises: Term[], from: number, to: number): Term[] {
+    const between: Term[] = [];
+    for (let k = from + 1; k < to; k++) {
+        if (userAtomOf(premises[k]!)) between.push(premises[k]!);
+    }
+    return between;
+}
+
+/** Filter-like built-ins (they only test values). */
+function isFilterPremise(premise: Term): boolean {
+    if (premise.type === 'Ineq') return true;
+    if (premise.type !== 'Atom') return false;
+    const sym = (premise as Atom).predicate.symbol;
+    return isComparisonAtom(premise) ||
+        /^:(float|time|duration):(lt|le|gt|ge)$/.test(sym) ||
+        sym === ':match_prefix' || sym.startsWith(':string:') || sym === ':filter' || sym === ':within_distance';
+}
+
+/**
  * Check for late filtering anti-pattern.
- * Detects when comparisons appear after multiple predicates that don't share variables.
+ *
+ * A filter (comparison, !=, string/prefix test, :filter) placed two or more
+ * joins after the point where all its variables are bound could have pruned
+ * rows earlier. The hint says exactly where to move it.
  */
 export function checkLateFiltering(unit: SourceUnit): StratificationError[] {
     const warnings: StratificationError[] = [];
 
     for (const clause of unit.clauses) {
-        if (!clause.premises || clause.premises.length < 3) {
+        const premises = clause.premises;
+        if (!premises || premises.length < 3) {
             continue;
         }
 
-        // Track predicates before we see a comparison
-        let predicateCount = 0;
-        let allVarsSoFar = new Set<string>();
-
-        for (const premise of clause.premises) {
-            // Check if this is a comparison (Ineq or comparison atom :lt/:le/:gt/:ge)
-            if (premise.type === 'Ineq') {
-                // If we have 2+ predicates before this comparison, warn
-                if (predicateCount >= 2) {
-                    const cmp = premise as { left: Term; right: Term; range: SourceRange };
-                    warnings.push({
-                        code: 'E021',
-                        message: `Late filtering: comparison appears after ${predicateCount} predicates. Consider moving filters earlier to reduce intermediate result size.`,
-                        range: cmp.range,
-                        severity: 'warning',
-                        cycle: [],
-                    });
-                }
-            } else if (premise.type === 'Atom') {
-                const atom = premise as Atom;
-                // Check if this is a comparison atom (:lt, :le, :gt, :ge)
-                const predSymbol = atom.predicate.symbol;
-                if (predSymbol === ':lt' || predSymbol === ':le' || predSymbol === ':gt' || predSymbol === ':ge') {
-                    // If we have 2+ predicates before this comparison, warn
-                    if (predicateCount >= 2) {
-                        warnings.push({
-                            code: 'E021',
-                            message: `Late filtering: comparison appears after ${predicateCount} predicates. Consider moving filters earlier to reduce intermediate result size.`,
-                            range: atom.range,
-                            severity: 'warning',
-                            cycle: [],
-                        });
-                    }
-                } else if (!predSymbol.startsWith(':')) {
-                    predicateCount++;
-                }
+        premises.forEach((premise, i) => {
+            if (!isFilterPremise(premise)) return;
+            const vars = premiseVars(premise);
+            const point = bindingPoint(premises, i, vars);
+            if (point === null) return; // unbound variables are reported elsewhere
+            const between = atomsBetween(premises, point, i);
+            if (between.length >= 2) {
+                const where = point >= 0 ? `right after '${termToString(premises[point]!)}'` : 'at the start of the body';
+                warnings.push({
+                    code: 'E021',
+                    message: `Late filtering: '${termToString(premise)}' only depends on variables bound ${point >= 0 ? `by '${termToString(premises[point]!)}'` : 'at the start'}, but runs after ${between.length} more joins (${between.map(b => `'${(userAtomOf(b) as Atom).predicate.symbol}'`).join(', ')}). Consider moving filters earlier to reduce intermediate result size.`,
+                    range: premise.range,
+                    severity: 'warning',
+                    cycle: [],
+                    hint: `move '${termToString(premise)}' ${where}; filters shrink intermediate results only when they run early`,
+                });
             }
-        }
+        });
     }
 
     return warnings;
@@ -524,64 +602,37 @@ export function checkLateFiltering(unit: SourceUnit): StratificationError[] {
 
 /**
  * Check for late negation anti-pattern.
- * Detects when negation appears after multiple predicates when it could filter earlier.
+ *
+ * A negated atom placed two or more joins after the point where its
+ * variables are bound keeps rows alive that it will discard.
  */
 export function checkLateNegation(unit: SourceUnit): StratificationError[] {
     const warnings: StratificationError[] = [];
 
     for (const clause of unit.clauses) {
-        if (!clause.premises || clause.premises.length < 3) {
+        const premises = clause.premises;
+        if (!premises || premises.length < 3) {
             continue;
         }
 
-        let predicateCount = 0;
-
-        for (const premise of clause.premises) {
-            if (premise.type === 'NegAtom') {
-                // If negation appears after 2+ predicates, check if it could be moved earlier
-                if (predicateCount >= 2) {
-                    const negAtom = premise as NegAtom;
-                    const negVars = new Set<string>();
-                    for (const arg of negAtom.atom.args) {
-                        collectVarsFromTerm(arg, negVars);
-                    }
-
-                    // Check if negation's variables were bound early
-                    // This is a heuristic - if first predicate binds all negation vars, suggest moving earlier
-                    const firstPremise = clause.premises[0];
-                    if (firstPremise && firstPremise.type === 'Atom') {
-                        const firstAtom = firstPremise as Atom;
-                        const firstVars = new Set<string>();
-                        for (const arg of firstAtom.args) {
-                            collectVarsFromTerm(arg, firstVars);
-                        }
-
-                        let allBound = true;
-                        for (const v of negVars) {
-                            if (v !== '_' && !firstVars.has(v)) {
-                                allBound = false;
-                                break;
-                            }
-                        }
-
-                        if (allBound) {
-                            warnings.push({
-                                code: 'E022',
-                                message: `Late negation: '!${negAtom.atom.predicate.symbol}' appears after ${predicateCount} predicates but its variables are bound by the first predicate. Consider moving negation earlier to filter sooner.`,
-                                range: negAtom.range,
-                                severity: 'warning',
-                                cycle: [],
-                            });
-                        }
-                    }
-                }
-            } else if (premise.type === 'Atom') {
-                const atom = premise as Atom;
-                if (!atom.predicate.symbol.startsWith(':')) {
-                    predicateCount++;
-                }
+        premises.forEach((premise, i) => {
+            if (premise.type !== 'NegAtom') return;
+            const negAtom = premise as NegAtom;
+            const vars = premiseVars(premise);
+            const point = bindingPoint(premises, i, vars);
+            if (point === null || point < 0) return;
+            const between = atomsBetween(premises, point, i);
+            if (between.length >= 2) {
+                warnings.push({
+                    code: 'E022',
+                    message: `Late negation: '!${negAtom.atom.predicate.symbol}' appears after ${between.length} more joins but its variables are all bound by '${termToString(premises[point]!)}'. Consider moving negation earlier to filter sooner.`,
+                    range: negAtom.range,
+                    severity: 'warning',
+                    cycle: [],
+                    hint: `move '${termToString(premise)}' right after '${termToString(premises[point]!)}'`,
+                });
             }
-        }
+        });
     }
 
     return warnings;
@@ -650,6 +701,7 @@ export function checkMultipleIndependentVars(unit: SourceUnit): StratificationEr
                 range: third.atom.range,
                 severity: 'warning',  // Performance warning, not a semantic error
                 cycle: [first.atom.predicate.symbol, second.atom.predicate.symbol, third.atom.predicate.symbol],
+                hint: 'if these relations are meant to be related, add the join variables; if not, precompute the combination you need in a helper predicate',
             });
         }
     }
@@ -699,7 +751,8 @@ export function checkTemporalRecursion(unit: SourceUnit): StratificationError[] 
             // Self-recursive temporal predicate
             if (temporalPreds.has(pred) && hasSelfLoop(pred, edges)) {
                 warnings.push({
-                    code: 'E048',
+                    code: 'E062',
+                    hint: 'bound the recursion (e.g. with interval limits or a temporal operator window such as <-[0d, 7d]) so derived intervals stay finite',
                     message: `Self-recursive temporal predicate '${pred}' may cause interval explosion; ensure coalescing or use interval limits`,
                     range: findPredicateRange(unit, pred),
                     severity: 'warning',
@@ -712,7 +765,8 @@ export function checkTemporalRecursion(unit: SourceUnit): StratificationError[] 
             if (hasTemporalPred) {
                 const temporalPredInScc = scc.find(p => temporalPreds.has(p)) ?? scc[0]!;
                 warnings.push({
-                    code: 'E049',
+                    code: 'E063',
+                    hint: 'break the cycle, or make only one predicate of the cycle temporal',
                     message: `Mutual recursion through temporal predicates may cause non-termination; ${scc.length} predicates in cycle: ${scc.join(' -> ')}`,
                     range: findPredicateRange(unit, temporalPredInScc),
                     severity: 'error',
@@ -742,7 +796,8 @@ export function checkTemporalRecursion(unit: SourceUnit): StratificationError[] 
                         }
                         if (litPredKey && isInSameSCC(headKey, litPredKey, sccs)) {
                             warnings.push({
-                                code: 'E050',
+                                code: 'E064',
+                                hint: 'use past operators (<-, [-) in recursive rules; future operators can derive facts arbitrarily far ahead',
                                 message: `Future operator in recursive temporal rule may cause unbounded fact generation`,
                                 range: temporal.range,
                                 severity: 'error',

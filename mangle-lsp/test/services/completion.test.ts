@@ -207,7 +207,7 @@ test(X) :- parent(X, Y).`;
 
             const plusCompletion = completions.find(c => c.label === 'fn:plus');
             expect(plusCompletion).toBeDefined();
-            expect(plusCompletion?.documentation).toContain('Addition');
+            expect(plusCompletion?.documentation).toContain('Integer addition');
         });
 
         it('should suggest list functions', () => {
