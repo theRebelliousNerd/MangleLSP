@@ -64,6 +64,9 @@ of this repository.
 - Type checks must only report provable mismatches (`isDisjoint`), never unknowns.
 - After changing `mangle-lsp/src`, run `npm run build` at the root so the committed bundles in
   `mangle-vscode/server/` stay in sync.
+- Everything here is public, commit messages included: never name a private project or describe
+  its internals. The `.githooks/` hooks and `npm run check:private` scan against a denylist kept
+  outside the repo (`$MANGLE_PRIVATE_TERMS`, default `~/.config/mangle-lsp/private-terms.txt`).
 
 ## Building and testing
 

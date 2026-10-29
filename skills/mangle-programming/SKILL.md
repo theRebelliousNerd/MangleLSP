@@ -148,7 +148,7 @@ Add every new trap you prove.
 Good public examples of what Mangle can really do barely exist, so
 shipped features are meant to become them. codeNERD
 (github.com/theRebelliousNerd/codeNERD) is the premier showcase. When a
-Mangle-only feature ships in any project, index it as
+Mangle-only feature ships in a public project, index it as
 `showcase/<slug>.md` in the format in [showcase/README](showcase/README.md),
 and link it here.
 
@@ -167,6 +167,11 @@ then a lab run, settle every question.
 
 Anyone who edits this skill (an agent, a session, another harness's copy)
 keeps these rules:
+- This skill is public. Write what Mangle does, never where you learned
+  it: no private project's name, paths, predicates, schemas, internals or
+  bug history. Restate a private finding as an engine or language fact
+  with its own lab, or leave it out. Only public projects (the engine,
+  codeNERD) are named. `npm run check:private` enforces it.
 - Every reference, showcase entry and project profile stays under 100
   lines. Split by idea when one grows.
 - Every file in the skill is linked from this SKILL.md, in the same change

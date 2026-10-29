@@ -17,7 +17,10 @@
     "package": "npm run build && npm run package --workspace=mangle-vscode",
     "clean": "rimraf mangle-lsp/dist mangle-vscode/out mangle-vscode/server",
     "test": "npm run test --workspace=mangle-lsp",
-    "test:mod": "node scripts/test-mod.mjs"
+    "test:mod": "node scripts/test-mod.mjs",
+    "test:scripts": "node --test scripts/*.test.mjs",
+    "check:private": "node scripts/check-private-terms.mjs",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "repository": {
     "type": "git",

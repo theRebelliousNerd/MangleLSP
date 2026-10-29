@@ -1,0 +1,3 @@
+#!/bin/sh
+# Blocks a commit message that names a private project (scripts/check-private-terms.mjs).
+exec node scripts/check-private-terms.mjs message "$1"

@@ -1,0 +1,3 @@
+#!/bin/sh
+# Blocks a push whose commits name a private project (scripts/check-private-terms.mjs).
+exec node scripts/check-private-terms.mjs push

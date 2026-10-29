@@ -1,0 +1,3 @@
+#!/bin/sh
+# Blocks a commit whose staged files name a private project (scripts/check-private-terms.mjs).
+exec node scripts/check-private-terms.mjs staged
