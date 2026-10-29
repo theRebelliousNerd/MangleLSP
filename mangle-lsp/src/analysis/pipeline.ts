@@ -6,7 +6,7 @@
  * drift between the editor and CI.
  */
 
-import { SourceUnit, SourceRange } from '../parser/ast';
+import { SourceUnit, SourceRange, analyzableUnit } from '../parser/ast';
 import { validate, ValidationResult, QuickFix } from './validation';
 import {
     checkStratification,
@@ -46,7 +46,8 @@ export interface AnalysisResult {
  * Runs semantic validation, stratification and all advisory checks.
  * Diagnostics are returned in source order.
  */
-export function analyzeUnit(unit: SourceUnit): AnalysisResult {
+export function analyzeUnit(input: SourceUnit): AnalysisResult {
+    const unit = analyzableUnit(input);
     const validation = validate(unit);
     const diagnostics: AnalysisDiagnostic[] = validation.errors.map(e => ({
         code: e.code,

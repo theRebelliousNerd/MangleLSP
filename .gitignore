@@ -65,8 +65,12 @@ coverage/
 # Archives (don't commit large zips)
 *.zip
 
-# Upstream reference (local copy of google/mangle)
-upstream/
+# Upstream reference (local copy of google/mangle), at the root only:
+# mangle-lsp/test/fixtures/upstream/ holds the vendored conformance programs.
+/upstream/
+
+# mangle-oracle binary (built from mangle-oracle/ on demand)
+mangle-oracle/bin/
 
 # Separate monorepo packages (mangle-ts, mangle-py ports)
 packages/

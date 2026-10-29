@@ -1072,8 +1072,8 @@ var require_semaphore = __commonJS({
         this._waiting = [];
       }
       lock(thunk) {
-        return new Promise((resolve9, reject) => {
-          this._waiting.push({ thunk, resolve: resolve9, reject });
+        return new Promise((resolve14, reject) => {
+          this._waiting.push({ thunk, resolve: resolve14, reject });
           this.runNext();
         });
       }
@@ -2563,9 +2563,9 @@ ${JSON.stringify(message, null, 4)}`);
           if (typeof cancellationStrategy.sender.enableCancellation === "function") {
             cancellationStrategy.sender.enableCancellation(requestMessage);
           }
-          return new Promise(async (resolve9, reject) => {
+          return new Promise(async (resolve14, reject) => {
             const resolveWithCleanup = (r) => {
-              resolve9(r);
+              resolve14(r);
               cancellationStrategy.sender.cleanup(id);
               disposable?.dispose();
             };
@@ -2976,10 +2976,10 @@ var require_ril = __commonJS({
         return api_1.Disposable.create(() => this.stream.off("end", listener));
       }
       write(data, encoding) {
-        return new Promise((resolve9, reject) => {
+        return new Promise((resolve14, reject) => {
           const callback = (error) => {
             if (error === void 0 || error === null) {
-              resolve9();
+              resolve14();
             } else {
               reject(error);
             }
@@ -3231,10 +3231,10 @@ var require_main = __commonJS({
     exports2.generateRandomPipeName = generateRandomPipeName;
     function createClientPipeTransport(pipeName, encoding = "utf-8") {
       let connectResolve;
-      const connected = new Promise((resolve9, _reject) => {
-        connectResolve = resolve9;
+      const connected = new Promise((resolve14, _reject) => {
+        connectResolve = resolve14;
       });
-      return new Promise((resolve9, reject) => {
+      return new Promise((resolve14, reject) => {
         let server = (0, net_1.createServer)((socket) => {
           server.close();
           connectResolve([
@@ -3245,7 +3245,7 @@ var require_main = __commonJS({
         server.on("error", reject);
         server.listen(pipeName, () => {
           server.removeListener("error", reject);
-          resolve9({
+          resolve14({
             onConnected: () => {
               return connected;
             }
@@ -3264,10 +3264,10 @@ var require_main = __commonJS({
     exports2.createServerPipeTransport = createServerPipeTransport;
     function createClientSocketTransport(port, encoding = "utf-8") {
       let connectResolve;
-      const connected = new Promise((resolve9, _reject) => {
-        connectResolve = resolve9;
+      const connected = new Promise((resolve14, _reject) => {
+        connectResolve = resolve14;
       });
-      return new Promise((resolve9, reject) => {
+      return new Promise((resolve14, reject) => {
         const server = (0, net_1.createServer)((socket) => {
           server.close();
           connectResolve([
@@ -3278,7 +3278,7 @@ var require_main = __commonJS({
         server.on("error", reject);
         server.listen(port, "127.0.0.1", () => {
           server.removeListener("error", reject);
-          resolve9({
+          resolve14({
             onConnected: () => {
               return connected;
             }
@@ -8064,8 +8064,8 @@ var require_server = __commonJS({
         if (value instanceof Promise) {
           return value;
         } else if (Is.thenable(value)) {
-          return new Promise((resolve9, reject) => {
-            value.then((resolved) => resolve9(resolved), (error) => reject(error));
+          return new Promise((resolve14, reject) => {
+            value.then((resolved) => resolve14(resolved), (error) => reject(error));
           });
         } else {
           return Promise.resolve(value);
@@ -8335,7 +8335,7 @@ var require_files = __commonJS({
     function isWindows() {
       return process.platform === "win32";
     }
-    function resolve9(moduleName, nodePath, cwd, tracer) {
+    function resolve14(moduleName, nodePath, cwd, tracer) {
       const nodePathKey = "NODE_PATH";
       const app = [
         "var p = process;",
@@ -8354,7 +8354,7 @@ var require_files = __commonJS({
         "}",
         "});"
       ].join("");
-      return new Promise((resolve10, reject) => {
+      return new Promise((resolve15, reject) => {
         let env = process.env;
         let newEnv = /* @__PURE__ */ Object.create(null);
         Object.keys(env).forEach((key) => newEnv[key] = env[key]);
@@ -8386,7 +8386,7 @@ var require_files = __commonJS({
             if (message2.c === "r") {
               cp.send({ c: "e" });
               if (message2.s) {
-                resolve10(message2.r);
+                resolve15(message2.r);
               } else {
                 reject(new Error(`Failed to resolve module: ${moduleName}`));
               }
@@ -8402,7 +8402,7 @@ var require_files = __commonJS({
         }
       });
     }
-    exports2.resolve = resolve9;
+    exports2.resolve = resolve14;
     function resolveGlobalNodePath(tracer) {
       let npmCommand = "npm";
       const env = /* @__PURE__ */ Object.create(null);
@@ -8517,17 +8517,17 @@ var require_files = __commonJS({
         if (!path.isAbsolute(nodePath)) {
           nodePath = path.join(workspaceRoot, nodePath);
         }
-        return resolve9(moduleName, nodePath, nodePath, tracer).then((value) => {
+        return resolve14(moduleName, nodePath, nodePath, tracer).then((value) => {
           if (FileSystem.isParent(nodePath, value)) {
             return value;
           } else {
             return Promise.reject(new Error(`Failed to load ${moduleName} from node path location.`));
           }
         }).then(void 0, (_error) => {
-          return resolve9(moduleName, resolveGlobalNodePath(tracer), workspaceRoot, tracer);
+          return resolve14(moduleName, resolveGlobalNodePath(tracer), workspaceRoot, tracer);
         });
       } else {
-        return resolve9(moduleName, resolveGlobalNodePath(tracer), workspaceRoot, tracer);
+        return resolve14(moduleName, resolveGlobalNodePath(tracer), workspaceRoot, tracer);
       }
     }
     exports2.resolveModulePath = resolveModulePath;
@@ -8886,6 +8886,11 @@ function containsPosition(range, pos) {
   if (pos.line === range.start.line && pos.column < range.start.column) return false;
   if (pos.line === range.end.line && pos.column >= range.end.column) return false;
   return true;
+}
+function analyzableUnit(unit) {
+  const bad = unit.malformed;
+  if (!bad || bad.size === 0) return unit;
+  return { ...unit, clauses: unit.clauses.filter((c) => !bad.has(c)), decls: unit.decls.filter((d) => !bad.has(d)), malformed: void 0 };
 }
 function createVariable(symbol, range) {
   return { type: "Variable", symbol, range };
@@ -37920,6 +37925,47 @@ function visitorErrorToParseError(error) {
     source: "parser"
   };
 }
+var REQUIRED_CHILDREN = ["head", "declaredAtom", "atom", "literal", "left", "right", "fn"];
+function hasHole(node) {
+  if (Array.isArray(node)) return node.some((e) => e === null || e === void 0 || hasHole(e));
+  if (node === null || typeof node !== "object") return false;
+  const obj = node;
+  for (const key of REQUIRED_CHILDREN) {
+    if (key in obj && (obj[key] === null || obj[key] === void 0)) return true;
+  }
+  for (const [key, value] of Object.entries(obj)) {
+    if (key === "range" || value === null || typeof value !== "object") continue;
+    if (hasHole(value)) return true;
+  }
+  return false;
+}
+function containsError(range, errors) {
+  return errors.some((e) => {
+    const after = e.line > range.start.line || e.line === range.start.line && e.column >= range.start.column;
+    const before = e.line < range.end.line || e.line === range.end.line && e.column <= range.end.column;
+    return after && before;
+  });
+}
+function markMalformed(unit, errors) {
+  const bad = (n2) => hasHole(n2) || containsError(n2.range, errors);
+  const malformed = /* @__PURE__ */ new Set([...unit.clauses.filter(bad), ...unit.decls.filter(bad)]);
+  return malformed.size > 0 ? { ...unit, malformed } : unit;
+}
+function nameSwallowedPeriodErrors(tokens) {
+  const out2 = [];
+  for (const t of tokens) {
+    if (t.type !== MangleLexer.CONSTANT || !t.text || !t.text.endsWith(".")) continue;
+    out2.push({
+      message: `The name constant '${t.text}' swallowed the '.' meant to end the clause: a name may contain '.', so '${t.text.slice(0, -1)}.' reads as one name. Write '${t.text.slice(0, -1)} .' or put another premise last`,
+      line: t.line,
+      column: t.column,
+      offset: t.start,
+      length: t.text.length,
+      source: "parser"
+    });
+  }
+  return out2;
+}
 function parse(source) {
   const errors = [];
   let visitor = null;
@@ -37940,10 +37986,12 @@ function parse(source) {
     errors.push(...lexerErrorListener.errors);
     errors.push(...parserErrorListener.errors);
     visitor = new MangleASTVisitor();
-    const unit = visitor.visit(tree);
-    const visitorErrors = visitor.getErrors();
-    errors.push(...visitorErrors.map(visitorErrorToParseError));
-    return { unit, errors };
+    const built = visitor.visit(tree);
+    errors.push(...visitor.getErrors().map(visitorErrorToParseError));
+    if (errors.length === 0) return { unit: built, errors };
+    tokenStream.fill();
+    errors.push(...nameSwallowedPeriodErrors(tokenStream.getTokens()));
+    return { unit: markMalformed(built, errors), errors };
   } catch (e) {
     const message = e instanceof Error ? e.message : String(e);
     errors.push({
@@ -38603,20 +38651,26 @@ var BUILTIN_PREDICATES = [
   pred(
     ":string:starts_with",
     [["String", I, T.string], ["Prefix", I, T.string]],
-    "Matches strings that start with a given prefix. The prefix must be a string constant.",
-    { example: ':string:starts_with(Path, "/tmp/")', seeAlso: [":match_prefix"] }
+    "Matches strings that start with a given prefix: a string literal or a variable bound to a string earlier in the body. A non-string subject is a silent false.",
+    { example: ':string:starts_with(Path, "/tmp/")', seeAlso: [":match_prefix", ":string:matches"] }
   ),
   pred(
     ":string:ends_with",
     [["String", I, T.string], ["Suffix", I, T.string]],
-    "Matches strings that end with a given suffix. The suffix must be a string constant.",
-    { example: ':string:ends_with(File, ".mg")' }
+    "Matches strings that end with a given suffix: a string literal or a variable bound to a string earlier in the body. A non-string subject is a silent false.",
+    { example: ':string:ends_with(File, ".mg")', seeAlso: [":string:matches"] }
   ),
   pred(
     ":string:contains",
     [["String", I, T.string], ["Substring", I, T.string]],
-    "Matches strings that contain a given substring. The substring must be a string constant.",
-    { example: ':string:contains(Msg, "error")' }
+    "Matches strings that contain a given substring: a string literal or a variable bound to a string earlier in the body. A non-string subject is a silent false.",
+    { example: ':string:contains(Msg, "error")', seeAlso: [":string:matches"] }
+  ),
+  pred(
+    ":string:matches",
+    [["String", I, T.string], ["Pattern", I, T.string]],
+    "Matches strings against an RE2 regular expression (new in v0.7). The pattern is not anchored: use ^ and $. An invalid pattern is an error; a non-string subject is a silent false. Patterns are compiled once.",
+    { example: ':string:matches(Name, "^[a-z-]+$")', seeAlso: [":string:contains"] }
   ),
   // Filter predicate
   pred(
@@ -40040,87 +40094,186 @@ function collectVars(term, vars) {
 }
 function rewriteClauseWithInfo(clause, preBoundVars) {
   if (!clause.premises || clause.premises.length === 0) {
-    return { clause, droppedNegations: [] };
+    return { clause, unresolved: [] };
   }
   const boundVars = new Set(preBoundVars ?? []);
   const premises = [];
-  const delayNegAtom = [];
-  const delayVars = [];
+  let delayed = [];
+  const bindAll = (p) => {
+    const defVars = /* @__PURE__ */ new Set();
+    collectVars(p, defVars);
+    for (const v of defVars) boundVars.add(v);
+  };
   for (const p of clause.premises) {
     let needsDelay = false;
     switch (p.type) {
-      case "Atom": {
-        const defVars = /* @__PURE__ */ new Set();
-        collectVars(p, defVars);
-        for (const v of defVars) {
-          boundVars.add(v);
-        }
+      case "Atom":
+      case "Eq":
+        bindAll(p);
         break;
-      }
       case "TemporalLiteral":
-      case "TemporalAtom": {
-        if (p.type === "TemporalLiteral" && p.literal.type === "NegAtom") {
-          break;
-        }
-        const defVars = /* @__PURE__ */ new Set();
-        collectVars(p, defVars);
-        for (const v of defVars) {
-          boundVars.add(v);
-        }
+      case "TemporalAtom":
+        if (p.type === "TemporalLiteral" && p.literal.type === "NegAtom") break;
+        bindAll(p);
         break;
-      }
-      case "Eq": {
-        const eqVars = /* @__PURE__ */ new Set();
-        collectVars(p, eqVars);
-        for (const v of eqVars) {
-          boundVars.add(v);
-        }
-        break;
-      }
-      case "NegAtom": {
-        const negVars = /* @__PURE__ */ new Set();
-        collectVars(p, negVars);
-        const unboundVars = /* @__PURE__ */ new Set();
-        for (const v of negVars) {
-          if (!boundVars.has(v)) {
-            unboundVars.add(v);
-          }
-        }
-        if (unboundVars.size > 0) {
+      case "NegAtom":
+      case "Ineq": {
+        const vars = /* @__PURE__ */ new Set();
+        collectVars(p, vars);
+        const unbound = new Set([...vars].filter((v) => !boundVars.has(v)));
+        if (unbound.size > 0) {
           needsDelay = true;
-          delayNegAtom.push(p);
-          delayVars.push(unboundVars);
+          delayed.push({ premise: p, vars: unbound });
         }
         break;
       }
     }
-    if (!needsDelay) {
-      premises.push(p);
-      const toRemove = [];
-      for (let i = 0; i < delayVars.length; i++) {
-        const vars = delayVars[i];
-        let allBound = true;
-        for (const v of vars) {
-          if (!boundVars.has(v)) {
-            allBound = false;
-            break;
-          }
-        }
-        if (allBound) {
-          premises.push(delayNegAtom[i]);
-          toRemove.unshift(i);
-        }
-      }
-      for (const i of toRemove) {
-        delayNegAtom.splice(i, 1);
-        delayVars.splice(i, 1);
-      }
+    if (needsDelay) continue;
+    premises.push(p);
+    const waiting = [];
+    for (const d of delayed) {
+      if ([...d.vars].every((v) => boundVars.has(v))) premises.push(d.premise);
+      else waiting.push(d);
+    }
+    delayed = waiting;
+  }
+  const unresolved = delayed.map((d) => d.premise);
+  return { clause: { ...clause, premises: [...premises, ...unresolved] }, unresolved };
+}
+
+// ../mangle-lsp/src/analysis/negation.ts
+function simpleTermText(term) {
+  if (term.type === "Variable") return term.symbol;
+  if (term.type !== "Constant") return void 0;
+  const c = term;
+  switch (c.constantType) {
+    case "name":
+      return c.symbol;
+    case "string":
+      return JSON.stringify(c.symbol ?? "");
+    case "number":
+      return String(c.numValue ?? 0);
+    case "float64":
+      return String(c.floatValue ?? 0);
+    default:
+      return void 0;
+  }
+}
+function atomText(atom) {
+  const args = atom.args.map(simpleTermText);
+  if (args.some((a) => a === void 0)) return void 0;
+  return `${atom.predicate.symbol}(${args.join(", ")})`;
+}
+function premiseText(p) {
+  switch (p.type) {
+    case "Atom":
+      return atomText(p);
+    case "Eq":
+    case "Ineq": {
+      const e = p;
+      const l = simpleTermText(e.left);
+      const r = simpleTermText(e.right);
+      if (l === void 0 || r === void 0) return void 0;
+      return `${l} ${p.type === "Eq" ? "=" : "!="} ${r}`;
+    }
+    default:
+      return void 0;
+  }
+}
+function freshName(base2, taken) {
+  if (!taken(base2)) return base2;
+  for (let i = 2; ; i++) {
+    if (!taken(`${base2}_${i}`)) return `${base2}_${i}`;
+  }
+}
+function endOf(range) {
+  return { start: range.end, end: range.end };
+}
+function projectionFix(title, neg, clause, helper, headVars, body) {
+  const call = `!${helper}(${headVars.join(", ")})`;
+  return {
+    title,
+    range: neg.range,
+    newText: call,
+    additionalEdits: [{ range: endOf(clause.range), newText: `
+${helper}(${headVars.join(", ")}) :- ${body}.` }]
+  };
+}
+function keptVariables(atom) {
+  const out2 = [];
+  for (const a of atom.args) {
+    if (a.type === "Variable") {
+      const v = a.symbol;
+      if (v !== "_" && !out2.includes(v)) out2.push(v);
     }
   }
+  return out2;
+}
+function negatedWildcardError(neg, clause, isTaken) {
+  const pred2 = neg.atom.predicate.symbol;
+  const vars = keptVariables(neg.atom);
+  const text = atomText(neg.atom);
+  const helper = freshName(`has_${pred2.replace(/[.:]/g, "_")}`, isTaken);
+  const fix = text && vars.length > 0 ? [projectionFix(`Negate a projection '${helper}(${vars.join(", ")})'`, neg, clause, helper, vars, text)] : void 0;
   return {
-    clause: { ...clause, premises },
-    droppedNegations: delayNegAtom
+    code: "E003",
+    message: `'_' in the negated atom '!${pred2}(...)' is a variable nothing binds; upstream v0.7 rejects the rule ("variable X0 is not bound")`,
+    range: neg.range,
+    severity: "error",
+    hint: `Mangle negation is not "there is no row with any value here". Project the columns you test first: ${helper}(${vars.join(", ")}) :- ${text ?? `${pred2}(...)`}. then negate !${helper}(${vars.join(", ")})`,
+    fixes: fix
   };
+}
+function isExternalDecl(decl) {
+  return !!decl?.descr?.some((d) => d.predicate.symbol === "external");
+}
+function negatedExternalError(neg, clause, isTaken) {
+  const pred2 = neg.atom.predicate.symbol;
+  const vars = keptVariables(neg.atom);
+  const helper = freshName(`${pred2.replace(/[.:]/g, "_")}_holds`, isTaken);
+  const positives = (clause.premises ?? []).filter((p) => p !== neg && p.type !== "NegAtom");
+  const parts = positives.map(premiseText);
+  const ext = atomText(neg.atom);
+  const printable = ext !== void 0 && parts.every((p) => p !== void 0);
+  const body = printable ? [...parts, ext].join(", ") : void 0;
+  return {
+    code: "E081",
+    message: `'!${pred2}(...)' negates an external predicate: the engine answers a negation from stored facts only and never calls the Go callback, so this is true whenever nothing stored the row`,
+    range: neg.range,
+    severity: "warning",
+    hint: `call the external positively in a helper rule whose body binds its inputs, then negate the helper: ${helper}(${vars.join(", ")}) :- ${body ?? `<premises binding the inputs>, ${pred2}(...)`}. and !${helper}(${vars.join(", ")})`,
+    fixes: body && vars.length > 0 ? [projectionFix(`Call '${pred2}' positively in '${helper}' and negate that`, neg, clause, helper, vars, body)] : void 0
+  };
+}
+
+// ../mangle-lsp/src/analysis/strictbounds.ts
+function strictBoundTrap(term) {
+  if (term.type === "Constant") {
+    const c = term;
+    return c.constantType === "name" && c.symbol === "/bool" ? "bool" : void 0;
+  }
+  if (rejectsEveryValueUnderStrictBounds(term)) return "singleton";
+  if (term.type !== "ApplyFn") return void 0;
+  for (const arg of term.args) {
+    const inner = strictBoundTrap(arg);
+    if (inner === "bool") return inner;
+  }
+  return void 0;
+}
+function rejectsEveryValueUnderStrictBounds(term) {
+  if (term.type !== "ApplyFn") return false;
+  const fn2 = term;
+  const args = fn2.args;
+  switch (fn2.function.symbol) {
+    case "fn:Singleton":
+      return true;
+    case "fn:TaggedUnion":
+      return false;
+    case "fn:Union":
+      return args.length > 0 && args.every(rejectsEveryValueUnderStrictBounds);
+    default:
+      return args.some(rejectsEveryValueUnderStrictBounds);
+  }
 }
 
 // ../mangle-lsp/src/analysis/diagnostics.ts
@@ -40170,10 +40323,10 @@ var entries = [
     title: "Variables in negation must be bound",
     category: "safety",
     severity: "error",
-    explanation: "Negation (`!pred(...)`) is negation-as-failure: it can only check that a *specific* tuple is absent. All its variables must be bound by positive premises of the same rule (anywhere in the body - Mangle reorders negations after the atoms that bind them). A variable that only occurs inside a negation is never bound, and upstream Mangle silently drops such a negation, changing the meaning of your rule.",
-    fix: 'Bind the variable with a positive atom, or replace it with `_` if you mean "no tuple with any value exists" - and then introduce a helper predicate that projects the columns you care about.',
+    explanation: 'Negation (`!pred(...)`) is negation-as-failure: it can only check that a *specific* tuple is absent. All its variables must be bound by positive premises of the same rule, anywhere in the body: Mangle v0.7 delays a negation until the premises that bind its variables have run. A variable that no positive premise binds is rejected ("variable X is not bound"), and so is `_` inside a negation, because the checker turns each `_` into a fresh variable that nothing binds: `!r(X, _)` does not mean "no r with any second value".',
+    fix: 'Bind the variable with a positive atom. To test "no tuple with any value here", project the columns you care about into a helper predicate and negate that (the quick fix writes the helper).',
     example: {
-      bad: "lonely(X) :- person(X), !friend(X, Y).",
+      bad: "lonely(X) :- person(X), !friend(X, _).",
       good: "has_friend(X) :- friend(X, _).\nlonely(X) :- person(X), !has_friend(X)."
     },
     docs: "negation.html"
@@ -40183,8 +40336,8 @@ var entries = [
     title: "Variables in comparison must be bound",
     category: "safety",
     severity: "error",
-    explanation: "Comparisons (`<`, `<=`, `>`, `>=`, `!=`) only test values; they never produce them. Both sides must be bound by earlier premises.",
-    fix: "Move the comparison after the atom that binds the variable, or add such an atom.",
+    explanation: 'Comparisons only test values; they never produce them. `<`, `<=`, `>`, `>=` and the `:float:` comparisons need both sides bound by an *earlier* premise (v0.7 rejects the rule otherwise: "move the subgoal to the right"). `!=` is different: like a negation it waits until its variables are bound, so its position does not matter, but some premise must still bind them.',
+    fix: "Move the comparison after the atom that binds the variable, or add such an atom. For `!=`, make sure a positive premise or equality binds both sides.",
     example: { bad: "big(X) :- X > 100, size(X).", good: "big(X) :- size(X), X > 100." }
   },
   {
@@ -40285,11 +40438,12 @@ var entries = [
   },
   {
     code: "E030",
-    title: "Pattern argument must be a constant",
+    title: "Pattern argument has the wrong type",
     category: "builtin",
     severity: "error",
-    explanation: "The prefix/suffix/substring argument of `:match_prefix`, `:string:starts_with`, `:string:ends_with` and `:string:contains` must be a constant in upstream Mangle.",
-    fix: "Write the pattern as a literal constant."
+    explanation: 'The pattern of `:string:starts_with`, `:string:ends_with` and `:string:contains` must be a string: a string literal, a variable bound to a string by an earlier premise, or a function that returns one (v0.7 substitutes and evaluates it). A constant of another type, such as the name `/ab`, is a run-time error ("2nd arguments must be string constant"). `:match_prefix` needs a name constant; a variable prefix fails strict type checking.',
+    fix: "Use a string pattern for the string tests (convert a name with `fn:name:to_string`), and a literal name such as `/users` for `:match_prefix`.",
+    example: { bad: "hit(H) :- hay(H), :string:contains(H, /ab).", good: 'hit(H) :- hay(H), :string:contains(H, "ab").' }
   },
   {
     code: "E033",
@@ -40635,6 +40789,31 @@ var entries = [
     explanation: "A `mode(...)` descriptor needs one quoted '+' (input), '-' (output) or '?' (either) per argument. Upstream silently ignores malformed modes, so the declaration would have no effect.",
     fix: "Write e.g. mode('+', '-') with one entry per argument of the declared predicate."
   },
+  {
+    code: "E081",
+    title: "Negated external predicate never calls Go",
+    category: "declaration",
+    severity: "warning",
+    explanation: "A predicate declared `descr [external(), mode(...)]` is answered by a Go callback during evaluation, but only in positive premises. In v0.7, `engine/premise.go` answers a negated premise `!ext(...)` from the fact store alone and never calls the callback, so the negation is true whenever nothing happened to store that row: usually always.",
+    fix: "Call the external positively in a helper rule whose body binds its inputs, then negate the helper. The quick fix writes the helper from the rule's own positive premises.",
+    example: {
+      bad: `Decl ext(X, Y) descr [external(), mode('+', '-')].
+miss(X) :- item(X), !ext(X, "hit").`,
+      good: 'ext_holds(X) :- item(X), ext(X, "hit").\nmiss(X) :- item(X), !ext_holds(X).'
+    }
+  },
+  {
+    code: "E082",
+    title: "Bound that strict checking can never satisfy",
+    category: "type",
+    severity: "warning",
+    explanation: "In v0.7 the bounds checker infers the base type of a constant (`/name` for `/high`), and `/name` does not conform to `fn:Singleton(/high)` or to a union of singletons. A related trap: Decl bounds have no boolean base type, so `/bool` is the name-prefix type of names under `/bool/`, and `/true` is not one of them. With strict checking (`AnalyzeAndCheckBounds(..., ErrorForBoundsMismatch)`) every fact and rule that writes such a column is rejected, including correct ones; without it the bound is not checked at all. `fn:TaggedUnion` is the exception: the checker reads its tags as `/name`.",
+    fix: "Declare the column `/name` (for booleans too), and enforce a closed vocabulary with an invariant relation that tests can query, e.g. `valid_sev(/low). valid_sev(/high). bad_sev(I, S) :- sev(I, S), !valid_sev(S).`",
+    example: {
+      bad: "Decl sev(I, S) bound [/name, fn:Union(fn:Singleton(/low), fn:Singleton(/high))].",
+      good: "Decl sev(I, S) bound [/name, /name].\nvalid_sev(/low). valid_sev(/high).\nbad_sev(I, S) :- sev(I, S), !valid_sev(S)."
+    }
+  },
   // ------------------------------------------------------------- stratification
   {
     code: "E015",
@@ -40815,6 +40994,181 @@ var entries = [
     explanation: "A named variable that occurs exactly once in a clause does not connect anything; it is usually a typo of another variable (e.g. `Person` vs `Persn`), which silently turns a join into a cross product or leaves a filter ineffective.",
     fix: 'If you mean "any value", write `_` instead. Otherwise fix the spelling so it matches the other occurrence. (Not reported in aggregating rules, where every named body variable keeps rows apart - see E080.)',
     example: { bad: "owns(P, C) :- person(P), car(Cr), owner(Cr, P).", good: "owns(P, C) :- person(P), car(C), owner(C, P)." }
+  },
+  {
+    code: "E083",
+    title: "Zero-arity Decl breaks strict bounds checking",
+    category: "declaration",
+    severity: "warning",
+    explanation: 'Upstream v0.7 strict bounds checking (`AnalyzeAndCheckBounds(..., ErrorForBoundsMismatch)`) fails the whole program on a zero-arity Decl that has no bound list, with "no bound decls in p()". Loose checking accepts it, and a zero-arity predicate without a Decl is fine either way. Verified on v0.7.0.',
+    fix: "Give the Decl an empty bound list.",
+    example: { bad: "Decl ready().", good: "Decl ready() bound []." }
+  },
+  {
+    code: "E084",
+    title: ":string:matches fails strict bounds checking",
+    category: "builtin",
+    severity: "warning",
+    explanation: 'Upstream v0.7.0 added `:string:matches` (RE2 regular expressions) but not its entry in the built-in type table (`symbols.go` lists `:string:starts_with`, `:string:ends_with` and `:string:contains` only). Strict bounds checking therefore rejects any rule that uses it ("cannot find assignment that works for premise"). Loose analysis accepts it and evaluation is correct. Verified on v0.7.0.',
+    fix: "Under strict checking, use `:string:starts_with`, `:string:ends_with` or `:string:contains` where they suffice; otherwise run loose analysis until upstream adds the signature."
+  },
+  // --------------------------------------------------------------------- advice
+  {
+    code: "A001",
+    title: "Arg-max joined back: use a merge lattice",
+    category: "advice",
+    severity: "info",
+    explanation: 'Mangle has no arg-max reducer, so a common pattern takes `fn:max` (or `fn:min`) per group in one rule and joins the result back to the source in a second to find the winning row. That needs the whole relation and a second stratum. A Decl with `fundep([Key], [P])` and `merge([P], "better")` makes the relation keep one value per key, replaced whenever the deferred comparison rule prefers a new one, inside the fixpoint and inside recursion. Verified on v0.7: same answers as the join-back; ties keep the first winner instead of several rows. The engine replaces the old fact only on stores that support removal (its in-memory stores do; a temporal-store adapter does not, and then both facts stay).',
+    fix: "Add the lattice relation (the quick fix writes it from the aggregating rule) and switch the consumers to it.",
+    example: {
+      bad: "latest_t(F, M) :- obs(F, T, _) |> do fn:group_by(F), let M = fn:max(T).\nlatest(F, V) :- latest_t(F, M), obs(F, M, V).",
+      good: `Decl best_obs(F, P) descr [fundep([F], [P]), merge([P], "obs_later")].
+Decl obs_later(P1, P2, B) descr [mode('+', '+', '-'), deferred()].
+obs_later(P1, P2, P1) :- :match_pair(P1, T1, _), :match_pair(P2, T2, _), T1 >= T2.
+obs_later(P1, P2, P2) :- :match_pair(P1, T1, _), :match_pair(P2, T2, _), T1 < T2.
+best_obs(F, fn:pair(T, V)) :- obs(F, T, V).`
+    }
+  },
+  {
+    code: "A002",
+    title: "Parallel variant predicates: use a tagged union",
+    category: "advice",
+    severity: "info",
+    explanation: "Three or more predicates such as `tool_started_event`, `tool_failed_event`, `tool_done_event` are variants of one thing spread over several relations. A Decl bounded by `fn:TaggedUnion(/kind, /started, fn:Struct(...), ...)` keeps them in one relation: a rule can match one variant (`:match_field(E, /kind, K), K = /failed`) or all of them, and a new variant is one more tag instead of a new predicate. Tagged unions pass strict bounds checking in v0.7 (the checker types their tags as /name); unions of singletons do not (E082).",
+    fix: "Declare one relation with a tagged-union value column and assert one fact per event."
+  },
+  {
+    code: "A003",
+    title: "Premise tests a value no writer produces",
+    category: "advice",
+    severity: "warning",
+    explanation: "Every rule and fact that writes this column of the predicate writes a name constant, and the constant this premise tests is not one of them, so the premise can never match and the rule derives nothing. This is the closed-vocabulary failure: a typo such as `/hihg`. A `fn:Singleton` union bound cannot catch it in v0.7 (E082); an invariant relation can: list the vocabulary as facts, derive violations with negation, and have a test assert there are none.",
+    fix: "Fix the constant (the quick fix offers the closest written value), and consider `valid_x(...)` facts plus a `bad_x(V) :- x(V), !valid_x(V).` invariant.",
+    example: { bad: "sev(/a, /high).\nurgent(I) :- sev(I, /hihg).", good: "sev(/a, /high).\nurgent(I) :- sev(I, /high)." }
+  },
+  {
+    code: "A004",
+    title: "Clock comparison: use temporal facts",
+    category: "advice",
+    severity: "info",
+    explanation: 'The rule reads a clock fact (`current_time(Now)`) and compares timestamps to decide whether something is recent, expired or due. Mangle has temporal facts: a Decl marked `temporal` holds facts valid over intervals, and operators such as `<-[0s, 24h] seen(X)` ("held at some point in the last 24 hours") read the evaluation time. Expiry needs no sweeper and no clock fact, and pinning the evaluation time replays a decision exactly. Verified on v0.7 (`recent(X) :- <-[0s, 24h] seen(X).`). Evaluation needs a temporal store and an evaluation time.',
+    fix: "Declare the fact temporal, assert it with its validity interval, and replace the comparison by a temporal operator.",
+    docs: "temporal.html"
+  },
+  {
+    code: "A005",
+    title: "Collecting pairs: use fn:collect_to_map",
+    category: "advice",
+    severity: "info",
+    explanation: "`fn:collect(fn:pair(K, V))` builds a list of pairs that the host then turns into a map. `fn:collect_to_map(K, V)` builds the map in the aggregation: one answer-shaped fact per group that Go reads without assembling and that rules can query with `fn:map:get`. Verified on v0.7. Keys should be unique per group.",
+    fix: "Replace the reducer (quick fix).",
+    example: { bad: "m(U, L) :- kv(U, K, V) |> do fn:group_by(U), let L = fn:collect(fn:pair(K, V)).", good: "m(U, M) :- kv(U, K, V) |> do fn:group_by(U), let M = fn:collect_to_map(K, V)." }
+  },
+  {
+    code: "A006",
+    title: "All paths, then pick one: use a merge lattice",
+    category: "advice",
+    severity: "info",
+    explanation: "A recursive relation accumulates a path or cost (`fn:list:append`, `fn:plus`) for every route, and a later aggregation keeps only the minimum or maximum. On a cyclic graph that recursion never finishes: verified on v0.7, a 5-edge cycle ran 38 s to the 100k fact limit. Declaring the recursive relation with `fundep` and `merge` keeps only the best path per key during the fixpoint (upstream `examples/shortest_path.mg`); the same cyclic graph then terminates with its 16 shortest paths.",
+    fix: 'Add `descr [fundep([Source, Target], [Path]), merge([Path], "shorter")]` to the recursive relation and a deferred `shorter` rule, then drop the aggregation.',
+    docs: "aggregation.html"
+  },
+  // ------------------------------------------------------------------- boundary
+  {
+    code: "B001",
+    title: "Rule reads a predicate nothing produces",
+    category: "boundary",
+    severity: "warning",
+    explanation: "A rule body reads this predicate, but no rule or fact in the module's .mg files derives it, no Go code asserts it, and its name appears nowhere else in Go. The rule compiles and never fires. Found by `mangle-cli boundary`, which scans the Go module with go/ast and judges the result with a Mangle program on the real engine.",
+    fix: "Make the producer assert it (with the Decl's shape), or delete the rule and the Decl."
+  },
+  {
+    code: "B002",
+    title: "Declared predicate nothing produces or reads",
+    category: "boundary",
+    severity: "info",
+    explanation: "A Decl that no rule, fact or Go code produces, and nothing reads in .mg or Go. It is dead schema.",
+    fix: "Delete the Decl, or wire the producer and consumer it was meant for."
+  },
+  {
+    code: "B003",
+    title: "Go asserts an undeclared predicate",
+    category: "boundary",
+    severity: "warning",
+    explanation: "Go asserts a fact whose predicate no .mg file declares or defines. No rule can read it (a typo, or a fact nobody consumes), and hosts that validate facts against Decls warn on it.",
+    fix: "Add the Decl (with bounds) to the owning schema file, or correct the predicate name."
+  },
+  {
+    code: "B004",
+    title: "Go asserts a predicate with the wrong arity",
+    category: "boundary",
+    severity: "error",
+    explanation: "In Mangle the arity is part of the predicate: `p/3` and `p/2` are different relations. Go asserts this name with an arity that no Decl and no rule has, so every rule written against the declared arity never sees these facts.",
+    fix: "Make the Go fact match the Decl's arguments, or change the Decl (and its rules) if the Go shape is the intended one."
+  },
+  {
+    code: "B005",
+    title: "Go queries a predicate the program never defines",
+    category: "boundary",
+    severity: "warning",
+    explanation: "Go queries a predicate that no .mg file declares or defines, so the query always returns nothing.",
+    fix: "Fix the name, or add the rule that derives it."
+  },
+  {
+    code: "B006",
+    title: "Asserted but never read",
+    category: "boundary",
+    severity: "info",
+    explanation: "Go asserts this declared predicate, but no rule reads it, no Go code queries it, and its name appears nowhere else in Go. The facts are written and ignored.",
+    fix: "Write the rule that uses it, or stop asserting it."
+  },
+  {
+    code: "B007",
+    title: "Go builds the wrong constant type for a column",
+    category: "boundary",
+    severity: "error",
+    explanation: 'The Decl bounds this argument with a base type, and Go builds a value that cannot become a constant of that type: a float64 for a /number column, an int for /float64, a name (`MangleAtom`, or a literal "/x" string that codeNERD\'s kernel turns into a name) for /string, or a plain string literal for /name. A join between a name and a string never matches, so rules silently derive nothing; strict bounds checking would reject the fact. Shapes the scan cannot know (a string variable) are never reported.',
+    fix: "Build the declared representation at the producer: `types.MangleAtom(x)` for /name, `types.MangleString(x)` or a plain string for /string, `int64(...)` for /number, `float64(...)` for /float64. Or fix the Decl if Go's shape is the intended one."
+  },
+  {
+    code: "B008",
+    title: "External predicate without a Go callback",
+    category: "boundary",
+    severity: "warning",
+    explanation: "The Decl says `descr [external(), mode(...)]`, so evaluation expects a Go callback, but the module registers none for this name and arity. Hosts reject or silently empty the predicate.",
+    fix: "Register the callback with the Decl's name, arity and modes, or remove `external()`."
+  },
+  {
+    code: "B009",
+    title: "Go callback without an external Decl",
+    category: "boundary",
+    severity: "warning",
+    explanation: "Go registers an external-predicate callback, but no .mg Decl marks the predicate `external()` at this arity, so the engine never calls it.",
+    fix: "Declare the predicate with `descr [external(), mode(...)]` matching the callback."
+  },
+  {
+    code: "B010",
+    title: "Callback modes disagree with the Decl",
+    category: "boundary",
+    severity: "error",
+    explanation: "The modes the Go callback is registered with (+ input, - output) differ from the Decl's `mode(...)`. The engine binds arguments by the Decl, so the callback receives inputs it did not expect.",
+    fix: "Make the two agree; the Decl is what analysis and evaluation use."
+  },
+  {
+    code: "B011",
+    title: "Rule negates an external; its Go callback never runs",
+    category: "boundary",
+    severity: "warning",
+    explanation: "The cross-file form of E081: a rule negates an external predicate, and the engine answers negations from stored facts only (v0.7 engine/premise.go), so the Go callback listed with the finding is never called for it.",
+    fix: "Call the external positively in a helper rule that binds its inputs, then negate the helper."
+  },
+  {
+    code: "B012",
+    title: "Rule reads a predicate with no recognized producer",
+    category: "boundary",
+    severity: "info",
+    explanation: "As B001, except that Go mentions the name somewhere the scan does not read as an assert: a list of predicate names, a map, a log line or a producer whose predicate is computed. Check the listed places; if none of them asserts the predicate, the rule never fires.",
+    fix: "Assert the predicate where it is produced, with the Decl's shape."
   }
 ];
 var DIAGNOSTIC_CATALOG = new Map(entries.map((e) => [e.code, e]));
@@ -41659,12 +42013,274 @@ function termUsesVar(term, name) {
   return false;
 }
 
+// ../mangle-lsp/src/analysis/advice.ts
+function checkAdvice(unit, errors) {
+  adviseArgMaxJoinBack(unit, errors);
+  adviseTaggedUnionFamilies(unit, errors);
+  adviseNeverWrittenConstants(unit, errors);
+  adviseClockComparisons(unit, errors);
+  adviseCollectPairs(unit, errors);
+  adviseAllPathsThenPick(unit, errors);
+}
+var predKey2 = (a) => `${a.predicate.symbol}/${a.predicate.arity}`;
+function positiveAtoms(clause) {
+  return (clause.premises ?? []).filter((p) => p.type === "Atom" && !p.predicate.symbol.startsWith(":"));
+}
+function varName(t) {
+  return t && t.type === "Variable" && t.symbol !== "_" ? t.symbol : void 0;
+}
+function doTransform(clause) {
+  const stmts = clause.transform?.statements;
+  const first = stmts?.[0];
+  if (!stmts || !first || first.variable !== null || first.fn.function.symbol !== "fn:group_by") return void 0;
+  const keys = first.fn.args.map(varName).filter((v) => !!v);
+  const lets = stmts.slice(1).filter((s) => s.variable).map((s) => ({ variable: s.variable.symbol, fn: s.fn }));
+  return { keys, lets };
+}
+function declFor(unit, key) {
+  return unit.decls.find((d) => `${d.declaredAtom.predicate.symbol}/${d.declaredAtom.predicate.arity}` === key);
+}
+function adviseArgMaxJoinBack(unit, errors) {
+  for (const agg of unit.clauses) {
+    const t = doTransform(agg);
+    const body = positiveAtoms(agg);
+    if (!t || body.length !== 1 || (agg.premises ?? []).length !== 1) continue;
+    const src = body[0];
+    for (const l of t.lets) {
+      const reducer = l.fn.function.symbol;
+      if (reducer !== "fn:max" && reducer !== "fn:min") continue;
+      const measured = varName(l.fn.args[0]);
+      if (!measured) continue;
+      const headKey = predKey2(agg.head);
+      if (t.keys.length === 0) continue;
+      const joiner = unit.clauses.find((c) => c !== agg && positiveAtoms(c).some((a) => predKey2(a) === headKey) && positiveAtoms(c).some((a) => predKey2(a) === predKey2(src)));
+      if (!joiner) continue;
+      const back = positiveAtoms(joiner).find((a) => predKey2(a) === predKey2(src));
+      const roles = src.args.map((a) => varName(a));
+      const values = back.args.map((a, i) => roles[i] === measured || roles[i] && t.keys.includes(roles[i]) ? void 0 : varName(a)).filter((v) => !!v);
+      const keys = t.keys;
+      const name = `best_${src.predicate.symbol}`;
+      const cmp = `${src.predicate.symbol}_${reducer === "fn:max" ? "later" : "earlier"}`;
+      const [win, lose] = reducer === "fn:max" ? [">=", "<"] : ["<=", ">"];
+      const value = values.length === 1 ? values[0] : void 0;
+      const rewrite = value === void 0 ? void 0 : [
+        `Decl ${name}(${[...keys, "P"].join(", ")}) descr [fundep([${keys.join(", ")}], [P]), merge([P], "${cmp}")].`,
+        `Decl ${cmp}(P1, P2, B) descr [mode('+', '+', '-'), deferred()].`,
+        `${cmp}(P1, P2, P1) :- :match_pair(P1, T1, _), :match_pair(P2, T2, _), T1 ${win} T2.`,
+        `${cmp}(P1, P2, P2) :- :match_pair(P1, T1, _), :match_pair(P2, T2, _), T1 ${lose} T2.`,
+        `${name}(${[...keys, `fn:pair(${measured}, ${value})`].join(", ")}) :- ${src.predicate.symbol}(${src.args.map((a, i) => varName(a) ? termToString(a) : varName(back.args[i]) === value ? value : "_").join(", ")}).`
+      ].join("\n");
+      errors.push({
+        code: "A001",
+        message: `'${termToString(agg.head)}' takes ${reducer} per group and this rule joins it back to '${src.predicate.symbol}' to find the winning row; a merge lattice keeps the winner directly`,
+        range: joiner.head.range,
+        severity: "info",
+        hint: rewrite ? `declare a relation that keeps one value per key and merges by comparison (one relation, no second stratum, works inside recursion; ties keep the first winner instead of several rows):
+${rewrite}
+The store must support fact removal (the engine's in-memory stores do; a temporal-store adapter does not, and then both facts stay)` : 'declare a relation with descr [fundep([Key], [P]), merge([P], "better")] whose value is fn:pair(Measure, Value), and a deferred better(P1, P2, B) rule that compares with :match_pair',
+        fixes: rewrite ? [{ title: `Add the lattice '${name}' (then switch consumers to it)`, range: { start: joiner.range.end, end: joiner.range.end }, newText: `
+${rewrite}` }] : void 0
+      });
+    }
+  }
+}
+var VARIANT_SUFFIXES = /* @__PURE__ */ new Set(["event", "result", "outcome", "signal", "notification", "message", "verdict"]);
+function adviseTaggedUnionFamilies(unit, errors) {
+  const first = /* @__PURE__ */ new Map();
+  for (const d of unit.decls) {
+    first.set(d.declaredAtom.predicate.symbol, { range: d.range, arity: d.declaredAtom.predicate.arity });
+  }
+  for (const c of unit.clauses) {
+    if (!first.has(c.head.predicate.symbol)) first.set(c.head.predicate.symbol, { range: c.head.range, arity: c.head.predicate.arity });
+  }
+  const families = /* @__PURE__ */ new Map();
+  for (const name of first.keys()) {
+    const parts = name.split("_");
+    if (parts.length < 3) continue;
+    const suffix = parts[parts.length - 1];
+    if (!VARIANT_SUFFIXES.has(suffix)) continue;
+    const family = `${parts[0]}_${suffix}`;
+    families.set(family, [...families.get(family) ?? [], name]);
+  }
+  for (const [family, members] of families) {
+    if (members.length < 3) continue;
+    const tags = members.map((m2) => `/${m2.split("_").slice(1, -1).join("_")}`);
+    const anchor = first.get(members[0]);
+    errors.push({
+      code: "A002",
+      message: `${members.length} predicates (${members.join(", ")}) are variants of one '${family}': a tagged union keeps them in one relation`,
+      range: anchor.range,
+      severity: "info",
+      hint: `declare one relation whose value is a tagged union, so a rule can match one variant or all of them, and a new variant is one more tag:
+Decl ${family}(Id, E) bound [/name, fn:TaggedUnion(/kind, ${tags.map((t) => `${t}, fn:Struct(...)`).join(", ")})].
+Match a variant with :match_field(E, /kind, K), K = ${tags[0]}. Tagged unions pass strict bounds checking (union-of-singleton bounds do not: E082)`
+    });
+  }
+}
+function constantKey2(t) {
+  return t.type === "Constant" && t.constantType === "name" ? t.symbol : void 0;
+}
+function adviseNeverWrittenConstants(unit, errors) {
+  const written = /* @__PURE__ */ new Map();
+  for (const c of unit.clauses) {
+    const key = predKey2(c.head);
+    const cols = written.get(key) ?? /* @__PURE__ */ new Map();
+    c.head.args.forEach((a, i) => {
+      if (cols.has(i) && cols.get(i) === void 0) return;
+      const k = constantKey2(a);
+      if (k === void 0) cols.set(i, void 0);
+      else cols.set(i, /* @__PURE__ */ new Set([...cols.get(i) ?? [], k]));
+    });
+    written.set(key, cols);
+  }
+  for (const c of unit.clauses) {
+    for (const atom of positiveAtoms(c)) {
+      const key = predKey2(atom);
+      const cols = written.get(key);
+      const decl = declFor(unit, key);
+      if (!cols || decl?.descr?.some((d) => d.predicate.symbol === "extensional" || d.predicate.symbol === "external")) continue;
+      atom.args.forEach((a, i) => {
+        const k = constantKey2(a);
+        const values = cols.get(i);
+        if (k === void 0 || !values || values.has(k)) return;
+        const sug = suggestSimilar(k, values);
+        errors.push({
+          code: "A003",
+          message: `'${k}' is never written to argument ${i + 1} of ${key} (its writers produce only ${[...values].sort().join(", ")}), so this premise never matches`,
+          range: a.range,
+          severity: "warning",
+          hint: `${sug.length > 0 ? `did you mean '${sug[0]}'? ` : ""}to make a closed vocabulary a checked contract, list it as a relation and derive violations a test asserts empty: valid_${atom.predicate.symbol}_${i + 1}(${[...values][0]}). ... bad_${atom.predicate.symbol}(V) :- ${atom.predicate.symbol}(${atom.args.map((_, j) => j === i ? "V" : "_").join(", ")}), !valid_${atom.predicate.symbol}_${i + 1}(V). (fn:Singleton bounds cannot: E082)`,
+          fixes: sug.length > 0 ? [{ title: `Replace with '${sug[0]}'`, range: a.range, newText: sug[0] }] : void 0
+        });
+      });
+    }
+  }
+}
+var CLOCK_PREDICATE = /^(current_time|current_timestamp|now|clock|time_now|current_unix_time)$/;
+var COMPARISONS = /* @__PURE__ */ new Set([":lt", ":le", ":gt", ":ge", ":time:lt", ":time:le", ":time:gt", ":time:ge", ":duration:lt", ":duration:le", ":duration:gt", ":duration:ge"]);
+function termVars(t, out2) {
+  if (t.type === "Variable") {
+    if (t.symbol !== "_") out2.add(t.symbol);
+  } else if (t.type === "ApplyFn" || t.type === "Atom") {
+    for (const a of t.args) termVars(a, out2);
+  } else if (t.type === "Eq" || t.type === "Ineq") {
+    const e = t;
+    termVars(e.left, out2);
+    termVars(e.right, out2);
+  }
+}
+function adviseClockComparisons(unit, errors) {
+  for (const c of unit.clauses) {
+    const clock = positiveAtoms(c).find((a) => CLOCK_PREDICATE.test(a.predicate.symbol));
+    if (!clock) continue;
+    const nowVars = /* @__PURE__ */ new Set();
+    clock.args.forEach((a) => {
+      const v = varName(a);
+      if (v) nowVars.add(v);
+    });
+    for (const p of c.premises ?? []) {
+      if (p.type !== "Eq") continue;
+      const e = p;
+      const rhs = /* @__PURE__ */ new Set();
+      termVars(e.right, rhs);
+      const lhs = varName(e.left);
+      if (lhs && [...rhs].some((v) => nowVars.has(v))) nowVars.add(lhs);
+    }
+    const compares = (c.premises ?? []).find((p) => {
+      if (p.type !== "Atom" || !COMPARISONS.has(p.predicate.symbol)) return false;
+      const vars = /* @__PURE__ */ new Set();
+      termVars(p, vars);
+      return [...vars].some((v) => nowVars.has(v));
+    });
+    if (!compares) continue;
+    const fact = positiveAtoms(c).find((a) => a !== clock);
+    const subject = fact ? fact.predicate.symbol : "p";
+    errors.push({
+      code: "A004",
+      message: `This rule decides freshness by comparing timestamps against the clock fact '${clock.predicate.symbol}'; temporal facts say it directly`,
+      range: compares.range,
+      severity: "info",
+      hint: `declare the fact temporal and let Go assert it with its validity time; the operator reads the evaluation time, so no clock fact is needed and a replay pins it:
+Decl ${subject}(...) temporal bound [...].
+recent(X) :- <-[0s, 24h] ${subject}(X).
+The evaluation needs a temporal store (engine.WithTemporalStore) and the time to judge at (engine.WithEvaluationTime)`
+    });
+  }
+}
+function adviseCollectPairs(unit, errors) {
+  for (const c of unit.clauses) {
+    const t = doTransform(c);
+    if (!t) continue;
+    for (const l of t.lets) {
+      const fn2 = l.fn.function.symbol;
+      if (fn2 !== "fn:collect" && fn2 !== "fn:collect_distinct") continue;
+      const arg = l.fn.args[0];
+      if (!arg || arg.type !== "ApplyFn" || arg.function.symbol !== "fn:pair" || arg.args.length !== 2) continue;
+      const [k, v] = arg.args;
+      const replacement = `fn:collect_to_map(${termToString(k)}, ${termToString(v)})`;
+      errors.push({
+        code: "A005",
+        message: `'${fn2}(fn:pair(...))' builds a list of pairs for Go to turn into a map; fn:collect_to_map builds the map`,
+        range: l.fn.range,
+        severity: "info",
+        hint: `${replacement} gives one answer-shaped value per group: Go reads it without assembling, and rules can look keys up with fn:map:get. Keys must be unique per group (a later pair wins)`,
+        fixes: [{ title: `Use ${replacement}`, range: l.fn.range, newText: replacement }]
+      });
+    }
+  }
+}
+var ACCUMULATORS = /* @__PURE__ */ new Set(["fn:list:append", "fn:list:cons", "fn:plus", "fn:float:plus"]);
+function accumulates(c) {
+  let found = false;
+  const visit = (t) => {
+    if (t.type === "ApplyFn") {
+      if (ACCUMULATORS.has(t.function.symbol)) found = true;
+      t.args.forEach(visit);
+    } else if (t.type === "Eq") {
+      visit(t.right);
+      visit(t.left);
+    }
+  };
+  (c.premises ?? []).forEach(visit);
+  c.head.args.forEach(visit);
+  c.transform?.statements.forEach((s) => visit(s.fn));
+  return found;
+}
+function adviseAllPathsThenPick(unit, errors) {
+  const recursiveAccumulating = /* @__PURE__ */ new Set();
+  for (const c of unit.clauses) {
+    const key = predKey2(c.head);
+    if (positiveAtoms(c).some((a) => predKey2(a) === key) && accumulates(c)) recursiveAccumulating.add(key);
+  }
+  for (const c of unit.clauses) {
+    const t = doTransform(c);
+    if (!t) continue;
+    const src = positiveAtoms(c).find((a) => recursiveAccumulating.has(predKey2(a)));
+    if (!src || declFor(unit, predKey2(src))?.descr?.some((d) => d.predicate.symbol === "merge")) continue;
+    const pick = t.lets.find((l) => l.fn.function.symbol === "fn:min" || l.fn.function.symbol === "fn:max");
+    if (!pick) continue;
+    errors.push({
+      code: "A006",
+      message: `'${src.predicate.symbol}' enumerates every path (accumulating a list or cost) and this rule keeps only the ${pick.fn.function.symbol === "fn:min" ? "smallest" : "largest"}; a merge lattice keeps only the best one while recursing`,
+      range: pick.fn.range,
+      severity: "info",
+      hint: `declare the recursive relation with a lattice so worse paths are dropped during the fixpoint (upstream examples/shortest_path.mg):
+Decl ${src.predicate.symbol}(Source, Target, Path) descr [fundep([Source, Target], [Path]), merge([Path], "shorter")].
+Decl shorter(P1, P2, Best) descr [mode('+', '+', '-'), deferred()].
+shorter(P1, P2, S) :- fn:list:len(P1) < fn:list:len(P2), S = P1.
+shorter(P1, P2, S) :- fn:list:len(P2) <= fn:list:len(P1), S = P2.
+On a cyclic graph the all-paths version never finishes (it runs to the fact limit); the lattice version terminates`
+    });
+  }
+}
+
 // ../mangle-lsp/src/analysis/validation.ts
 var STRING_CONSTANT_PREDICATES = /* @__PURE__ */ new Set([
   ":match_prefix",
   ":string:starts_with",
   ":string:ends_with",
-  ":string:contains"
+  ":string:contains",
+  ":string:matches"
 ]);
 var DESTRUCTURING_PREDICATES = /* @__PURE__ */ new Set([
   ":match_pair",
@@ -41675,7 +42291,8 @@ var FIELD_SELECTOR_PREDICATES = /* @__PURE__ */ new Set([
   ":match_entry"
 ]);
 var VALID_ESCAPES = /* @__PURE__ */ new Set(["n", "t", "r", "\\", '"', "'"]);
-function validate(unit) {
+function validate(input) {
+  const unit = analyzableUnit(input);
   const errors = [];
   const symbolTable = buildSymbolTable(unit);
   const declaredPredicates = /* @__PURE__ */ new Map();
@@ -41703,8 +42320,8 @@ function validate(unit) {
   }
   for (const clause of unit.clauses) {
     const pred2 = clause.head.predicate;
-    const predKey2 = `${pred2.symbol}/${pred2.arity}`;
-    const decl = declaredPredicates.get(predKey2);
+    const predKey3 = `${pred2.symbol}/${pred2.arity}`;
+    const decl = declaredPredicates.get(predKey3);
     if (decl && clause.headTime && !isEternalInterval(clause.headTime)) {
       if (!isDeclTemporal(decl) && !isDeclMaybeTemporal(decl)) {
         errors.push({
@@ -41728,6 +42345,7 @@ function validate(unit) {
   }
   validateArityConsistency(unit, errors);
   checkClauseLints(unit, errors);
+  checkAdvice(unit, errors);
   checkBounds(unit, declaredPredicates, errors);
   return { errors, symbolTable };
 }
@@ -41781,6 +42399,17 @@ function validateDeclaration(decl, errors) {
       expectedArgs.set(arg.symbol, arg);
     }
   }
+  if (declAtom.args.length === 0 && (!decl.bounds || decl.bounds.length === 0) && !decl.constraints?.length) {
+    const at = { line: decl.range.end.line, column: Math.max(0, decl.range.end.column - 1), offset: Math.max(0, decl.range.end.offset - 1) };
+    errors.push({
+      code: "E083",
+      message: `Zero-arity Decl '${declAtom.predicate.symbol}()' has no bound list: upstream v0.7 strict bounds checking rejects the whole program ("no bound decls in ${declAtom.predicate.symbol}()")`,
+      range: declAtom.range,
+      severity: "warning",
+      hint: `write 'Decl ${declAtom.predicate.symbol}() bound [].' (loose checking, which codeNERD's kernel uses, accepts either)`,
+      fixes: [{ title: "Add 'bound []'", range: { start: at, end: at }, newText: " bound []" }]
+    });
+  }
   if (decl.bounds && decl.bounds.length > 0) {
     for (const boundDecl of decl.bounds) {
       if (boundDecl.bounds.length !== declAtom.args.length) {
@@ -41802,6 +42431,17 @@ function validateDeclaration(decl, errors) {
             range: problem.range,
             severity: "error",
             hint
+          });
+        }
+        const trap = strictBoundTrap(bound);
+        if (trap) {
+          errors.push({
+            code: "E082",
+            message: trap === "singleton" ? `Argument ${i + 1} is bounded by ${termToString(bound)}: upstream v0.7 types every constant by its base type (/name), so strict bounds checking rejects every value written to this column, and loose checking ignores the bound` : `Argument ${i + 1} uses /bool, which in a bound is the name-prefix type of names under /bool/ (there is no boolean base type): /true and /false do not conform`,
+            range: bound.range,
+            severity: "warning",
+            hint: trap === "singleton" ? "declare the column /name and enforce the vocabulary with a relation tests can query: valid_x(/a). valid_x(/b). bad_x(V) :- x(V), !valid_x(V)." : "declare the column /name (values /true and /false)",
+            fixes: trap === "bool" && bound.type === "Constant" ? [{ title: "Replace '/bool' with '/name'", range: bound.range, newText: "/name" }] : void 0
           });
         }
       }
@@ -41889,17 +42529,17 @@ function validateDeclaration(decl, errors) {
         });
         continue;
       }
-      const varName = firstArg.symbol;
-      if (!expectedArgsForArgCheck.has(varName)) {
+      const varName2 = firstArg.symbol;
+      if (!expectedArgsForArgCheck.has(varName2)) {
         errors.push({
           code: "E056",
-          message: `arg atom for an unknown variable ${varName}`,
+          message: `arg atom for an unknown variable ${varName2}`,
           range: firstArg.range,
           severity: "error"
         });
         continue;
       }
-      expectedArgsForArgCheck.delete(varName);
+      expectedArgsForArgCheck.delete(varName2);
       for (let i = 1; i < descrAtom.args.length; i++) {
         const argArg = descrAtom.args[i];
         if (argArg.type !== "Constant" || argArg.constantType !== "string") {
@@ -41956,6 +42596,9 @@ function validateDeclaration(decl, errors) {
     }
   }
 }
+function isPredicateNameTaken(ctx, name) {
+  return ctx.symbolTable.getAllPredicates().some((p) => p.symbol.symbol === name) || [...ctx.decls.keys()].some((k) => k.startsWith(`${name}/`));
+}
 function nameRangeOf(range, name) {
   return {
     start: range.start,
@@ -41980,7 +42623,7 @@ function validateClause(clause, symbolTable, errors, declaredPredicates, reporte
       if (m2 === "input" || m2 === "input_output") preBoundForRewrite.push(arg.symbol);
     }
   });
-  const { clause: rewritten, droppedNegations } = rewriteClauseWithInfo(clause, preBoundForRewrite);
+  const { clause: rewritten, unresolved } = rewriteClauseWithInfo(clause, preBoundForRewrite);
   const boundVars = new Set(inputHeadVars);
   const headVars = /* @__PURE__ */ new Set();
   const uf = UnionFind.create();
@@ -41991,7 +42634,9 @@ function validateClause(clause, symbolTable, errors, declaredPredicates, reporte
     uf,
     headPackage: packageOf(clause.head.predicate.symbol),
     inputPositionVars: /* @__PURE__ */ new Map(),
-    reportedUndefined
+    reportedUndefined,
+    unresolved: new Set(unresolved),
+    clause
   };
   collectAtomVariables(rewritten.head, headVars);
   if (rewritten.headTime) {
@@ -42038,23 +42683,6 @@ function validateClause(clause, symbolTable, errors, declaredPredicates, reporte
   }
   for (const premise of rewritten.premises ?? []) {
     validatePremise(premise, boundVars, ctx);
-  }
-  for (const dropped of droppedNegations) {
-    const negAtom = dropped.type === "NegAtom" ? dropped : null;
-    if (!negAtom) continue;
-    const negVars = /* @__PURE__ */ new Set();
-    collectAtomVariables(negAtom.atom, negVars);
-    const unbound = [...negVars].filter((v) => !boundVars.has(v));
-    for (const v of unbound) {
-      errors.push({
-        code: "E003",
-        message: `Variable '${v}' in negated atom '!${negAtom.atom.predicate.symbol}(...)' is never bound by a positive premise; upstream Mangle silently drops this negation`,
-        range: negAtom.range,
-        severity: "error",
-        hint: `bind '${v}' with a positive atom, or if you mean "no ${negAtom.atom.predicate.symbol} with any ${v}", replace '${v}' with '_' (and project the columns you need through a helper predicate)`
-      });
-    }
-    validateAtom(negAtom.atom, boundVars, ctx, { suppressUnbound: true });
   }
   const bodyVars = /* @__PURE__ */ new Set();
   for (const premise of clause.premises) {
@@ -42133,6 +42761,7 @@ function validatePremise(premise, boundVars, ctx) {
     }
     case "NegAtom": {
       const negAtom = premise;
+      const pred2 = negAtom.atom.predicate.symbol;
       const negVars = /* @__PURE__ */ new Set();
       collectAtomVariables(negAtom.atom, negVars);
       let anyUnbound = false;
@@ -42141,12 +42770,21 @@ function validatePremise(premise, boundVars, ctx) {
           anyUnbound = true;
           errors.push({
             code: "E003",
-            message: `Variable '${v}' in negated atom must be bound before the negation`,
+            message: `Variable '${v}' in '!${pred2}(...)' is not bound by any positive premise of this rule`,
             range: negAtom.range,
             severity: "error",
-            hint: `bind '${v}' with a positive atom of the same rule; use '_' for "any value"`
+            hint: `a negation only tests values and waits until its variables are bound; bind '${v}' with a positive atom of the same rule, or project the columns you mean: '${pred2}_proj(...) :- ${pred2}(...).' then negate the projection`
           });
         }
+      }
+      const wildcards = negAtom.atom.args.filter((a) => a.type === "Variable" && a.symbol === "_");
+      if (wildcards.length > 0) {
+        anyUnbound = true;
+        errors.push(negatedWildcardError(negAtom, ctx.clause, (n2) => isPredicateNameTaken(ctx, n2)));
+      }
+      const negKey = `${pred2}/${negAtom.atom.predicate.arity}`;
+      if (!anyUnbound && isExternalDecl(ctx.decls.get(negKey))) {
+        errors.push(negatedExternalError(negAtom, ctx.clause, (n2) => isPredicateNameTaken(ctx, n2)));
       }
       validateAtom(negAtom.atom, boundVars, ctx, { suppressUnbound: anyUnbound });
       break;
@@ -42165,10 +42803,10 @@ function validatePremise(premise, boundVars, ctx) {
         if (v !== "_" && !boundVars.has(v)) {
           errors.push({
             code: "E004",
-            message: `Variable '${v}' must be bound before comparison`,
+            message: `Variable '${v}' in '!=' is not bound by any premise of this rule`,
             range: ineq.range,
             severity: "error",
-            hint: `'!=' only tests values; move it after the premise that binds '${v}'`
+            hint: `'!=' only tests values and waits until its variables are bound (its position in the body does not matter); bind '${v}' with a positive atom or an equality`
           });
         }
       }
@@ -42314,16 +42952,28 @@ function validateAtom(atom, boundVars, ctx, opts = {}) {
       }
     }
     if (STRING_CONSTANT_PREDICATES.has(predName) && atom.args.length >= 2) {
-      const secondArg = atom.args[1];
-      if (secondArg && secondArg.type !== "Constant") {
+      const pattern = atom.args[1];
+      const isPrefix = predName === ":match_prefix";
+      const constType = pattern.type === "Constant" ? pattern.constantType : void 0;
+      const bad = isPrefix ? constType !== "name" : constType !== void 0 && constType !== "string";
+      if (bad) {
         errors.push({
           code: "E030",
-          message: `Second argument of '${predName}' must be a constant pattern, not a ${secondArg.type}`,
-          range: secondArg.range,
+          message: isPrefix ? `The prefix of ':match_prefix' must be a name constant, not a ${constType ? `${constType} constant` : pattern.type}` : `The pattern of '${predName}' must be a string, got a ${constType} constant`,
+          range: pattern.range,
           severity: "error",
-          hint: predName === ":match_prefix" ? "write the prefix as a name constant, e.g. :match_prefix(X, /users)" : `write the pattern as a string literal, e.g. ${predName}(S, "abc")`
+          hint: isPrefix ? "write the prefix as a name constant, e.g. :match_prefix(X, /users); for a computed prefix convert both sides to strings and use :string:starts_with" : `write the pattern as a string, e.g. ${predName}(S, "abc"); a name converts with fn:name:to_string(N)`
         });
       }
+    }
+    if (predName === ":string:matches") {
+      errors.push({
+        code: "E084",
+        message: `':string:matches' has no type signature in upstream v0.7.0: strict bounds checking rejects every rule that uses it ("cannot find assignment that works for premise")`,
+        range: nameRangeOf(atom.range, predName),
+        severity: "warning",
+        hint: "loose analysis (AnalyzeOneUnit, as codeNERD's kernel runs) accepts it and it evaluates correctly; under strict checking use :string:starts_with / :string:ends_with / :string:contains where they suffice"
+      });
     }
     if (DESTRUCTURING_PREDICATES.has(predName) && atom.args.length >= 3) {
       const arg2 = atom.args[1];
@@ -42361,8 +43011,8 @@ function validateAtom(atom, boundVars, ctx, opts = {}) {
     }
   }
   if (!predName.startsWith(":") && !predName.startsWith("fn:")) {
-    const predKey2 = `${predName}/${arity}`;
-    const predInfo = symbolTable.getPredicateInfo(predKey2);
+    const predKey3 = `${predName}/${arity}`;
+    const predInfo = symbolTable.getPredicateInfo(predKey3);
     const hasDefs = predInfo && (predInfo.definitions.length > 0 || predInfo.declLocation);
     if (!hasDefs) {
       const availableArities = symbolTable.getPredicateArities(predName);
@@ -43281,29 +43931,29 @@ function checkUnboundedRecursion(unit) {
     clauses.push(clause);
     predicateClauses.set(key, clauses);
   }
-  for (const [predKey2, clauses] of predicateClauses) {
-    const recursiveClauses = clauses.filter((c) => isRecursive(c, predKey2));
+  for (const [predKey3, clauses] of predicateClauses) {
+    const recursiveClauses = clauses.filter((c) => isRecursive(c, predKey3));
     if (recursiveClauses.length > 0) {
       const firstRecursive = recursiveClauses[0];
       if (!firstRecursive) continue;
-      const hasBaseCase = clauses.some((c) => !isRecursive(c, predKey2));
+      const hasBaseCase = clauses.some((c) => !isRecursive(c, predKey3));
       if (!hasBaseCase) {
         warnings.push({
           code: "E016",
-          message: `Predicate '${predKey2}' has recursive rules but no base case - may not terminate`,
+          message: `Predicate '${predKey3}' has recursive rules but no base case - may not terminate`,
           range: firstRecursive.head.range,
           severity: "warning",
-          cycle: [predKey2]
+          cycle: [predKey3]
         });
       }
       for (const clause of recursiveClauses) {
-        if (hasUnboundedGeneration(clause, predKey2)) {
+        if (hasUnboundedGeneration(clause, predKey3)) {
           warnings.push({
             code: "E017",
             message: `Recursive rule may generate unbounded values - ensure termination condition exists`,
             range: clause.head.range,
             severity: "warning",
-            cycle: [predKey2]
+            cycle: [predKey3]
           });
         }
       }
@@ -43311,19 +43961,19 @@ function checkUnboundedRecursion(unit) {
   }
   return warnings;
 }
-function isRecursive(clause, predKey2) {
+function isRecursive(clause, predKey3) {
   if (!clause.premises) return false;
   for (const premise of clause.premises) {
     if (premise.type === "Atom") {
       const atom = premise;
-      if (predicateKey(atom.predicate) === predKey2) {
+      if (predicateKey(atom.predicate) === predKey3) {
         return true;
       }
     }
   }
   return false;
 }
-function hasUnboundedGeneration(clause, predKey2) {
+function hasUnboundedGeneration(clause, predKey3) {
   if (!clause.premises) return false;
   let hasArithmeticIncrement = false;
   for (const premise of clause.premises) {
@@ -43677,9 +44327,9 @@ function isInSameSCC(pred1, pred2, sccs) {
   }
   return false;
 }
-function findPredicateRange(unit, predKey2) {
+function findPredicateRange(unit, predKey3) {
   for (const clause of unit.clauses) {
-    if (predicateKey(clause.head.predicate) === predKey2) {
+    if (predicateKey(clause.head.predicate) === predKey3) {
       return clause.head.range;
     }
   }
@@ -43687,7 +44337,8 @@ function findPredicateRange(unit, predKey2) {
 }
 
 // ../mangle-lsp/src/analysis/pipeline.ts
-function analyzeUnit(unit) {
+function analyzeUnit(input) {
+  const unit = analyzableUnit(input);
   const validation = validate(unit);
   const diagnostics = validation.errors.map((e) => ({
     code: e.code,
@@ -43754,7 +44405,8 @@ function analysisToCLIDiagnostic(error, lines, explain = false) {
   const fixes = error.fixes?.map((f) => ({
     title: f.title,
     range: toCLIRange(f.range),
-    newText: f.newText
+    newText: f.newText,
+    ...f.additionalEdits?.length ? { additionalEdits: f.additionalEdits.map((e) => ({ range: toCLIRange(e.range), newText: e.newText })) } : {}
   }));
   const diag = {
     severity: error.severity,
@@ -44758,18 +45410,18 @@ function getVariableCompletions(unit, position, prefix, replaceRange) {
   const variables = collectClauseVariables(clause);
   const items = [];
   let index = 0;
-  for (const varName of Array.from(variables)) {
-    if (varName === "_") {
+  for (const varName2 of Array.from(variables)) {
+    if (varName2 === "_") {
       continue;
     }
-    if (prefix && !varName.startsWith(prefix)) {
+    if (prefix && !varName2.startsWith(prefix)) {
       continue;
     }
     items.push({
-      label: varName,
+      label: varName2,
       kind: import_node4.CompletionItemKind.Variable,
       detail: "Variable",
-      textEdit: import_node4.TextEdit.replace(replaceRange, varName),
+      textEdit: import_node4.TextEdit.replace(replaceRange, varName2),
       insertTextFormat: import_node4.InsertTextFormat.PlainText,
       sortText: `2${index.toString().padStart(3, "0")}`
     });
@@ -45020,6 +45672,13 @@ var FullTextDocument = class _FullTextDocument {
         const startOffset = this.offsetAt(range.start);
         const endOffset = this.offsetAt(range.end);
         this._content = this._content.substring(0, startOffset) + change.text + this._content.substring(endOffset, this._content.length);
+        const insertedEndOffset = startOffset + change.text.length;
+        const crlfAtStart = this._content.charCodeAt(startOffset - 1) === 13 && this._content.charCodeAt(startOffset) === 10;
+        const crlfAtEnd = this._content.charCodeAt(insertedEndOffset - 1) === 13 && this._content.charCodeAt(insertedEndOffset) === 10;
+        if (crlfAtStart || crlfAtEnd) {
+          this._lineOffsets = void 0;
+          continue;
+        }
         const startLine = Math.max(range.start.line, 0);
         const endLine = Math.max(range.end.line, 0);
         let lineOffsets = this._lineOffsets;
@@ -45825,14 +46484,14 @@ function getFileCache(filePath) {
   const document = TextDocument.create(uri, "mangle", 1, source);
   const parseResult = parse(source);
   const validationResult = parseResult.unit ? validate(parseResult.unit) : null;
-  const cache = {
+  const cache2 = {
     source,
     document,
     parseResult,
     validationResult
   };
-  fileCache.set(filePath, cache);
-  return cache;
+  fileCache.set(filePath, cache2);
+  return cache2;
 }
 function runBatch(queries, _options) {
   const results = [];
@@ -45848,8 +46507,8 @@ function runBatch(queries, _options) {
       result: null
     };
     try {
-      const cache = getFileCache(filePath);
-      if (!cache) {
+      const cache2 = getFileCache(filePath);
+      if (!cache2) {
         result.error = `File not found: ${filePath}`;
         failed++;
         results.push(result);
@@ -45857,28 +46516,28 @@ function runBatch(queries, _options) {
       }
       switch (query.type) {
         case "hover":
-          result.result = processHover(cache, query);
+          result.result = processHover(cache2, query);
           break;
         case "definition":
-          result.result = processDefinition(cache, query);
+          result.result = processDefinition(cache2, query);
           break;
         case "references":
-          result.result = processReferences(cache, query);
+          result.result = processReferences(cache2, query);
           break;
         case "completion":
-          result.result = processCompletion(cache, query);
+          result.result = processCompletion(cache2, query);
           break;
         case "symbols":
-          result.result = processSymbols(cache);
+          result.result = processSymbols(cache2);
           break;
         case "diagnostics":
-          result.result = processDiagnostics(cache);
+          result.result = processDiagnostics(cache2);
           break;
         case "format":
-          result.result = processFormat(cache);
+          result.result = processFormat(cache2);
           break;
         case "fileInfo":
-          result.result = processFileInfo(cache, filePath);
+          result.result = processFileInfo(cache2, filePath);
           break;
         default:
           result.error = `Unknown query type: ${query.type}`;
@@ -45903,13 +46562,13 @@ function runBatch(queries, _options) {
     }
   };
 }
-function processHover(cache, query) {
-  if (!cache.parseResult.unit || query.line === void 0 || query.column === void 0) {
+function processHover(cache2, query) {
+  if (!cache2.parseResult.unit || query.line === void 0 || query.column === void 0) {
     return null;
   }
-  const symbolTable = cache.validationResult?.symbolTable ?? buildSymbolTable(cache.parseResult.unit);
+  const symbolTable = cache2.validationResult?.symbolTable ?? buildSymbolTable(cache2.parseResult.unit);
   const position = { line: query.line - 1, character: query.column };
-  const hover = getHover(cache.parseResult.unit, symbolTable, position);
+  const hover = getHover(cache2.parseResult.unit, symbolTable, position);
   if (!hover) return null;
   return {
     contents: typeof hover.contents === "string" ? hover.contents : hover.contents.value,
@@ -45919,11 +46578,11 @@ function processHover(cache, query) {
     } : void 0
   };
 }
-function processDefinition(cache, query) {
-  if (!cache.parseResult.unit || query.line === void 0 || query.column === void 0) {
+function processDefinition(cache2, query) {
+  if (!cache2.parseResult.unit || query.line === void 0 || query.column === void 0) {
     return { locations: [] };
   }
-  const symbolTable = cache.validationResult?.symbolTable ?? buildSymbolTable(cache.parseResult.unit);
+  const symbolTable = cache2.validationResult?.symbolTable ?? buildSymbolTable(cache2.parseResult.unit);
   const position = { line: query.line - 1, character: query.column };
   const uri = `file://${(0, import_path8.resolve)(query.file)}`;
   const def = getDefinition(uri, symbolTable, position);
@@ -45939,11 +46598,11 @@ function processDefinition(cache, query) {
     }))
   };
 }
-function processReferences(cache, query) {
-  if (!cache.parseResult.unit || query.line === void 0 || query.column === void 0) {
+function processReferences(cache2, query) {
+  if (!cache2.parseResult.unit || query.line === void 0 || query.column === void 0) {
     return { locations: [] };
   }
-  const symbolTable = cache.validationResult?.symbolTable ?? buildSymbolTable(cache.parseResult.unit);
+  const symbolTable = cache2.validationResult?.symbolTable ?? buildSymbolTable(cache2.parseResult.unit);
   const position = { line: query.line - 1, character: query.column };
   const uri = `file://${(0, import_path8.resolve)(query.file)}`;
   const refs = findReferences(uri, symbolTable, position, {
@@ -45959,13 +46618,13 @@ function processReferences(cache, query) {
     }))
   };
 }
-function processCompletion(cache, query) {
+function processCompletion(cache2, query) {
   if (query.line === void 0 || query.column === void 0) {
     return { items: [] };
   }
-  const symbolTable = cache.validationResult?.symbolTable ?? null;
+  const symbolTable = cache2.validationResult?.symbolTable ?? null;
   const position = { line: query.line - 1, character: query.column };
-  const items = getCompletions(cache.document, cache.parseResult.unit, symbolTable, position);
+  const items = getCompletions(cache2.document, cache2.parseResult.unit, symbolTable, position);
   return {
     items: items.map((item) => ({
       label: item.label,
@@ -45976,11 +46635,11 @@ function processCompletion(cache, query) {
     }))
   };
 }
-function processSymbols(cache) {
-  if (!cache.parseResult.unit) {
+function processSymbols(cache2) {
+  if (!cache2.parseResult.unit) {
     return { symbols: [] };
   }
-  const symbols = getDocumentSymbols(cache.parseResult.unit);
+  const symbols = getDocumentSymbols(cache2.parseResult.unit);
   return {
     symbols: symbols.map((s) => ({
       name: s.name,
@@ -45992,10 +46651,10 @@ function processSymbols(cache) {
     }))
   };
 }
-function processDiagnostics(cache) {
-  const lines = cache.source.split("\n");
-  const parseErrors = cache.parseResult.errors.map((e) => parseErrorToCLIDiagnostic(e, lines));
-  const analysis = cache.parseResult.unit ? analyzeUnit(cache.parseResult.unit).diagnostics : [];
+function processDiagnostics(cache2) {
+  const lines = cache2.source.split("\n");
+  const parseErrors = cache2.parseResult.errors.map((e) => parseErrorToCLIDiagnostic(e, lines));
+  const analysis = cache2.parseResult.unit ? analyzeUnit(cache2.parseResult.unit).diagnostics : [];
   const semanticErrors = analysis.map((e) => analysisToCLIDiagnostic(e, lines));
   return {
     parseErrors,
@@ -46005,11 +46664,11 @@ function processDiagnostics(cache) {
     totalInfo: semanticErrors.filter((e) => e.severity === "info").length
   };
 }
-function processFormat(cache) {
-  if (!cache.parseResult.unit) {
+function processFormat(cache2) {
+  if (!cache2.parseResult.unit) {
     return { edits: [], error: "Cannot format file with syntax errors" };
   }
-  const edits = formatDocument(cache.document, cache.parseResult.unit, { tabSize: 4, insertSpaces: true });
+  const edits = formatDocument(cache2.document, cache2.parseResult.unit, { tabSize: 4, insertSpaces: true });
   return {
     edits: edits.map((e) => ({
       range: {
@@ -46018,13 +46677,13 @@ function processFormat(cache) {
       },
       newText: e.newText
     })),
-    formatted: edits.length > 0 ? edits[0]?.newText : cache.source
+    formatted: edits.length > 0 ? edits[0]?.newText : cache2.source
   };
 }
-function processFileInfo(cache, filePath) {
-  const diagnostics = processDiagnostics(cache);
-  const symbols = processSymbols(cache);
-  const predicates = cache.validationResult?.symbolTable.getAllPredicates().map((info) => ({
+function processFileInfo(cache2, filePath) {
+  const diagnostics = processDiagnostics(cache2);
+  const symbols = processSymbols(cache2);
+  const predicates = cache2.validationResult?.symbolTable.getAllPredicates().map((info) => ({
     name: info.symbol.symbol,
     arity: info.symbol.arity,
     isExternal: info.isExternal,
@@ -46034,17 +46693,17 @@ function processFileInfo(cache, filePath) {
   })) ?? [];
   return {
     path: (0, import_path8.relative)(process.cwd(), filePath),
-    hasSyntaxErrors: cache.parseResult.errors.length > 0,
-    hasSemanticErrors: (cache.validationResult?.errors.length ?? 0) > 0,
+    hasSyntaxErrors: cache2.parseResult.errors.length > 0,
+    hasSemanticErrors: (cache2.validationResult?.errors.length ?? 0) > 0,
     diagnostics,
     symbols: symbols.symbols,
     predicates,
-    ast: cache.parseResult.unit ? {
-      declCount: cache.parseResult.unit.decls.length,
-      clauseCount: cache.parseResult.unit.clauses.length,
-      packageDecl: cache.parseResult.unit.packageDecl
+    ast: cache2.parseResult.unit ? {
+      declCount: cache2.parseResult.unit.decls.length,
+      clauseCount: cache2.parseResult.unit.clauses.length,
+      packageDecl: cache2.parseResult.unit.packageDecl
     } : null,
-    lineCount: cache.document.lineCount
+    lineCount: cache2.document.lineCount
   };
 }
 function parseBatchInput(input) {
@@ -46283,8 +46942,11 @@ function formatFormatResultText(results) {
 }
 
 // ../mangle-lsp/src/version.ts
-var VERSION = "1.1.0";
-var UPSTREAM_MANGLE_REVISION = "77780a5 (2026-09-19)";
+var VERSION = "1.2.0";
+var UPSTREAM_MANGLE_MODULE = "codeberg.org/TauCeti/mangle-go";
+var UPSTREAM_MANGLE_VERSION = "v0.7.0";
+var UPSTREAM_MANGLE_REVISION = "7cd2543 (2026-10-15)";
+var UPSTREAM_MANGLE = `${UPSTREAM_MANGLE_MODULE} ${UPSTREAM_MANGLE_VERSION} (${UPSTREAM_MANGLE_REVISION.replace(" (", ", ").replace(")", "")})`;
 
 // ../mangle-lsp/src/cli/formatters/sarif.ts
 var SARIF_SCHEMA = "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json";
@@ -46408,6 +47070,631 @@ function formatCheckResultSarif(result) {
   return JSON.stringify(sarif, null, 2);
 }
 
+// ../mangle-lsp/src/cli/commands/review.ts
+var import_fs10 = require("fs");
+var import_path11 = require("path");
+
+// ../mangle-lsp/src/analysis/program.ts
+function segmentsOf(files) {
+  const segments = [];
+  let line = 1;
+  const parts = [];
+  for (const f of files) {
+    const text = f.text.endsWith("\n") ? f.text : f.text + "\n";
+    const lines = text.split("\n").length - 1;
+    segments.push({ path: f.path, start: line, lines });
+    parts.push(text);
+    line += lines;
+  }
+  return { text: parts.join(""), segments };
+}
+function segmentAt(segments, line) {
+  let lo = 0;
+  let hi = segments.length - 1;
+  while (lo < hi) {
+    const mid = lo + hi + 1 >> 1;
+    if (segments[mid].start <= line) lo = mid;
+    else hi = mid - 1;
+  }
+  return segments[lo];
+}
+function shiftRange(r, by) {
+  return {
+    start: { ...r.start, line: r.start.line - by },
+    end: { ...r.end, line: r.end.line - by }
+  };
+}
+function shiftFix(f, by) {
+  return {
+    ...f,
+    range: shiftRange(f.range, by),
+    additionalEdits: f.additionalEdits?.map((e) => ({ ...e, range: shiftRange(e.range, by) }))
+  };
+}
+function analyzeProgram(files) {
+  const { text, segments } = segmentsOf(files);
+  const result = new Map(files.map((f) => [f.path, { path: f.path, parseErrors: [], diagnostics: [] }]));
+  const parsed = parse(text);
+  for (const e of parsed.errors) {
+    const seg = segmentAt(segments, e.line);
+    result.get(seg.path).parseErrors.push({ ...e, line: e.line - seg.start + 1 });
+  }
+  if (parsed.unit) {
+    for (const d of analyzeUnit(parsed.unit).diagnostics) {
+      const seg = segmentAt(segments, d.range.start.line);
+      const by = seg.start - 1;
+      result.get(seg.path).diagnostics.push({
+        ...d,
+        range: shiftRange(d.range, by),
+        fixes: d.fixes?.map((f) => shiftFix(f, by))
+      });
+    }
+  }
+  return [...result.values()];
+}
+
+// ../mangle-lsp/src/oracle/client.ts
+var import_child_process = require("child_process");
+var import_fs9 = require("fs");
+var import_path9 = require("path");
+function findOracleSource() {
+  let dir = __dirname;
+  for (let i = 0; i < 5; i++) {
+    const candidate = (0, import_path9.join)(dir, "mangle-oracle");
+    if ((0, import_fs9.existsSync)((0, import_path9.join)(candidate, "go.mod"))) return candidate;
+    dir = (0, import_path9.resolve)(dir, "..");
+  }
+  return (0, import_path9.join)((0, import_path9.resolve)(__dirname, "..", "..", ".."), "mangle-oracle");
+}
+var ORACLE_SOURCE = findOracleSource();
+var ENGINE_MODULE = "codeberg.org/TauCeti/mangle-go";
+var EXE = process.platform === "win32" ? ".exe" : "";
+function binDir() {
+  return process.env["MANGLE_ORACLE_CACHE"] || (0, import_path9.join)(ORACLE_SOURCE, "bin");
+}
+var OracleUnavailableError = class extends Error {
+};
+function onPath(name) {
+  const which = (0, import_child_process.spawnSync)(process.platform === "win32" ? "where" : "which", [name], { encoding: "utf-8" });
+  const found = which.status === 0 ? which.stdout.split(/\r?\n/)[0]?.trim() : void 0;
+  return found || void 0;
+}
+function requiredEngineVersion(goModText) {
+  const m2 = goModText.match(new RegExp(`^\\s*(?:require\\s+)?${ENGINE_MODULE.replace(/[.]/g, "\\.")}\\s+(v[^\\s]+)`, "m"));
+  return m2?.[1];
+}
+function projectRootOf(start) {
+  let dir = (0, import_path9.resolve)(start);
+  if ((0, import_fs9.existsSync)(dir) && !(0, import_fs9.statSync)(dir).isDirectory()) dir = (0, import_path9.dirname)(dir);
+  for (; ; ) {
+    if ((0, import_fs9.existsSync)((0, import_path9.join)(dir, "go.mod"))) return dir;
+    const up = (0, import_path9.dirname)(dir);
+    if (up === dir) return void 0;
+    dir = up;
+  }
+}
+function newestSource() {
+  let newest = 0;
+  const walk = (dir) => {
+    for (const name of (0, import_fs9.readdirSync)(dir)) {
+      if (name === "bin") continue;
+      const full = (0, import_path9.join)(dir, name);
+      const st = (0, import_fs9.statSync)(full);
+      if (st.isDirectory()) walk(full);
+      else if (/\.(go|mg|json|mod|sum)$/.test(name)) newest = Math.max(newest, st.mtimeMs);
+    }
+  };
+  walk(ORACLE_SOURCE);
+  return newest;
+}
+function goBuild(out2, modfile) {
+  (0, import_fs9.mkdirSync)(binDir(), { recursive: true });
+  const args = ["build", ...modfile ? ["-modfile", modfile] : [], "-o", out2, "."];
+  const res = (0, import_child_process.spawnSync)("go", args, { cwd: ORACLE_SOURCE, encoding: "utf-8", env: { ...process.env, GOFLAGS: "-mod=mod" } });
+  return res.status === 0 && (0, import_fs9.existsSync)(out2) ? void 0 : res.stderr || "go build failed";
+}
+var cache = /* @__PURE__ */ new Map();
+function oracleFor(projectRoot) {
+  const fromEnv = process.env["MANGLE_ORACLE"];
+  if (fromEnv) {
+    if (!(0, import_fs9.existsSync)(fromEnv)) throw new OracleUnavailableError(`MANGLE_ORACLE=${fromEnv} does not exist`);
+    return { path: fromEnv };
+  }
+  const sourceOk = (0, import_fs9.existsSync)((0, import_path9.join)(ORACLE_SOURCE, "go.mod"));
+  const goOk = sourceOk && !!onPath("go");
+  const pinned = sourceOk ? requiredEngineVersion((0, import_fs9.readFileSync)((0, import_path9.join)(ORACLE_SOURCE, "go.mod"), "utf-8")) : void 0;
+  const wanted = projectRoot && (0, import_fs9.existsSync)((0, import_path9.join)(projectRoot, "go.mod")) ? requiredEngineVersion((0, import_fs9.readFileSync)((0, import_path9.join)(projectRoot, "go.mod"), "utf-8")) : void 0;
+  const key = wanted && wanted !== pinned ? wanted : "pinned";
+  const hit = cache.get(key);
+  if (hit) return hit;
+  const pinnedPath = (0, import_path9.join)(binDir(), `mangle-oracle${EXE}`);
+  const pinnedBinary = () => {
+    if (goOk && (!(0, import_fs9.existsSync)(pinnedPath) || (0, import_fs9.statSync)(pinnedPath).mtimeMs < newestSource())) {
+      const err = goBuild(pinnedPath);
+      if (err) throw new OracleUnavailableError(`building mangle-oracle failed:
+${err}`);
+    }
+    if ((0, import_fs9.existsSync)(pinnedPath)) return { path: pinnedPath };
+    const installed = onPath("mangle-oracle");
+    if (installed) return { path: installed };
+    throw new OracleUnavailableError(
+      "mangle-oracle is not available: set MANGLE_ORACLE, put mangle-oracle on PATH, or install Go so it can be built from " + ORACLE_SOURCE
+    );
+  };
+  let result;
+  if (key === "pinned") {
+    result = pinnedBinary();
+  } else if (!goOk) {
+    result = { ...pinnedBinary(), note: `the project requires ${ENGINE_MODULE} ${wanted}; without Go only the pinned ${pinned} is available` };
+  } else {
+    const variant = (0, import_path9.join)(binDir(), `mangle-oracle-${wanted}${EXE}`);
+    let err;
+    if (!(0, import_fs9.existsSync)(variant) || (0, import_fs9.statSync)(variant).mtimeMs < newestSource()) {
+      const modDir = (0, import_path9.join)(binDir(), `mod-${wanted}`);
+      (0, import_fs9.mkdirSync)(modDir, { recursive: true });
+      const modfile = (0, import_path9.join)(modDir, "go.mod");
+      (0, import_fs9.copyFileSync)((0, import_path9.join)(ORACLE_SOURCE, "go.mod"), modfile);
+      if ((0, import_fs9.existsSync)((0, import_path9.join)(ORACLE_SOURCE, "go.sum"))) (0, import_fs9.copyFileSync)((0, import_path9.join)(ORACLE_SOURCE, "go.sum"), (0, import_path9.join)(modDir, "go.sum"));
+      const edit = (0, import_child_process.spawnSync)("go", ["mod", "edit", `-modfile=${modfile}`, `-require=${ENGINE_MODULE}@${wanted}`], { cwd: ORACLE_SOURCE, encoding: "utf-8" });
+      err = edit.status === 0 ? goBuild(variant, modfile) : edit.stderr;
+    }
+    result = err ? { ...pinnedBinary(), note: `could not build mangle-oracle against ${ENGINE_MODULE} ${wanted} (the project's pin), so the pinned ${pinned} ran: ${err.split("\n")[0]}` } : { path: variant };
+  }
+  cache.set(key, result);
+  return result;
+}
+function runOracle(args, projectRoot) {
+  const bin = oracleFor(projectRoot);
+  try {
+    const out2 = (0, import_child_process.execFileSync)(bin.path, args, { cwd: projectRoot, encoding: "utf-8", maxBuffer: 1024 * 1024 * 512 });
+    const parsed = JSON.parse(out2);
+    if (bin.note && parsed && typeof parsed === "object") parsed["engineNote"] = bin.note;
+    return parsed;
+  } catch (e) {
+    const err = e;
+    throw new Error(`mangle-oracle ${args[0]} failed: ${err.stderr?.trim() || err.message}`);
+  }
+}
+
+// ../mangle-lsp/src/cli/commands/boundary.ts
+var import_path10 = require("path");
+function messageOf(f) {
+  const p = `${f.predicate}/${f.arity}`;
+  switch (f.code) {
+    case "B001":
+      return { message: `A rule reads ${p}, but nothing produces it: no rule or fact derives it, no Go code asserts it, and Go never mentions the name`, hint: "assert it from the Go producer with the Decl's shape, or delete the rules that wait for it" };
+    case "B002":
+      return { message: `${p} is declared, but nothing produces or reads it in .mg or Go`, hint: "delete the Decl, or wire it" };
+    case "B003":
+      return { message: `Go asserts ${p}, which no .mg file declares or defines`, hint: `add 'Decl ${f.predicate}(...) bound [...]' to the owning schema, or fix the name` };
+    case "B004":
+      return { message: `Go asserts ${p}, but the program only knows ${f.predicate} at other arities: in Mangle that is a different predicate`, hint: "make the Go argument list match the Decl" };
+    case "B005":
+      return { message: `Go queries ${f.predicate}, which the program never declares or defines`, hint: "the query always returns nothing; fix the name or add the rule" };
+    case "B006":
+      return { message: `Go asserts ${p}, and nothing reads it: no rule, no Go query`, hint: "write the consumer or stop asserting it" };
+    case "B007": {
+      const kind = (f.note ?? "").replace(/^\//, "");
+      const built = { lit_name: 'a "/..." string literal, which the kernel turns into a name', lit_string: "a string literal", name: "a name (MangleAtom)", string: "a string", float64: "a float64", number: "an integer", time: "a time", duration: "a duration", bool: "a bool (/true or /false)" }[kind] ?? kind;
+      return { message: `Argument ${f.position} of ${p}: Go builds ${built}, but the Decl allows only ${(f.declared ?? []).join(" or ")}`, hint: "build the declared representation at the producer (types.MangleAtom for /name, a plain string for /string, int64 for /number, float64 for /float64)" };
+    }
+    case "B008":
+      return { message: `${p} is declared external(), but the Go module registers no callback for it` };
+    case "B009":
+      return { message: `Go registers a callback for ${p}, which no Decl marks external()`, hint: `declare it: Decl ${f.predicate}(...) descr [external(), mode(${[...f.note ?? ""].map((m2) => `'${m2}'`).join(", ")})].` };
+    case "B010":
+      return { message: `The Go callback for ${p} is registered with modes ${f.note}, which differ from the Decl's mode(...)` };
+    case "B011":
+      return { message: `A rule negates the external ${p}: the engine answers negations from stored facts only, so ${f.related?.length ? `the Go callback at ${f.related.map((r) => `${r.file}:${r.line}`).join(", ")}` : "its Go callback"} never runs for it`, hint: `${f.predicate}_holds(...) :- <premises binding the inputs>, ${f.predicate}(...). then negate ${f.predicate}_holds` };
+    case "B012":
+      return { message: `A rule reads ${p}, and no producer the scan recognizes asserts it; Go mentions the name at ${(f.related ?? []).slice(0, 3).map((r) => `${r.file}:${r.line}`).join(", ")}${(f.related?.length ?? 0) > 3 ? ", ..." : ""}`, hint: "check whether those places assert it; if none does, the rule never fires" };
+    default:
+      return { message: `${f.code} on ${p}` };
+  }
+}
+function toBoundaryDiagnostics(out2) {
+  return out2.findings.map((f) => {
+    const info = getDiagnosticInfo(f.code);
+    const { message, hint } = messageOf(f);
+    const related = [...f.decl ? [f.decl] : [], ...f.related ?? []];
+    return {
+      code: f.code,
+      severity: info?.severity ?? "warning",
+      title: info?.title ?? f.code,
+      predicate: `${f.predicate}/${f.arity}`,
+      file: f.at.file,
+      line: f.at.line,
+      message,
+      hint,
+      related,
+      proof: f.proof
+    };
+  });
+}
+function runBoundary(root, profile) {
+  const abs = (0, import_path10.resolve)(root);
+  const out2 = runOracle(["boundary", "--root", abs, ...profile ? ["--profile", profile] : []], abs);
+  const diagnostics = toBoundaryDiagnostics(out2);
+  const summary = {};
+  for (const d of diagnostics) summary[d.code] = (summary[d.code] ?? 0) + 1;
+  return {
+    engine: out2.engine,
+    ...out2.engineNote ? { engineNote: out2.engineNote } : {},
+    profile: out2.profile,
+    root: abs,
+    scanned: { goFiles: out2.goFiles, mgFiles: out2.mgFiles, assertSites: out2.assertSites, querySites: out2.querySites, externalCallbacks: out2.externalCallbacks },
+    programs: out2.programs,
+    parseErrors: out2.parseErrors,
+    diagnostics,
+    summary
+  };
+}
+function formatBoundaryText(r) {
+  const lines = [
+    `Boundary of ${r.root} (${r.engine}, profile ${r.profile})${r.engineNote ? `
+  note: ${r.engineNote}` : ""}`,
+    `  scanned ${r.scanned.goFiles} Go files (${r.scanned.assertSites} assert sites, ${r.scanned.querySites} queries, ${r.scanned.externalCallbacks} external callbacks) and ${r.scanned.mgFiles} .mg files`
+  ];
+  for (const p of r.programs) {
+    lines.push(`  program ${p.id} (${p.files.length} files): engine ${p.verdict.stage}${p.verdict.error ? ` - ${p.verdict.error.split("\n")[0]}` : ""}`);
+  }
+  lines.push(`  findings: ${Object.entries(r.summary).sort().map(([c, n2]) => `${c}=${n2}`).join(" ") || "none"}`, "");
+  for (const d of r.diagnostics) {
+    lines.push(`${d.file}:${d.line}: ${d.severity} [${d.code}]: ${d.message}`);
+    if (d.hint) lines.push(`  = help: ${d.hint}`);
+    for (const rel of d.related.slice(0, 3)) lines.push(`  = see: ${rel.file}:${rel.line}`);
+  }
+  return lines.join("\n");
+}
+
+// ../mangle-lsp/src/cli/commands/review.ts
+var SKIP = (name) => name.startsWith(".") || name.startsWith("_") || name === "node_modules" || name === "vendor" || name === "testdata";
+function findMangleFiles(root) {
+  const out2 = [];
+  const walk = (dir) => {
+    for (const name of (0, import_fs10.readdirSync)(dir)) {
+      const full = (0, import_path11.join)(dir, name);
+      const st = (0, import_fs10.statSync)(full);
+      if (st.isDirectory()) {
+        if (!SKIP(name)) walk(full);
+      } else if (name.endsWith(".mg")) {
+        out2.push(full);
+      }
+    }
+  };
+  walk(root);
+  return out2.sort();
+}
+var RANK = { error: 0, warning: 1, info: 2 };
+function verifyFor(code, file, root) {
+  if (code.startsWith("B")) return `mangle-cli boundary --root ${root}`;
+  return `mangle-cli check ${file}`;
+}
+function runReview(rootArg, options = {}) {
+  const root = (0, import_path11.resolve)(rootArg);
+  const files = findMangleFiles(root);
+  let boundary;
+  let boundaryNote;
+  const hasGo = (0, import_fs10.existsSync)((0, import_path11.join)(root, "go.mod"));
+  if (!options.noBoundary && hasGo) {
+    try {
+      boundary = runBoundary(root, options.profile);
+    } catch (e) {
+      boundaryNote = e instanceof OracleUnavailableError ? e.message : String(e);
+    }
+  } else if (!hasGo) {
+    boundaryNote = "no go.mod at the root: no Go boundary to scan";
+  }
+  const programs = [];
+  const grouped = /* @__PURE__ */ new Set();
+  for (const p of boundary?.programs ?? []) {
+    const abs = p.files.map((f) => (0, import_path11.join)(root, f));
+    abs.forEach((f) => grouped.add(f));
+    programs.push({ id: p.id, files: p.files, engine: { stage: p.verdict.stage, error: p.verdict.error } });
+  }
+  for (const f of files) {
+    if (!grouped.has(f)) programs.push({ id: (0, import_path11.relative)(root, f), files: [(0, import_path11.relative)(root, f)] });
+  }
+  const actions = [];
+  const push = (d, file) => {
+    const info = getDiagnosticInfo(d.code);
+    const rel = (0, import_path11.relative)(root, file);
+    actions.push({
+      code: d.code,
+      severity: d.severity,
+      category: info?.category ?? "other",
+      title: info?.title ?? d.code,
+      file: rel,
+      line: d.range.start.line,
+      message: d.message,
+      hint: d.hint,
+      why: info?.explanation,
+      edits: d.fixes?.[0] ? [d.fixes[0], ...d.fixes[0].additionalEdits ?? []].map((e) => ({
+        file: rel,
+        range: { start: { line: e.range.start.line, column: e.range.start.column }, end: { line: e.range.end.line, column: e.range.end.column } },
+        newText: e.newText
+      })) : void 0,
+      verify: verifyFor(d.code, rel, root)
+    });
+  };
+  for (const p of programs) {
+    const abs = p.files.map((f) => (0, import_path11.join)(root, f));
+    for (const fa of analyzeProgram(abs.map((f) => ({ path: f, text: (0, import_fs10.readFileSync)(f, "utf-8") })))) {
+      for (const e of fa.parseErrors) {
+        push({
+          code: "P001",
+          message: e.message,
+          severity: "error",
+          source: "mangle-semantic",
+          range: { start: { line: e.line, column: e.column, offset: e.offset }, end: { line: e.line, column: e.column + e.length, offset: e.offset } }
+        }, fa.path);
+      }
+      for (const d of fa.diagnostics) push(d, fa.path);
+    }
+    if (p.engine && p.engine.stage !== "ok") {
+      actions.push({
+        code: "ENGINE",
+        severity: p.engine.stage === "bounds" ? "warning" : "error",
+        category: "engine",
+        title: `Engine rejects program ${p.id} at ${p.engine.stage}`,
+        file: p.files[0] ?? p.id,
+        line: 1,
+        message: p.engine.error ?? p.engine.stage,
+        why: p.engine.stage === "bounds" ? "The program passes the analysis hosts usually run (no bounds checking) but fails strict bounds checking: some fact or rule writes a type its Decl does not allow." : "The engine rejects the assembled program; the host fails to load it.",
+        verify: `mangle-cli conformance --program ${p.files.map((f) => (0, import_path11.join)(root, f)).join(" ")}`
+      });
+    }
+  }
+  for (const d of boundary?.diagnostics ?? []) {
+    const info = getDiagnosticInfo(d.code);
+    actions.push({
+      code: d.code,
+      severity: d.severity,
+      category: "boundary",
+      title: d.title,
+      file: d.file,
+      line: d.line,
+      message: d.message,
+      hint: d.hint,
+      why: info?.explanation,
+      related: d.related,
+      proof: d.proof,
+      verify: verifyFor(d.code, d.file, root)
+    });
+  }
+  const min = RANK[options.severity ?? "info"];
+  const plan = actions.filter((a) => RANK[a.severity] <= min).sort((a, b) => RANK[a.severity] - RANK[b.severity] || a.code.localeCompare(b.code) || a.file.localeCompare(b.file) || a.line - b.line).map((a, i) => ({ id: i + 1, ...a }));
+  const bySeverity = {};
+  const byCode = {};
+  for (const a of plan) {
+    bySeverity[a.severity] = (bySeverity[a.severity] ?? 0) + 1;
+    byCode[a.code] = (byCode[a.code] ?? 0) + 1;
+  }
+  return {
+    root,
+    programs,
+    boundary: boundary ? { engine: boundary.engine, engineNote: boundary.engineNote, profile: boundary.profile, scanned: boundary.scanned, summary: boundary.summary } : boundaryNote ? { unavailable: boundaryNote } : void 0,
+    summary: { actions: plan.length, bySeverity, byCode },
+    plan
+  };
+}
+function formatReviewText(r) {
+  const lines = [`Review of ${r.root}: ${r.summary.actions} actions (${Object.entries(r.summary.bySeverity).map(([s, n2]) => `${n2} ${s}`).join(", ")})`];
+  for (const p of r.programs.filter((p2) => p2.files.length > 1 || p2.engine)) {
+    lines.push(`  program ${p.id}: ${p.files.length} files${p.engine ? `, engine ${p.engine.stage}` : ""}`);
+  }
+  if (r.boundary && "unavailable" in r.boundary) lines.push(`  boundary: skipped (${r.boundary.unavailable})`);
+  lines.push(`  by code: ${Object.entries(r.summary.byCode).sort().map(([c, n2]) => `${c}=${n2}`).join(" ")}`, "");
+  for (const a of r.plan) {
+    lines.push(`${a.id}. ${a.file}:${a.line}: ${a.severity} [${a.code}] ${a.message}`);
+    if (a.hint) lines.push(`   help: ${a.hint.split("\n")[0]}`);
+    if (a.edits) lines.push(`   fix: ${a.edits.length} edit(s) in the JSON plan`);
+  }
+  return lines.join("\n");
+}
+
+// ../mangle-lsp/src/cli/commands/conformance.ts
+var import_fs11 = require("fs");
+var import_path12 = require("path");
+var BOUNDS_WARNINGS = /* @__PURE__ */ new Set(["E073", "E082", "E083", "E084"]);
+var RUNTIME_WARNINGS = /* @__PURE__ */ new Set(["E016", "E017"]);
+function classify(stage, lspErrors, lspWarnings = []) {
+  const lspRejects = lspErrors > 0;
+  switch (stage) {
+    case "ok":
+      return lspRejects ? "lsp-false-positive" : "agree-accept";
+    case "parse":
+    case "analyze":
+      return lspRejects ? "agree-reject" : "lsp-misses";
+    case "bounds":
+      if (lspRejects) return "agree-reject";
+      return lspWarnings.some((c) => BOUNDS_WARNINGS.has(c)) ? "lsp-warns" : "lsp-misses-bounds";
+    case "eval":
+      if (lspRejects) return "lsp-catches-runtime";
+      return lspWarnings.some((c) => RUNTIME_WARNINGS.has(c)) ? "lsp-warns" : "lsp-misses-runtime";
+  }
+}
+function lspVerdictOf(files) {
+  const analyses = analyzeProgram(files.map((f) => ({ path: f, text: (0, import_fs11.readFileSync)(f, "utf-8") })));
+  const errors = [];
+  const warnings = /* @__PURE__ */ new Set();
+  for (const a of analyses) {
+    const rel = (0, import_path12.relative)(process.cwd(), a.path);
+    for (const e of a.parseErrors) errors.push(`P001 ${rel}:${e.line} ${e.message}`);
+    for (const d of a.diagnostics) {
+      if (d.severity === "error") errors.push(`${d.code} ${rel}:${d.range.start.line} ${d.message}`);
+      else if (d.severity === "warning") warnings.add(d.code);
+    }
+  }
+  return { errors, warnings: [...warnings].sort() };
+}
+var AGREEMENTS = [
+  "agree-accept",
+  "agree-reject",
+  "lsp-catches-runtime",
+  "lsp-warns",
+  "lsp-false-positive",
+  "lsp-misses",
+  "lsp-misses-bounds",
+  "lsp-misses-runtime"
+];
+function isAgreement(a) {
+  return a === "agree-accept" || a === "agree-reject" || a === "lsp-catches-runtime" || a === "lsp-warns";
+}
+function compareWithEngine(groups, engine) {
+  const summary = Object.fromEntries(AGREEMENTS.map((a) => [a, 0]));
+  summary.total = 0;
+  summary.agreeing = 0;
+  const cases = groups.map((files, i) => {
+    const v = engine.verdicts[i];
+    const lsp = lspVerdictOf(files);
+    const agreement = classify(v.stage, lsp.errors.length, lsp.warnings);
+    summary[agreement]++;
+    summary.total++;
+    if (isAgreement(agreement)) summary.agreeing++;
+    return { files: files.map((f) => (0, import_path12.relative)(process.cwd(), f)), engine: { stage: v.stage, error: v.error }, lsp, agreement };
+  });
+  return { engine: engine.engine, ...engine.engineNote ? { engineNote: engine.engineNote } : {}, cases, summary };
+}
+function runConformance(files, asProgram) {
+  const abs = files.map((f) => (0, import_path12.resolve)(f));
+  const groups = asProgram ? [abs] : abs.map((f) => [f]);
+  const engine = runOracle(["verdict", "--at", "2024-01-01T00:00:00Z", ...asProgram ? ["--program"] : [], ...abs], projectRootOf(abs[0]));
+  return compareWithEngine(groups, engine);
+}
+function formatConformanceText(r) {
+  const lines = [`Conformance with ${r.engine}: ${r.summary.agreeing}/${r.summary.total} agree`];
+  for (const a of AGREEMENTS) if (r.summary[a]) lines.push(`  ${a.padEnd(20)} ${r.summary[a]}`);
+  for (const c of r.cases) {
+    if (c.agreement === "agree-accept" || c.agreement === "agree-reject") continue;
+    lines.push("", `${c.agreement}: ${c.files.join(" + ")}`);
+    lines.push(`  engine ${c.engine.stage}${c.engine.error ? `: ${c.engine.error.split("\n")[0]}` : ""}`);
+    for (const e of c.lsp.errors.slice(0, 5)) lines.push(`  lsp    ${e}`);
+  }
+  return lines.join("\n");
+}
+
+// ../mangle-lsp/src/cli/commands/engine.ts
+var import_path13 = require("path");
+function runEngineQuery(files, options) {
+  const args = ["run", "--query", options.query];
+  if (options.why) args.push("--why", options.why);
+  if (options.at) args.push("--at", options.at);
+  return runOracle([...args, ...files.map((f) => (0, import_path13.resolve)(f))], projectRootOf(files[0]));
+}
+function runWhyNot(files, goal, at) {
+  const args = ["whynot", "--goal", goal];
+  if (at) args.push("--at", at);
+  return runOracle([...args, ...files.map((f) => (0, import_path13.resolve)(f))], projectRootOf(files[0]));
+}
+function proofLines(p, indent2, out2) {
+  out2.push(`${indent2}${p.fact}  [${p.kind}${p.partial ? ", partial" : ""}]${p.rule ? `  by ${p.rule}` : ""}`);
+  for (const sub of p.premises ?? []) proofLines(sub, indent2 + "  ", out2);
+}
+function formatRunText(r) {
+  if (r.error) return `engine ${r.stage}: ${r.error}`;
+  const res = r.result;
+  const lines = [`${res.predicate}: ${res.count} facts`, ...res.facts.map((f) => `  ${f}`)];
+  if (res.whyError) lines.push(`why: ${res.whyError}`);
+  for (const p of res.why ?? []) {
+    lines.push("why:");
+    proofLines(p, "  ", lines);
+  }
+  return lines.join("\n");
+}
+function formatWhyNotText(w) {
+  const r = w.result;
+  const lines = [r.summary];
+  for (const rule of r.rules) {
+    lines.push("", rule.rule);
+    (rule.funnel ?? []).forEach((s, i) => {
+      lines.push(`  ${i === rule.blockedAt ? ">>" : "  "} ${String(s.rows).padStart(6)} rows after ${s.premise}`);
+    });
+    lines.push(`  ${rule.reason}`);
+  }
+  return lines.join("\n");
+}
+
+// ../mangle-lsp/src/cli/agent-commands.ts
+var AGENT_COMMANDS = ["advise", "review", "boundary", "conformance", "run", "whynot"];
+var AGENT_USAGE = `
+Agent Commands (engine-backed ones run mangle-oracle, built from mangle-oracle/ with Go
+against the engine version the project's go.mod pins, else the pinned v0.7.0):
+  advise <files...>          Mangle-feature advice only (A-codes), with rewrites
+  review [--root dir]        Whole repo: programs assembled from //go:embed, every
+                             diagnostic, engine verdicts, Go boundary findings, and
+                             a numbered plan of actions with edits (--severity, --no-boundary)
+  boundary [--root dir]      Go <-> .mg findings (B-codes) for a Go module, with proofs.
+                             --profile generic|codenerd|file.json says how the host's Go
+                             builds facts (default: .mangle/oracle-profile.json, else by
+                             go.mod module, else generic)
+  conformance <files...>     LSP verdict next to the engine's (--program: one assembled program)
+  run <files...> --query p   Evaluate on the engine and list p's facts (--why 'p(1)' for a proof,
+                             --at RFC3339 to pin the evaluation time)
+  whynot <files...> --goal 'p(X)'
+                             Why a goal is not derived: rows surviving each premise of each rule
+`;
+function out(text) {
+  process.stdout.write(text.endsWith("\n") ? text : text + "\n");
+}
+function handleAgentCommand(command, files, format, options) {
+  const json = format !== "text";
+  switch (command) {
+    case "advise": {
+      if (files.length === 0) return usage("advise needs files");
+      const opts = { format: "json", quiet: true, severity: "info", failOn: "never", explain: !!options["explain"] };
+      const result = runCheck(files, opts);
+      for (const f of result.files) f.diagnostics = f.diagnostics.filter((d) => d.code.startsWith("A"));
+      result.summary.totalErrors = 0;
+      result.summary.totalWarnings = result.files.reduce((n2, f) => n2 + f.diagnostics.filter((d) => d.severity === "warning").length, 0);
+      result.summary.totalInfo = result.files.reduce((n2, f) => n2 + f.diagnostics.filter((d) => d.severity === "info").length, 0);
+      out(json ? formatCheckResultJson(result) : formatCheckResultText(result));
+      return 0;
+    }
+    case "review": {
+      const report = runReview(String(options["root"] ?? files[0] ?? "."), {
+        noBoundary: !!options["no-boundary"],
+        severity: options["severity"],
+        profile: options["profile"]
+      });
+      out(json ? JSON.stringify(report, null, 2) : formatReviewText(report));
+      return report.plan.some((a) => a.severity === "error") ? 1 : 0;
+    }
+    case "boundary": {
+      const report = runBoundary(String(options["root"] ?? files[0] ?? "."), options["profile"]);
+      out(json ? JSON.stringify(report, null, 2) : formatBoundaryText(report));
+      return report.diagnostics.some((d) => d.severity === "error") ? 1 : 0;
+    }
+    case "conformance": {
+      if (files.length === 0) return usage("conformance needs files");
+      const report = runConformance(files, !!options["program"]);
+      out(json ? JSON.stringify(report, null, 2) : formatConformanceText(report));
+      return report.summary.agreeing === report.summary.total ? 0 : 1;
+    }
+    case "run": {
+      const query = options["query"];
+      if (files.length === 0 || typeof query !== "string") return usage("run needs files and --query");
+      const r = runEngineQuery(files, { query, why: options["why"], at: options["at"] });
+      out(json ? JSON.stringify(r, null, 2) : formatRunText(r));
+      return r.error ? 1 : 0;
+    }
+    case "whynot": {
+      const goal = options["goal"];
+      if (files.length === 0 || typeof goal !== "string") return usage("whynot needs files and --goal");
+      const w = runWhyNot(files, goal, options["at"]);
+      out(json ? JSON.stringify(w, null, 2) : formatWhyNotText(w));
+      return 0;
+    }
+    default:
+      return usage(`unknown command ${command}`);
+  }
+}
+function usage(message) {
+  process.stderr.write(`Error: ${message}
+${AGENT_USAGE}`);
+  return 1;
+}
+
 // ../mangle-lsp/src/cli.ts
 var BOOLEAN_FLAGS = /* @__PURE__ */ new Set([
   "quiet",
@@ -46420,11 +47707,13 @@ var BOOLEAN_FLAGS = /* @__PURE__ */ new Set([
   "explain",
   "all",
   "markdown",
-  "list"
+  "list",
+  "program",
+  "no-boundary"
 ]);
 function printUsage() {
   console.log(`
-Mangle CLI v${VERSION} (tracks upstream Mangle ${UPSTREAM_MANGLE_REVISION})
+Mangle CLI v${VERSION}, tracking ${UPSTREAM_MANGLE}
 
 Usage: mangle-cli <command> [options] <files...>
 
@@ -46439,7 +47728,9 @@ Commands:
   batch         Run multiple queries in one call (for agents)
   file-info     Get complete analysis of a file
   explain       Explain a diagnostic code: what it means, how to fix it, example
+  advise, review, boundary, conformance, run, whynot   (see Agent Commands)
 
+${AGENT_USAGE}
 Global Options:
   --format, -f    Output format: json | text | sarif (default: json)
   --quiet, -q     Suppress non-essential output
@@ -46592,12 +47883,12 @@ function expandGlobs(patterns) {
 function main() {
   const args = parseArgs(process.argv.slice(2));
   if (args.options["version"]) {
-    console.log(`mangle-cli v${VERSION} (upstream Mangle ${UPSTREAM_MANGLE_REVISION})`);
-    process.exit(0);
+    console.log(`mangle-cli v${VERSION}, tracking ${UPSTREAM_MANGLE}`);
+    return 0;
   }
   if (args.options["help"] || !args.command) {
     printUsage();
-    process.exit(args.options["help"] ? 0 : 1);
+    return args.options["help"] ? 0 : 1;
   }
   const outputFormat = args.options["format"] || "json";
   const quiet = !!args.options["quiet"];
@@ -46605,51 +47896,44 @@ function main() {
   try {
     switch (args.command) {
       case "check":
-        handleCheck(files, outputFormat, args.options);
-        break;
+        return handleCheck(files, outputFormat, args.options);
       case "symbols":
-        handleSymbols(files[0] || "", outputFormat, args.options);
-        break;
+        return handleSymbols(files[0] || "", outputFormat, args.options);
       case "hover":
-        handleHover(files[0] || "", outputFormat, args.options);
-        break;
+        return handleHover(files[0] || "", outputFormat, args.options);
       case "definition":
-        handleDefinition(files[0] || "", outputFormat, args.options);
-        break;
+        return handleDefinition(files[0] || "", outputFormat, args.options);
       case "references":
-        handleReferences(files[0] || "", outputFormat, args.options);
-        break;
+        return handleReferences(files[0] || "", outputFormat, args.options);
       case "completion":
-        handleCompletion(files[0] || "", outputFormat, args.options);
-        break;
+        return handleCompletion(files[0] || "", outputFormat, args.options);
       case "format":
-        handleFormat(files, outputFormat, args.options);
-        break;
+        return handleFormat(files, outputFormat, args.options);
       case "batch":
-        handleBatch(files[0] || "", outputFormat, args.options);
-        break;
+        return handleBatch(files[0] || "", outputFormat, args.options);
       case "file-info":
-        handleFileInfo(files[0] || "", outputFormat, args.options);
-        break;
+        return handleFileInfo(files[0] || "", outputFormat, args.options);
       case "explain":
-        handleExplain(args.files, args.options["format"] || "text", args.options);
-        break;
+        return handleExplain(args.files, args.options["format"] || "text", args.options);
       default:
+        if (AGENT_COMMANDS.includes(args.command)) {
+          return handleAgentCommand(args.command, files, outputFormat, args.options);
+        }
         console.error(`Unknown command: ${args.command}`);
         printUsage();
-        process.exit(1);
+        return 1;
     }
   } catch (e) {
     if (!quiet) {
       console.error(`Error: ${e}`);
     }
-    process.exit(2);
+    return 2;
   }
 }
 function handleCheck(files, format, options) {
   if (files.length === 0) {
     console.error("Error: No files specified");
-    process.exit(1);
+    return 1;
   }
   const checkOptions = {
     format,
@@ -46669,13 +47953,13 @@ function handleCheck(files, format, options) {
     default:
       console.log(formatCheckResultJson(result));
   }
-  process.exit(getExitCode(result, checkOptions));
+  return getExitCode(result, checkOptions);
 }
 function handleExplain(codes, format, options) {
   const all = getAllDiagnosticInfos();
   if (options["markdown"]) {
     console.log(renderDiagnosticsMarkdown());
-    return;
+    return 0;
   }
   if (options["list"]) {
     if (format === "json") {
@@ -46685,12 +47969,12 @@ function handleExplain(codes, format, options) {
         console.log(`${i.code}  ${i.severity.padEnd(7)}  ${i.category.padEnd(14)}  ${i.title}`);
       }
     }
-    return;
+    return 0;
   }
   const selected = options["all"] ? all : codes.map((c) => c.toUpperCase());
   if (selected.length === 0) {
     console.error("Error: specify a code (e.g. mangle-cli explain E002), --list or --all");
-    process.exit(1);
+    return 1;
   }
   const infos = [];
   for (const item of selected) {
@@ -46698,7 +47982,7 @@ function handleExplain(codes, format, options) {
     if (!info) {
       const hint = didYouMean(suggestSimilar(String(item), all.map((i) => i.code)));
       console.error(`Unknown diagnostic code: ${item}${hint ? ` (${hint})` : ""}. Run 'mangle-cli explain --list' to see all codes.`);
-      process.exit(1);
+      return 1;
     }
     infos.push(info);
   }
@@ -46707,11 +47991,12 @@ function handleExplain(codes, format, options) {
   } else {
     console.log(infos.map((i) => renderExplanation(i, format === "markdown")).join("\n\n---\n\n"));
   }
+  return 0;
 }
 function handleSymbols(file, format, options) {
   if (!file) {
     console.error("Error: No file specified");
-    process.exit(1);
+    return 1;
   }
   const commonOptions = {
     format,
@@ -46725,17 +48010,18 @@ function handleSymbols(file, format, options) {
     default:
       console.log(formatSymbolsResultJson(result));
   }
+  return 0;
 }
 function handleHover(file, format, options) {
   if (!file) {
     console.error("Error: No file specified");
-    process.exit(1);
+    return 1;
   }
   const line = parseInt(options["line"], 10);
   const column = parseInt(options["column"], 10);
   if (isNaN(line) || isNaN(column)) {
     console.error("Error: --line and --column are required");
-    process.exit(1);
+    return 1;
   }
   const posOptions = {
     format,
@@ -46751,17 +48037,18 @@ function handleHover(file, format, options) {
     default:
       console.log(formatHoverResultJson(result));
   }
+  return 0;
 }
 function handleDefinition(file, format, options) {
   if (!file) {
     console.error("Error: No file specified");
-    process.exit(1);
+    return 1;
   }
   const line = parseInt(options["line"], 10);
   const column = parseInt(options["column"], 10);
   if (isNaN(line) || isNaN(column)) {
     console.error("Error: --line and --column are required");
-    process.exit(1);
+    return 1;
   }
   const posOptions = {
     format,
@@ -46777,17 +48064,18 @@ function handleDefinition(file, format, options) {
     default:
       console.log(formatDefinitionResultJson(result));
   }
+  return 0;
 }
 function handleReferences(file, format, options) {
   if (!file) {
     console.error("Error: No file specified");
-    process.exit(1);
+    return 1;
   }
   const line = parseInt(options["line"], 10);
   const column = parseInt(options["column"], 10);
   if (isNaN(line) || isNaN(column)) {
     console.error("Error: --line and --column are required");
-    process.exit(1);
+    return 1;
   }
   const refOptions = {
     format,
@@ -46804,17 +48092,18 @@ function handleReferences(file, format, options) {
     default:
       console.log(formatReferencesResultJson(result));
   }
+  return 0;
 }
 function handleCompletion(file, format, options) {
   if (!file) {
     console.error("Error: No file specified");
-    process.exit(1);
+    return 1;
   }
   const line = parseInt(options["line"], 10);
   const column = parseInt(options["column"], 10);
   if (isNaN(line) || isNaN(column)) {
     console.error("Error: --line and --column are required");
-    process.exit(1);
+    return 1;
   }
   const posOptions = {
     format,
@@ -46830,11 +48119,12 @@ function handleCompletion(file, format, options) {
     default:
       console.log(formatCompletionResultJson(result));
   }
+  return 0;
 }
 function handleFormat(files, format, options) {
   if (files.length === 0) {
     console.error("Error: No files specified");
-    process.exit(1);
+    return 1;
   }
   const formatOptions = {
     format,
@@ -46851,7 +48141,7 @@ function handleFormat(files, format, options) {
     default:
       console.log(formatFormatResultJson(results));
   }
-  process.exit(getFormatExitCode(results, formatOptions));
+  return getFormatExitCode(results, formatOptions);
 }
 function handleBatch(input, format, options) {
   let queryInput;
@@ -46868,7 +48158,7 @@ function handleBatch(input, format, options) {
     queryInput = input;
   } else {
     console.error("Error: No batch input specified. Use a file path or - for stdin");
-    process.exit(1);
+    return 1;
   }
   try {
     const queries = parseBatchInput(queryInput);
@@ -46878,16 +48168,17 @@ function handleBatch(input, format, options) {
     };
     const result = runBatch(queries, commonOptions);
     console.log(JSON.stringify(result, null, 2));
-    process.exit(result.summary.failed > 0 ? 1 : 0);
+    return result.summary.failed > 0 ? 1 : 0;
   } catch (e) {
     console.error(`Error parsing batch input: ${e}`);
-    process.exit(2);
+    return 2;
   }
+  return 0;
 }
 function handleFileInfo(file, format, options) {
   if (!file) {
     console.error("Error: No file specified");
-    process.exit(1);
+    return 1;
   }
   const commonOptions = {
     format,
@@ -46903,8 +48194,9 @@ function handleFileInfo(file, format, options) {
     }
   } else {
     console.error("Error: Failed to get file info");
-    process.exit(1);
+    return 1;
   }
+  return 0;
 }
 function formatFileInfoText(info) {
   if (!info) return "No file info available";
@@ -46952,4 +48244,4 @@ Diagnostics:`);
   }
   return lines.join("\n");
 }
-main();
+process.exitCode = main();

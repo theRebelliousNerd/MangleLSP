@@ -60,7 +60,8 @@ import {
     DiagnosticSeverity,
 } from './cli/types';
 
-import { VERSION, UPSTREAM_MANGLE_REVISION } from './version';
+import { VERSION, UPSTREAM_MANGLE } from './version';
+import { AGENT_COMMANDS, AGENT_USAGE, handleAgentCommand } from './cli/agent-commands';
 import {
     getDiagnosticInfo,
     getAllDiagnosticInfos,
@@ -76,6 +77,7 @@ import {
 const BOOLEAN_FLAGS = new Set([
     'quiet', 'help', 'version', 'write', 'check', 'diff',
     'include-declaration', 'explain', 'all', 'markdown', 'list',
+    'program', 'no-boundary',
 ]);
 
 /**
@@ -83,7 +85,7 @@ const BOOLEAN_FLAGS = new Set([
  */
 function printUsage(): void {
     console.log(`
-Mangle CLI v${VERSION} (tracks upstream Mangle ${UPSTREAM_MANGLE_REVISION})
+Mangle CLI v${VERSION}, tracking ${UPSTREAM_MANGLE}
 
 Usage: mangle-cli <command> [options] <files...>
 
@@ -98,7 +100,9 @@ Commands:
   batch         Run multiple queries in one call (for agents)
   file-info     Get complete analysis of a file
   explain       Explain a diagnostic code: what it means, how to fix it, example
+  advise, review, boundary, conformance, run, whynot   (see Agent Commands)
 
+${AGENT_USAGE}
 Global Options:
   --format, -f    Output format: json | text | sarif (default: json)
   --quiet, -q     Suppress non-essential output
@@ -272,18 +276,18 @@ function expandGlobs(patterns: string[]): string[] {
 /**
  * Main entry point.
  */
-function main(): void {
+function main(): number {
     const args = parseArgs(process.argv.slice(2));
 
     // Handle global flags
     if (args.options['version']) {
-        console.log(`mangle-cli v${VERSION} (upstream Mangle ${UPSTREAM_MANGLE_REVISION})`);
-        process.exit(0);
+        console.log(`mangle-cli v${VERSION}, tracking ${UPSTREAM_MANGLE}`);
+        return (0);
     }
 
     if (args.options['help'] || !args.command) {
         printUsage();
-        process.exit(args.options['help'] ? 0 : 1);
+        return (args.options['help'] ? 0 : 1);
     }
 
     const outputFormat = (args.options['format'] as string) || 'json';
@@ -295,55 +299,48 @@ function main(): void {
     try {
         switch (args.command) {
             case 'check':
-                handleCheck(files, outputFormat, args.options);
-                break;
+                return handleCheck(files, outputFormat, args.options);
 
             case 'symbols':
-                handleSymbols(files[0] || '', outputFormat, args.options);
-                break;
+                return handleSymbols(files[0] || '', outputFormat, args.options);
 
             case 'hover':
-                handleHover(files[0] || '', outputFormat, args.options);
-                break;
+                return handleHover(files[0] || '', outputFormat, args.options);
 
             case 'definition':
-                handleDefinition(files[0] || '', outputFormat, args.options);
-                break;
+                return handleDefinition(files[0] || '', outputFormat, args.options);
 
             case 'references':
-                handleReferences(files[0] || '', outputFormat, args.options);
-                break;
+                return handleReferences(files[0] || '', outputFormat, args.options);
 
             case 'completion':
-                handleCompletion(files[0] || '', outputFormat, args.options);
-                break;
+                return handleCompletion(files[0] || '', outputFormat, args.options);
 
             case 'format':
-                handleFormat(files, outputFormat, args.options);
-                break;
+                return handleFormat(files, outputFormat, args.options);
 
             case 'batch':
-                handleBatch(files[0] || '', outputFormat, args.options);
-                break;
+                return handleBatch(files[0] || '', outputFormat, args.options);
 
             case 'file-info':
-                handleFileInfo(files[0] || '', outputFormat, args.options);
-                break;
+                return handleFileInfo(files[0] || '', outputFormat, args.options);
 
             case 'explain':
-                handleExplain(args.files, (args.options['format'] as string) || 'text', args.options);
-                break;
+                return handleExplain(args.files, (args.options['format'] as string) || 'text', args.options);
 
             default:
+                if ((AGENT_COMMANDS as readonly string[]).includes(args.command)) {
+                    return handleAgentCommand(args.command, files, outputFormat, args.options);
+                }
                 console.error(`Unknown command: ${args.command}`);
                 printUsage();
-                process.exit(1);
+                return (1);
         }
     } catch (e) {
         if (!quiet) {
             console.error(`Error: ${e}`);
         }
-        process.exit(2);
+        return (2);
     }
 }
 
@@ -354,10 +351,10 @@ function handleCheck(
     files: string[],
     format: string,
     options: Record<string, string | boolean | number>
-): void {
+): number {
     if (files.length === 0) {
         console.error('Error: No files specified');
-        process.exit(1);
+        return (1);
     }
 
     const checkOptions: CheckOptions = {
@@ -381,7 +378,7 @@ function handleCheck(
             console.log(formatCheckResultJson(result));
     }
 
-    process.exit(getExitCode(result, checkOptions));
+    return (getExitCode(result, checkOptions));
 }
 
 /**
@@ -392,11 +389,11 @@ function handleExplain(
     codes: string[],
     format: string,
     options: Record<string, string | boolean | number>
-): void {
+): number {
     const all = getAllDiagnosticInfos();
     if (options['markdown']) {
         console.log(renderDiagnosticsMarkdown());
-        return;
+        return 0;
     }
     if (options['list']) {
         if (format === 'json') {
@@ -406,12 +403,12 @@ function handleExplain(
                 console.log(`${i.code}  ${i.severity.padEnd(7)}  ${i.category.padEnd(14)}  ${i.title}`);
             }
         }
-        return;
+        return 0;
     }
     const selected = options['all'] ? all : codes.map(c => c.toUpperCase());
     if (selected.length === 0) {
         console.error('Error: specify a code (e.g. mangle-cli explain E002), --list or --all');
-        process.exit(1);
+        return (1);
     }
     const infos = [];
     for (const item of selected) {
@@ -419,7 +416,7 @@ function handleExplain(
         if (!info) {
             const hint = didYouMean(suggestSimilar(String(item), all.map(i => i.code)));
             console.error(`Unknown diagnostic code: ${item}${hint ? ` (${hint})` : ''}. Run 'mangle-cli explain --list' to see all codes.`);
-            process.exit(1);
+            return (1);
         }
         infos.push(info);
     }
@@ -428,6 +425,7 @@ function handleExplain(
     } else {
         console.log(infos.map(i => renderExplanation(i, format === 'markdown')).join('\n\n---\n\n'));
     }
+    return 0;
 }
 
 /**
@@ -437,10 +435,10 @@ function handleSymbols(
     file: string,
     format: string,
     options: Record<string, string | boolean | number>
-): void {
+): number {
     if (!file) {
         console.error('Error: No file specified');
-        process.exit(1);
+        return (1);
     }
 
     const commonOptions = {
@@ -457,6 +455,7 @@ function handleSymbols(
         default:
             console.log(formatSymbolsResultJson(result));
     }
+    return 0;
 }
 
 /**
@@ -466,10 +465,10 @@ function handleHover(
     file: string,
     format: string,
     options: Record<string, string | boolean | number>
-): void {
+): number {
     if (!file) {
         console.error('Error: No file specified');
-        process.exit(1);
+        return (1);
     }
 
     const line = parseInt(options['line'] as string, 10);
@@ -477,7 +476,7 @@ function handleHover(
 
     if (isNaN(line) || isNaN(column)) {
         console.error('Error: --line and --column are required');
-        process.exit(1);
+        return (1);
     }
 
     const posOptions: PositionOptions = {
@@ -496,6 +495,7 @@ function handleHover(
         default:
             console.log(formatHoverResultJson(result));
     }
+    return 0;
 }
 
 /**
@@ -505,10 +505,10 @@ function handleDefinition(
     file: string,
     format: string,
     options: Record<string, string | boolean | number>
-): void {
+): number {
     if (!file) {
         console.error('Error: No file specified');
-        process.exit(1);
+        return (1);
     }
 
     const line = parseInt(options['line'] as string, 10);
@@ -516,7 +516,7 @@ function handleDefinition(
 
     if (isNaN(line) || isNaN(column)) {
         console.error('Error: --line and --column are required');
-        process.exit(1);
+        return (1);
     }
 
     const posOptions: PositionOptions = {
@@ -535,6 +535,7 @@ function handleDefinition(
         default:
             console.log(formatDefinitionResultJson(result));
     }
+    return 0;
 }
 
 /**
@@ -544,10 +545,10 @@ function handleReferences(
     file: string,
     format: string,
     options: Record<string, string | boolean | number>
-): void {
+): number {
     if (!file) {
         console.error('Error: No file specified');
-        process.exit(1);
+        return (1);
     }
 
     const line = parseInt(options['line'] as string, 10);
@@ -555,7 +556,7 @@ function handleReferences(
 
     if (isNaN(line) || isNaN(column)) {
         console.error('Error: --line and --column are required');
-        process.exit(1);
+        return (1);
     }
 
     const refOptions: ReferencesOptions = {
@@ -575,6 +576,7 @@ function handleReferences(
         default:
             console.log(formatReferencesResultJson(result));
     }
+    return 0;
 }
 
 /**
@@ -584,10 +586,10 @@ function handleCompletion(
     file: string,
     format: string,
     options: Record<string, string | boolean | number>
-): void {
+): number {
     if (!file) {
         console.error('Error: No file specified');
-        process.exit(1);
+        return (1);
     }
 
     const line = parseInt(options['line'] as string, 10);
@@ -595,7 +597,7 @@ function handleCompletion(
 
     if (isNaN(line) || isNaN(column)) {
         console.error('Error: --line and --column are required');
-        process.exit(1);
+        return (1);
     }
 
     const posOptions: PositionOptions = {
@@ -614,6 +616,7 @@ function handleCompletion(
         default:
             console.log(formatCompletionResultJson(result));
     }
+    return 0;
 }
 
 /**
@@ -623,10 +626,10 @@ function handleFormat(
     files: string[],
     format: string,
     options: Record<string, string | boolean | number>
-): void {
+): number {
     if (files.length === 0) {
         console.error('Error: No files specified');
-        process.exit(1);
+        return (1);
     }
 
     const formatOptions: FormatOptions = {
@@ -647,7 +650,7 @@ function handleFormat(
             console.log(formatFormatResultJson(results));
     }
 
-    process.exit(getFormatExitCode(results, formatOptions));
+    return (getFormatExitCode(results, formatOptions));
 }
 
 /**
@@ -657,7 +660,7 @@ function handleBatch(
     input: string,
     format: string,
     options: Record<string, string | boolean | number>
-): void {
+): number {
     let queryInput: string;
 
     if (input === '-') {
@@ -674,7 +677,7 @@ function handleBatch(
         queryInput = input;
     } else {
         console.error('Error: No batch input specified. Use a file path or - for stdin');
-        process.exit(1);
+        return (1);
     }
 
     try {
@@ -690,11 +693,12 @@ function handleBatch(
         console.log(JSON.stringify(result, null, 2));
 
         // Exit with error if any queries failed
-        process.exit(result.summary.failed > 0 ? 1 : 0);
+        return (result.summary.failed > 0 ? 1 : 0);
     } catch (e) {
         console.error(`Error parsing batch input: ${e}`);
-        process.exit(2);
+        return (2);
     }
+    return 0;
 }
 
 /**
@@ -704,10 +708,10 @@ function handleFileInfo(
     file: string,
     format: string,
     options: Record<string, string | boolean | number>
-): void {
+): number {
     if (!file) {
         console.error('Error: No file specified');
-        process.exit(1);
+        return (1);
     }
 
     const commonOptions = {
@@ -727,8 +731,9 @@ function handleFileInfo(
         }
     } else {
         console.error('Error: Failed to get file info');
-        process.exit(1);
+        return (1);
     }
+    return 0;
 }
 
 /**
@@ -783,5 +788,6 @@ function formatFileInfoText(info: any): string {
     return lines.join('\n');
 }
 
-// Run main
-main();
+// Run main. Exit through exitCode, never process.exit(): exiting while
+// stdout is a pipe truncates the output an agent is reading.
+process.exitCode = main();

@@ -365,6 +365,48 @@ mangle-cli file-info --format text <file>   # Human-readable output
 }
 ```
 
+#### Agent commands: `review`, `boundary`, `advise`, `conformance`, `run`, `whynot`
+
+The engine-backed commands run **mangle-oracle** (`mangle-oracle/`, a Go module on
+`codeberg.org/TauCeti/mangle-go`). The CLI builds it on first use with Go, against the
+engine version the target project's `go.mod` requires (cached as
+`mangle-oracle/bin/mangle-oracle-<version>`), falling back to the pinned v0.7.0 and saying
+so in `engineNote`. `MANGLE_ORACLE=/path/to/binary` overrides.
+
+```bash
+# Whole repository: programs assembled from //go:embed, every diagnostic,
+# engine verdicts, Go <-> .mg findings, and one numbered plan with edits
+mangle-cli review --root . [--severity warning] [--no-boundary] [--profile codenerd]
+
+# Go <-> .mg boundary only (B-codes); each finding carries the facts its proof rests on
+mangle-cli boundary --root . [--profile generic|codenerd|file.json]
+
+# Mangle-feature advice only (A-codes) with rewrites
+mangle-cli advise src/*.mg
+
+# The LSP verdict next to the engine's (one case per file, or --program for one program)
+mangle-cli conformance --program schema.mg policy.mg
+
+# Evaluate on the engine: list facts, explain one with a proof (through let/do transforms)
+mangle-cli run rules.mg --query latest --why 'latest(/f1, "new")' [--at 2024-01-01T00:00:00Z]
+
+# Why is a goal not derived: rows surviving each premise of each rule, first block named
+mangle-cli whynot rules.mg --goal 'grant(U)'
+```
+
+`review` plan items: `{ id, code, severity, category, title, file, line, message, hint,
+why, edits?: [{file, range, newText}], related?, proof?, verify }`, most severe first.
+`edits` are present only when the fix is unambiguous; `verify` is the command that shows
+the item is done.
+
+**Host profiles.** The boundary scan reads Go with a profile that says which struct is a
+fact, which calls assert, query and retract, and how a Go string becomes a constant.
+Built-ins: `generic` (any `Fact{Predicate, Args}`, `Assert*`/`AddFact*`/`Query*`, mangle-go
+`map[ast.PredicateSym]engine.ExternalPredicateCallback` registrations) and `codenerd`.
+A project file `.mangle/oracle-profile.json` (same shape as
+`mangle-oracle/profiles/generic.json`) takes precedence; otherwise the profile whose
+`modules` lists the go.mod module is used.
+
 ### Output Formats
 
 #### JSON (default)

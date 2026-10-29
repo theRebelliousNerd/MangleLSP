@@ -1,6 +1,6 @@
 # Mangle LSP
 
-Language Server Protocol (LSP) implementation and CLI for the [Mangle](https://codeberg.org/TauCeti/mangle-go) declarative programming language, synced with upstream `77780a5` (2026-09-19).
+Language Server Protocol (LSP) implementation and CLI for the [Mangle](https://codeberg.org/TauCeti/mangle-go) declarative programming language, tracking upstream v0.7.0 (`7cd2543`, 2026-10-15).
 
 ## Features
 

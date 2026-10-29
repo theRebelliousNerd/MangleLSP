@@ -368,6 +368,7 @@ function analysisToJson(e: AnalysisDiagnostic): Record<string, unknown> {
         fixes: e.fixes?.map(f => ({
             title: f.title,
             newText: f.newText,
+            additionalEdits: f.additionalEdits,
             range: {
                 start: { line: f.range.start.line, column: f.range.start.column },
                 end: { line: f.range.end.line, column: f.range.end.column },
@@ -414,16 +415,17 @@ connection.onCodeAction((params: CodeActionParams): CodeAction[] => {
         const data = diagnostic.data as DiagnosticData | undefined;
         if (!data?.fixes) continue;
         data.fixes.forEach((fix, index) => {
-            const edit = TextEdit.replace({
-                start: { line: fix.range.start.line - 1, character: fix.range.start.column },
-                end: { line: fix.range.end.line - 1, character: fix.range.end.column },
-            }, fix.newText);
+            const toEdit = (r: QuickFix['range'], text: string) => TextEdit.replace({
+                start: { line: r.start.line - 1, character: r.start.column },
+                end: { line: r.end.line - 1, character: r.end.column },
+            }, text);
+            const edits = [toEdit(fix.range, fix.newText), ...(fix.additionalEdits ?? []).map(e => toEdit(e.range, e.newText))];
             actions.push({
                 title: fix.title,
                 kind: CodeActionKind.QuickFix,
                 diagnostics: [diagnostic],
                 isPreferred: index === 0,
-                edit: { changes: { [params.textDocument.uri]: [edit] } },
+                edit: { changes: { [params.textDocument.uri]: edits } },
             });
         });
     }

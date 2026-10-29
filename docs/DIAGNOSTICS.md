@@ -7,6 +7,24 @@ Run `mangle-cli explain <CODE>` for the same text in a terminal.
 
 | Code | Title | Category | Severity |
 |------|-------|----------|----------|
+| [A001](#a001) | Arg-max joined back: use a merge lattice | advice | info |
+| [A002](#a002) | Parallel variant predicates: use a tagged union | advice | info |
+| [A003](#a003) | Premise tests a value no writer produces | advice | warning |
+| [A004](#a004) | Clock comparison: use temporal facts | advice | info |
+| [A005](#a005) | Collecting pairs: use fn:collect_to_map | advice | info |
+| [A006](#a006) | All paths, then pick one: use a merge lattice | advice | info |
+| [B001](#b001) | Rule reads a predicate nothing produces | boundary | warning |
+| [B002](#b002) | Declared predicate nothing produces or reads | boundary | info |
+| [B003](#b003) | Go asserts an undeclared predicate | boundary | warning |
+| [B004](#b004) | Go asserts a predicate with the wrong arity | boundary | error |
+| [B005](#b005) | Go queries a predicate the program never defines | boundary | warning |
+| [B006](#b006) | Asserted but never read | boundary | info |
+| [B007](#b007) | Go builds the wrong constant type for a column | boundary | error |
+| [B008](#b008) | External predicate without a Go callback | boundary | warning |
+| [B009](#b009) | Go callback without an external Decl | boundary | warning |
+| [B010](#b010) | Callback modes disagree with the Decl | boundary | error |
+| [B011](#b011) | Rule negates an external; its Go callback never runs | boundary | warning |
+| [B012](#b012) | Rule reads a predicate with no recognized producer | boundary | info |
 | [E000](#e000) | File or I/O error | io | error |
 | [E001](#e001) | Variables in facts must be ground | safety | error |
 | [E002](#e002) | Range restriction violation | safety | error |
@@ -34,7 +52,7 @@ Run `mangle-cli explain <CODE>` for the same text in a terminal.
 | [E025](#e025) | Bound count does not match arity | declaration | error |
 | [E026](#e026) | External predicate needs exactly one mode | declaration | error |
 | [E027](#e027) | Odd number of key/value arguments | style | error |
-| [E030](#e030) | Pattern argument must be a constant | builtin | error |
+| [E030](#e030) | Pattern argument has the wrong type | builtin | error |
 | [E031](#e031) | Package name must be lowercase | declaration | error |
 | [E032](#e032) | Invalid name constant | style | error |
 | [E033](#e033) | Destructuring target must be a variable | builtin | error |
@@ -84,7 +102,193 @@ Run `mangle-cli explain <CODE>` for the same text in a terminal.
 | [E078](#e078) | Unknown declaration descriptor | declaration | warning |
 | [E079](#e079) | Invalid mode declaration | declaration | warning |
 | [E080](#e080) | Wildcard merges rows before aggregation | performance | warning |
+| [E081](#e081) | Negated external predicate never calls Go | declaration | warning |
+| [E082](#e082) | Bound that strict checking can never satisfy | type | warning |
+| [E083](#e083) | Zero-arity Decl breaks strict bounds checking | declaration | warning |
+| [E084](#e084) | :string:matches fails strict bounds checking | builtin | warning |
 | [P001](#p001) | Syntax error | syntax | error |
+
+## A001
+
+**Arg-max joined back: use a merge lattice** - advice, default severity: info
+
+Mangle has no arg-max reducer, so a common pattern takes `fn:max` (or `fn:min`) per group in one rule and joins the result back to the source in a second to find the winning row. That needs the whole relation and a second stratum. A Decl with `fundep([Key], [P])` and `merge([P], "better")` makes the relation keep one value per key, replaced whenever the deferred comparison rule prefers a new one, inside the fixpoint and inside recursion. Verified on v0.7: same answers as the join-back; ties keep the first winner instead of several rows. The engine replaces the old fact only on stores that support removal (its in-memory stores do; a temporal-store adapter does not, and then both facts stay).
+
+**How to fix:** Add the lattice relation (the quick fix writes it from the aggregating rule) and switch the consumers to it.
+
+Instead of:
+```mangle
+latest_t(F, M) :- obs(F, T, _) |> do fn:group_by(F), let M = fn:max(T).
+latest(F, V) :- latest_t(F, M), obs(F, M, V).
+```
+write:
+```mangle
+Decl best_obs(F, P) descr [fundep([F], [P]), merge([P], "obs_later")].
+Decl obs_later(P1, P2, B) descr [mode('+', '+', '-'), deferred()].
+obs_later(P1, P2, P1) :- :match_pair(P1, T1, _), :match_pair(P2, T2, _), T1 >= T2.
+obs_later(P1, P2, P2) :- :match_pair(P1, T1, _), :match_pair(P2, T2, _), T1 < T2.
+best_obs(F, fn:pair(T, V)) :- obs(F, T, V).
+```
+
+## A002
+
+**Parallel variant predicates: use a tagged union** - advice, default severity: info
+
+Three or more predicates such as `tool_started_event`, `tool_failed_event`, `tool_done_event` are variants of one thing spread over several relations. A Decl bounded by `fn:TaggedUnion(/kind, /started, fn:Struct(...), ...)` keeps them in one relation: a rule can match one variant (`:match_field(E, /kind, K), K = /failed`) or all of them, and a new variant is one more tag instead of a new predicate. Tagged unions pass strict bounds checking in v0.7 (the checker types their tags as /name); unions of singletons do not (E082).
+
+**How to fix:** Declare one relation with a tagged-union value column and assert one fact per event.
+
+## A003
+
+**Premise tests a value no writer produces** - advice, default severity: warning
+
+Every rule and fact that writes this column of the predicate writes a name constant, and the constant this premise tests is not one of them, so the premise can never match and the rule derives nothing. This is the closed-vocabulary failure: a typo such as `/hihg`. A `fn:Singleton` union bound cannot catch it in v0.7 (E082); an invariant relation can: list the vocabulary as facts, derive violations with negation, and have a test assert there are none.
+
+**How to fix:** Fix the constant (the quick fix offers the closest written value), and consider `valid_x(...)` facts plus a `bad_x(V) :- x(V), !valid_x(V).` invariant.
+
+Instead of:
+```mangle
+sev(/a, /high).
+urgent(I) :- sev(I, /hihg).
+```
+write:
+```mangle
+sev(/a, /high).
+urgent(I) :- sev(I, /high).
+```
+
+## A004
+
+**Clock comparison: use temporal facts** - advice, default severity: info
+
+The rule reads a clock fact (`current_time(Now)`) and compares timestamps to decide whether something is recent, expired or due. Mangle has temporal facts: a Decl marked `temporal` holds facts valid over intervals, and operators such as `<-[0s, 24h] seen(X)` ("held at some point in the last 24 hours") read the evaluation time. Expiry needs no sweeper and no clock fact, and pinning the evaluation time replays a decision exactly. Verified on v0.7 (`recent(X) :- <-[0s, 24h] seen(X).`). Evaluation needs a temporal store and an evaluation time.
+
+**How to fix:** Declare the fact temporal, assert it with its validity interval, and replace the comparison by a temporal operator.
+
+**Upstream docs:** https://mangle.readthedocs.io/en/latest/temporal.html
+
+## A005
+
+**Collecting pairs: use fn:collect_to_map** - advice, default severity: info
+
+`fn:collect(fn:pair(K, V))` builds a list of pairs that the host then turns into a map. `fn:collect_to_map(K, V)` builds the map in the aggregation: one answer-shaped fact per group that Go reads without assembling and that rules can query with `fn:map:get`. Verified on v0.7. Keys should be unique per group.
+
+**How to fix:** Replace the reducer (quick fix).
+
+Instead of:
+```mangle
+m(U, L) :- kv(U, K, V) |> do fn:group_by(U), let L = fn:collect(fn:pair(K, V)).
+```
+write:
+```mangle
+m(U, M) :- kv(U, K, V) |> do fn:group_by(U), let M = fn:collect_to_map(K, V).
+```
+
+## A006
+
+**All paths, then pick one: use a merge lattice** - advice, default severity: info
+
+A recursive relation accumulates a path or cost (`fn:list:append`, `fn:plus`) for every route, and a later aggregation keeps only the minimum or maximum. On a cyclic graph that recursion never finishes: verified on v0.7, a 5-edge cycle ran 38 s to the 100k fact limit. Declaring the recursive relation with `fundep` and `merge` keeps only the best path per key during the fixpoint (upstream `examples/shortest_path.mg`); the same cyclic graph then terminates with its 16 shortest paths.
+
+**How to fix:** Add `descr [fundep([Source, Target], [Path]), merge([Path], "shorter")]` to the recursive relation and a deferred `shorter` rule, then drop the aggregation.
+
+**Upstream docs:** https://mangle.readthedocs.io/en/latest/aggregation.html
+
+## B001
+
+**Rule reads a predicate nothing produces** - boundary, default severity: warning
+
+A rule body reads this predicate, but no rule or fact in the module's .mg files derives it, no Go code asserts it, and its name appears nowhere else in Go. The rule compiles and never fires. Found by `mangle-cli boundary`, which scans the Go module with go/ast and judges the result with a Mangle program on the real engine.
+
+**How to fix:** Make the producer assert it (with the Decl's shape), or delete the rule and the Decl.
+
+## B002
+
+**Declared predicate nothing produces or reads** - boundary, default severity: info
+
+A Decl that no rule, fact or Go code produces, and nothing reads in .mg or Go. It is dead schema.
+
+**How to fix:** Delete the Decl, or wire the producer and consumer it was meant for.
+
+## B003
+
+**Go asserts an undeclared predicate** - boundary, default severity: warning
+
+Go asserts a fact whose predicate no .mg file declares or defines. No rule can read it (a typo, or a fact nobody consumes), and hosts that validate facts against Decls warn on it.
+
+**How to fix:** Add the Decl (with bounds) to the owning schema file, or correct the predicate name.
+
+## B004
+
+**Go asserts a predicate with the wrong arity** - boundary, default severity: error
+
+In Mangle the arity is part of the predicate: `p/3` and `p/2` are different relations. Go asserts this name with an arity that no Decl and no rule has, so every rule written against the declared arity never sees these facts.
+
+**How to fix:** Make the Go fact match the Decl's arguments, or change the Decl (and its rules) if the Go shape is the intended one.
+
+## B005
+
+**Go queries a predicate the program never defines** - boundary, default severity: warning
+
+Go queries a predicate that no .mg file declares or defines, so the query always returns nothing.
+
+**How to fix:** Fix the name, or add the rule that derives it.
+
+## B006
+
+**Asserted but never read** - boundary, default severity: info
+
+Go asserts this declared predicate, but no rule reads it, no Go code queries it, and its name appears nowhere else in Go. The facts are written and ignored.
+
+**How to fix:** Write the rule that uses it, or stop asserting it.
+
+## B007
+
+**Go builds the wrong constant type for a column** - boundary, default severity: error
+
+The Decl bounds this argument with a base type, and Go builds a value that cannot become a constant of that type: a float64 for a /number column, an int for /float64, a name (`MangleAtom`, or a literal "/x" string that codeNERD's kernel turns into a name) for /string, or a plain string literal for /name. A join between a name and a string never matches, so rules silently derive nothing; strict bounds checking would reject the fact. Shapes the scan cannot know (a string variable) are never reported.
+
+**How to fix:** Build the declared representation at the producer: `types.MangleAtom(x)` for /name, `types.MangleString(x)` or a plain string for /string, `int64(...)` for /number, `float64(...)` for /float64. Or fix the Decl if Go's shape is the intended one.
+
+## B008
+
+**External predicate without a Go callback** - boundary, default severity: warning
+
+The Decl says `descr [external(), mode(...)]`, so evaluation expects a Go callback, but the module registers none for this name and arity. Hosts reject or silently empty the predicate.
+
+**How to fix:** Register the callback with the Decl's name, arity and modes, or remove `external()`.
+
+## B009
+
+**Go callback without an external Decl** - boundary, default severity: warning
+
+Go registers an external-predicate callback, but no .mg Decl marks the predicate `external()` at this arity, so the engine never calls it.
+
+**How to fix:** Declare the predicate with `descr [external(), mode(...)]` matching the callback.
+
+## B010
+
+**Callback modes disagree with the Decl** - boundary, default severity: error
+
+The modes the Go callback is registered with (+ input, - output) differ from the Decl's `mode(...)`. The engine binds arguments by the Decl, so the callback receives inputs it did not expect.
+
+**How to fix:** Make the two agree; the Decl is what analysis and evaluation use.
+
+## B011
+
+**Rule negates an external; its Go callback never runs** - boundary, default severity: warning
+
+The cross-file form of E081: a rule negates an external predicate, and the engine answers negations from stored facts only (v0.7 engine/premise.go), so the Go callback listed with the finding is never called for it.
+
+**How to fix:** Call the external positively in a helper rule that binds its inputs, then negate the helper.
+
+## B012
+
+**Rule reads a predicate with no recognized producer** - boundary, default severity: info
+
+As B001, except that Go mentions the name somewhere the scan does not read as an assert: a list of predicate names, a map, a log line or a producer whose predicate is computed. Check the listed places; if none of them asserts the predicate, the rule never fires.
+
+**How to fix:** Assert the predicate where it is produced, with the Decl's shape.
 
 ## E000
 
@@ -132,13 +336,13 @@ adult(Name) :- person(Name, Age), Age >= 18.
 
 **Variables in negation must be bound** - safety, default severity: error
 
-Negation (`!pred(...)`) is negation-as-failure: it can only check that a *specific* tuple is absent. All its variables must be bound by positive premises of the same rule (anywhere in the body - Mangle reorders negations after the atoms that bind them). A variable that only occurs inside a negation is never bound, and upstream Mangle silently drops such a negation, changing the meaning of your rule.
+Negation (`!pred(...)`) is negation-as-failure: it can only check that a *specific* tuple is absent. All its variables must be bound by positive premises of the same rule, anywhere in the body: Mangle v0.7 delays a negation until the premises that bind its variables have run. A variable that no positive premise binds is rejected ("variable X is not bound"), and so is `_` inside a negation, because the checker turns each `_` into a fresh variable that nothing binds: `!r(X, _)` does not mean "no r with any second value".
 
-**How to fix:** Bind the variable with a positive atom, or replace it with `_` if you mean "no tuple with any value exists" - and then introduce a helper predicate that projects the columns you care about.
+**How to fix:** Bind the variable with a positive atom. To test "no tuple with any value here", project the columns you care about into a helper predicate and negate that (the quick fix writes the helper).
 
 Instead of:
 ```mangle
-lonely(X) :- person(X), !friend(X, Y).
+lonely(X) :- person(X), !friend(X, _).
 ```
 write:
 ```mangle
@@ -152,9 +356,9 @@ lonely(X) :- person(X), !has_friend(X).
 
 **Variables in comparison must be bound** - safety, default severity: error
 
-Comparisons (`<`, `<=`, `>`, `>=`, `!=`) only test values; they never produce them. Both sides must be bound by earlier premises.
+Comparisons only test values; they never produce them. `<`, `<=`, `>`, `>=` and the `:float:` comparisons need both sides bound by an *earlier* premise (v0.7 rejects the rule otherwise: "move the subgoal to the right"). `!=` is different: like a negation it waits until its variables are bound, so its position does not matter, but some premise must still bind them.
 
-**How to fix:** Move the comparison after the atom that binds the variable, or add such an atom.
+**How to fix:** Move the comparison after the atom that binds the variable, or add such an atom. For `!=`, make sure a positive premise or equality binds both sides.
 
 Instead of:
 ```mangle
@@ -436,11 +640,20 @@ Predicates marked `external()` are computed by host code, which needs to know wh
 
 ## E030
 
-**Pattern argument must be a constant** - builtin, default severity: error
+**Pattern argument has the wrong type** - builtin, default severity: error
 
-The prefix/suffix/substring argument of `:match_prefix`, `:string:starts_with`, `:string:ends_with` and `:string:contains` must be a constant in upstream Mangle.
+The pattern of `:string:starts_with`, `:string:ends_with` and `:string:contains` must be a string: a string literal, a variable bound to a string by an earlier premise, or a function that returns one (v0.7 substitutes and evaluates it). A constant of another type, such as the name `/ab`, is a run-time error ("2nd arguments must be string constant"). `:match_prefix` needs a name constant; a variable prefix fails strict type checking.
 
-**How to fix:** Write the pattern as a literal constant.
+**How to fix:** Use a string pattern for the string tests (convert a name with `fn:name:to_string`), and a literal name such as `/users` for `:match_prefix`.
+
+Instead of:
+```mangle
+hit(H) :- hay(H), :string:contains(H, /ab).
+```
+write:
+```mangle
+hit(H) :- hay(H), :string:contains(H, "ab").
+```
 
 ## E031
 
@@ -1015,6 +1228,69 @@ total(S) :- sale(Id, Amount), valid(Amount) |> do fn:group_by(), let S = fn:sum(
 ```
 
 **Upstream docs:** https://mangle.readthedocs.io/en/latest/aggregation.html
+
+## E081
+
+**Negated external predicate never calls Go** - declaration, default severity: warning
+
+A predicate declared `descr [external(), mode(...)]` is answered by a Go callback during evaluation, but only in positive premises. In v0.7, `engine/premise.go` answers a negated premise `!ext(...)` from the fact store alone and never calls the callback, so the negation is true whenever nothing happened to store that row: usually always.
+
+**How to fix:** Call the external positively in a helper rule whose body binds its inputs, then negate the helper. The quick fix writes the helper from the rule's own positive premises.
+
+Instead of:
+```mangle
+Decl ext(X, Y) descr [external(), mode('+', '-')].
+miss(X) :- item(X), !ext(X, "hit").
+```
+write:
+```mangle
+ext_holds(X) :- item(X), ext(X, "hit").
+miss(X) :- item(X), !ext_holds(X).
+```
+
+## E082
+
+**Bound that strict checking can never satisfy** - type, default severity: warning
+
+In v0.7 the bounds checker infers the base type of a constant (`/name` for `/high`), and `/name` does not conform to `fn:Singleton(/high)` or to a union of singletons. A related trap: Decl bounds have no boolean base type, so `/bool` is the name-prefix type of names under `/bool/`, and `/true` is not one of them. With strict checking (`AnalyzeAndCheckBounds(..., ErrorForBoundsMismatch)`) every fact and rule that writes such a column is rejected, including correct ones; without it the bound is not checked at all. `fn:TaggedUnion` is the exception: the checker reads its tags as `/name`.
+
+**How to fix:** Declare the column `/name` (for booleans too), and enforce a closed vocabulary with an invariant relation that tests can query, e.g. `valid_sev(/low). valid_sev(/high). bad_sev(I, S) :- sev(I, S), !valid_sev(S).`
+
+Instead of:
+```mangle
+Decl sev(I, S) bound [/name, fn:Union(fn:Singleton(/low), fn:Singleton(/high))].
+```
+write:
+```mangle
+Decl sev(I, S) bound [/name, /name].
+valid_sev(/low). valid_sev(/high).
+bad_sev(I, S) :- sev(I, S), !valid_sev(S).
+```
+
+## E083
+
+**Zero-arity Decl breaks strict bounds checking** - declaration, default severity: warning
+
+Upstream v0.7 strict bounds checking (`AnalyzeAndCheckBounds(..., ErrorForBoundsMismatch)`) fails the whole program on a zero-arity Decl that has no bound list, with "no bound decls in p()". Loose checking accepts it, and a zero-arity predicate without a Decl is fine either way. Verified on v0.7.0.
+
+**How to fix:** Give the Decl an empty bound list.
+
+Instead of:
+```mangle
+Decl ready().
+```
+write:
+```mangle
+Decl ready() bound [].
+```
+
+## E084
+
+**:string:matches fails strict bounds checking** - builtin, default severity: warning
+
+Upstream v0.7.0 added `:string:matches` (RE2 regular expressions) but not its entry in the built-in type table (`symbols.go` lists `:string:starts_with`, `:string:ends_with` and `:string:contains` only). Strict bounds checking therefore rejects any rule that uses it ("cannot find assignment that works for premise"). Loose analysis accepts it and evaluation is correct. Verified on v0.7.0.
+
+**How to fix:** Under strict checking, use `:string:starts_with`, `:string:ends_with` or `:string:contains` where they suffice; otherwise run loose analysis until upstream adds the signature.
 
 ## P001
 

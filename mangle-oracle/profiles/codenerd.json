@@ -1,0 +1,17 @@
+{
+  "name": "codenerd",
+  "doc": "codeNERD: types.Fact (core.Fact) goes to the kernel through Fact.ToAtom, which turns a string that looks like a name (\"/x\", at most two slashes, no file extension) into a name; mangle.Fact and Engine.AddFact go through convertValueToTypedTerm, which gives a string the Decl's type.",
+  "modules": ["codenerd"],
+  "factTypes": [
+    {"importSuffix": "internal/types", "package": "types", "regime": "/name_heuristic"},
+    {"importSuffix": "internal/core", "package": "core", "regime": "/name_heuristic"},
+    {"importSuffix": "internal/mangle", "package": "mangle", "regime": "/decl_coerced"}
+  ],
+  "assertPrefixes": ["Assert", "AddFact"],
+  "retractPrefixes": ["Retract"],
+  "queryMethods": ["Query", "QueryFacts", "GetFacts", "QueryPredicate"],
+  "variadicAssert": {"method": "AddFact", "regime": "/decl_coerced"},
+  "assertHelperVerbs": ["add", "assert", "emit", "push", "record", "insert", "fact"],
+  "nameTypes": ["MangleAtom"],
+  "stringTypes": ["MangleString"]
+}

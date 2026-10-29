@@ -10,8 +10,8 @@ Primary goals:
 # Upstream Reference
 
 Upstream Mangle is developed at https://codeberg.org/TauCeti/mangle-go. This repository is
-synced with upstream commit `77780a5` (2026-09-19); see `mangle-lsp/src/version.ts` and
-`CHANGELOG.md`. A local copy may exist at `C:\CodeProjects\MangleTSandPython\upstream`;
+tracking the tagged release v0.7.0 (`7cd2543`, 2026-10-15); see `mangle-lsp/src/version.ts`
+and `CHANGELOG.md`. `mangle-oracle/` runs that engine; its verdicts are ground truth. A local copy may exist at `C:\CodeProjects\MangleTSandPython\upstream`;
 otherwise clone upstream.
 
 Use it as the source of truth for parser/AST behavior, semantic analysis,

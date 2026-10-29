@@ -3,7 +3,7 @@
 [![Open VSX](https://img.shields.io/open-vsx/v/theRebelliousNerd/mangle-vscode)](https://open-vsx.org/extension/theRebelliousNerd/mangle-vscode)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Language support for [Mangle](https://codeberg.org/TauCeti/mangle-go), a Datalog-inspired declarative programming language originally created at Google (synced with upstream `77780a5`, 2026-09-19).
+Language support for [Mangle](https://codeberg.org/TauCeti/mangle-go), a Datalog-inspired declarative programming language originally created at Google (tracking upstream v0.7.0, `7cd2543`, 2026-10-15).
 
 ## Features
 

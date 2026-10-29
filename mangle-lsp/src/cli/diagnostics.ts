@@ -51,6 +51,9 @@ export function analysisToCLIDiagnostic(error: AnalysisDiagnostic, lines: string
         title: f.title,
         range: toCLIRange(f.range),
         newText: f.newText,
+        ...(f.additionalEdits?.length
+            ? { additionalEdits: f.additionalEdits.map(e => ({ range: toCLIRange(e.range), newText: e.newText })) }
+            : {}),
     }));
     const diag: CLIDiagnostic = {
         severity: error.severity,

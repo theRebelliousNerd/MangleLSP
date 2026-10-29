@@ -1,0 +1,13 @@
+{
+  "name": "generic",
+  "doc": "Any Go + Mangle module: a struct named Fact with Predicate and Args fields, Assert*/AddFact* to write, Query*/GetFacts to read, Retract* to remove. String arguments are of unknown shape.",
+  "modules": [],
+  "factTypes": [],
+  "assertPrefixes": ["Assert", "AddFact"],
+  "retractPrefixes": ["Retract"],
+  "queryMethods": ["Query", "QueryFacts", "GetFacts", "QueryPredicate"],
+  "variadicAssert": {"method": "AddFact", "regime": "/unknown"},
+  "assertHelperVerbs": ["add", "assert", "emit", "push", "record", "insert", "fact"],
+  "nameTypes": [],
+  "stringTypes": []
+}

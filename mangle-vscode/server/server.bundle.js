@@ -8921,6 +8921,13 @@ var FullTextDocument = class _FullTextDocument {
         const startOffset = this.offsetAt(range.start);
         const endOffset = this.offsetAt(range.end);
         this._content = this._content.substring(0, startOffset) + change.text + this._content.substring(endOffset, this._content.length);
+        const insertedEndOffset = startOffset + change.text.length;
+        const crlfAtStart = this._content.charCodeAt(startOffset - 1) === 13 && this._content.charCodeAt(startOffset) === 10;
+        const crlfAtEnd = this._content.charCodeAt(insertedEndOffset - 1) === 13 && this._content.charCodeAt(insertedEndOffset) === 10;
+        if (crlfAtStart || crlfAtEnd) {
+          this._lineOffsets = void 0;
+          continue;
+        }
         const startLine = Math.max(range.start.line, 0);
         const endLine = Math.max(range.end.line, 0);
         let lineOffsets = this._lineOffsets;
@@ -9142,6 +9149,11 @@ function containsPosition(range, pos) {
   if (pos.line === range.start.line && pos.column < range.start.column) return false;
   if (pos.line === range.end.line && pos.column >= range.end.column) return false;
   return true;
+}
+function analyzableUnit(unit) {
+  const bad = unit.malformed;
+  if (!bad || bad.size === 0) return unit;
+  return { ...unit, clauses: unit.clauses.filter((c) => !bad.has(c)), decls: unit.decls.filter((d) => !bad.has(d)), malformed: void 0 };
 }
 function createVariable(symbol, range) {
   return { type: "Variable", symbol, range };
@@ -38176,6 +38188,47 @@ function visitorErrorToParseError(error) {
     source: "parser"
   };
 }
+var REQUIRED_CHILDREN = ["head", "declaredAtom", "atom", "literal", "left", "right", "fn"];
+function hasHole(node) {
+  if (Array.isArray(node)) return node.some((e) => e === null || e === void 0 || hasHole(e));
+  if (node === null || typeof node !== "object") return false;
+  const obj = node;
+  for (const key of REQUIRED_CHILDREN) {
+    if (key in obj && (obj[key] === null || obj[key] === void 0)) return true;
+  }
+  for (const [key, value] of Object.entries(obj)) {
+    if (key === "range" || value === null || typeof value !== "object") continue;
+    if (hasHole(value)) return true;
+  }
+  return false;
+}
+function containsError(range, errors) {
+  return errors.some((e) => {
+    const after = e.line > range.start.line || e.line === range.start.line && e.column >= range.start.column;
+    const before = e.line < range.end.line || e.line === range.end.line && e.column <= range.end.column;
+    return after && before;
+  });
+}
+function markMalformed(unit, errors) {
+  const bad = (n2) => hasHole(n2) || containsError(n2.range, errors);
+  const malformed = /* @__PURE__ */ new Set([...unit.clauses.filter(bad), ...unit.decls.filter(bad)]);
+  return malformed.size > 0 ? { ...unit, malformed } : unit;
+}
+function nameSwallowedPeriodErrors(tokens) {
+  const out = [];
+  for (const t of tokens) {
+    if (t.type !== MangleLexer.CONSTANT || !t.text || !t.text.endsWith(".")) continue;
+    out.push({
+      message: `The name constant '${t.text}' swallowed the '.' meant to end the clause: a name may contain '.', so '${t.text.slice(0, -1)}.' reads as one name. Write '${t.text.slice(0, -1)} .' or put another premise last`,
+      line: t.line,
+      column: t.column,
+      offset: t.start,
+      length: t.text.length,
+      source: "parser"
+    });
+  }
+  return out;
+}
 function parse(source) {
   const errors = [];
   let visitor = null;
@@ -38196,10 +38249,12 @@ function parse(source) {
     errors.push(...lexerErrorListener.errors);
     errors.push(...parserErrorListener.errors);
     visitor = new MangleASTVisitor();
-    const unit = visitor.visit(tree);
-    const visitorErrors = visitor.getErrors();
-    errors.push(...visitorErrors.map(visitorErrorToParseError));
-    return { unit, errors };
+    const built = visitor.visit(tree);
+    errors.push(...visitor.getErrors().map(visitorErrorToParseError));
+    if (errors.length === 0) return { unit: built, errors };
+    tokenStream.fill();
+    errors.push(...nameSwallowedPeriodErrors(tokenStream.getTokens()));
+    return { unit: markMalformed(built, errors), errors };
   } catch (e) {
     const message = e instanceof Error ? e.message : String(e);
     errors.push({
@@ -38859,20 +38914,26 @@ var BUILTIN_PREDICATES = [
   pred(
     ":string:starts_with",
     [["String", I, T.string], ["Prefix", I, T.string]],
-    "Matches strings that start with a given prefix. The prefix must be a string constant.",
-    { example: ':string:starts_with(Path, "/tmp/")', seeAlso: [":match_prefix"] }
+    "Matches strings that start with a given prefix: a string literal or a variable bound to a string earlier in the body. A non-string subject is a silent false.",
+    { example: ':string:starts_with(Path, "/tmp/")', seeAlso: [":match_prefix", ":string:matches"] }
   ),
   pred(
     ":string:ends_with",
     [["String", I, T.string], ["Suffix", I, T.string]],
-    "Matches strings that end with a given suffix. The suffix must be a string constant.",
-    { example: ':string:ends_with(File, ".mg")' }
+    "Matches strings that end with a given suffix: a string literal or a variable bound to a string earlier in the body. A non-string subject is a silent false.",
+    { example: ':string:ends_with(File, ".mg")', seeAlso: [":string:matches"] }
   ),
   pred(
     ":string:contains",
     [["String", I, T.string], ["Substring", I, T.string]],
-    "Matches strings that contain a given substring. The substring must be a string constant.",
-    { example: ':string:contains(Msg, "error")' }
+    "Matches strings that contain a given substring: a string literal or a variable bound to a string earlier in the body. A non-string subject is a silent false.",
+    { example: ':string:contains(Msg, "error")', seeAlso: [":string:matches"] }
+  ),
+  pred(
+    ":string:matches",
+    [["String", I, T.string], ["Pattern", I, T.string]],
+    "Matches strings against an RE2 regular expression (new in v0.7). The pattern is not anchored: use ^ and $. An invalid pattern is an error; a non-string subject is a silent false. Patterns are compiled once.",
+    { example: ':string:matches(Name, "^[a-z-]+$")', seeAlso: [":string:contains"] }
   ),
   // Filter predicate
   pred(
@@ -40296,87 +40357,186 @@ function collectVars(term, vars) {
 }
 function rewriteClauseWithInfo(clause, preBoundVars) {
   if (!clause.premises || clause.premises.length === 0) {
-    return { clause, droppedNegations: [] };
+    return { clause, unresolved: [] };
   }
   const boundVars = new Set(preBoundVars ?? []);
   const premises = [];
-  const delayNegAtom = [];
-  const delayVars = [];
+  let delayed = [];
+  const bindAll = (p) => {
+    const defVars = /* @__PURE__ */ new Set();
+    collectVars(p, defVars);
+    for (const v of defVars) boundVars.add(v);
+  };
   for (const p of clause.premises) {
     let needsDelay = false;
     switch (p.type) {
-      case "Atom": {
-        const defVars = /* @__PURE__ */ new Set();
-        collectVars(p, defVars);
-        for (const v of defVars) {
-          boundVars.add(v);
-        }
+      case "Atom":
+      case "Eq":
+        bindAll(p);
         break;
-      }
       case "TemporalLiteral":
-      case "TemporalAtom": {
-        if (p.type === "TemporalLiteral" && p.literal.type === "NegAtom") {
-          break;
-        }
-        const defVars = /* @__PURE__ */ new Set();
-        collectVars(p, defVars);
-        for (const v of defVars) {
-          boundVars.add(v);
-        }
+      case "TemporalAtom":
+        if (p.type === "TemporalLiteral" && p.literal.type === "NegAtom") break;
+        bindAll(p);
         break;
-      }
-      case "Eq": {
-        const eqVars = /* @__PURE__ */ new Set();
-        collectVars(p, eqVars);
-        for (const v of eqVars) {
-          boundVars.add(v);
-        }
-        break;
-      }
-      case "NegAtom": {
-        const negVars = /* @__PURE__ */ new Set();
-        collectVars(p, negVars);
-        const unboundVars = /* @__PURE__ */ new Set();
-        for (const v of negVars) {
-          if (!boundVars.has(v)) {
-            unboundVars.add(v);
-          }
-        }
-        if (unboundVars.size > 0) {
+      case "NegAtom":
+      case "Ineq": {
+        const vars = /* @__PURE__ */ new Set();
+        collectVars(p, vars);
+        const unbound = new Set([...vars].filter((v) => !boundVars.has(v)));
+        if (unbound.size > 0) {
           needsDelay = true;
-          delayNegAtom.push(p);
-          delayVars.push(unboundVars);
+          delayed.push({ premise: p, vars: unbound });
         }
         break;
       }
     }
-    if (!needsDelay) {
-      premises.push(p);
-      const toRemove = [];
-      for (let i = 0; i < delayVars.length; i++) {
-        const vars = delayVars[i];
-        let allBound = true;
-        for (const v of vars) {
-          if (!boundVars.has(v)) {
-            allBound = false;
-            break;
-          }
-        }
-        if (allBound) {
-          premises.push(delayNegAtom[i]);
-          toRemove.unshift(i);
-        }
-      }
-      for (const i of toRemove) {
-        delayNegAtom.splice(i, 1);
-        delayVars.splice(i, 1);
-      }
+    if (needsDelay) continue;
+    premises.push(p);
+    const waiting = [];
+    for (const d of delayed) {
+      if ([...d.vars].every((v) => boundVars.has(v))) premises.push(d.premise);
+      else waiting.push(d);
+    }
+    delayed = waiting;
+  }
+  const unresolved = delayed.map((d) => d.premise);
+  return { clause: { ...clause, premises: [...premises, ...unresolved] }, unresolved };
+}
+
+// ../mangle-lsp/src/analysis/negation.ts
+function simpleTermText(term) {
+  if (term.type === "Variable") return term.symbol;
+  if (term.type !== "Constant") return void 0;
+  const c = term;
+  switch (c.constantType) {
+    case "name":
+      return c.symbol;
+    case "string":
+      return JSON.stringify(c.symbol ?? "");
+    case "number":
+      return String(c.numValue ?? 0);
+    case "float64":
+      return String(c.floatValue ?? 0);
+    default:
+      return void 0;
+  }
+}
+function atomText(atom) {
+  const args = atom.args.map(simpleTermText);
+  if (args.some((a) => a === void 0)) return void 0;
+  return `${atom.predicate.symbol}(${args.join(", ")})`;
+}
+function premiseText(p) {
+  switch (p.type) {
+    case "Atom":
+      return atomText(p);
+    case "Eq":
+    case "Ineq": {
+      const e = p;
+      const l = simpleTermText(e.left);
+      const r = simpleTermText(e.right);
+      if (l === void 0 || r === void 0) return void 0;
+      return `${l} ${p.type === "Eq" ? "=" : "!="} ${r}`;
+    }
+    default:
+      return void 0;
+  }
+}
+function freshName(base2, taken) {
+  if (!taken(base2)) return base2;
+  for (let i = 2; ; i++) {
+    if (!taken(`${base2}_${i}`)) return `${base2}_${i}`;
+  }
+}
+function endOf(range) {
+  return { start: range.end, end: range.end };
+}
+function projectionFix(title, neg, clause, helper, headVars, body) {
+  const call = `!${helper}(${headVars.join(", ")})`;
+  return {
+    title,
+    range: neg.range,
+    newText: call,
+    additionalEdits: [{ range: endOf(clause.range), newText: `
+${helper}(${headVars.join(", ")}) :- ${body}.` }]
+  };
+}
+function keptVariables(atom) {
+  const out = [];
+  for (const a of atom.args) {
+    if (a.type === "Variable") {
+      const v = a.symbol;
+      if (v !== "_" && !out.includes(v)) out.push(v);
     }
   }
+  return out;
+}
+function negatedWildcardError(neg, clause, isTaken) {
+  const pred2 = neg.atom.predicate.symbol;
+  const vars = keptVariables(neg.atom);
+  const text = atomText(neg.atom);
+  const helper = freshName(`has_${pred2.replace(/[.:]/g, "_")}`, isTaken);
+  const fix = text && vars.length > 0 ? [projectionFix(`Negate a projection '${helper}(${vars.join(", ")})'`, neg, clause, helper, vars, text)] : void 0;
   return {
-    clause: { ...clause, premises },
-    droppedNegations: delayNegAtom
+    code: "E003",
+    message: `'_' in the negated atom '!${pred2}(...)' is a variable nothing binds; upstream v0.7 rejects the rule ("variable X0 is not bound")`,
+    range: neg.range,
+    severity: "error",
+    hint: `Mangle negation is not "there is no row with any value here". Project the columns you test first: ${helper}(${vars.join(", ")}) :- ${text ?? `${pred2}(...)`}. then negate !${helper}(${vars.join(", ")})`,
+    fixes: fix
   };
+}
+function isExternalDecl(decl) {
+  return !!decl?.descr?.some((d) => d.predicate.symbol === "external");
+}
+function negatedExternalError(neg, clause, isTaken) {
+  const pred2 = neg.atom.predicate.symbol;
+  const vars = keptVariables(neg.atom);
+  const helper = freshName(`${pred2.replace(/[.:]/g, "_")}_holds`, isTaken);
+  const positives = (clause.premises ?? []).filter((p) => p !== neg && p.type !== "NegAtom");
+  const parts = positives.map(premiseText);
+  const ext = atomText(neg.atom);
+  const printable = ext !== void 0 && parts.every((p) => p !== void 0);
+  const body = printable ? [...parts, ext].join(", ") : void 0;
+  return {
+    code: "E081",
+    message: `'!${pred2}(...)' negates an external predicate: the engine answers a negation from stored facts only and never calls the Go callback, so this is true whenever nothing stored the row`,
+    range: neg.range,
+    severity: "warning",
+    hint: `call the external positively in a helper rule whose body binds its inputs, then negate the helper: ${helper}(${vars.join(", ")}) :- ${body ?? `<premises binding the inputs>, ${pred2}(...)`}. and !${helper}(${vars.join(", ")})`,
+    fixes: body && vars.length > 0 ? [projectionFix(`Call '${pred2}' positively in '${helper}' and negate that`, neg, clause, helper, vars, body)] : void 0
+  };
+}
+
+// ../mangle-lsp/src/analysis/strictbounds.ts
+function strictBoundTrap(term) {
+  if (term.type === "Constant") {
+    const c = term;
+    return c.constantType === "name" && c.symbol === "/bool" ? "bool" : void 0;
+  }
+  if (rejectsEveryValueUnderStrictBounds(term)) return "singleton";
+  if (term.type !== "ApplyFn") return void 0;
+  for (const arg of term.args) {
+    const inner = strictBoundTrap(arg);
+    if (inner === "bool") return inner;
+  }
+  return void 0;
+}
+function rejectsEveryValueUnderStrictBounds(term) {
+  if (term.type !== "ApplyFn") return false;
+  const fn2 = term;
+  const args = fn2.args;
+  switch (fn2.function.symbol) {
+    case "fn:Singleton":
+      return true;
+    case "fn:TaggedUnion":
+      return false;
+    case "fn:Union":
+      return args.length > 0 && args.every(rejectsEveryValueUnderStrictBounds);
+    default:
+      return args.some(rejectsEveryValueUnderStrictBounds);
+  }
 }
 
 // ../mangle-lsp/src/analysis/diagnostics.ts
@@ -40426,10 +40586,10 @@ var entries = [
     title: "Variables in negation must be bound",
     category: "safety",
     severity: "error",
-    explanation: "Negation (`!pred(...)`) is negation-as-failure: it can only check that a *specific* tuple is absent. All its variables must be bound by positive premises of the same rule (anywhere in the body - Mangle reorders negations after the atoms that bind them). A variable that only occurs inside a negation is never bound, and upstream Mangle silently drops such a negation, changing the meaning of your rule.",
-    fix: 'Bind the variable with a positive atom, or replace it with `_` if you mean "no tuple with any value exists" - and then introduce a helper predicate that projects the columns you care about.',
+    explanation: 'Negation (`!pred(...)`) is negation-as-failure: it can only check that a *specific* tuple is absent. All its variables must be bound by positive premises of the same rule, anywhere in the body: Mangle v0.7 delays a negation until the premises that bind its variables have run. A variable that no positive premise binds is rejected ("variable X is not bound"), and so is `_` inside a negation, because the checker turns each `_` into a fresh variable that nothing binds: `!r(X, _)` does not mean "no r with any second value".',
+    fix: 'Bind the variable with a positive atom. To test "no tuple with any value here", project the columns you care about into a helper predicate and negate that (the quick fix writes the helper).',
     example: {
-      bad: "lonely(X) :- person(X), !friend(X, Y).",
+      bad: "lonely(X) :- person(X), !friend(X, _).",
       good: "has_friend(X) :- friend(X, _).\nlonely(X) :- person(X), !has_friend(X)."
     },
     docs: "negation.html"
@@ -40439,8 +40599,8 @@ var entries = [
     title: "Variables in comparison must be bound",
     category: "safety",
     severity: "error",
-    explanation: "Comparisons (`<`, `<=`, `>`, `>=`, `!=`) only test values; they never produce them. Both sides must be bound by earlier premises.",
-    fix: "Move the comparison after the atom that binds the variable, or add such an atom.",
+    explanation: 'Comparisons only test values; they never produce them. `<`, `<=`, `>`, `>=` and the `:float:` comparisons need both sides bound by an *earlier* premise (v0.7 rejects the rule otherwise: "move the subgoal to the right"). `!=` is different: like a negation it waits until its variables are bound, so its position does not matter, but some premise must still bind them.',
+    fix: "Move the comparison after the atom that binds the variable, or add such an atom. For `!=`, make sure a positive premise or equality binds both sides.",
     example: { bad: "big(X) :- X > 100, size(X).", good: "big(X) :- size(X), X > 100." }
   },
   {
@@ -40541,11 +40701,12 @@ var entries = [
   },
   {
     code: "E030",
-    title: "Pattern argument must be a constant",
+    title: "Pattern argument has the wrong type",
     category: "builtin",
     severity: "error",
-    explanation: "The prefix/suffix/substring argument of `:match_prefix`, `:string:starts_with`, `:string:ends_with` and `:string:contains` must be a constant in upstream Mangle.",
-    fix: "Write the pattern as a literal constant."
+    explanation: 'The pattern of `:string:starts_with`, `:string:ends_with` and `:string:contains` must be a string: a string literal, a variable bound to a string by an earlier premise, or a function that returns one (v0.7 substitutes and evaluates it). A constant of another type, such as the name `/ab`, is a run-time error ("2nd arguments must be string constant"). `:match_prefix` needs a name constant; a variable prefix fails strict type checking.',
+    fix: "Use a string pattern for the string tests (convert a name with `fn:name:to_string`), and a literal name such as `/users` for `:match_prefix`.",
+    example: { bad: "hit(H) :- hay(H), :string:contains(H, /ab).", good: 'hit(H) :- hay(H), :string:contains(H, "ab").' }
   },
   {
     code: "E033",
@@ -40891,6 +41052,31 @@ var entries = [
     explanation: "A `mode(...)` descriptor needs one quoted '+' (input), '-' (output) or '?' (either) per argument. Upstream silently ignores malformed modes, so the declaration would have no effect.",
     fix: "Write e.g. mode('+', '-') with one entry per argument of the declared predicate."
   },
+  {
+    code: "E081",
+    title: "Negated external predicate never calls Go",
+    category: "declaration",
+    severity: "warning",
+    explanation: "A predicate declared `descr [external(), mode(...)]` is answered by a Go callback during evaluation, but only in positive premises. In v0.7, `engine/premise.go` answers a negated premise `!ext(...)` from the fact store alone and never calls the callback, so the negation is true whenever nothing happened to store that row: usually always.",
+    fix: "Call the external positively in a helper rule whose body binds its inputs, then negate the helper. The quick fix writes the helper from the rule's own positive premises.",
+    example: {
+      bad: `Decl ext(X, Y) descr [external(), mode('+', '-')].
+miss(X) :- item(X), !ext(X, "hit").`,
+      good: 'ext_holds(X) :- item(X), ext(X, "hit").\nmiss(X) :- item(X), !ext_holds(X).'
+    }
+  },
+  {
+    code: "E082",
+    title: "Bound that strict checking can never satisfy",
+    category: "type",
+    severity: "warning",
+    explanation: "In v0.7 the bounds checker infers the base type of a constant (`/name` for `/high`), and `/name` does not conform to `fn:Singleton(/high)` or to a union of singletons. A related trap: Decl bounds have no boolean base type, so `/bool` is the name-prefix type of names under `/bool/`, and `/true` is not one of them. With strict checking (`AnalyzeAndCheckBounds(..., ErrorForBoundsMismatch)`) every fact and rule that writes such a column is rejected, including correct ones; without it the bound is not checked at all. `fn:TaggedUnion` is the exception: the checker reads its tags as `/name`.",
+    fix: "Declare the column `/name` (for booleans too), and enforce a closed vocabulary with an invariant relation that tests can query, e.g. `valid_sev(/low). valid_sev(/high). bad_sev(I, S) :- sev(I, S), !valid_sev(S).`",
+    example: {
+      bad: "Decl sev(I, S) bound [/name, fn:Union(fn:Singleton(/low), fn:Singleton(/high))].",
+      good: "Decl sev(I, S) bound [/name, /name].\nvalid_sev(/low). valid_sev(/high).\nbad_sev(I, S) :- sev(I, S), !valid_sev(S)."
+    }
+  },
   // ------------------------------------------------------------- stratification
   {
     code: "E015",
@@ -41071,6 +41257,181 @@ var entries = [
     explanation: "A named variable that occurs exactly once in a clause does not connect anything; it is usually a typo of another variable (e.g. `Person` vs `Persn`), which silently turns a join into a cross product or leaves a filter ineffective.",
     fix: 'If you mean "any value", write `_` instead. Otherwise fix the spelling so it matches the other occurrence. (Not reported in aggregating rules, where every named body variable keeps rows apart - see E080.)',
     example: { bad: "owns(P, C) :- person(P), car(Cr), owner(Cr, P).", good: "owns(P, C) :- person(P), car(C), owner(C, P)." }
+  },
+  {
+    code: "E083",
+    title: "Zero-arity Decl breaks strict bounds checking",
+    category: "declaration",
+    severity: "warning",
+    explanation: 'Upstream v0.7 strict bounds checking (`AnalyzeAndCheckBounds(..., ErrorForBoundsMismatch)`) fails the whole program on a zero-arity Decl that has no bound list, with "no bound decls in p()". Loose checking accepts it, and a zero-arity predicate without a Decl is fine either way. Verified on v0.7.0.',
+    fix: "Give the Decl an empty bound list.",
+    example: { bad: "Decl ready().", good: "Decl ready() bound []." }
+  },
+  {
+    code: "E084",
+    title: ":string:matches fails strict bounds checking",
+    category: "builtin",
+    severity: "warning",
+    explanation: 'Upstream v0.7.0 added `:string:matches` (RE2 regular expressions) but not its entry in the built-in type table (`symbols.go` lists `:string:starts_with`, `:string:ends_with` and `:string:contains` only). Strict bounds checking therefore rejects any rule that uses it ("cannot find assignment that works for premise"). Loose analysis accepts it and evaluation is correct. Verified on v0.7.0.',
+    fix: "Under strict checking, use `:string:starts_with`, `:string:ends_with` or `:string:contains` where they suffice; otherwise run loose analysis until upstream adds the signature."
+  },
+  // --------------------------------------------------------------------- advice
+  {
+    code: "A001",
+    title: "Arg-max joined back: use a merge lattice",
+    category: "advice",
+    severity: "info",
+    explanation: 'Mangle has no arg-max reducer, so a common pattern takes `fn:max` (or `fn:min`) per group in one rule and joins the result back to the source in a second to find the winning row. That needs the whole relation and a second stratum. A Decl with `fundep([Key], [P])` and `merge([P], "better")` makes the relation keep one value per key, replaced whenever the deferred comparison rule prefers a new one, inside the fixpoint and inside recursion. Verified on v0.7: same answers as the join-back; ties keep the first winner instead of several rows. The engine replaces the old fact only on stores that support removal (its in-memory stores do; a temporal-store adapter does not, and then both facts stay).',
+    fix: "Add the lattice relation (the quick fix writes it from the aggregating rule) and switch the consumers to it.",
+    example: {
+      bad: "latest_t(F, M) :- obs(F, T, _) |> do fn:group_by(F), let M = fn:max(T).\nlatest(F, V) :- latest_t(F, M), obs(F, M, V).",
+      good: `Decl best_obs(F, P) descr [fundep([F], [P]), merge([P], "obs_later")].
+Decl obs_later(P1, P2, B) descr [mode('+', '+', '-'), deferred()].
+obs_later(P1, P2, P1) :- :match_pair(P1, T1, _), :match_pair(P2, T2, _), T1 >= T2.
+obs_later(P1, P2, P2) :- :match_pair(P1, T1, _), :match_pair(P2, T2, _), T1 < T2.
+best_obs(F, fn:pair(T, V)) :- obs(F, T, V).`
+    }
+  },
+  {
+    code: "A002",
+    title: "Parallel variant predicates: use a tagged union",
+    category: "advice",
+    severity: "info",
+    explanation: "Three or more predicates such as `tool_started_event`, `tool_failed_event`, `tool_done_event` are variants of one thing spread over several relations. A Decl bounded by `fn:TaggedUnion(/kind, /started, fn:Struct(...), ...)` keeps them in one relation: a rule can match one variant (`:match_field(E, /kind, K), K = /failed`) or all of them, and a new variant is one more tag instead of a new predicate. Tagged unions pass strict bounds checking in v0.7 (the checker types their tags as /name); unions of singletons do not (E082).",
+    fix: "Declare one relation with a tagged-union value column and assert one fact per event."
+  },
+  {
+    code: "A003",
+    title: "Premise tests a value no writer produces",
+    category: "advice",
+    severity: "warning",
+    explanation: "Every rule and fact that writes this column of the predicate writes a name constant, and the constant this premise tests is not one of them, so the premise can never match and the rule derives nothing. This is the closed-vocabulary failure: a typo such as `/hihg`. A `fn:Singleton` union bound cannot catch it in v0.7 (E082); an invariant relation can: list the vocabulary as facts, derive violations with negation, and have a test assert there are none.",
+    fix: "Fix the constant (the quick fix offers the closest written value), and consider `valid_x(...)` facts plus a `bad_x(V) :- x(V), !valid_x(V).` invariant.",
+    example: { bad: "sev(/a, /high).\nurgent(I) :- sev(I, /hihg).", good: "sev(/a, /high).\nurgent(I) :- sev(I, /high)." }
+  },
+  {
+    code: "A004",
+    title: "Clock comparison: use temporal facts",
+    category: "advice",
+    severity: "info",
+    explanation: 'The rule reads a clock fact (`current_time(Now)`) and compares timestamps to decide whether something is recent, expired or due. Mangle has temporal facts: a Decl marked `temporal` holds facts valid over intervals, and operators such as `<-[0s, 24h] seen(X)` ("held at some point in the last 24 hours") read the evaluation time. Expiry needs no sweeper and no clock fact, and pinning the evaluation time replays a decision exactly. Verified on v0.7 (`recent(X) :- <-[0s, 24h] seen(X).`). Evaluation needs a temporal store and an evaluation time.',
+    fix: "Declare the fact temporal, assert it with its validity interval, and replace the comparison by a temporal operator.",
+    docs: "temporal.html"
+  },
+  {
+    code: "A005",
+    title: "Collecting pairs: use fn:collect_to_map",
+    category: "advice",
+    severity: "info",
+    explanation: "`fn:collect(fn:pair(K, V))` builds a list of pairs that the host then turns into a map. `fn:collect_to_map(K, V)` builds the map in the aggregation: one answer-shaped fact per group that Go reads without assembling and that rules can query with `fn:map:get`. Verified on v0.7. Keys should be unique per group.",
+    fix: "Replace the reducer (quick fix).",
+    example: { bad: "m(U, L) :- kv(U, K, V) |> do fn:group_by(U), let L = fn:collect(fn:pair(K, V)).", good: "m(U, M) :- kv(U, K, V) |> do fn:group_by(U), let M = fn:collect_to_map(K, V)." }
+  },
+  {
+    code: "A006",
+    title: "All paths, then pick one: use a merge lattice",
+    category: "advice",
+    severity: "info",
+    explanation: "A recursive relation accumulates a path or cost (`fn:list:append`, `fn:plus`) for every route, and a later aggregation keeps only the minimum or maximum. On a cyclic graph that recursion never finishes: verified on v0.7, a 5-edge cycle ran 38 s to the 100k fact limit. Declaring the recursive relation with `fundep` and `merge` keeps only the best path per key during the fixpoint (upstream `examples/shortest_path.mg`); the same cyclic graph then terminates with its 16 shortest paths.",
+    fix: 'Add `descr [fundep([Source, Target], [Path]), merge([Path], "shorter")]` to the recursive relation and a deferred `shorter` rule, then drop the aggregation.',
+    docs: "aggregation.html"
+  },
+  // ------------------------------------------------------------------- boundary
+  {
+    code: "B001",
+    title: "Rule reads a predicate nothing produces",
+    category: "boundary",
+    severity: "warning",
+    explanation: "A rule body reads this predicate, but no rule or fact in the module's .mg files derives it, no Go code asserts it, and its name appears nowhere else in Go. The rule compiles and never fires. Found by `mangle-cli boundary`, which scans the Go module with go/ast and judges the result with a Mangle program on the real engine.",
+    fix: "Make the producer assert it (with the Decl's shape), or delete the rule and the Decl."
+  },
+  {
+    code: "B002",
+    title: "Declared predicate nothing produces or reads",
+    category: "boundary",
+    severity: "info",
+    explanation: "A Decl that no rule, fact or Go code produces, and nothing reads in .mg or Go. It is dead schema.",
+    fix: "Delete the Decl, or wire the producer and consumer it was meant for."
+  },
+  {
+    code: "B003",
+    title: "Go asserts an undeclared predicate",
+    category: "boundary",
+    severity: "warning",
+    explanation: "Go asserts a fact whose predicate no .mg file declares or defines. No rule can read it (a typo, or a fact nobody consumes), and hosts that validate facts against Decls warn on it.",
+    fix: "Add the Decl (with bounds) to the owning schema file, or correct the predicate name."
+  },
+  {
+    code: "B004",
+    title: "Go asserts a predicate with the wrong arity",
+    category: "boundary",
+    severity: "error",
+    explanation: "In Mangle the arity is part of the predicate: `p/3` and `p/2` are different relations. Go asserts this name with an arity that no Decl and no rule has, so every rule written against the declared arity never sees these facts.",
+    fix: "Make the Go fact match the Decl's arguments, or change the Decl (and its rules) if the Go shape is the intended one."
+  },
+  {
+    code: "B005",
+    title: "Go queries a predicate the program never defines",
+    category: "boundary",
+    severity: "warning",
+    explanation: "Go queries a predicate that no .mg file declares or defines, so the query always returns nothing.",
+    fix: "Fix the name, or add the rule that derives it."
+  },
+  {
+    code: "B006",
+    title: "Asserted but never read",
+    category: "boundary",
+    severity: "info",
+    explanation: "Go asserts this declared predicate, but no rule reads it, no Go code queries it, and its name appears nowhere else in Go. The facts are written and ignored.",
+    fix: "Write the rule that uses it, or stop asserting it."
+  },
+  {
+    code: "B007",
+    title: "Go builds the wrong constant type for a column",
+    category: "boundary",
+    severity: "error",
+    explanation: 'The Decl bounds this argument with a base type, and Go builds a value that cannot become a constant of that type: a float64 for a /number column, an int for /float64, a name (`MangleAtom`, or a literal "/x" string that codeNERD\'s kernel turns into a name) for /string, or a plain string literal for /name. A join between a name and a string never matches, so rules silently derive nothing; strict bounds checking would reject the fact. Shapes the scan cannot know (a string variable) are never reported.',
+    fix: "Build the declared representation at the producer: `types.MangleAtom(x)` for /name, `types.MangleString(x)` or a plain string for /string, `int64(...)` for /number, `float64(...)` for /float64. Or fix the Decl if Go's shape is the intended one."
+  },
+  {
+    code: "B008",
+    title: "External predicate without a Go callback",
+    category: "boundary",
+    severity: "warning",
+    explanation: "The Decl says `descr [external(), mode(...)]`, so evaluation expects a Go callback, but the module registers none for this name and arity. Hosts reject or silently empty the predicate.",
+    fix: "Register the callback with the Decl's name, arity and modes, or remove `external()`."
+  },
+  {
+    code: "B009",
+    title: "Go callback without an external Decl",
+    category: "boundary",
+    severity: "warning",
+    explanation: "Go registers an external-predicate callback, but no .mg Decl marks the predicate `external()` at this arity, so the engine never calls it.",
+    fix: "Declare the predicate with `descr [external(), mode(...)]` matching the callback."
+  },
+  {
+    code: "B010",
+    title: "Callback modes disagree with the Decl",
+    category: "boundary",
+    severity: "error",
+    explanation: "The modes the Go callback is registered with (+ input, - output) differ from the Decl's `mode(...)`. The engine binds arguments by the Decl, so the callback receives inputs it did not expect.",
+    fix: "Make the two agree; the Decl is what analysis and evaluation use."
+  },
+  {
+    code: "B011",
+    title: "Rule negates an external; its Go callback never runs",
+    category: "boundary",
+    severity: "warning",
+    explanation: "The cross-file form of E081: a rule negates an external predicate, and the engine answers negations from stored facts only (v0.7 engine/premise.go), so the Go callback listed with the finding is never called for it.",
+    fix: "Call the external positively in a helper rule that binds its inputs, then negate the helper."
+  },
+  {
+    code: "B012",
+    title: "Rule reads a predicate with no recognized producer",
+    category: "boundary",
+    severity: "info",
+    explanation: "As B001, except that Go mentions the name somewhere the scan does not read as an assert: a list of predicate names, a map, a log line or a producer whose predicate is computed. Check the listed places; if none of them asserts the predicate, the rule never fires.",
+    fix: "Assert the predicate where it is produced, with the Decl's shape."
   }
 ];
 var DIAGNOSTIC_CATALOG = new Map(entries.map((e) => [e.code, e]));
@@ -41891,12 +42252,274 @@ function termUsesVar(term, name) {
   return false;
 }
 
+// ../mangle-lsp/src/analysis/advice.ts
+function checkAdvice(unit, errors) {
+  adviseArgMaxJoinBack(unit, errors);
+  adviseTaggedUnionFamilies(unit, errors);
+  adviseNeverWrittenConstants(unit, errors);
+  adviseClockComparisons(unit, errors);
+  adviseCollectPairs(unit, errors);
+  adviseAllPathsThenPick(unit, errors);
+}
+var predKey2 = (a) => `${a.predicate.symbol}/${a.predicate.arity}`;
+function positiveAtoms(clause) {
+  return (clause.premises ?? []).filter((p) => p.type === "Atom" && !p.predicate.symbol.startsWith(":"));
+}
+function varName(t) {
+  return t && t.type === "Variable" && t.symbol !== "_" ? t.symbol : void 0;
+}
+function doTransform(clause) {
+  const stmts = clause.transform?.statements;
+  const first = stmts?.[0];
+  if (!stmts || !first || first.variable !== null || first.fn.function.symbol !== "fn:group_by") return void 0;
+  const keys = first.fn.args.map(varName).filter((v) => !!v);
+  const lets = stmts.slice(1).filter((s) => s.variable).map((s) => ({ variable: s.variable.symbol, fn: s.fn }));
+  return { keys, lets };
+}
+function declFor(unit, key) {
+  return unit.decls.find((d) => `${d.declaredAtom.predicate.symbol}/${d.declaredAtom.predicate.arity}` === key);
+}
+function adviseArgMaxJoinBack(unit, errors) {
+  for (const agg of unit.clauses) {
+    const t = doTransform(agg);
+    const body = positiveAtoms(agg);
+    if (!t || body.length !== 1 || (agg.premises ?? []).length !== 1) continue;
+    const src = body[0];
+    for (const l of t.lets) {
+      const reducer = l.fn.function.symbol;
+      if (reducer !== "fn:max" && reducer !== "fn:min") continue;
+      const measured = varName(l.fn.args[0]);
+      if (!measured) continue;
+      const headKey = predKey2(agg.head);
+      if (t.keys.length === 0) continue;
+      const joiner = unit.clauses.find((c) => c !== agg && positiveAtoms(c).some((a) => predKey2(a) === headKey) && positiveAtoms(c).some((a) => predKey2(a) === predKey2(src)));
+      if (!joiner) continue;
+      const back = positiveAtoms(joiner).find((a) => predKey2(a) === predKey2(src));
+      const roles = src.args.map((a) => varName(a));
+      const values = back.args.map((a, i) => roles[i] === measured || roles[i] && t.keys.includes(roles[i]) ? void 0 : varName(a)).filter((v) => !!v);
+      const keys = t.keys;
+      const name = `best_${src.predicate.symbol}`;
+      const cmp = `${src.predicate.symbol}_${reducer === "fn:max" ? "later" : "earlier"}`;
+      const [win, lose] = reducer === "fn:max" ? [">=", "<"] : ["<=", ">"];
+      const value = values.length === 1 ? values[0] : void 0;
+      const rewrite = value === void 0 ? void 0 : [
+        `Decl ${name}(${[...keys, "P"].join(", ")}) descr [fundep([${keys.join(", ")}], [P]), merge([P], "${cmp}")].`,
+        `Decl ${cmp}(P1, P2, B) descr [mode('+', '+', '-'), deferred()].`,
+        `${cmp}(P1, P2, P1) :- :match_pair(P1, T1, _), :match_pair(P2, T2, _), T1 ${win} T2.`,
+        `${cmp}(P1, P2, P2) :- :match_pair(P1, T1, _), :match_pair(P2, T2, _), T1 ${lose} T2.`,
+        `${name}(${[...keys, `fn:pair(${measured}, ${value})`].join(", ")}) :- ${src.predicate.symbol}(${src.args.map((a, i) => varName(a) ? termToString(a) : varName(back.args[i]) === value ? value : "_").join(", ")}).`
+      ].join("\n");
+      errors.push({
+        code: "A001",
+        message: `'${termToString(agg.head)}' takes ${reducer} per group and this rule joins it back to '${src.predicate.symbol}' to find the winning row; a merge lattice keeps the winner directly`,
+        range: joiner.head.range,
+        severity: "info",
+        hint: rewrite ? `declare a relation that keeps one value per key and merges by comparison (one relation, no second stratum, works inside recursion; ties keep the first winner instead of several rows):
+${rewrite}
+The store must support fact removal (the engine's in-memory stores do; a temporal-store adapter does not, and then both facts stay)` : 'declare a relation with descr [fundep([Key], [P]), merge([P], "better")] whose value is fn:pair(Measure, Value), and a deferred better(P1, P2, B) rule that compares with :match_pair',
+        fixes: rewrite ? [{ title: `Add the lattice '${name}' (then switch consumers to it)`, range: { start: joiner.range.end, end: joiner.range.end }, newText: `
+${rewrite}` }] : void 0
+      });
+    }
+  }
+}
+var VARIANT_SUFFIXES = /* @__PURE__ */ new Set(["event", "result", "outcome", "signal", "notification", "message", "verdict"]);
+function adviseTaggedUnionFamilies(unit, errors) {
+  const first = /* @__PURE__ */ new Map();
+  for (const d of unit.decls) {
+    first.set(d.declaredAtom.predicate.symbol, { range: d.range, arity: d.declaredAtom.predicate.arity });
+  }
+  for (const c of unit.clauses) {
+    if (!first.has(c.head.predicate.symbol)) first.set(c.head.predicate.symbol, { range: c.head.range, arity: c.head.predicate.arity });
+  }
+  const families = /* @__PURE__ */ new Map();
+  for (const name of first.keys()) {
+    const parts = name.split("_");
+    if (parts.length < 3) continue;
+    const suffix = parts[parts.length - 1];
+    if (!VARIANT_SUFFIXES.has(suffix)) continue;
+    const family = `${parts[0]}_${suffix}`;
+    families.set(family, [...families.get(family) ?? [], name]);
+  }
+  for (const [family, members] of families) {
+    if (members.length < 3) continue;
+    const tags = members.map((m2) => `/${m2.split("_").slice(1, -1).join("_")}`);
+    const anchor = first.get(members[0]);
+    errors.push({
+      code: "A002",
+      message: `${members.length} predicates (${members.join(", ")}) are variants of one '${family}': a tagged union keeps them in one relation`,
+      range: anchor.range,
+      severity: "info",
+      hint: `declare one relation whose value is a tagged union, so a rule can match one variant or all of them, and a new variant is one more tag:
+Decl ${family}(Id, E) bound [/name, fn:TaggedUnion(/kind, ${tags.map((t) => `${t}, fn:Struct(...)`).join(", ")})].
+Match a variant with :match_field(E, /kind, K), K = ${tags[0]}. Tagged unions pass strict bounds checking (union-of-singleton bounds do not: E082)`
+    });
+  }
+}
+function constantKey2(t) {
+  return t.type === "Constant" && t.constantType === "name" ? t.symbol : void 0;
+}
+function adviseNeverWrittenConstants(unit, errors) {
+  const written = /* @__PURE__ */ new Map();
+  for (const c of unit.clauses) {
+    const key = predKey2(c.head);
+    const cols = written.get(key) ?? /* @__PURE__ */ new Map();
+    c.head.args.forEach((a, i) => {
+      if (cols.has(i) && cols.get(i) === void 0) return;
+      const k = constantKey2(a);
+      if (k === void 0) cols.set(i, void 0);
+      else cols.set(i, /* @__PURE__ */ new Set([...cols.get(i) ?? [], k]));
+    });
+    written.set(key, cols);
+  }
+  for (const c of unit.clauses) {
+    for (const atom of positiveAtoms(c)) {
+      const key = predKey2(atom);
+      const cols = written.get(key);
+      const decl = declFor(unit, key);
+      if (!cols || decl?.descr?.some((d) => d.predicate.symbol === "extensional" || d.predicate.symbol === "external")) continue;
+      atom.args.forEach((a, i) => {
+        const k = constantKey2(a);
+        const values = cols.get(i);
+        if (k === void 0 || !values || values.has(k)) return;
+        const sug = suggestSimilar(k, values);
+        errors.push({
+          code: "A003",
+          message: `'${k}' is never written to argument ${i + 1} of ${key} (its writers produce only ${[...values].sort().join(", ")}), so this premise never matches`,
+          range: a.range,
+          severity: "warning",
+          hint: `${sug.length > 0 ? `did you mean '${sug[0]}'? ` : ""}to make a closed vocabulary a checked contract, list it as a relation and derive violations a test asserts empty: valid_${atom.predicate.symbol}_${i + 1}(${[...values][0]}). ... bad_${atom.predicate.symbol}(V) :- ${atom.predicate.symbol}(${atom.args.map((_, j) => j === i ? "V" : "_").join(", ")}), !valid_${atom.predicate.symbol}_${i + 1}(V). (fn:Singleton bounds cannot: E082)`,
+          fixes: sug.length > 0 ? [{ title: `Replace with '${sug[0]}'`, range: a.range, newText: sug[0] }] : void 0
+        });
+      });
+    }
+  }
+}
+var CLOCK_PREDICATE = /^(current_time|current_timestamp|now|clock|time_now|current_unix_time)$/;
+var COMPARISONS = /* @__PURE__ */ new Set([":lt", ":le", ":gt", ":ge", ":time:lt", ":time:le", ":time:gt", ":time:ge", ":duration:lt", ":duration:le", ":duration:gt", ":duration:ge"]);
+function termVars(t, out) {
+  if (t.type === "Variable") {
+    if (t.symbol !== "_") out.add(t.symbol);
+  } else if (t.type === "ApplyFn" || t.type === "Atom") {
+    for (const a of t.args) termVars(a, out);
+  } else if (t.type === "Eq" || t.type === "Ineq") {
+    const e = t;
+    termVars(e.left, out);
+    termVars(e.right, out);
+  }
+}
+function adviseClockComparisons(unit, errors) {
+  for (const c of unit.clauses) {
+    const clock = positiveAtoms(c).find((a) => CLOCK_PREDICATE.test(a.predicate.symbol));
+    if (!clock) continue;
+    const nowVars = /* @__PURE__ */ new Set();
+    clock.args.forEach((a) => {
+      const v = varName(a);
+      if (v) nowVars.add(v);
+    });
+    for (const p of c.premises ?? []) {
+      if (p.type !== "Eq") continue;
+      const e = p;
+      const rhs = /* @__PURE__ */ new Set();
+      termVars(e.right, rhs);
+      const lhs = varName(e.left);
+      if (lhs && [...rhs].some((v) => nowVars.has(v))) nowVars.add(lhs);
+    }
+    const compares = (c.premises ?? []).find((p) => {
+      if (p.type !== "Atom" || !COMPARISONS.has(p.predicate.symbol)) return false;
+      const vars = /* @__PURE__ */ new Set();
+      termVars(p, vars);
+      return [...vars].some((v) => nowVars.has(v));
+    });
+    if (!compares) continue;
+    const fact = positiveAtoms(c).find((a) => a !== clock);
+    const subject = fact ? fact.predicate.symbol : "p";
+    errors.push({
+      code: "A004",
+      message: `This rule decides freshness by comparing timestamps against the clock fact '${clock.predicate.symbol}'; temporal facts say it directly`,
+      range: compares.range,
+      severity: "info",
+      hint: `declare the fact temporal and let Go assert it with its validity time; the operator reads the evaluation time, so no clock fact is needed and a replay pins it:
+Decl ${subject}(...) temporal bound [...].
+recent(X) :- <-[0s, 24h] ${subject}(X).
+The evaluation needs a temporal store (engine.WithTemporalStore) and the time to judge at (engine.WithEvaluationTime)`
+    });
+  }
+}
+function adviseCollectPairs(unit, errors) {
+  for (const c of unit.clauses) {
+    const t = doTransform(c);
+    if (!t) continue;
+    for (const l of t.lets) {
+      const fn2 = l.fn.function.symbol;
+      if (fn2 !== "fn:collect" && fn2 !== "fn:collect_distinct") continue;
+      const arg = l.fn.args[0];
+      if (!arg || arg.type !== "ApplyFn" || arg.function.symbol !== "fn:pair" || arg.args.length !== 2) continue;
+      const [k, v] = arg.args;
+      const replacement = `fn:collect_to_map(${termToString(k)}, ${termToString(v)})`;
+      errors.push({
+        code: "A005",
+        message: `'${fn2}(fn:pair(...))' builds a list of pairs for Go to turn into a map; fn:collect_to_map builds the map`,
+        range: l.fn.range,
+        severity: "info",
+        hint: `${replacement} gives one answer-shaped value per group: Go reads it without assembling, and rules can look keys up with fn:map:get. Keys must be unique per group (a later pair wins)`,
+        fixes: [{ title: `Use ${replacement}`, range: l.fn.range, newText: replacement }]
+      });
+    }
+  }
+}
+var ACCUMULATORS = /* @__PURE__ */ new Set(["fn:list:append", "fn:list:cons", "fn:plus", "fn:float:plus"]);
+function accumulates(c) {
+  let found = false;
+  const visit = (t) => {
+    if (t.type === "ApplyFn") {
+      if (ACCUMULATORS.has(t.function.symbol)) found = true;
+      t.args.forEach(visit);
+    } else if (t.type === "Eq") {
+      visit(t.right);
+      visit(t.left);
+    }
+  };
+  (c.premises ?? []).forEach(visit);
+  c.head.args.forEach(visit);
+  c.transform?.statements.forEach((s) => visit(s.fn));
+  return found;
+}
+function adviseAllPathsThenPick(unit, errors) {
+  const recursiveAccumulating = /* @__PURE__ */ new Set();
+  for (const c of unit.clauses) {
+    const key = predKey2(c.head);
+    if (positiveAtoms(c).some((a) => predKey2(a) === key) && accumulates(c)) recursiveAccumulating.add(key);
+  }
+  for (const c of unit.clauses) {
+    const t = doTransform(c);
+    if (!t) continue;
+    const src = positiveAtoms(c).find((a) => recursiveAccumulating.has(predKey2(a)));
+    if (!src || declFor(unit, predKey2(src))?.descr?.some((d) => d.predicate.symbol === "merge")) continue;
+    const pick = t.lets.find((l) => l.fn.function.symbol === "fn:min" || l.fn.function.symbol === "fn:max");
+    if (!pick) continue;
+    errors.push({
+      code: "A006",
+      message: `'${src.predicate.symbol}' enumerates every path (accumulating a list or cost) and this rule keeps only the ${pick.fn.function.symbol === "fn:min" ? "smallest" : "largest"}; a merge lattice keeps only the best one while recursing`,
+      range: pick.fn.range,
+      severity: "info",
+      hint: `declare the recursive relation with a lattice so worse paths are dropped during the fixpoint (upstream examples/shortest_path.mg):
+Decl ${src.predicate.symbol}(Source, Target, Path) descr [fundep([Source, Target], [Path]), merge([Path], "shorter")].
+Decl shorter(P1, P2, Best) descr [mode('+', '+', '-'), deferred()].
+shorter(P1, P2, S) :- fn:list:len(P1) < fn:list:len(P2), S = P1.
+shorter(P1, P2, S) :- fn:list:len(P2) <= fn:list:len(P1), S = P2.
+On a cyclic graph the all-paths version never finishes (it runs to the fact limit); the lattice version terminates`
+    });
+  }
+}
+
 // ../mangle-lsp/src/analysis/validation.ts
 var STRING_CONSTANT_PREDICATES = /* @__PURE__ */ new Set([
   ":match_prefix",
   ":string:starts_with",
   ":string:ends_with",
-  ":string:contains"
+  ":string:contains",
+  ":string:matches"
 ]);
 var DESTRUCTURING_PREDICATES = /* @__PURE__ */ new Set([
   ":match_pair",
@@ -41907,7 +42530,8 @@ var FIELD_SELECTOR_PREDICATES = /* @__PURE__ */ new Set([
   ":match_entry"
 ]);
 var VALID_ESCAPES = /* @__PURE__ */ new Set(["n", "t", "r", "\\", '"', "'"]);
-function validate(unit) {
+function validate(input) {
+  const unit = analyzableUnit(input);
   const errors = [];
   const symbolTable = buildSymbolTable(unit);
   const declaredPredicates = /* @__PURE__ */ new Map();
@@ -41935,8 +42559,8 @@ function validate(unit) {
   }
   for (const clause of unit.clauses) {
     const pred2 = clause.head.predicate;
-    const predKey2 = `${pred2.symbol}/${pred2.arity}`;
-    const decl = declaredPredicates.get(predKey2);
+    const predKey3 = `${pred2.symbol}/${pred2.arity}`;
+    const decl = declaredPredicates.get(predKey3);
     if (decl && clause.headTime && !isEternalInterval(clause.headTime)) {
       if (!isDeclTemporal(decl) && !isDeclMaybeTemporal(decl)) {
         errors.push({
@@ -41960,6 +42584,7 @@ function validate(unit) {
   }
   validateArityConsistency(unit, errors);
   checkClauseLints(unit, errors);
+  checkAdvice(unit, errors);
   checkBounds(unit, declaredPredicates, errors);
   return { errors, symbolTable };
 }
@@ -42013,6 +42638,17 @@ function validateDeclaration(decl, errors) {
       expectedArgs.set(arg.symbol, arg);
     }
   }
+  if (declAtom.args.length === 0 && (!decl.bounds || decl.bounds.length === 0) && !decl.constraints?.length) {
+    const at = { line: decl.range.end.line, column: Math.max(0, decl.range.end.column - 1), offset: Math.max(0, decl.range.end.offset - 1) };
+    errors.push({
+      code: "E083",
+      message: `Zero-arity Decl '${declAtom.predicate.symbol}()' has no bound list: upstream v0.7 strict bounds checking rejects the whole program ("no bound decls in ${declAtom.predicate.symbol}()")`,
+      range: declAtom.range,
+      severity: "warning",
+      hint: `write 'Decl ${declAtom.predicate.symbol}() bound [].' (loose checking, which codeNERD's kernel uses, accepts either)`,
+      fixes: [{ title: "Add 'bound []'", range: { start: at, end: at }, newText: " bound []" }]
+    });
+  }
   if (decl.bounds && decl.bounds.length > 0) {
     for (const boundDecl of decl.bounds) {
       if (boundDecl.bounds.length !== declAtom.args.length) {
@@ -42034,6 +42670,17 @@ function validateDeclaration(decl, errors) {
             range: problem.range,
             severity: "error",
             hint
+          });
+        }
+        const trap = strictBoundTrap(bound);
+        if (trap) {
+          errors.push({
+            code: "E082",
+            message: trap === "singleton" ? `Argument ${i + 1} is bounded by ${termToString(bound)}: upstream v0.7 types every constant by its base type (/name), so strict bounds checking rejects every value written to this column, and loose checking ignores the bound` : `Argument ${i + 1} uses /bool, which in a bound is the name-prefix type of names under /bool/ (there is no boolean base type): /true and /false do not conform`,
+            range: bound.range,
+            severity: "warning",
+            hint: trap === "singleton" ? "declare the column /name and enforce the vocabulary with a relation tests can query: valid_x(/a). valid_x(/b). bad_x(V) :- x(V), !valid_x(V)." : "declare the column /name (values /true and /false)",
+            fixes: trap === "bool" && bound.type === "Constant" ? [{ title: "Replace '/bool' with '/name'", range: bound.range, newText: "/name" }] : void 0
           });
         }
       }
@@ -42121,17 +42768,17 @@ function validateDeclaration(decl, errors) {
         });
         continue;
       }
-      const varName = firstArg.symbol;
-      if (!expectedArgsForArgCheck.has(varName)) {
+      const varName2 = firstArg.symbol;
+      if (!expectedArgsForArgCheck.has(varName2)) {
         errors.push({
           code: "E056",
-          message: `arg atom for an unknown variable ${varName}`,
+          message: `arg atom for an unknown variable ${varName2}`,
           range: firstArg.range,
           severity: "error"
         });
         continue;
       }
-      expectedArgsForArgCheck.delete(varName);
+      expectedArgsForArgCheck.delete(varName2);
       for (let i = 1; i < descrAtom.args.length; i++) {
         const argArg = descrAtom.args[i];
         if (argArg.type !== "Constant" || argArg.constantType !== "string") {
@@ -42188,6 +42835,9 @@ function validateDeclaration(decl, errors) {
     }
   }
 }
+function isPredicateNameTaken(ctx, name) {
+  return ctx.symbolTable.getAllPredicates().some((p) => p.symbol.symbol === name) || [...ctx.decls.keys()].some((k) => k.startsWith(`${name}/`));
+}
 function nameRangeOf(range, name) {
   return {
     start: range.start,
@@ -42212,7 +42862,7 @@ function validateClause(clause, symbolTable, errors, declaredPredicates, reporte
       if (m2 === "input" || m2 === "input_output") preBoundForRewrite.push(arg.symbol);
     }
   });
-  const { clause: rewritten, droppedNegations } = rewriteClauseWithInfo(clause, preBoundForRewrite);
+  const { clause: rewritten, unresolved } = rewriteClauseWithInfo(clause, preBoundForRewrite);
   const boundVars = new Set(inputHeadVars);
   const headVars = /* @__PURE__ */ new Set();
   const uf = UnionFind.create();
@@ -42223,7 +42873,9 @@ function validateClause(clause, symbolTable, errors, declaredPredicates, reporte
     uf,
     headPackage: packageOf(clause.head.predicate.symbol),
     inputPositionVars: /* @__PURE__ */ new Map(),
-    reportedUndefined
+    reportedUndefined,
+    unresolved: new Set(unresolved),
+    clause
   };
   collectAtomVariables(rewritten.head, headVars);
   if (rewritten.headTime) {
@@ -42270,23 +42922,6 @@ function validateClause(clause, symbolTable, errors, declaredPredicates, reporte
   }
   for (const premise of rewritten.premises ?? []) {
     validatePremise(premise, boundVars, ctx);
-  }
-  for (const dropped of droppedNegations) {
-    const negAtom = dropped.type === "NegAtom" ? dropped : null;
-    if (!negAtom) continue;
-    const negVars = /* @__PURE__ */ new Set();
-    collectAtomVariables(negAtom.atom, negVars);
-    const unbound = [...negVars].filter((v) => !boundVars.has(v));
-    for (const v of unbound) {
-      errors.push({
-        code: "E003",
-        message: `Variable '${v}' in negated atom '!${negAtom.atom.predicate.symbol}(...)' is never bound by a positive premise; upstream Mangle silently drops this negation`,
-        range: negAtom.range,
-        severity: "error",
-        hint: `bind '${v}' with a positive atom, or if you mean "no ${negAtom.atom.predicate.symbol} with any ${v}", replace '${v}' with '_' (and project the columns you need through a helper predicate)`
-      });
-    }
-    validateAtom(negAtom.atom, boundVars, ctx, { suppressUnbound: true });
   }
   const bodyVars = /* @__PURE__ */ new Set();
   for (const premise of clause.premises) {
@@ -42365,6 +43000,7 @@ function validatePremise(premise, boundVars, ctx) {
     }
     case "NegAtom": {
       const negAtom = premise;
+      const pred2 = negAtom.atom.predicate.symbol;
       const negVars = /* @__PURE__ */ new Set();
       collectAtomVariables(negAtom.atom, negVars);
       let anyUnbound = false;
@@ -42373,12 +43009,21 @@ function validatePremise(premise, boundVars, ctx) {
           anyUnbound = true;
           errors.push({
             code: "E003",
-            message: `Variable '${v}' in negated atom must be bound before the negation`,
+            message: `Variable '${v}' in '!${pred2}(...)' is not bound by any positive premise of this rule`,
             range: negAtom.range,
             severity: "error",
-            hint: `bind '${v}' with a positive atom of the same rule; use '_' for "any value"`
+            hint: `a negation only tests values and waits until its variables are bound; bind '${v}' with a positive atom of the same rule, or project the columns you mean: '${pred2}_proj(...) :- ${pred2}(...).' then negate the projection`
           });
         }
+      }
+      const wildcards = negAtom.atom.args.filter((a) => a.type === "Variable" && a.symbol === "_");
+      if (wildcards.length > 0) {
+        anyUnbound = true;
+        errors.push(negatedWildcardError(negAtom, ctx.clause, (n2) => isPredicateNameTaken(ctx, n2)));
+      }
+      const negKey = `${pred2}/${negAtom.atom.predicate.arity}`;
+      if (!anyUnbound && isExternalDecl(ctx.decls.get(negKey))) {
+        errors.push(negatedExternalError(negAtom, ctx.clause, (n2) => isPredicateNameTaken(ctx, n2)));
       }
       validateAtom(negAtom.atom, boundVars, ctx, { suppressUnbound: anyUnbound });
       break;
@@ -42397,10 +43042,10 @@ function validatePremise(premise, boundVars, ctx) {
         if (v !== "_" && !boundVars.has(v)) {
           errors.push({
             code: "E004",
-            message: `Variable '${v}' must be bound before comparison`,
+            message: `Variable '${v}' in '!=' is not bound by any premise of this rule`,
             range: ineq.range,
             severity: "error",
-            hint: `'!=' only tests values; move it after the premise that binds '${v}'`
+            hint: `'!=' only tests values and waits until its variables are bound (its position in the body does not matter); bind '${v}' with a positive atom or an equality`
           });
         }
       }
@@ -42546,16 +43191,28 @@ function validateAtom(atom, boundVars, ctx, opts = {}) {
       }
     }
     if (STRING_CONSTANT_PREDICATES.has(predName) && atom.args.length >= 2) {
-      const secondArg = atom.args[1];
-      if (secondArg && secondArg.type !== "Constant") {
+      const pattern = atom.args[1];
+      const isPrefix = predName === ":match_prefix";
+      const constType = pattern.type === "Constant" ? pattern.constantType : void 0;
+      const bad = isPrefix ? constType !== "name" : constType !== void 0 && constType !== "string";
+      if (bad) {
         errors.push({
           code: "E030",
-          message: `Second argument of '${predName}' must be a constant pattern, not a ${secondArg.type}`,
-          range: secondArg.range,
+          message: isPrefix ? `The prefix of ':match_prefix' must be a name constant, not a ${constType ? `${constType} constant` : pattern.type}` : `The pattern of '${predName}' must be a string, got a ${constType} constant`,
+          range: pattern.range,
           severity: "error",
-          hint: predName === ":match_prefix" ? "write the prefix as a name constant, e.g. :match_prefix(X, /users)" : `write the pattern as a string literal, e.g. ${predName}(S, "abc")`
+          hint: isPrefix ? "write the prefix as a name constant, e.g. :match_prefix(X, /users); for a computed prefix convert both sides to strings and use :string:starts_with" : `write the pattern as a string, e.g. ${predName}(S, "abc"); a name converts with fn:name:to_string(N)`
         });
       }
+    }
+    if (predName === ":string:matches") {
+      errors.push({
+        code: "E084",
+        message: `':string:matches' has no type signature in upstream v0.7.0: strict bounds checking rejects every rule that uses it ("cannot find assignment that works for premise")`,
+        range: nameRangeOf(atom.range, predName),
+        severity: "warning",
+        hint: "loose analysis (AnalyzeOneUnit, as codeNERD's kernel runs) accepts it and it evaluates correctly; under strict checking use :string:starts_with / :string:ends_with / :string:contains where they suffice"
+      });
     }
     if (DESTRUCTURING_PREDICATES.has(predName) && atom.args.length >= 3) {
       const arg2 = atom.args[1];
@@ -42593,8 +43250,8 @@ function validateAtom(atom, boundVars, ctx, opts = {}) {
     }
   }
   if (!predName.startsWith(":") && !predName.startsWith("fn:")) {
-    const predKey2 = `${predName}/${arity}`;
-    const predInfo = symbolTable.getPredicateInfo(predKey2);
+    const predKey3 = `${predName}/${arity}`;
+    const predInfo = symbolTable.getPredicateInfo(predKey3);
     const hasDefs = predInfo && (predInfo.definitions.length > 0 || predInfo.declLocation);
     if (!hasDefs) {
       const availableArities = symbolTable.getPredicateArities(predName);
@@ -43513,29 +44170,29 @@ function checkUnboundedRecursion(unit) {
     clauses.push(clause);
     predicateClauses.set(key, clauses);
   }
-  for (const [predKey2, clauses] of predicateClauses) {
-    const recursiveClauses = clauses.filter((c) => isRecursive(c, predKey2));
+  for (const [predKey3, clauses] of predicateClauses) {
+    const recursiveClauses = clauses.filter((c) => isRecursive(c, predKey3));
     if (recursiveClauses.length > 0) {
       const firstRecursive = recursiveClauses[0];
       if (!firstRecursive) continue;
-      const hasBaseCase = clauses.some((c) => !isRecursive(c, predKey2));
+      const hasBaseCase = clauses.some((c) => !isRecursive(c, predKey3));
       if (!hasBaseCase) {
         warnings.push({
           code: "E016",
-          message: `Predicate '${predKey2}' has recursive rules but no base case - may not terminate`,
+          message: `Predicate '${predKey3}' has recursive rules but no base case - may not terminate`,
           range: firstRecursive.head.range,
           severity: "warning",
-          cycle: [predKey2]
+          cycle: [predKey3]
         });
       }
       for (const clause of recursiveClauses) {
-        if (hasUnboundedGeneration(clause, predKey2)) {
+        if (hasUnboundedGeneration(clause, predKey3)) {
           warnings.push({
             code: "E017",
             message: `Recursive rule may generate unbounded values - ensure termination condition exists`,
             range: clause.head.range,
             severity: "warning",
-            cycle: [predKey2]
+            cycle: [predKey3]
           });
         }
       }
@@ -43543,19 +44200,19 @@ function checkUnboundedRecursion(unit) {
   }
   return warnings;
 }
-function isRecursive(clause, predKey2) {
+function isRecursive(clause, predKey3) {
   if (!clause.premises) return false;
   for (const premise of clause.premises) {
     if (premise.type === "Atom") {
       const atom = premise;
-      if (predicateKey(atom.predicate) === predKey2) {
+      if (predicateKey(atom.predicate) === predKey3) {
         return true;
       }
     }
   }
   return false;
 }
-function hasUnboundedGeneration(clause, predKey2) {
+function hasUnboundedGeneration(clause, predKey3) {
   if (!clause.premises) return false;
   let hasArithmeticIncrement = false;
   for (const premise of clause.premises) {
@@ -43909,9 +44566,9 @@ function isInSameSCC(pred1, pred2, sccs) {
   }
   return false;
 }
-function findPredicateRange(unit, predKey2) {
+function findPredicateRange(unit, predKey3) {
   for (const clause of unit.clauses) {
-    if (predicateKey(clause.head.predicate) === predKey2) {
+    if (predicateKey(clause.head.predicate) === predKey3) {
       return clause.head.range;
     }
   }
@@ -43919,7 +44576,8 @@ function findPredicateRange(unit, predKey2) {
 }
 
 // ../mangle-lsp/src/analysis/pipeline.ts
-function analyzeUnit(unit) {
+function analyzeUnit(input) {
+  const unit = analyzableUnit(input);
   const validation = validate(unit);
   const diagnostics = validation.errors.map((e) => ({
     code: e.code,
@@ -44393,18 +45051,18 @@ function getVariableCompletions(unit, position, prefix, replaceRange) {
   const variables = collectClauseVariables(clause);
   const items = [];
   let index = 0;
-  for (const varName of Array.from(variables)) {
-    if (varName === "_") {
+  for (const varName2 of Array.from(variables)) {
+    if (varName2 === "_") {
       continue;
     }
-    if (prefix && !varName.startsWith(prefix)) {
+    if (prefix && !varName2.startsWith(prefix)) {
       continue;
     }
     items.push({
-      label: varName,
+      label: varName2,
       kind: import_node2.CompletionItemKind.Variable,
       detail: "Variable",
-      textEdit: import_node2.TextEdit.replace(replaceRange, varName),
+      textEdit: import_node2.TextEdit.replace(replaceRange, varName2),
       insertTextFormat: import_node2.InsertTextFormat.PlainText,
       sortText: `2${index.toString().padStart(3, "0")}`
     });
@@ -45540,6 +46198,7 @@ function analysisToJson(e) {
     fixes: e.fixes?.map((f) => ({
       title: f.title,
       newText: f.newText,
+      additionalEdits: f.additionalEdits,
       range: {
         start: { line: f.range.start.line, column: f.range.start.column },
         end: { line: f.range.end.line, column: f.range.end.column }
@@ -45578,16 +46237,17 @@ connection.onCodeAction((params) => {
     const data = diagnostic.data;
     if (!data?.fixes) continue;
     data.fixes.forEach((fix, index) => {
-      const edit = import_node4.TextEdit.replace({
-        start: { line: fix.range.start.line - 1, character: fix.range.start.column },
-        end: { line: fix.range.end.line - 1, character: fix.range.end.column }
-      }, fix.newText);
+      const toEdit = (r, text) => import_node4.TextEdit.replace({
+        start: { line: r.start.line - 1, character: r.start.column },
+        end: { line: r.end.line - 1, character: r.end.column }
+      }, text);
+      const edits = [toEdit(fix.range, fix.newText), ...(fix.additionalEdits ?? []).map((e) => toEdit(e.range, e.newText))];
       actions.push({
         title: fix.title,
         kind: import_node4.CodeActionKind.QuickFix,
         diagnostics: [diagnostic],
         isPreferred: index === 0,
-        edit: { changes: { [params.textDocument.uri]: [edit] } }
+        edit: { changes: { [params.textDocument.uri]: edits } }
       });
     });
   }

@@ -30,6 +30,8 @@ export interface CLIFix {
     title: string;
     range: Range;
     newText: string;
+    /** Further edits applied together with this one (e.g. a helper rule to add) */
+    additionalEdits?: { range: Range; newText: string }[];
 }
 
 /**

@@ -29,6 +29,8 @@ import {
     isDeclTemporal,
     isDeclMaybeTemporal,
     DESCRIPTORS,
+    termToString,
+    analyzableUnit,
 } from '../parser/ast';
 import {
     isBuiltinPredicate,
@@ -48,10 +50,13 @@ import {
 import { SymbolTable, buildSymbolTable } from './symbols';
 import { UnionFind } from './unionfind';
 import { rewriteClauseWithInfo } from './rewrite';
+import { negatedWildcardError, negatedExternalError, isExternalDecl } from './negation';
 import { checkWellformedBound } from './types';
+import { strictBoundTrap } from './strictbounds';
 import { suggestSimilar, didYouMean } from './diagnostics';
 import { checkBounds } from './boundscheck';
 import { checkClauseLints } from './lints';
+import { checkAdvice } from './advice';
 
 /**
  * A machine-applicable edit that fixes (part of) a diagnostic.
@@ -63,6 +68,14 @@ export interface QuickFix {
     /** Range to replace */
     range: SourceRange;
     /** Replacement text */
+    newText: string;
+    /** Further edits that belong to the same fix (e.g. a helper rule to add) */
+    additionalEdits?: TextReplacement[];
+}
+
+/** One text replacement inside a quick fix. */
+export interface TextReplacement {
+    range: SourceRange;
     newText: string;
 }
 
@@ -102,6 +115,7 @@ const STRING_CONSTANT_PREDICATES = new Set([
     ':string:starts_with',
     ':string:ends_with',
     ':string:contains',
+    ':string:matches',
 ]);
 
 /**
@@ -128,7 +142,8 @@ const VALID_ESCAPES = new Set(['n', 't', 'r', '\\', '"', "'"]);
 /**
  * Validate a source unit and return semantic errors.
  */
-export function validate(unit: SourceUnit): ValidationResult {
+export function validate(input: SourceUnit): ValidationResult {
+    const unit = analyzableUnit(input);
     const errors: SemanticError[] = [];
     const symbolTable = buildSymbolTable(unit);
 
@@ -198,6 +213,9 @@ export function validate(unit: SourceUnit): ValidationResult {
 
     // Advice lints (singleton variables, duplicate premises, collect+len)
     checkClauseLints(unit, errors);
+
+    // Mangle-feature advice (lattices, tagged unions, temporal, maps)
+    checkAdvice(unit, errors);
 
     // Conservative bounds (type) checking, upstream analysis/boundscheck.go
     checkBounds(unit, declaredPredicates, errors);
@@ -285,6 +303,20 @@ function validateDeclaration(
         }
     }
 
+    // E083: v0.7 strict bounds checking rejects a zero-arity Decl without a
+    // bound list ("no bound decls in ..."); `bound []` satisfies it.
+    if (declAtom.args.length === 0 && (!decl.bounds || decl.bounds.length === 0) && !decl.constraints?.length) {
+        const at = { line: decl.range.end.line, column: Math.max(0, decl.range.end.column - 1), offset: Math.max(0, decl.range.end.offset - 1) };
+        errors.push({
+            code: 'E083',
+            message: `Zero-arity Decl '${declAtom.predicate.symbol}()' has no bound list: upstream v0.7 strict bounds checking rejects the whole program ("no bound decls in ${declAtom.predicate.symbol}()")`,
+            range: declAtom.range,
+            severity: 'warning',
+            hint: `write 'Decl ${declAtom.predicate.symbol}() bound [].' (loose checking, which codeNERD's kernel uses, accepts either)`,
+            fixes: [{ title: "Add 'bound []'", range: { start: at, end: at }, newText: ' bound []' }],
+        });
+    }
+
     // Check bounds count matches arity (if bounds exist)
     if (decl.bounds && decl.bounds.length > 0) {
         for (const boundDecl of decl.bounds) {
@@ -312,6 +344,23 @@ function validateDeclaration(
                         range: problem.range,
                         severity: 'error',
                         hint,
+                    });
+                }
+                const trap = strictBoundTrap(bound);
+                if (trap) {
+                    errors.push({
+                        code: 'E082',
+                        message: trap === 'singleton'
+                            ? `Argument ${i + 1} is bounded by ${termToString(bound)}: upstream v0.7 types every constant by its base type (/name), so strict bounds checking rejects every value written to this column, and loose checking ignores the bound`
+                            : `Argument ${i + 1} uses /bool, which in a bound is the name-prefix type of names under /bool/ (there is no boolean base type): /true and /false do not conform`,
+                        range: bound.range,
+                        severity: 'warning',
+                        hint: trap === 'singleton'
+                            ? 'declare the column /name and enforce the vocabulary with a relation tests can query: valid_x(/a). valid_x(/b). bad_x(V) :- x(V), !valid_x(V).'
+                            : 'declare the column /name (values /true and /false)',
+                        fixes: trap === 'bool' && bound.type === 'Constant'
+                            ? [{ title: "Replace '/bool' with '/name'", range: bound.range, newText: '/name' }]
+                            : undefined,
                     });
                 }
             }
@@ -517,6 +566,19 @@ interface ClauseCtx {
     readonly inputPositionVars: Map<string, SourceRange>;
     /** Undefined predicates already reported in this unit (report once each). */
     readonly reportedUndefined: Set<string>;
+    /**
+     * Delayed premises (`!p(...)`, `!=`) that no premise of the rule binds.
+     * The rewrite kept them at the end of the body, as upstream v0.7 does.
+     */
+    readonly unresolved: Set<Term>;
+    /** The clause being checked (for fixes that add a helper rule after it). */
+    readonly clause: Clause;
+}
+
+/** True when a predicate name is declared or defined in the unit. */
+function isPredicateNameTaken(ctx: ClauseCtx, name: string): boolean {
+    return ctx.symbolTable.getAllPredicates().some(p => p.symbol.symbol === name)
+        || [...ctx.decls.keys()].some(k => k.startsWith(`${name}/`));
 }
 
 /** Range covering only the name at the start of an expression. */
@@ -560,7 +622,7 @@ function validateClause(
 
     // Apply clause rewriting (negation delay) before validation
     // Upstream: RewriteClause is called before CheckRule
-    const { clause: rewritten, droppedNegations } = rewriteClauseWithInfo(clause, preBoundForRewrite);
+    const { clause: rewritten, unresolved } = rewriteClauseWithInfo(clause, preBoundForRewrite);
 
     // Collect bound variables
     const boundVars = new Set<string>(inputHeadVars);
@@ -577,6 +639,8 @@ function validateClause(
         headPackage: packageOf(clause.head.predicate.symbol),
         inputPositionVars: new Map(),
         reportedUndefined,
+        unresolved: new Set(unresolved),
+        clause,
     };
 
     // Collect variables from head
@@ -636,26 +700,6 @@ function validateClause(
     // Process premises to determine bound variables
     for (const premise of rewritten.premises ?? []) {
         validatePremise(premise, boundVars, ctx);
-    }
-
-    // E003: negated atoms whose variables are never bound. Upstream silently
-    // drops them from the rule (changing its meaning), so report them.
-    for (const dropped of droppedNegations) {
-        const negAtom = (dropped.type === 'NegAtom' ? dropped : null) as NegAtom | null;
-        if (!negAtom) continue;
-        const negVars = new Set<string>();
-        collectAtomVariables(negAtom.atom, negVars);
-        const unbound = [...negVars].filter(v => !boundVars.has(v));
-        for (const v of unbound) {
-            errors.push({
-                code: 'E003',
-                message: `Variable '${v}' in negated atom '!${negAtom.atom.predicate.symbol}(...)' is never bound by a positive premise; upstream Mangle silently drops this negation`,
-                range: negAtom.range,
-                severity: 'error',
-                hint: `bind '${v}' with a positive atom, or if you mean "no ${negAtom.atom.predicate.symbol} with any ${v}", replace '${v}' with '_' (and project the columns you need through a helper predicate)`,
-            });
-        }
-        validateAtom(negAtom.atom, boundVars, ctx, { suppressUnbound: true });
     }
 
     // Collect body variables for transform redefinition check (E043)
@@ -765,7 +809,10 @@ function validatePremise(
         }
         case 'NegAtom': {
             const negAtom = premise as NegAtom;
-            // Negated atoms don't bind variables, but all their variables must be bound
+            const pred = negAtom.atom.predicate.symbol;
+            // Negated atoms don't bind variables. The rewrite already delayed
+            // this one past every premise that binds its variables, so any
+            // variable still unbound here is bound by no premise at all.
             const negVars = new Set<string>();
             collectAtomVariables(negAtom.atom, negVars);
             let anyUnbound = false;
@@ -774,12 +821,23 @@ function validatePremise(
                     anyUnbound = true;
                     errors.push({
                         code: 'E003',
-                        message: `Variable '${v}' in negated atom must be bound before the negation`,
+                        message: `Variable '${v}' in '!${pred}(...)' is not bound by any positive premise of this rule`,
                         range: negAtom.range,
                         severity: 'error',
-                        hint: `bind '${v}' with a positive atom of the same rule; use '_' for "any value"`,
+                        hint: `a negation only tests values and waits until its variables are bound; bind '${v}' with a positive atom of the same rule, or project the columns you mean: '${pred}_proj(...) :- ${pred}(...).' then negate the projection`,
                     });
                 }
+            }
+            // v0.7 CheckRule replaces each '_' with a fresh variable, which
+            // nothing binds: `!r(X, _)` is rejected ("variable X0 is not bound").
+            const wildcards = negAtom.atom.args.filter(a => a.type === 'Variable' && (a as Variable).symbol === '_');
+            if (wildcards.length > 0) {
+                anyUnbound = true;
+                errors.push(negatedWildcardError(negAtom, ctx.clause, n => isPredicateNameTaken(ctx, n)));
+            }
+            const negKey = `${pred}/${negAtom.atom.predicate.arity}`;
+            if (!anyUnbound && isExternalDecl(ctx.decls.get(negKey))) {
+                errors.push(negatedExternalError(negAtom, ctx.clause, n => isPredicateNameTaken(ctx, n)));
             }
             validateAtom(negAtom.atom, boundVars, ctx, { suppressUnbound: anyUnbound });
             break;
@@ -800,10 +858,10 @@ function validatePremise(
                 if (v !== '_' && !boundVars.has(v)) {
                     errors.push({
                         code: 'E004',
-                        message: `Variable '${v}' must be bound before comparison`,
+                        message: `Variable '${v}' in '!=' is not bound by any premise of this rule`,
                         range: ineq.range,
                         severity: 'error',
-                        hint: `'!=' only tests values; move it after the premise that binds '${v}'`,
+                        hint: `'!=' only tests values and waits until its variables are bound (its position in the body does not matter); bind '${v}' with a positive atom or an equality`,
                     });
                 }
             }
@@ -988,20 +1046,40 @@ function validateAtom(
             }
         }
 
-        // Check that string predicates have a constant as second argument
+        // String tests evaluate their pattern after substitution: a bound
+        // variable or a function application works (verified on v0.7); a
+        // constant of another type is a run-time error. :match_prefix needs a
+        // name constant: a variable pattern fails strict type checking.
         if (STRING_CONSTANT_PREDICATES.has(predName) && atom.args.length >= 2) {
-            const secondArg = atom.args[1];
-            if (secondArg && secondArg.type !== 'Constant') {
+            const pattern = atom.args[1]!;
+            const isPrefix = predName === ':match_prefix';
+            const constType = pattern.type === 'Constant' ? (pattern as Constant).constantType : undefined;
+            const bad = isPrefix ? constType !== 'name' : (constType !== undefined && constType !== 'string');
+            if (bad) {
                 errors.push({
                     code: 'E030',
-                    message: `Second argument of '${predName}' must be a constant pattern, not a ${secondArg.type}`,
-                    range: secondArg.range,
+                    message: isPrefix
+                        ? `The prefix of ':match_prefix' must be a name constant, not a ${constType ? `${constType} constant` : pattern.type}`
+                        : `The pattern of '${predName}' must be a string, got a ${constType} constant`,
+                    range: pattern.range,
                     severity: 'error',
-                    hint: predName === ':match_prefix'
-                        ? 'write the prefix as a name constant, e.g. :match_prefix(X, /users)'
-                        : `write the pattern as a string literal, e.g. ${predName}(S, "abc")`,
+                    hint: isPrefix
+                        ? 'write the prefix as a name constant, e.g. :match_prefix(X, /users); for a computed prefix convert both sides to strings and use :string:starts_with'
+                        : `write the pattern as a string, e.g. ${predName}(S, "abc"); a name converts with fn:name:to_string(N)`,
                 });
             }
+        }
+
+        // E084: v0.7.0 ships :string:matches without a type signature in
+        // symbols.go, so strict bounds checking rejects every use.
+        if (predName === ':string:matches') {
+            errors.push({
+                code: 'E084',
+                message: `':string:matches' has no type signature in upstream v0.7.0: strict bounds checking rejects every rule that uses it ("cannot find assignment that works for premise")`,
+                range: nameRangeOf(atom.range, predName),
+                severity: 'warning',
+                hint: 'loose analysis (AnalyzeOneUnit, as codeNERD\'s kernel runs) accepts it and it evaluates correctly; under strict checking use :string:starts_with / :string:ends_with / :string:contains where they suffice',
+            });
         }
 
         // Check destructuring predicates (:match_pair, :match_cons) - args 2&3 must be variables

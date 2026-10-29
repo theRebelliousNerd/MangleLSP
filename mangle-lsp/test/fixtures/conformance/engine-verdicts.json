@@ -1,0 +1,169 @@
+{
+  "engine": "codeberg.org/TauCeti/mangle-go v0.7.0",
+  "verdicts": {
+    "upstream/examples/aggregation.mg": {
+      "stage": "ok"
+    },
+    "upstream/examples/ancestor.mg": {
+      "stage": "ok"
+    },
+    "upstream/examples/dataflow_analysis.mg": {
+      "stage": "ok"
+    },
+    "upstream/examples/dataflow_liveness.mg": {
+      "stage": "ok"
+    },
+    "upstream/examples/example.mg": {
+      "stage": "ok"
+    },
+    "upstream/examples/example_type_error.mg": {
+      "stage": "bounds",
+      "error": "found unit clause with fn:Rel(/v,/name) that does not conform to any decl fn:Rel(/v,/skill)"
+    },
+    "upstream/examples/flow_checking.mg": {
+      "stage": "ok"
+    },
+    "upstream/examples/map_aggregation.mg": {
+      "stage": "ok"
+    },
+    "upstream/examples/one_or_two_leg_trip.mg": {
+      "stage": "ok"
+    },
+    "upstream/examples/project_aggregation.mg": {
+      "stage": "ok"
+    },
+    "upstream/examples/reversesamegen.mg": {
+      "stage": "ok"
+    },
+    "upstream/examples/shortest_path.mg": {
+      "stage": "ok"
+    },
+    "upstream/examples/tagged_union.mg": {
+      "stage": "bounds",
+      "error": "type mismatch for pred bulk_import_size(Items,N) rule: bulk_import_size(Items,N) :- event(E), :match_field(E,/kind,K), K = /bulk_import, :match_field(E,/items,Items) |> let N = fn:list:len(Items). "
+    },
+    "upstream/examples/temporal_graph_intervals.mg": {
+      "stage": "ok"
+    },
+    "upstream/examples/temporal_graph_points.mg": {
+      "stage": "ok"
+    },
+    "upstream/examples/temporal_sequence.mg": {
+      "stage": "ok"
+    },
+    "upstream/test_cases/decl_struct.mg": {
+      "stage": "ok"
+    },
+    "upstream/test_cases/decl_tagged_union.mg": {
+      "stage": "ok"
+    },
+    "upstream/test_cases/filter.mg": {
+      "stage": "ok"
+    },
+    "upstream/test_cases/fun.mg": {
+      "stage": "eval",
+      "error": "not a constant: R ast.Variable"
+    },
+    "upstream/test_cases/infinite.mg": {
+      "stage": "eval",
+      "error": "fact size limit reached 100001 > 100000"
+    },
+    "upstream/test_cases/neg_arity_mismatch.mg": {
+      "stage": "analyze",
+      "error": "in clause \"q(X,Y) :- p(X,Y).\": predicate p called with 2 arguments, but available arities are: [3]"
+    },
+    "upstream/test_cases/neg_duplicate_decl.mg": {
+      "stage": "analyze",
+      "error": "predicate foo(A0, A1, A2) declared more than once, previous was {foo(X,Y,Z) [extensional()] [{[/x /y /z]}] <nil>}"
+    },
+    "upstream/test_cases/neg_plusarg.mg": {
+      "stage": "bounds",
+      "error": "type mismatch: cannot find assignment that works for premise X = fn:plus(1,Y)"
+    },
+    "upstream/test_cases/neg_polymorphic_match.mg": {
+      "stage": "bounds",
+      "error": "type mismatch: cannot find assignment that works for premise :match_pair(O,A,X)"
+    },
+    "upstream/test_cases/polymorphic_feasible.mg": {
+      "stage": "ok"
+    },
+    "conformance/probes/argmax_join_back.mg": {
+      "stage": "ok"
+    },
+    "conformance/probes/argmax_lattice.mg": {
+      "stage": "ok"
+    },
+    "conformance/probes/bool_bound.mg": {
+      "stage": "bounds",
+      "error": "found unit clause with fn:Rel(/name) that does not conform to any decl fn:Rel(/bool)"
+    },
+    "conformance/probes/collect_to_map.mg": {
+      "stage": "ok"
+    },
+    "conformance/probes/contains_bound_var.mg": {
+      "stage": "ok"
+    },
+    "conformance/probes/contains_name_pattern.mg": {
+      "stage": "eval",
+      "error": "2nd arguments must be string constant for ':string:contains': :string:contains(\"xxabyy\",/ab)"
+    },
+    "conformance/probes/float_gt.mg": {
+      "stage": "bounds",
+      "error": "type mismatch: cannot find assignment that works for premise :gt(S,0.9)"
+    },
+    "conformance/probes/float_gt_ok.mg": {
+      "stage": "ok"
+    },
+    "conformance/probes/fn_before_binder.mg": {
+      "stage": "analyze",
+      "error": "variable X in apply expression Y = fn:plus(X,1) not bound"
+    },
+    "conformance/probes/ineq_before_binder.mg": {
+      "stage": "ok"
+    },
+    "conformance/probes/lattice_cyclic.mg": {
+      "stage": "ok"
+    },
+    "conformance/probes/lt_before_binder.mg": {
+      "stage": "analyze",
+      "error": "for goal \":lt(X,2)\" expected X (arg 0) to be constant or bound variable"
+    },
+    "conformance/probes/match_prefix_var.mg": {
+      "stage": "bounds",
+      "error": "type mismatch: cannot find assignment that works for premise :match_prefix(X,P)"
+    },
+    "conformance/probes/name_swallows_period.mg": {
+      "stage": "parse",
+      "error": "4:0 missing '.' at 'r'"
+    },
+    "conformance/probes/neg_external.mg": {
+      "stage": "ok"
+    },
+    "conformance/probes/neg_wildcard.mg": {
+      "stage": "analyze",
+      "error": "variable X0 is not bound in q(X) :- p(X), !r(X,X0)."
+    },
+    "conformance/probes/recovery_hole.mg": {
+      "stage": "parse",
+      "error": "4:0 mismatched input 'r' expecting {'.', '\\u27F8', ':-', '@'}"
+    },
+    "conformance/probes/singleton_union.mg": {
+      "stage": "bounds",
+      "error": "found unit clause with fn:Rel(/name,/name) that does not conform to any decl fn:Rel(/name,fn:Union(fn:Singleton(/low),fn:Singleton(/high)))"
+    },
+    "conformance/probes/string_matches.mg": {
+      "stage": "bounds",
+      "error": "type mismatch: cannot find assignment that works for premise :string:matches(N,\"^[a-z]+$\")"
+    },
+    "conformance/probes/temporal_recent.mg": {
+      "stage": "ok"
+    },
+    "conformance/probes/zero_arity_decl.mg": {
+      "stage": "bounds",
+      "error": "no bound decls in {ok() [doc(\"\") desugared()] [] 0x...}"
+    },
+    "conformance/probes/zero_arity_decl_bound.mg": {
+      "stage": "ok"
+    }
+  }
+}

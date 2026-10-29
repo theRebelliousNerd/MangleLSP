@@ -11,8 +11,9 @@ Primary goals:
 
 Upstream Mangle is developed at **https://codeberg.org/TauCeti/mangle-go**
 (module `codeberg.org/TauCeti/mangle-go`, mirrored at https://github.com/google/mangle).
-This repository is synced with upstream commit **`77780a5` (2026-09-19)**; the revision is
-recorded in `mangle-lsp/src/version.ts` (`UPSTREAM_MANGLE_REVISION`) and `CHANGELOG.md`.
+This repository tracks the tagged release **v0.7.0** (`7cd2543`, 2026-10-15), recorded in
+`mangle-lsp/src/version.ts` and `CHANGELOG.md`. `mangle-oracle/` (Go) runs that engine for
+conformance, evaluation and the Go boundary scan; the engine is ground truth.
 
 A local copy may exist at `C:\CodeProjects\MangleTSandPython\upstream\mangle`; otherwise
 clone upstream. Use it as the source of truth for parser/AST behavior, semantic analysis,
@@ -69,8 +70,18 @@ of this repository.
 ```bash
 npm install          # root (npm workspaces: mangle-lsp, mangle-vscode)
 npm run build        # regenerate parser, tsc, bundle extension + server + CLI
-npm test             # vitest in mangle-lsp
+npm test             # vitest in mangle-lsp (engine-backed suites run when Go is installed)
+npm run build:oracle # build mangle-oracle/bin/mangle-oracle (the CLI also builds it on demand)
+npm run conformance:refresh   # re-record the engine's verdict on every conformance fixture
+(cd mangle-oracle && go test ./...)
 ```
+
+- Diagnostic codes: `E`/`P` checks, `A` Mangle-feature advice (src/analysis/advice.ts),
+  `B` Go <-> .mg boundary findings (derived by `mangle-oracle/boundary.mg`; the TS side only
+  renders them). A claim about engine behaviour needs an engine verdict: add a probe to
+  `mangle-lsp/test/fixtures/conformance/probes/` and refresh the verdicts.
+- `mangle-oracle/` is a standalone Go module (no host imports). Host conventions live in
+  profiles (`mangle-oracle/profiles/*.json`, or a project's `.mangle/oracle-profile.json`).
 
 # Skills
 

@@ -23,14 +23,19 @@ import {
  * Result of rewriting a clause.
  */
 export interface RewriteResult {
-    /** The rewritten clause (negations delayed until their variables are bound). */
+    /**
+     * The rewritten clause. Negations and inequalities wait until their
+     * variables are bound; any that no premise ever binds are kept at the end
+     * (as upstream v0.7 does) so checking reports the unbound variable.
+     */
     clause: Clause;
     /**
-     * Negated atoms whose variables are never bound by the body. Upstream
-     * silently drops these, which changes the meaning of the rule; the LSP
-     * reports them (E003).
+     * The delayed premises (negated atoms and `!=`) that no premise of the
+     * rule ever binds. Upstream v0.7 keeps them at the end of the body and
+     * CheckRule rejects the rule ("variable X is not bound"); the LSP reports
+     * them as E003 / E004 with a v0.7-specific message.
      */
-    droppedNegations: Term[];
+    unresolved: Term[];
 }
 
 function collectIntervalVars(interval: TemporalInterval | null | undefined, vars: Set<string>): void {
@@ -94,29 +99,27 @@ function collectVars(term: Term, vars: Set<string>): void {
 }
 
 /**
- * Rewrite a clause by delaying negated atoms until their variables are bound.
+ * Rewrite a clause the way upstream v0.7 `analysis.RewriteClause` does.
  *
- * This implements the negation delay transformation from upstream
- * (analysis/rewriteclause.go). The algorithm:
+ * 1. Track bound variables as premises are processed left to right.
+ * 2. Positive atoms and equalities bind their variables.
+ * 3. A negated atom or an inequality (`!=`) whose variables are not all bound
+ *    yet is delayed, and placed right after the premise that binds the last
+ *    of them. Premise order is therefore irrelevant for `!` and `!=`.
+ * 4. A delayed premise that nothing binds is kept at the end of the body.
+ *    (Up to 77780a5 upstream dropped such negations silently; v0.7 keeps them
+ *    and rejects the rule.)
  *
- * 1. Track bound variables as we process premises left-to-right.
- * 2. For each positive atom, bind all its variables.
- * 3. For each Eq premise, bind its variables.
- * 4. For each negated atom, check if all its variables are bound.
- *    - If yes, emit it immediately.
- *    - If no, delay it and record which variables need binding.
- * 5. After emitting each non-delayed premise, check if any delayed negated
- *    atoms can now be emitted (all their unbound variables are now bound).
- *
- * Upstream Go equivalent: analysis.RewriteClause()
+ * Comparisons such as `<` and `:float:lt` are not delayed: they need their
+ * inputs bound by an earlier premise.
  */
 export function rewriteClause(clause: Clause, preBoundVars?: Iterable<string>): Clause {
     return rewriteClauseWithInfo(clause, preBoundVars).clause;
 }
 
 /**
- * Like {@link rewriteClause}, but also reports negated atoms that could never
- * be scheduled because some of their variables are never bound.
+ * Like {@link rewriteClause}, but also returns the delayed premises that no
+ * premise ever binds.
  *
  * @param preBoundVars head variables that are bound on entry because the
  *   head predicate declares them as input ('+' or '?') via mode(...)
@@ -124,103 +127,56 @@ export function rewriteClause(clause: Clause, preBoundVars?: Iterable<string>): 
  */
 export function rewriteClauseWithInfo(clause: Clause, preBoundVars?: Iterable<string>): RewriteResult {
     if (!clause.premises || clause.premises.length === 0) {
-        return { clause, droppedNegations: [] };
+        return { clause, unresolved: [] };
     }
 
     const boundVars = new Set<string>(preBoundVars ?? []);
-
     const premises: Term[] = [];
-    const delayNegAtom: Term[] = [];
-    const delayVars: Set<string>[] = [];
+    let delayed: { premise: Term; vars: Set<string> }[] = [];
+
+    const bindAll = (p: Term): void => {
+        const defVars = new Set<string>();
+        collectVars(p, defVars);
+        for (const v of defVars) boundVars.add(v);
+    };
 
     for (const p of clause.premises) {
         let needsDelay = false;
-
         switch (p.type) {
-            case 'Atom': {
-                // Positive atoms bind all their variables
-                const defVars = new Set<string>();
-                collectVars(p, defVars);
-                for (const v of defVars) {
-                    boundVars.add(v);
-                }
+            case 'Atom':
+            case 'Eq':
+                bindAll(p);
                 break;
-            }
             case 'TemporalLiteral':
-            case 'TemporalAtom': {
+            case 'TemporalAtom':
                 // Temporal literals bind the variables of their inner atom and
                 // interval (upstream CheckRule binds them the same way).
-                if (p.type === 'TemporalLiteral' && (p as TemporalLiteral).literal.type === 'NegAtom') {
-                    break;
-                }
-                const defVars = new Set<string>();
-                collectVars(p, defVars);
-                for (const v of defVars) {
-                    boundVars.add(v);
-                }
+                if (p.type === 'TemporalLiteral' && (p as TemporalLiteral).literal.type === 'NegAtom') break;
+                bindAll(p);
                 break;
-            }
-            case 'Eq': {
-                // Equality binds variables from both sides
-                const eqVars = new Set<string>();
-                collectVars(p, eqVars);
-                for (const v of eqVars) {
-                    boundVars.add(v);
-                }
-                break;
-            }
-            case 'NegAtom': {
-                // Check if all variables in the negated atom are already bound
-                const negVars = new Set<string>();
-                collectVars(p, negVars);
-                const unboundVars = new Set<string>();
-                for (const v of negVars) {
-                    if (!boundVars.has(v)) {
-                        unboundVars.add(v);
-                    }
-                }
-                if (unboundVars.size > 0) {
+            case 'NegAtom':
+            case 'Ineq': {
+                const vars = new Set<string>();
+                collectVars(p, vars);
+                const unbound = new Set([...vars].filter(v => !boundVars.has(v)));
+                if (unbound.size > 0) {
                     needsDelay = true;
-                    delayNegAtom.push(p);
-                    delayVars.push(unboundVars);
+                    delayed.push({ premise: p, vars: unbound });
                 }
                 break;
             }
         }
-
-        if (!needsDelay) {
-            premises.push(p);
-
-            // Check if any delayed negated atoms can now be emitted
-            const toRemove: number[] = [];
-            for (let i = 0; i < delayVars.length; i++) {
-                const vars = delayVars[i];
-                let allBound = true;
-                for (const v of vars) {
-                    if (!boundVars.has(v)) {
-                        allBound = false;
-                        break;
-                    }
-                }
-                if (allBound) {
-                    premises.push(delayNegAtom[i]);
-                    toRemove.unshift(i); // prepend so we remove from end first
-                }
-            }
-            // Remove emitted delayed atoms (in reverse order)
-            for (const i of toRemove) {
-                delayNegAtom.splice(i, 1);
-                delayVars.splice(i, 1);
-            }
+        if (needsDelay) continue;
+        premises.push(p);
+        // Place each waiting premise whose variables are now all bound.
+        const waiting: typeof delayed = [];
+        for (const d of delayed) {
+            if ([...d.vars].every(v => boundVars.has(v))) premises.push(d.premise);
+            else waiting.push(d);
         }
+        delayed = waiting;
     }
 
-    // Any remaining delayed negated atoms never got their variables bound.
-    // Upstream silently drops them; we drop them from the rewritten clause
-    // too (to mirror evaluation) but hand them back so they can be reported.
-
-    return {
-        clause: { ...clause, premises },
-        droppedNegations: delayNegAtom,
-    };
+    const unresolved = delayed.map(d => d.premise);
+    return { clause: { ...clause, premises: [...premises, ...unresolved] }, unresolved };
 }

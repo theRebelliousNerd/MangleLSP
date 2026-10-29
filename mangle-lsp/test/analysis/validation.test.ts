@@ -102,21 +102,31 @@ describe('Validation Module', () => {
     });
 
     describe('E003: Variables in negation must be bound', () => {
-        it('should error on negated atom with a variable never bound elsewhere (upstream would silently drop it)', () => {
-            // Upstream RewriteClause delays negated atoms until their variables are bound and
-            // silently drops those whose variables never get bound - which turns orphan into person.
-            // The LSP reports this as E003 and suggests '_'.
+        it('should error on negated atom with a variable never bound elsewhere (v0.7 rejects it)', () => {
+            // Up to 77780a5 upstream silently dropped such a negation; v0.7 keeps it at the
+            // end of the body and CheckRule rejects the rule ("variable Y is not bound").
             const parseResult = parse('orphan(X) :- person(X), !parent(Y, X).');
             const result = validate(parseResult.unit!);
             const error = result.errors.find(e => e.code === 'E003');
             expect(error).toBeDefined();
             expect(error?.message).toContain("'Y'");
-            expect(error?.message).toContain('silently drops');
-            expect(error?.hint).toContain("'_'");
+            expect(error?.message).toContain('not bound by any positive premise');
+            expect(error?.hint).toContain('project');
+        });
+
+        it('should reject a wildcard in a negated atom (v0.7: "variable X0 is not bound")', () => {
+            expectError('orphan(X) :- person(X), !parent(_, X).', 'E003');
+        });
+
+        it('offers the projection rewrite for a wildcard in a negation', () => {
+            const result = validate(parse('orphan(X) :- person(X), !parent(_, X).').unit!);
+            const fix = result.errors.find(e => e.code === 'E003')?.fixes?.[0];
+            expect(fix?.newText).toBe('!has_parent(X)');
+            expect(fix?.additionalEdits?.[0]?.newText).toBe('\nhas_parent(X) :- parent(_, X).');
         });
 
         it('should allow negation with all variables bound', () => {
-            expectNoErrors('orphan(X) :- person(X), !parent(_, X).');
+            expectNoErrors('orphan(X) :- person(X), !parent(X, X).');
         });
 
         it('should allow negation with variables bound earlier', () => {
@@ -416,8 +426,20 @@ describe('Validation Module', () => {
             expectError('foo(X) :- str(X), :match_prefix(X, Y).', 'E030');
         });
 
-        it('should error when :string:starts_with has variable pattern', () => {
-            expectError('foo(X) :- str(X), :string:starts_with(X, Y).', 'E030');
+        it('should error when the pattern variable of :string:starts_with is never bound', () => {
+            expectError('foo(X) :- str(X), :string:starts_with(X, Y).', 'E007');
+        });
+
+        it('should allow a pattern variable bound earlier (v0.7 substitutes it)', () => {
+            expectNoErrors('foo(X) :- str(X), pat(Y), :string:contains(X, Y).');
+        });
+
+        it('should error on a name constant as a string pattern (run-time error in v0.7)', () => {
+            expectError('foo(X) :- str(X), :string:contains(X, /ab).', 'E030');
+        });
+
+        it('should error on a variable :match_prefix prefix (fails strict type checking)', () => {
+            expectError('foo(X) :- item(X), pre(P), :match_prefix(X, P).', 'E030');
         });
 
         it('should allow constant pattern', () => {
@@ -699,15 +721,12 @@ describe('Validation Module', () => {
             expectError('foo(/a) |> let X = fn:plus(1, 2).', 'E045');
         });
 
-        it('should error when clause has transform but no premises', () => {
-            // Head with variable but no body - should trigger E001 first, but also E045 if transform present
-            const source = 'result(Y) |> let Y = fn:plus(1, 2).';
-            const parseResult = parse(source);
-            const result = validate(parseResult.unit!);
-            // Should have either E001 (variable in fact) or E045 (transform without body)
-            const hasE001 = result.errors.some(e => e.code === 'E001');
-            const hasE045 = result.errors.some(e => e.code === 'E045');
-            expect(hasE001 || hasE045).toBe(true);
+        it('should report a transform without premises as a syntax error only', () => {
+            // The grammar has no transform without a body (the engine rejects it at parse),
+            // so the clause is malformed: P001, and analysis does not guess at it.
+            const parseResult = parse('result(Y) |> let Y = fn:plus(1, 2).');
+            expect(parseResult.errors.length).toBeGreaterThan(0);
+            expect(validate(parseResult.unit!).errors).toEqual([]);
         });
 
         it('should allow transform with body', () => {
@@ -804,7 +823,9 @@ describe('Validation Module', () => {
                 node(/a).
                 node(/b).
                 edge(/a, /b).
-                isolated(X) :- node(X), !edge(X, _), !edge(_, X).
+                has_out(X) :- edge(X, _).
+                has_in(X) :- edge(_, X).
+                isolated(X) :- node(X), !has_out(X), !has_in(X).
             `;
             expectNoErrors(source);
         });
@@ -1029,8 +1050,8 @@ describe('Validation Module', () => {
             expectNoErrors('foo(X) :- bar(X), !uses(Y), source(Y).');
         });
 
-        it('should allow negation with wildcard only', () => {
-            expectNoErrors('orphan(X) :- person(X), !parent(_, _).');
+        it('should reject a negation of wildcards only (v0.7)', () => {
+            expectError('orphan(X) :- person(X), !parent(_, _).', 'E003');
         });
 
         it('should report never-bound nested var in a negated atom', () => {

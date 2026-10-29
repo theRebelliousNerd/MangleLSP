@@ -480,6 +480,19 @@ export interface SourceUnit {
     readonly decls: Decl[];
     /** Rules and facts */
     readonly clauses: Clause[];
+    /**
+     * Clauses and declarations that error recovery could not finish (a syntax
+     * error inside them, or a hole). Editor services may use them; analysis
+     * skips them (see {@link analyzableUnit}).
+     */
+    readonly malformed?: ReadonlySet<Clause | Decl>;
+}
+
+/** The unit without the clauses and declarations error recovery left malformed. */
+export function analyzableUnit(unit: SourceUnit): SourceUnit {
+    const bad = unit.malformed;
+    if (!bad || bad.size === 0) return unit;
+    return { ...unit, clauses: unit.clauses.filter(c => !bad.has(c)), decls: unit.decls.filter(d => !bad.has(d)), malformed: undefined };
 }
 
 // ============================================================================

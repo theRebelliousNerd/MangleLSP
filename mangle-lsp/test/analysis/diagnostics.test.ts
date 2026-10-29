@@ -38,7 +38,7 @@ function emittedCodes(): Map<string, string> {
     for (const file of sourceFiles(SRC)) {
         if (file.endsWith('diagnostics.ts') && file.includes('analysis')) continue;
         const text = readFileSync(file, 'utf-8');
-        for (const m of text.matchAll(/code: '([EP]\d{3})'/g)) {
+        for (const m of text.matchAll(/code: '([EPAB]\d{3})'/g)) {
             codes.set(m[1]!, file);
         }
     }
@@ -49,6 +49,13 @@ describe('Diagnostic catalog', () => {
     it('documents every code emitted in src/', () => {
         const missing = [...emittedCodes().entries()].filter(([code]) => !DIAGNOSTIC_CATALOG.has(code));
         expect(missing).toEqual([]);
+    });
+
+    it('documents every boundary code the oracle\'s Mangle program derives', () => {
+        const program = readFileSync(join(__dirname, '..', '..', '..', 'mangle-oracle', 'boundary.mg'), 'utf-8');
+        const codes = new Set([...program.matchAll(/finding\(\/(B\d{3})/g)].map(m => m[1]!));
+        expect(codes.size).toBeGreaterThan(10);
+        expect([...codes].filter(c => !DIAGNOSTIC_CATALOG.has(c))).toEqual([]);
     });
 
     it('has unique codes and complete entries', () => {

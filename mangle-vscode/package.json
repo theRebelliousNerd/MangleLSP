@@ -2,7 +2,7 @@
   "name": "mangle-vscode",
   "displayName": "Mangle Language Support",
   "description": "Language support for Mangle (.mg files) - syntax highlighting, diagnostics with fixes and explanations, type checking, hover, completion and CLI tools",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "publisher": "theRebelliousNerd",
   "license": "MIT",
   "icon": "images/icon.png",

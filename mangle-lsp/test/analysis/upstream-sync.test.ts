@@ -362,7 +362,7 @@ describe('Actionable builtin diagnostics', () => {
 describe('Negation and visibility', () => {
     it('E003: never-bound negation variables are reported with a hint', () => {
         const e = find('orphan(X) :- person(X), !parent(Y, X).', 'E003');
-        expect(e?.hint).toContain("'_'");
+        expect(e?.hint).toContain('project the columns');
     });
 
     it('E003 is not reported for input-mode head variables used in negation', () => {

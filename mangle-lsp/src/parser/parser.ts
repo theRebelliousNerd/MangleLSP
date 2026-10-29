@@ -17,7 +17,7 @@ import {
 import { MangleLexer } from './gen/MangleLexer';
 import { MangleParser } from './gen/MangleParser';
 import { MangleASTVisitor, VisitorParseError } from './visitor';
-import type { SourceUnit, SourceRange, SourcePosition } from './ast';
+import type { SourceUnit, SourceRange, SourcePosition, Clause, Decl } from './ast';
 
 /**
  * A parse error with location information.
@@ -96,6 +96,70 @@ function visitorErrorToParseError(error: VisitorParseError): ParseError {
 }
 
 /**
+ * Fields that always hold a node: null there means error recovery gave up
+ * inside the node (e.g. `H = C./host` leaves an equality without a right side).
+ */
+const REQUIRED_CHILDREN = ['head', 'declaredAtom', 'atom', 'literal', 'left', 'right', 'fn'] as const;
+
+/** True when an AST node (or any node under it) has a hole left by error recovery. */
+export function hasHole(node: unknown): boolean {
+    if (Array.isArray(node)) return node.some(e => e === null || e === undefined || hasHole(e));
+    if (node === null || typeof node !== 'object') return false;
+    const obj = node as Record<string, unknown>;
+    for (const key of REQUIRED_CHILDREN) {
+        if (key in obj && (obj[key] === null || obj[key] === undefined)) return true;
+    }
+    for (const [key, value] of Object.entries(obj)) {
+        if (key === 'range' || value === null || typeof value !== 'object') continue;
+        if (hasHole(value)) return true;
+    }
+    return false;
+}
+
+/** True when a syntax error lies inside a node's source range. */
+function containsError(range: SourceRange, errors: ParseError[]): boolean {
+    return errors.some(e => {
+        const after = e.line > range.start.line || (e.line === range.start.line && e.column >= range.start.column);
+        const before = e.line < range.end.line || (e.line === range.end.line && e.column <= range.end.column);
+        return after && before;
+    });
+}
+
+/**
+ * Marks the clauses and declarations that error recovery could not finish:
+ * those with a syntax error inside them, or with holes (null terms) left by
+ * recovery. They are already reported as syntax errors; analysis skips them
+ * (analyzableUnit), or it would chase the holes (crashes, or bogus follow-on
+ * diagnostics). Editor services such as formatting still see them.
+ */
+function markMalformed(unit: SourceUnit, errors: ParseError[]): SourceUnit {
+    const bad = (n: { range: SourceRange }) => hasHole(n) || containsError(n.range, errors);
+    const malformed = new Set<Clause | Decl>([...unit.clauses.filter(bad), ...unit.decls.filter(bad)]);
+    return malformed.size > 0 ? { ...unit, malformed } : unit;
+}
+
+/**
+ * Error recovery reads `X = /a.` at the end of a rule as the name `/a.`
+ * (a name may contain '.'), so the clause runs on into the next one. The
+ * resulting error points at the wrong place; this one names the cause.
+ */
+function nameSwallowedPeriodErrors(tokens: Token[]): ParseError[] {
+    const out: ParseError[] = [];
+    for (const t of tokens) {
+        if (t.type !== MangleLexer.CONSTANT || !t.text || !t.text.endsWith('.')) continue;
+        out.push({
+            message: `The name constant '${t.text}' swallowed the '.' meant to end the clause: a name may contain '.', so '${t.text.slice(0, -1)}.' reads as one name. Write '${t.text.slice(0, -1)} .' or put another premise last`,
+            line: t.line,
+            column: t.column,
+            offset: t.start,
+            length: t.text.length,
+            source: 'parser',
+        });
+    }
+    return out;
+}
+
+/**
  * Parse Mangle source code into an AST.
  *
  * This parser implements error recovery: it will produce a partial AST
@@ -138,13 +202,15 @@ export function parse(source: string): ParseResult {
 
         // Build AST with error recovery
         visitor = new MangleASTVisitor();
-        const unit = visitor.visit(tree) as SourceUnit;
+        const built = visitor.visit(tree) as SourceUnit;
 
         // Collect visitor errors (from AST construction)
-        const visitorErrors = visitor.getErrors();
-        errors.push(...visitorErrors.map(visitorErrorToParseError));
+        errors.push(...visitor.getErrors().map(visitorErrorToParseError));
+        if (errors.length === 0) return { unit: built, errors };
 
-        return { unit, errors };
+        tokenStream.fill();
+        errors.push(...nameSwallowedPeriodErrors(tokenStream.getTokens()));
+        return { unit: markMalformed(built, errors), errors };
     } catch (e) {
         // Handle unexpected errors - try to return partial unit if available
         const message = e instanceof Error ? e.message : String(e);

@@ -3,6 +3,107 @@
 All notable changes to the Mangle language server (`mangle-lsp`), CLI (`mangle-cli`)
 and VS Code extension (`mangle-vscode`).
 
+## 1.2.0 — 2026-10-28
+
+Tracks the tagged upstream release **v0.7.0** (`7cd2543`, 2026-10-15) of
+<https://codeberg.org/TauCeti/mangle-go>. The LSP now names the release first and the
+commit second, because a host pins the release in `go.mod`. The engine itself is now
+ground truth: **mangle-oracle** (`mangle-oracle/`, a standalone Go module) runs it, and
+the test suite holds the LSP to its verdicts.
+
+### Ground truth: differential conformance with the engine
+
+- **`mangle-cli conformance`** puts the LSP's verdict next to the engine's (parse, loose
+  analysis, strict bounds, evaluation), per file or for one assembled program, and
+  classifies each case (agree, LSP warns with the reason, false positive, miss).
+- **The suite runs it.** `test/fixtures/conformance/engine-verdicts.json` holds the
+  engine's verdict on 48 programs: the v0.7 `examples/` and `analysis/test_cases/`
+  (vendored again: a root-level `upstream/` ignore rule had kept them out of git), and 22
+  probe programs that pin v0.7 behaviour. 46 agree; the 2 known disagreements are listed
+  with reasons. With Go installed the verdicts are recomputed live.
+- `npm run conformance:refresh` re-records the verdicts after an engine bump.
+
+### v0.7 alignment
+
+- **`!=` waits for its variables, as negation does** (v0.7 `RewriteClause`), so its
+  position in the body no longer matters: no more E004 on `R != /x, p(X, R)`. A `!=` or
+  negation that nothing binds is kept at the end and rejected, as in v0.7 (it used to be
+  dropped silently).
+- **E003 covers `_` in a negation.** v0.7 replaces each `_` with a fresh variable, so
+  `!r(X, _)` is rejected ("variable X0 is not bound"). The quick fix writes the
+  projection (`has_r(X) :- r(X, _).`) and negates it. The old hint that suggested `_`
+  is gone.
+- **E030 reports only real pattern errors.** A string-test pattern may be a variable
+  bound earlier or a function (v0.7 substitutes and evaluates it); a constant of another
+  type is a run-time error and is still reported. `:match_prefix` still needs a name
+  constant (a variable prefix fails strict type checking).
+- **`:string:matches`** (new in v0.7) is known.
+- **Syntax-error recovery.** Clauses and Decls with a syntax error inside them, or with
+  holes left by recovery, are marked malformed: analysis skips them (no crashes, no
+  follow-on noise), while formatting and other editor services still see them. A name
+  constant that swallowed the clause's final `.` (`X = /a.`) gets its own error at the
+  right place.
+- **New diagnostics, each verified on v0.7:**
+  - **E081** a negated external predicate never calls its Go callback
+    (`engine/premise.go`); quick fix: call it positively in a helper rule built from the
+    rule's own premises, and negate the helper.
+  - **E082** a bound strict checking can never satisfy: `fn:Singleton` unions (the checker
+    types `/high` as `/name`) and `/bool`, which in a bound is the name-prefix type of
+    `/bool/...` names.
+  - **E083** a zero-arity Decl without `bound []` fails strict bounds checking
+    ("no bound decls"); quick fix adds `bound []`.
+  - **E084** `:string:matches` has no type signature in v0.7.0, so strict checking
+    rejects it.
+
+### Where .mg meets Go: `mangle-cli boundary`
+
+- mangle-oracle scans the Go module with go/ast (Fact literals, Assert/AddFact calls,
+  helpers whose parameter becomes the predicate, facts written as text, queries,
+  external-callback registrations, `//go:embed` program sets) and the .mg files with the
+  engine's own parser. A Mangle program, `mangle-oracle/boundary.mg`, analyzed with strict
+  bounds, judges the facts; every finding carries its proof (the facts it rests on and
+  the facts whose absence it rests on).
+- **B001–B012:** a rule reads a predicate nothing produces (B001, or B012 when Go only
+  mentions the name); dead Decls (B002); Go asserts an undeclared predicate (B003) or the
+  wrong arity (B004); Go queries an undefined predicate (B005); asserted but never read
+  (B006); Go builds the wrong constant type for a column (B007: float64 for /number,
+  `MangleAtom` or a "/x" literal for /string, a plain literal for /name); external Decl
+  without callback (B008), callback without Decl (B009), modes disagree (B010), negated
+  external with the callback that never runs (B011).
+- **Host profiles** say how a host's Go builds facts; built-ins `generic` and `codenerd`,
+  or a project's `.mangle/oracle-profile.json`.
+- **Engine version follows the project.** The oracle is built against the
+  `codeberg.org/TauCeti/mangle-go` version the project's go.mod requires, else the
+  pinned v0.7.0 (and the output says why).
+
+### Advice: what Mangle could do here (A-codes, `mangle-cli advise`)
+
+- **A001** `fn:max`/`fn:min` per group joined back to the source: a `fundep` + `merge`
+  lattice (quick fix writes it; same winners on the engine).
+- **A002** three or more `*_event`-style predicates: one `fn:TaggedUnion` relation.
+- **A003** a premise tests a constant no writer of that column produces (a typo such as
+  `/hihg`), with the closest written value as the fix and an invariant relation as the
+  contract (union-of-singleton bounds cannot do it in v0.7: E082).
+- **A004** freshness by comparing timestamps with a clock fact: temporal facts and
+  `<-[0s, 24h]`.
+- **A005** `fn:collect(fn:pair(K, V))`: `fn:collect_to_map(K, V)` (quick fix).
+- **A006** all paths, then `fn:min`/`fn:max`: a merge lattice. On a 5-edge cycle the
+  all-paths version runs 38 s to the 100k fact limit; the lattice version terminates.
+
+### Agent-grade CLI
+
+- **`mangle-cli review`**: a whole repository in one JSON document: programs assembled
+  from `//go:embed` and analyzed as one program each (cross-file Decls, externals and
+  stratification), the engine's verdict per program, the boundary findings, and a
+  numbered plan, most severe first, with edits when unambiguous and a verify command.
+- **`mangle-cli run`** evaluates on the engine and explains a fact with its proof, through
+  let/do transforms (recorder mode). **`mangle-cli whynot`** says why a goal is not
+  derived: it writes one probe rule per body prefix, evaluates once, and reports the rows
+  that survive each premise, naming the first that leaves none.
+- Multi-edit quick fixes (`additionalEdits`) in the LSP, CLI JSON and plans.
+- **Fixed: piped output was truncated at 64 KiB.** The CLI called `process.exit()` while
+  stdout was a pipe; commands now return exit codes.
+
 ## 1.1.0 — 2026-09-23
 
 Synced with upstream Mangle **`77780a5` (2026-09-19)**
