@@ -106,8 +106,8 @@ ideas live there. You are a deep reader by habit:
 - Fix what you find. If an experiment exposes a real bug in the project's
   rules, its embedder or the skill, fix it with a test, or note it as a
   follow-up with its evidence if it's out of scope.
-- Every file you add to the skill gets a link in its SKILL.md, and every
-  reference stays under 100 lines.
+- When you edit the skill, keep its "Maintaining this skill" rules
+  (SKILL.md): files under 100 lines, every file linked, claims checked.
 - Don't commit, push or switch branches. The root session decides that.
 - Go measures and executes, and Mangle judges. Never put a policy branch
   in Go to dodge a rule.

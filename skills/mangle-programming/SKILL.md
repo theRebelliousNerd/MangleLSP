@@ -162,3 +162,21 @@ Entries:
 order, which upstream file answers which question, and where to dig for
 ideas (the engine's `examples/` and source). Upstream prose has bugs. The engine's source,
 then a lab run, settle every question.
+
+## Maintaining this skill
+
+Anyone who edits this skill (an agent, a session, another harness's copy)
+keeps these rules:
+- Every reference, showcase entry and project profile stays under 100
+  lines. Split by idea when one grows.
+- Every file in the skill is linked from this SKILL.md, in the same change
+  that adds it.
+- A claim about engine behavior needs a lab run, a `mangle-cli run`, or a
+  line of engine source. Unchecked ideas are marked as hypotheses.
+- New traps go in [verified-traps](references/verified-traps.md), and new
+  ideas or struck items go in
+  [pushing-mangle-forward](references/pushing-mangle-forward.md).
+- Ideas over syntax: write what Mangle can do and how it composes with Go,
+  not a grammar tutorial.
+- The source of truth is the MangleLSP repo
+  (`skills/mangle-programming/`). Installed plugin copies are read-only.
