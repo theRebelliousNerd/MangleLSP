@@ -1,0 +1,13 @@
+{
+  "name": "mangle-tools",
+  "description": "Mangle language tooling for Claude Code",
+  "owner": { "name": "theRebelliousNerd" },
+  "plugins": [
+    {
+      "name": "mangle",
+      "source": "./",
+      "description": "MangleLSP, engine-backed mangle-cli, post-edit engine check, the mangle-programming skill and a self-profiling Mangle architect agent",
+      "category": "code-intelligence"
+    }
+  ]
+}

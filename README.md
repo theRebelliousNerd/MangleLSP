@@ -36,6 +36,25 @@ MangleLSP/
 
 ## Installation
 
+### Claude Code plugin
+
+```
+/plugin install mangle --marketplace theRebelliousNerd/MangleLSP
+```
+
+The `mangle` plugin brings:
+- the language server for `.mg` files;
+- `mangle-cli` on the shell's PATH;
+- an engine check after every `.mg` edit, which reports only the errors
+  the edit introduced;
+- the `mangle-programming` skill;
+- the `mangle-logic-architect` agent. It profiles each project into
+  `.claude/mangle-project.md` on first use, then works experiment-first.
+
+It needs Node. Engine-backed checks also need Go: the engine runner,
+`mangle-oracle`, is built on first use against the engine version the
+project pins.
+
 ### From Open VSX
 
 Install from [Open VSX Registry](https://open-vsx.org/extension/theRebelliousNerd/mangle-vscode)
@@ -91,9 +110,14 @@ node mangle-vscode/server/cli.bundle.js explain E003
 2. Diff `parse/gen/Mangle.g4` against `mangle-lsp/Mangle.g4`, and `symbols/symbols.go` /
    `builtin/builtin.go` against `mangle-lsp/src/builtins/`.
 3. Re-copy `examples/*.mg` and `analysis/test_cases/*.mg` into
-   `mangle-lsp/test/fixtures/upstream/` and run `npm test` — the conformance suite holds
-   the LSP to upstream's accept/reject verdicts.
-4. Update `UPSTREAM_MANGLE_REVISION` in `mangle-lsp/src/version.ts` and the CHANGELOG.
+   `mangle-lsp/test/fixtures/upstream/`.
+4. Bump the engine in `mangle-oracle/go.mod`, run `npm run build:lsp` and
+   `npm run conformance:refresh` (writes the engine's verdict on every fixture to
+   `mangle-lsp/test/fixtures/conformance/engine-verdicts.json`), then `npm test`: the
+   differential suite holds the LSP to the engine's verdicts, and with Go installed it
+   re-checks the verdicts live.
+5. Update `UPSTREAM_MANGLE_VERSION` / `UPSTREAM_MANGLE_REVISION` in
+   `mangle-lsp/src/version.ts` and the CHANGELOG.
 
 ## Requirements
 

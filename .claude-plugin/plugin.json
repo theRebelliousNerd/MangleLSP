@@ -1,0 +1,37 @@
+{
+  "name": "mangle",
+  "displayName": "Mangle",
+  "version": "1.2.0",
+  "description": "Mangle for Claude Code: the MangleLSP language server, an engine-backed mangle-cli, a post-edit engine check, the mangle-programming skill, and an experiment-first Mangle architect agent that profiles each project it lands in.",
+  "author": {
+    "name": "theRebelliousNerd"
+  },
+  "homepage": "https://github.com/theRebelliousNerd/MangleLSP",
+  "repository": "https://github.com/theRebelliousNerd/MangleLSP",
+  "license": "MIT",
+  "keywords": [
+    "mangle",
+    "datalog",
+    "lsp",
+    "code-intelligence",
+    "mg",
+    "go"
+  ],
+  "lspServers": {
+    "mangle": {
+      "command": "node",
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/mangle-vscode/server/server.bundle.js",
+        "--stdio"
+      ],
+      "env": {
+        "MANGLE_ORACLE_CACHE": "${CLAUDE_PLUGIN_DATA}/oracle"
+      },
+      "extensionToLanguage": {
+        ".mg": "mangle"
+      },
+      "shutdownTimeout": 5000
+    }
+  },
+  "types": "./types/index.d.ts"
+}

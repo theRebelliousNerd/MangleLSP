@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# mangle-cli from the Mangle plugin: the engine-backed Mangle CLI (check,
+# review, boundary, advise, run, whynot, explain, ...). Built oracles are
+# cached outside the plugin so plugin updates don't lose them.
+here="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+export MANGLE_ORACLE_CACHE="${MANGLE_ORACLE_CACHE:-${XDG_CACHE_HOME:-$HOME/.cache}/mangle-oracle}"
+exec node "$here/../mangle-vscode/server/cli.bundle.js" "$@"

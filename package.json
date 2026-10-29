@@ -9,12 +9,15 @@
   ],
   "scripts": {
     "build": "npm run build:lsp && npm run build:vscode",
+    "build:oracle": "cd mangle-oracle && go build -o bin/mangle-oracle .",
+    "conformance:refresh": "node mangle-lsp/test/conformance/refresh-engine-verdicts.mjs",
     "build:lsp": "npm run build --workspace=mangle-lsp",
     "build:vscode": "npm run bundle --workspace=mangle-vscode",
     "watch": "npm run watch --workspace=mangle-lsp & npm run watch --workspace=mangle-vscode",
     "package": "npm run build && npm run package --workspace=mangle-vscode",
     "clean": "rimraf mangle-lsp/dist mangle-vscode/out mangle-vscode/server",
-    "test": "npm run test --workspace=mangle-lsp"
+    "test": "npm run test --workspace=mangle-lsp",
+    "test:mod": "node scripts/test-mod.mjs"
   },
   "repository": {
     "type": "git",
