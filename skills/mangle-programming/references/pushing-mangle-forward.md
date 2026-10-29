@@ -43,10 +43,10 @@ verdict exists (and record the verdict in agent memory).
    behavior and line count.
 6. **Proof-backed "why" in the TUI.** Render `kernel_explanation.go` proofs
    as a graph, and measure recorder cost per turn.
-7. **Jev as an external predicate.** One typed question (for example
-   "is this user turn a bug report?") with calibrated probabilities as
-   facts, a lattice choosing the label, and hard rules that override it.
-   Coordinate with `codenerd-explorer` for the Jev side.
+7. ~~Jev Choice as facts plus a lattice.~~ Shipped in codeNERD
+   (`policy/jev_evidence.mg`, `policy/conversation_acts.mg`). It needed one
+   relation where max-then-join-back needed three strata. Next: the same
+   pattern for learnjudge's verb choice.
 8. ~~Negated-external guard.~~ Shipped: MangleLSP E081 (per file, with
    the projection quick fix) and B011 (cross-file, names the Go callback).
    codeNERD has none today.

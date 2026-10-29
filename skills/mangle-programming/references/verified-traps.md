@@ -79,11 +79,11 @@ every new trap you find.
 
 ## Stores and lattices
 
-- Every in-memory store (`Simple`, `Indexed`, `MultiIndexed(Array)`,
-  `Concurrent`, `Merged`, `Teeing`) implements `Remove`, so merge lattices
-  replace facts. The temporal-store adapter does not: there both facts stay.
-  The kernel and the lab harness use `SimpleInMemoryStore` (the harness used
-  the adapter until 2026-10-28).
+- Every in-memory store implements `Remove`, so merge lattices replace
+  facts; the temporal-store adapter doesn't, so there both facts stay.
+- Hosting a lattice: hand the engine the merge and deferred rules (subset
+  evaluation drops them), name the merge's inputs in the lattice rule's body,
+  and keep merges total preorders (`lattices-and-merge.md`).
 - A lattice shortest path on a cyclic graph terminates (5 edges: 16
   facts, instant); all paths + `fn:min` runs 38 s to the 100k fact limit.
 

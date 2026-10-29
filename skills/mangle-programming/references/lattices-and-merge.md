@@ -40,6 +40,25 @@ so the recursion explores far less than the full path set.
 - On a cyclic graph a lattice shortest path terminates; the all-paths
   closure doesn't (verified: 5-edge cycle, 16 facts vs the 100k limit).
 
+## Hosting a lattice (verified on v0.7 in codeNERD's first production lattice)
+
+- The engine runs merge and `deferred()` predicates top-down from the rules
+  of the program it is handed. An embedder that evaluates a subset (an
+  incremental pass, a dependency cone) must hand it the merge and deferred
+  rules too; otherwise every row counts as incomparable and is kept. Pin
+  this with a differential test of the subset against full evaluation.
+- Analysis stratifies by rule bodies only and never reads a merge
+  predicate. If the merge reads a derived predicate (a rank table), name
+  that predicate in the lattice rule's body so it is computed first;
+  otherwise ties survive, and the result can flake with stratum order.
+- A merge must be a total preorder: one answer for every pair. A merge that
+  answers both ways keeps whichever row arrived last.
+- `fn:Pair(/string, /number)` passes strict checks as the lattice column,
+  and a higher row replaces two tied ones in any arrival order. The engine
+  mutates the incoming fact in place, so don't reuse it from Go.
+- Make ties data: derive `x_tied` when two rows survive, and have consumers
+  require the top alone.
+
 ## Why this beats the usual workaround
 
 There is no arg-max reducer. The usual pattern computes `fn:max` in one

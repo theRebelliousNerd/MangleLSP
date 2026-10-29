@@ -46,7 +46,10 @@ negated form against a positive control.
   neuro-symbolic mediator. Use
   `:float:gt` for thresholds (`>` is integers only), and derive the
   fallback decision from a separate predicate, never by negating the rule's
-  own head.
+  own head. For a multiple-choice question (Jev Choice), assert the whole
+  distribution, `jev_choice(Q, Option, Pct)`, let a lattice keep the top,
+  derive a tie relation, and have consumers read the chosen fact. Never
+  pick the top in Go. This ships in codeNERD (`policy/jev_evidence.mg`).
 - **Lazy measurement.** Stop pre-asserting filesystem or git facts for the
   whole workspace. A `file_stat(Path, Size, MTime)` external is asked only
   for the paths the rules reach, so the census cost drops to the cone of
