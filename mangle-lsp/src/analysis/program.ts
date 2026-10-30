@@ -4,18 +4,22 @@
  * (undefined predicates, arity, duplicate Decls, bounds through other files'
  * Decls, negation cycles, negated externals) then see what the engine sees.
  *
- * The files are concatenated, as hosts do, analyzed once, and every
- * diagnostic is mapped back to its file and line.
+ * Each file is parsed on its own (so a syntax error in one file never
+ * swallows the first statement of the next), its AST is moved to the file's
+ * line range of the assembled program, and the units are merged and analyzed
+ * once. Every diagnostic is mapped back to its file and line.
  */
 
-import { parse, ParseError } from '../parser/index';
-import { analyzeUnit, AnalysisDiagnostic } from './pipeline';
-import type { SourceRange } from '../parser/ast';
+import { parse, ParseError, ParseResult } from '../parser/index';
+import { analyzeUnit, AnalysisDiagnostic, AnalysisResult } from './pipeline';
+import type { SourceRange, SourceUnit, Clause, Decl } from '../parser/ast';
 import type { QuickFix } from './validation';
 
 export interface ProgramFile {
     path: string;
     text: string;
+    /** The parse of `text`, when the caller already has it. */
+    parsed?: ParseResult;
 }
 
 export interface FileAnalysis {
@@ -24,25 +28,15 @@ export interface FileAnalysis {
     diagnostics: AnalysisDiagnostic[];
 }
 
-interface Segment {
+export interface Segment {
     path: string;
-    /** First line of the file in the concatenated text (1-based). */
+    /** First line of the file in the assembled program (1-based). */
     start: number;
     lines: number;
 }
 
-function segmentsOf(files: ProgramFile[]): { text: string; segments: Segment[] } {
-    const segments: Segment[] = [];
-    let line = 1;
-    const parts: string[] = [];
-    for (const f of files) {
-        const text = f.text.endsWith('\n') ? f.text : f.text + '\n';
-        const lines = text.split('\n').length - 1;
-        segments.push({ path: f.path, start: line, lines });
-        parts.push(text);
-        line += lines;
-    }
-    return { text: parts.join(''), segments };
+function lineCount(text: string): number {
+    return text.endsWith('\n') ? text.split('\n').length - 1 : text.split('\n').length;
 }
 
 function segmentAt(segments: Segment[], line: number): Segment {
@@ -71,25 +65,99 @@ function shiftFix(f: QuickFix, by: number): QuickFix {
     };
 }
 
+/**
+ * Copy of an AST with every position moved `lines` lines down. Nodes are
+ * plain objects; the copy keeps shared nodes shared (the `malformed` set
+ * refers to clauses and declarations by identity).
+ */
+function relocate<T>(root: T, lines: number): T {
+    if (lines === 0) return root;
+    const copies = new Map<object, unknown>();
+    const copy = (v: unknown): unknown => {
+        if (v === null || typeof v !== 'object') return v;
+        const seen = copies.get(v);
+        if (seen) return seen;
+        if (Array.isArray(v)) {
+            const out: unknown[] = [];
+            copies.set(v, out);
+            for (const item of v) out.push(copy(item));
+            return out;
+        }
+        if (v instanceof Set) {
+            const out = new Set<unknown>();
+            copies.set(v, out);
+            for (const item of v) out.add(copy(item));
+            return out;
+        }
+        const src = v as Record<string, unknown>;
+        const out: Record<string, unknown> = {};
+        copies.set(v, out);
+        for (const key of Object.keys(src)) out[key] = copy(src[key]);
+        if (typeof src['line'] === 'number' && typeof src['column'] === 'number') out['line'] = (src['line'] as number) + lines;
+        return out;
+    };
+    return copy(root) as T;
+}
+
+/** The units of several files as one program; positions already in program lines. */
+function mergeUnits(units: SourceUnit[]): SourceUnit {
+    const malformed = new Set<Clause | Decl>();
+    for (const u of units) for (const m of u.malformed ?? []) malformed.add(m);
+    const packages = new Set(units.map(u => u.packageDecl?.name ?? ''));
+    return {
+        packageDecl: packages.size === 1 ? units.find(u => u.packageDecl)?.packageDecl ?? null : null,
+        useDecls: units.flatMap(u => u.useDecls),
+        decls: units.flatMap(u => u.decls),
+        clauses: units.flatMap(u => u.clauses),
+        malformed: malformed.size > 0 ? malformed : undefined,
+    };
+}
+
+/** A program's merged unit, with the segment of each file in its line numbering. */
+export interface AssembledProgram {
+    unit: SourceUnit;
+    segments: Segment[];
+    parseErrors: Map<string, ParseError[]>;
+}
+
+export function assembleProgram(files: ProgramFile[]): AssembledProgram {
+    const segments: Segment[] = [];
+    const units: SourceUnit[] = [];
+    const parseErrors = new Map<string, ParseError[]>();
+    let line = 1;
+    for (const f of files) {
+        const parsed = f.parsed ?? parse(f.text);
+        const lines = lineCount(f.text);
+        segments.push({ path: f.path, start: line, lines });
+        parseErrors.set(f.path, parsed.errors);
+        if (parsed.unit) units.push(relocate(parsed.unit, line - 1));
+        line += lines;
+    }
+    return { unit: mergeUnits(units), segments, parseErrors };
+}
+
+/** The diagnostics of a merged program's analysis, per file and in file lines. */
+export function diagnosticsByFile(program: AssembledProgram, result: AnalysisResult): Map<string, AnalysisDiagnostic[]> {
+    const out = new Map<string, AnalysisDiagnostic[]>(program.segments.map(s => [s.path, []]));
+    for (const d of result.diagnostics) {
+        const seg = segmentAt(program.segments, d.range.start.line);
+        const by = seg.start - 1;
+        out.get(seg.path)!.push({
+            ...d,
+            range: shiftRange(d.range, by),
+            fixes: d.fixes?.map(f => shiftFix(f, by)),
+        });
+    }
+    return out;
+}
+
 /** Analyzes files as one program and returns diagnostics per file. */
 export function analyzeProgram(files: ProgramFile[]): FileAnalysis[] {
-    const { text, segments } = segmentsOf(files);
-    const result = new Map<string, FileAnalysis>(files.map(f => [f.path, { path: f.path, parseErrors: [], diagnostics: [] }]));
-    const parsed = parse(text);
-    for (const e of parsed.errors) {
-        const seg = segmentAt(segments, e.line);
-        result.get(seg.path)!.parseErrors.push({ ...e, line: e.line - seg.start + 1 });
-    }
-    if (parsed.unit) {
-        for (const d of analyzeUnit(parsed.unit).diagnostics) {
-            const seg = segmentAt(segments, d.range.start.line);
-            const by = seg.start - 1;
-            result.get(seg.path)!.diagnostics.push({
-                ...d,
-                range: shiftRange(d.range, by),
-                fixes: d.fixes?.map(f => shiftFix(f, by)),
-            });
-        }
-    }
-    return [...result.values()];
+    const program = assembleProgram(files);
+    const diagnostics = diagnosticsByFile(program, analyzeUnit(program.unit));
+    return files.map(f => ({
+        path: f.path,
+        parseErrors: program.parseErrors.get(f.path) ?? [],
+        diagnostics: diagnostics.get(f.path) ?? [],
+    }));
 }

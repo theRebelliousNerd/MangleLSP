@@ -14,7 +14,8 @@
 
 import { existsSync, readdirSync, readFileSync, statSync } from 'fs';
 import { join, relative, resolve } from 'path';
-import { analyzeProgram } from '../../analysis/program';
+import { analyzeProgram, FileAnalysis } from '../../analysis/program';
+import { ProgramContext } from '../../workspace/context';
 import { AnalysisDiagnostic } from '../../analysis/pipeline';
 import { getDiagnosticInfo } from '../../analysis/diagnostics';
 import { OracleUnavailableError } from '../../oracle/client';
@@ -55,6 +56,8 @@ export interface ReviewOptions {
     severity?: 'error' | 'warning' | 'info';
     /** Host profile for the boundary scan (built-in name or JSON path). */
     profile?: string;
+    /** Analyze files alone, without the program context. */
+    isolated?: boolean;
 }
 
 export interface ReviewReport {
@@ -85,6 +88,19 @@ export function findMangleFiles(root: string): string[] {
     return out.sort();
 }
 
+/**
+ * A program of several files is analyzed whole; a file alone is analyzed in
+ * the context the editor gives it (the declarations beside it).
+ */
+function analyzeFiles(context: ProgramContext, files: string[]): FileAnalysis[] {
+    const texts = files.map(f => ({ path: f, text: readFileSync(f, 'utf-8') }));
+    if (texts.length > 1) return analyzeProgram(texts);
+    return texts.map(t => {
+        const report = context.analyze(t.path, t.text);
+        return { path: t.path, parseErrors: report.parseErrors, diagnostics: report.diagnostics };
+    });
+}
+
 const RANK = { error: 0, warning: 1, info: 2 } as const;
 
 function verifyFor(code: string, file: string, root: string): string {
@@ -94,7 +110,8 @@ function verifyFor(code: string, file: string, root: string): string {
 
 export function runReview(rootArg: string, options: ReviewOptions = {}): ReviewReport {
     const root = resolve(rootArg);
-    const files = findMangleFiles(root);
+    const context = new ProgramContext({ isolated: options.isolated });
+    const files = findMangleFiles(root).filter(f => !context.ignore.isIgnored(f));
     let boundary: BoundaryReport | undefined;
     let boundaryNote: string | undefined;
     const hasGo = existsSync(join(root, 'go.mod'));
@@ -112,9 +129,10 @@ export function runReview(rootArg: string, options: ReviewOptions = {}): ReviewR
     const programs: ReviewReport['programs'] = [];
     const grouped = new Set<string>();
     for (const p of boundary?.programs ?? []) {
-        const abs = p.files.map(f => join(root, f));
+        const abs = p.files.map(f => join(root, f)).filter(f => !context.ignore.isIgnored(f));
+        if (abs.length === 0) continue;
         abs.forEach(f => grouped.add(f));
-        programs.push({ id: p.id, files: p.files, engine: { stage: p.verdict.stage, error: p.verdict.error } });
+        programs.push({ id: p.id, files: abs.map(f => relative(root, f)), engine: { stage: p.verdict.stage, error: p.verdict.error } });
     }
     for (const f of files) {
         if (!grouped.has(f)) programs.push({ id: relative(root, f), files: [relative(root, f)] });
@@ -137,7 +155,7 @@ export function runReview(rootArg: string, options: ReviewOptions = {}): ReviewR
     };
     for (const p of programs) {
         const abs = p.files.map(f => join(root, f));
-        for (const fa of analyzeProgram(abs.map(f => ({ path: f, text: readFileSync(f, 'utf-8') })))) {
+        for (const fa of analyzeFiles(context, abs)) {
             for (const e of fa.parseErrors) {
                 push({ code: 'P001', message: e.message, severity: 'error', source: 'mangle-semantic',
                     range: { start: { line: e.line, column: e.column, offset: e.offset }, end: { line: e.line, column: e.column + e.length, offset: e.offset } } }, fa.path);

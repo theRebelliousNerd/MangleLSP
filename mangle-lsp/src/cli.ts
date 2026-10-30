@@ -77,7 +77,7 @@ import {
 const BOOLEAN_FLAGS = new Set([
     'quiet', 'help', 'version', 'write', 'check', 'diff',
     'include-declaration', 'explain', 'all', 'markdown', 'list',
-    'program', 'no-boundary',
+    'program', 'no-boundary', 'isolated', 'no-ignore',
 ]);
 
 /**
@@ -113,6 +113,9 @@ Check Options:
   --severity      Minimum severity: error | warning | info (default: info)
   --fail-on       Exit non-zero on: error | warning | never (default: error)
   --explain       Include the full explanation, fix and example of every code
+  --isolated      Analyze each file alone (default: in its program context: the .mg files
+                  a Go package //go:embeds together, else the Decls of the files beside it)
+  --no-ignore     Check files that .mangleignore or '# mangle-ignore-file' exclude
 
 Explain Options:
   mangle-cli explain E002          Explain one code
@@ -363,6 +366,8 @@ function handleCheck(
         severity: (options['severity'] as DiagnosticSeverity) || 'info',
         failOn: (options['fail-on'] as 'error' | 'warning' | 'never') || 'error',
         explain: !!options['explain'],
+        isolated: !!options['isolated'],
+        noIgnore: !!options['no-ignore'],
     };
 
     const result = runCheck(files, checkOptions);

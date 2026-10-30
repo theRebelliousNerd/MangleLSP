@@ -103,6 +103,7 @@ export function formatCheckResultText(result: CheckResult): string {
         lines.push('');
         lines.push(color('Summary:', COLORS.bold));
         lines.push(`  Files checked: ${result.summary.totalFiles}`);
+        if (result.summary.ignoredFiles) lines.push(`  Ignored: ${result.summary.ignoredFiles} (.mangleignore or # mangle-ignore-file)`);
         if (result.summary.totalErrors > 0) {
             lines.push(`  Errors: ${color(result.summary.totalErrors.toString(), COLORS.red)}`);
         }
@@ -119,6 +120,7 @@ export function formatCheckResultText(result: CheckResult): string {
         }
     } else {
         lines.push(color('No issues found.', COLORS.gray));
+        if (result.summary.ignoredFiles) lines.push(color(`${result.summary.ignoredFiles} file(s) ignored (.mangleignore or # mangle-ignore-file)`, COLORS.gray));
     }
 
     return lines.join('\n');

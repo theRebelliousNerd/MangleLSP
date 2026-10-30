@@ -102,7 +102,7 @@ export async function activate(context: ExtensionContext) {
         documentSelector: [{ scheme: 'file', language: 'mangle' }],
         synchronize: {
             // Notify the server about file changes to '.mg' files in the workspace
-            fileEvents: workspace.createFileSystemWatcher('**/*.mg'),
+            fileEvents: workspace.createFileSystemWatcher('**/{*.mg,*.go,go.mod,.mangleignore}'),
         },
         outputChannel: outputChannel,
     };

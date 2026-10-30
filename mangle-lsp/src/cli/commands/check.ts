@@ -5,7 +5,7 @@
 import { readFileSync, existsSync } from 'fs';
 import { resolve, relative } from 'path';
 import { parse } from '../../parser/index';
-import { analyzeUnit } from '../../analysis/pipeline';
+import { ProgramContext } from '../../workspace/context';
 import { analysisToCLIDiagnostic, parseErrorToCLIDiagnostic } from '../diagnostics';
 import {
     CheckResult,
@@ -30,6 +30,8 @@ export function runCheck(files: string[], options: CheckOptions): CheckResult {
         },
     };
 
+    const context = new ProgramContext({ isolated: options.isolated });
+    let ignoredFiles = 0;
     for (const file of files) {
         const filePath = resolve(file);
         if (!existsSync(filePath)) {
@@ -73,7 +75,11 @@ export function runCheck(files: string[], options: CheckOptions): CheckResult {
             continue;
         }
 
-        const fileDiagnostics = checkFile(filePath, source, options);
+        if (!options.noIgnore && context.ignore.isIgnored(filePath, source)) {
+            ignoredFiles++;
+            continue;
+        }
+        const fileDiagnostics = checkFile(filePath, source, options, context);
         result.files.push(fileDiagnostics);
         result.summary.totalFiles++;
 
@@ -88,35 +94,38 @@ export function runCheck(files: string[], options: CheckOptions): CheckResult {
         }
     }
 
+    if (ignoredFiles > 0) result.summary.ignoredFiles = ignoredFiles;
     return result;
 }
 
 /**
- * Check a single file.
+ * Check a single file, in the context of the program the host loads it with.
  */
-export function checkFile(filePath: string, source: string, options: CheckOptions): FileDiagnostics {
+export function checkFile(
+    filePath: string,
+    source: string,
+    options: CheckOptions,
+    context: ProgramContext = new ProgramContext({ isolated: options.isolated }),
+): FileDiagnostics {
     const diagnostics: CLIDiagnostic[] = [];
     const lines = source.split('\n');
     const explain = !!options.explain;
 
-    // Parse
     const parseResult = parse(source);
+    const report = context.analyze(filePath, source, parseResult);
 
-    // Add parse errors
-    for (const error of parseResult.errors) {
+    for (const error of report.parseErrors) {
         const diag = parseErrorToCLIDiagnostic(error, lines, explain);
         if (shouldInclude(diag.severity, options.severity)) {
             diagnostics.push(diag);
         }
     }
 
-    // Semantic validation, stratification and advisory checks
-    if (parseResult.unit) {
-        for (const error of analyzeUnit(parseResult.unit).diagnostics) {
-            const diag = analysisToCLIDiagnostic(error, lines, explain);
-            if (shouldInclude(diag.severity, options.severity)) {
-                diagnostics.push(diag);
-            }
+    // Semantic validation, stratification and advisory checks (of this file only)
+    for (const error of report.diagnostics) {
+        const diag = analysisToCLIDiagnostic(error, lines, explain);
+        if (shouldInclude(diag.severity, options.severity)) {
+            diagnostics.push(diag);
         }
     }
 

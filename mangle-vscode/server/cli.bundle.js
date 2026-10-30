@@ -26,6 +26,856 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
+// ../node_modules/ignore/index.js
+var require_ignore = __commonJS({
+  "../node_modules/ignore/index.js"(exports2, module2) {
+    function makeArray(subject) {
+      return Array.isArray(subject) ? subject : [subject];
+    }
+    var UNDEFINED = void 0;
+    var EMPTY = "";
+    var SPACE = " ";
+    var ESCAPE = "\\";
+    var REGEX_LITERAL_SPECIAL = /[.*+?()[\]{}^$|\\/]/;
+    var BOM = "\uFEFF";
+    var REGEX_INVALID_TRAILING_BACKSLASH = /(?:[^\\]|^)\\$/;
+    var REGEX_ANCHORED_GLOBSTAR = /^\/\*{2,}$/;
+    var REGEX_REPLACE_LEADING_EXCAPED_EXCLAMATION = /^\\!/;
+    var REGEX_REPLACE_LEADING_EXCAPED_HASH = /^\\#/;
+    var REGEX_SPLITALL_CRLF = /\r?\n/g;
+    var DOUBLE_SLASH = "//";
+    var SLASH_CODE = 47;
+    var DOT_CODE = 46;
+    var SLASH = "/";
+    var TMP_KEY_IGNORE = "node-ignore";
+    if (typeof Symbol !== "undefined") {
+      TMP_KEY_IGNORE = /* @__PURE__ */ Symbol.for("node-ignore");
+    }
+    var KEY_IGNORE = TMP_KEY_IGNORE;
+    var define2 = (object, key, value) => {
+      Object.defineProperty(object, key, { value });
+      return value;
+    };
+    var RETURN_FALSE = () => false;
+    var POSIX_CLASSES = {
+      alnum: "0-9A-Za-z",
+      alpha: "A-Za-z",
+      blank: " \\t",
+      cntrl: "\\x00-\\x1f\\x7f",
+      digit: "0-9",
+      graph: "!-.0-~",
+      lower: "a-z",
+      print: " -.0-~",
+      punct: "!-.:-@\\[-`{-~",
+      // git's `sane-ctype.h` classifies \v and \f as control, not space,
+      //   unlike C's `isspace`
+      space: " \\t\\n\\r",
+      upper: "A-Z",
+      xdigit: "0-9A-Fa-f"
+    };
+    var CLASS_MEMBERS_TO_ESCAPE = "\\]^-[";
+    var escapeMember = (char) => CLASS_MEMBERS_TO_ESCAPE.indexOf(char) < 0 ? char : ESCAPE + char;
+    var NON_SLASH = "(?!\\/)";
+    var classSource = (negated, body) => {
+      if (negated) {
+        return `[^\\/${body}]`;
+      }
+      const source = `[${body}]`;
+      return new RegExp(source).test("/") ? NON_SLASH + source : source;
+    };
+    var scanBracket = (pattern, start) => {
+      const { length } = pattern;
+      let index = start + 1;
+      let negated = EMPTY;
+      const lead = pattern[index];
+      if (lead === "!" || lead === "^") {
+        negated = "^";
+        index++;
+      }
+      let body = EMPTY;
+      let prev = EMPTY;
+      for (; ; ) {
+        const char = pattern[index];
+        if (char === UNDEFINED) {
+          return null;
+        }
+        if (char === ESCAPE) {
+          const escaped = pattern[index + 1];
+          if (escaped === UNDEFINED) {
+            return null;
+          }
+          body += escapeMember(escaped);
+          prev = escaped;
+          index++;
+        } else if (char === "-" && prev && index + 1 < length && pattern[index + 1] !== "]") {
+          index++;
+          let to = pattern[index];
+          if (to === ESCAPE) {
+            to = pattern[index += 1];
+          }
+          if (prev <= to) {
+            body += `-${escapeMember(to)}`;
+          }
+          prev = EMPTY;
+        } else if (char === "[" && pattern[index + 1] === ":") {
+          const nameStart = index + 2;
+          let end = nameStart;
+          while (end < length && pattern[end] !== "]") {
+            end++;
+          }
+          if (end === length) {
+            return null;
+          }
+          if (end > nameStart && pattern[end - 1] === ":") {
+            const name = pattern.slice(nameStart, end - 1);
+            if (!Object.prototype.hasOwnProperty.call(POSIX_CLASSES, name)) {
+              return null;
+            }
+            body += POSIX_CLASSES[name];
+            prev = EMPTY;
+            index = end;
+          } else {
+            body += escapeMember("[");
+            prev = "[";
+            index = nameStart - 2;
+          }
+        } else {
+          body += escapeMember(char);
+          prev = char;
+        }
+        index++;
+        if (pattern[index] === "]") {
+          return {
+            end: index,
+            source: classSource(negated, body)
+          };
+        }
+      }
+    };
+    var NEVER_MATCH = "[]";
+    var PLACEHOLDER = "\0";
+    var REGEX_RESTORE_PLACEHOLDER = new RegExp(
+      `${PLACEHOLDER}(\\d+)${PLACEHOLDER}`,
+      "g"
+    );
+    var TRAILING_WILDCARD = "\uE000";
+    var TRAILING_DOUBLESTAR = "\uE001";
+    var isReserved = (char) => char === PLACEHOLDER || char === TRAILING_WILDCARD || char === TRAILING_DOUBLESTAR;
+    var extractBrackets = (pattern) => {
+      const sources = [];
+      const hold = (source) => `${PLACEHOLDER}${sources.push(source) - 1}${PLACEHOLDER}`;
+      const { length } = pattern;
+      let out2 = EMPTY;
+      let index = 0;
+      while (index < length) {
+        const char = pattern[index];
+        if (char === ESCAPE) {
+          const escaped = pattern[index + 1];
+          if (escaped === UNDEFINED || escaped === SLASH && index + 2 === length) {
+            out2 += hold(NEVER_MATCH);
+          } else if (escaped === "*" || escaped === "[" || escaped === SPACE) {
+            out2 += pattern.slice(index, index + 2);
+          } else {
+            out2 += hold(
+              REGEX_LITERAL_SPECIAL.test(escaped) ? ESCAPE + escaped : isReserved(escaped) ? `[${escaped}]` : escaped
+            );
+          }
+          index += 2;
+        } else if (isReserved(char)) {
+          out2 += hold(`[${char}]`);
+          index++;
+        } else if (char === "[") {
+          const scanned = scanBracket(pattern, index);
+          if (scanned === null) {
+            out2 += hold(NEVER_MATCH);
+            index = length;
+          } else {
+            out2 += hold(scanned.source);
+            index = scanned.end + 1;
+          }
+        } else {
+          out2 += char;
+          index++;
+        }
+      }
+      return {
+        source: out2,
+        sources
+      };
+    };
+    var DIRECT = null;
+    var REGEX_INNER_SLASH = /\/(?!$)/;
+    var REPLACERS = [
+      // Replace (\ ) with ' '
+      // Only a space: an escaped tab or other whitespace is already a literal by
+      //   the time it reaches here, and a bare tab must be left as one, not turned
+      //   into a space.
+      // (\ ) -> ' '
+      // (\\ ) -> '\\ '
+      // (\\\ ) -> '\\ '
+      [
+        // A run of backslashes is taken whole, from its first one, so no match
+        //   ever starts again inside it -- `(\\+?) ` did, which made a long run
+        //   quadratic.
+        /(\\+)( ?)/g,
+        (_, run, space) => space ? run.slice(0, run.length - run.length % 2) + SPACE : run,
+        ESCAPE + SPACE
+      ],
+      // git's wildmatch() reads a run of two or more asterisks as one globstar
+      //   whenever the run fills a path segment: it starts the pattern or follows
+      //   a `/`, and it ends the pattern or comes before a `/`. A run of two is
+      //   already `**`; a longer one is folded into `**` here, so the steps
+      //   below only ever have to know `**`.
+      // `***/foo` -> `**/foo`, `a/***/b` -> `a/**/b`, `a/***` -> `a/**`
+      // git also takes a run beside a literal prefix (`a***/b`) or beside an
+      //   escaped slash (`***\/b`) as a globstar, and this does not; the README
+      //   lists both, under "A run of asterisks".
+      [
+        /(^|\/)\*{3,}(?=\/|$)/g,
+        (_, start) => `${start}**`,
+        "*"
+      ],
+      // Escape metacharacters
+      // which is written down by users but means special for regular expressions.
+      // > There are 12 characters with special meanings:
+      // > - the backslash \,
+      // > - the caret ^,
+      // > - the dollar sign $,
+      // > - the period or dot .,
+      // > - the vertical bar or pipe symbol |,
+      // > - the question mark ?,
+      // > - the asterisk or star *,
+      // > - the plus sign +,
+      // > - the opening parenthesis (,
+      // > - the closing parenthesis ),
+      // > - and the opening square bracket [,
+      // > - the opening curly brace {,
+      // > These special characters are often called "metacharacters".
+      [
+        /[\\$.|*+(){^]/g,
+        (match) => `\\${match}`
+      ],
+      [
+        // > a question mark (?) matches a single character
+        /(?!\\)\?/g,
+        () => "[^/]",
+        "?"
+      ],
+      // leading slash
+      [
+        // > A leading slash matches the beginning of the pathname.
+        // > For example, "/*.c" matches "cat-file.c" but not "mozilla-sha1/sha1.c".
+        // A leading slash matches the beginning of the pathname
+        /^\//,
+        () => "^",
+        SLASH
+      ],
+      // replace special metacharacter slash after the leading slash
+      [
+        /\//g,
+        () => "\\/",
+        SLASH
+      ],
+      [
+        // > A leading "**" followed by a slash means match in all directories.
+        // > For example, "**/foo" matches file or directory "foo" anywhere,
+        // > the same as pattern "foo".
+        // > "**/foo/bar" matches file or directory "bar" anywhere that is directly
+        // >   under directory "foo".
+        // Notice that the '*'s have been replaced as '\\*'
+        /^\^*(?:\\\*\\\*\\\/)+/,
+        // '**/foo' <-> 'foo'
+        () => "^(?:.*\\/)?",
+        "*"
+      ],
+      // starting
+      [
+        // there will be no leading '/'
+        //   (which has been replaced by section "leading slash")
+        // If starts with '**', adding a '^' to the regular expression also works
+        DIRECT,
+        (source, pattern) => {
+          if (!source || source[0] === "^") {
+            return source;
+          }
+          const anchor = !REGEX_INNER_SLASH.test(pattern) ? "(?:^|\\/)" : "^";
+          return anchor + source;
+        }
+      ],
+      // two globstars
+      [
+        // Use lookahead assertions so that we could match more than one `'/**'`
+        /\\\/\\\*\\\*(?=\\\/|$)/g,
+        // Zero, one or several directories
+        // should not use '*', or it will be replaced by the next replacer
+        // Check if it is not the last `'/**'`
+        (_, index, str) => index + 6 < str.length ? str.slice(index + 6) === "\\/" ? "(?:\\/[^\\/]+)+" : "(?:\\/[^\\/]+)*" : `\\/${TRAILING_DOUBLESTAR}`,
+        "*"
+      ],
+      // normal intermediate wildcards
+      [
+        // Never replace escaped '*'
+        // ignore rule '\*' will match the path '*'
+        // 'abc.*/' -> go
+        // 'abc.*'  -> skip this rule,
+        //    coz trailing single wildcard will be handed by [trailing wildcard]
+        /(^|[^\\]+)(\\\*)+(?=.+)/g,
+        // '*.js' matches '.js'
+        // '*.js' doesn't match 'abc'
+        (_, p1, p2) => {
+          const unescaped = p2.replace(/\\\*/g, "[^\\/]*");
+          return p1 + unescaped;
+        },
+        "*"
+      ],
+      // trailing wildcard, held apart from a literal star
+      [
+        // The step above leaves a trailing `*` alone, so a single `\*` is all that
+        //   can be left at the end here, and what stands in front of it says which
+        //   kind it is. A wildcard arrives as the escaper wrote it, `\*` with
+        //   nothing before it; a literal arrives as the user's own escape, which
+        //   the escaper doubled, and then the star's own -- `\\` and then `\*`.
+        //   There is no third case: every backslash still reaching the chain is
+        //   one `\*`, `\[` or `\ ` carries itself, and each is followed by its
+        //   own character, so a longer run can never form. This runs while the
+        //   two are still distinct, before the unescape steps below collapse the
+        //   literal onto the very `\*` a wildcard leaves behind.
+        /(^|[^\\])((?:\\\\)*)\\\*$/,
+        (match, p1, p2) => p2 === EMPTY ? p1 + TRAILING_WILDCARD : match,
+        "*"
+      ],
+      [
+        // unescape, revert step 3 except for back slash
+        // For example, if a user escape a '\\*',
+        // after step 3, the result will be '\\\\\\*'
+        /\\\\\\(?=[$.|*+(){^])/g,
+        () => ESCAPE,
+        ESCAPE + ESCAPE
+      ],
+      [
+        // '\\\\' -> '\\'
+        /\\\\/g,
+        () => ESCAPE,
+        ESCAPE + ESCAPE
+      ],
+      [
+        // Every real bracket expression -- POSIX classes included -- has already
+        //   been held aside by `extractBrackets`, so the only `[` left in the
+        //   pattern is an escaped, literal one.
+        // A backslash could only stand at the end of the range if it quoted the
+        //   `]`, and `\]` is held aside long before this.
+        /\\\[([^\]/]*?)($|\])/g,
+        // '\\[bar]' -> '\\\\[bar]'
+        (match, range, close) => `\\[${range}${close}`,
+        "["
+      ],
+      // ending
+      [
+        // 'js' will not match 'js.'
+        // 'ab' will not match 'abc'
+        DIRECT,
+        // WTF!
+        // https://git-scm.com/docs/gitignore
+        // changes in [2.22.1](https://git-scm.com/docs/gitignore/2.22.1)
+        // which re-fixes #24, #38
+        // > If there is a separator at the end of the pattern then the pattern
+        // > will only match directories, otherwise the pattern can match both
+        // > files and directories.
+        // 'js*' will not match 'a.js'
+        // 'js/' will not match 'a.js'
+        // 'js' will match 'a.js' and 'a.js/'
+        (source) => {
+          const last = source[source.length - 1];
+          if (!last || last === TRAILING_WILDCARD || last === TRAILING_DOUBLESTAR) {
+            return source;
+          }
+          return last === SLASH ? `${source}$` : `${source}(?=$|\\/$)`;
+        }
+      ]
+    ];
+    var REGEX_REPLACE_TRAILING_WILDCARD = /(^|\\\/)?\uE000$/;
+    var MODE_IGNORE = "regex";
+    var MODE_CHECK_IGNORE = "checkRegex";
+    var UNDERSCORE = "_";
+    var replaceTrailingWildcard = (_, p1) => {
+      const prefix = p1 ? `${p1}[^/]+` : "[^/]*";
+      return `${prefix}(?=$|\\/$)`;
+    };
+    var REGEX_REPLACE_TRAILING_DOUBLESTAR = /\uE001$/;
+    var replaceTrailingDoublestar = () => ".+(?=$|\\/$)";
+    var WILDCARD = "[^\\/]*";
+    var separatorAfter = (run, at) => {
+      let separator = EMPTY;
+      for (let index = at + 1; index < run.length && !run[index].wildcard; index++) {
+        separator += run[index].single;
+      }
+      return separator;
+    };
+    var pinWildcards = (source) => {
+      if (source.indexOf(WILDCARD) < 0) {
+        return source;
+      }
+      const tokens = [];
+      const { length } = source;
+      let index = 0;
+      while (index < length) {
+        const char = source[index];
+        if (source.startsWith(WILDCARD, index)) {
+          tokens.push({ wildcard: true });
+          index += WILDCARD.length;
+        } else if (char === "[") {
+          let end = index + 1;
+          if (source[end] === "^") {
+            end++;
+          }
+          if (source[end] === "]") {
+            end++;
+          }
+          while (end < length && source[end] !== "]") {
+            end += source[end] === ESCAPE ? 2 : 1;
+          }
+          end++;
+          tokens.push({ single: source.slice(index, end) });
+          index = end;
+        } else if (char === ESCAPE) {
+          tokens.push({ single: source.slice(index, index + 2) });
+          index += 2;
+        } else if (char === "(") {
+          let depth = 0;
+          let end = index;
+          do {
+            if (source[end] === ESCAPE) {
+              end++;
+            } else if (source[end] === "(") {
+              depth++;
+            } else if (source[end] === ")") {
+              depth--;
+            }
+            end++;
+          } while (end < length && depth > 0);
+          if ("*+?".indexOf(source[end]) >= 0) {
+            end++;
+          }
+          tokens.push({ boundary: source.slice(index, end) });
+          index = end;
+        } else if (char === "^" || char === "$") {
+          tokens.push({ boundary: char });
+          index++;
+        } else {
+          tokens.push({ single: char });
+          index++;
+        }
+      }
+      let out2 = EMPTY;
+      let run = [];
+      const flush = () => {
+        let lastWildcard;
+        run.forEach((token, at) => {
+          if (token.wildcard) {
+            lastWildcard = at;
+          }
+        });
+        run.forEach((token, at) => {
+          if (!token.wildcard) {
+            out2 += token.single;
+            return;
+          }
+          out2 += at === lastWildcard ? WILDCARD : `(?:(?!${separatorAfter(run, at)})[^\\/])*`;
+        });
+        run = [];
+      };
+      tokens.forEach((token) => {
+        if (token.boundary === void 0) {
+          run.push(token);
+          return;
+        }
+        flush();
+        out2 += token.boundary;
+      });
+      flush();
+      return out2;
+    };
+    var makeRegexPrefix = (pattern) => {
+      if (REGEX_ANCHORED_GLOBSTAR.test(pattern)) {
+        pattern = "**";
+      }
+      const { source, sources } = extractBrackets(pattern);
+      const replaced = REPLACERS.reduce(
+        // A pass whose matcher finds nothing hands back the very string it was
+        //   given, so asking first costs a search and saves a rewrite. Ten of the
+        //   fifteen passes never fire for a typical .gitignore line, and between
+        //   them they were 45% of this chain.
+        (prev, [matcher, replacer, required]) => {
+          if (matcher === DIRECT) {
+            return replacer(prev, pattern);
+          }
+          if (required !== UNDEFINED && prev.indexOf(required) < 0) {
+            return prev;
+          }
+          return matcher.test(prev) ? prev.replace(matcher, replacer.bind(pattern)) : prev;
+        },
+        source
+      );
+      return sources.length ? replaced.replace(
+        REGEX_RESTORE_PLACEHOLDER,
+        (match, index) => sources[index]
+      ) : replaced;
+    };
+    var checkSourceOf = (body, prefix) => {
+      if (body[body.length - 1] === SLASH) {
+        prefix = makeRegexPrefix(body.slice(0, -1));
+      }
+      const head = prefix.slice(0, -1);
+      const last = prefix[prefix.length - 1];
+      return last === TRAILING_WILDCARD ? `${head}$` : last === TRAILING_DOUBLESTAR ? `${head}.*$` : NEVER_MATCH;
+    };
+    var matchesBasename = (body) => {
+      const index = body.indexOf(SLASH);
+      return index < 0 || index === body.length - 1;
+    };
+    var basenameOf = (path) => {
+      const end = path.length - 1;
+      const index = path.lastIndexOf(
+        SLASH,
+        path[end] === SLASH ? end - 1 : end
+      );
+      return index < 0 ? path : path.slice(index + 1);
+    };
+    var parentOf = (path) => {
+      if (path.charCodeAt(0) === SLASH_CODE || path.indexOf(DOUBLE_SLASH) >= 0) {
+        const slices = path.split(SLASH).filter(Boolean);
+        slices.pop();
+        return slices.length ? slices.join(SLASH) + SLASH : EMPTY;
+      }
+      const end = path.length - 1;
+      const cut = path.lastIndexOf(
+        SLASH,
+        path.charCodeAt(end) === SLASH_CODE ? end - 1 : end
+      );
+      return cut < 0 ? EMPTY : path.slice(0, cut + 1);
+    };
+    var isString = (subject) => typeof subject === "string";
+    var checkPattern = (pattern) => pattern && isString(pattern) && !REGEX_INVALID_TRAILING_BACKSLASH.test(pattern);
+    var splitPattern = (pattern) => pattern.split(REGEX_SPLITALL_CRLF).filter(Boolean);
+    var IgnoreRule = class {
+      constructor(pattern, mark, body, ignoreCase, negative, prefix) {
+        this.pattern = pattern;
+        this.mark = mark;
+        this.negative = negative;
+        define2(this, "body", body);
+        define2(this, "ignoreCase", ignoreCase);
+        define2(this, "regexPrefix", prefix);
+      }
+      // Worked out on first use and kept behind an own property, the way `regex`
+      //   caches itself in `_regex`. Deciding it in the constructor instead would
+      //   add a fourth `defineProperty` to every rule ever built, which cost 4% of
+      //   every compile -- including the compiles of rules that are never matched
+      //   against anything.
+      get _basenameOnly() {
+        return define2(this, "_basenameOnly", matchesBasename(this.body));
+      }
+      get regex() {
+        const key = UNDERSCORE + MODE_IGNORE;
+        if (this[key]) {
+          return this[key];
+        }
+        return this._make(MODE_IGNORE, key);
+      }
+      get checkRegex() {
+        const key = UNDERSCORE + MODE_CHECK_IGNORE;
+        if (this[key]) {
+          return this[key];
+        }
+        return this._make(MODE_CHECK_IGNORE, key);
+      }
+      _make(mode, key) {
+        const str = pinWildcards(
+          mode === MODE_IGNORE ? this.regexPrefix.replace(REGEX_REPLACE_TRAILING_WILDCARD, replaceTrailingWildcard).replace(REGEX_REPLACE_TRAILING_DOUBLESTAR, replaceTrailingDoublestar) : checkSourceOf(this.body, this.regexPrefix)
+        );
+        const regex = this.ignoreCase ? new RegExp(str, "i") : new RegExp(str);
+        return define2(this, key, regex);
+      }
+    };
+    var isLineEnd = (char) => char === "\r" || char === "\n";
+    var trimEnd = (body) => {
+      let end = body.length;
+      while (end && isLineEnd(body[end - 1])) {
+        end--;
+      }
+      const lineEnd = end;
+      while (end && body[end - 1] === SPACE) {
+        end--;
+      }
+      if (end === lineEnd) {
+        return body.slice(0, end);
+      }
+      let backslashes = 0;
+      while (backslashes < end && body[end - backslashes - 1] === ESCAPE) {
+        backslashes++;
+      }
+      return backslashes % 2 ? body.slice(0, end - 1) + SPACE : body.slice(0, end);
+    };
+    var createRule = ({
+      pattern,
+      mark
+    }, ignoreCase) => {
+      let body = pattern[0] === BOM ? pattern.slice(1) : pattern;
+      if (body[0] === "#") {
+        return;
+      }
+      let negative = false;
+      if (body[0] === "!") {
+        negative = true;
+        body = body.slice(1);
+      }
+      const last = body[body.length - 1];
+      if (last === SPACE || last === "\r" || last === "\n") {
+        body = trimEnd(body);
+      }
+      if (!body) {
+        return;
+      }
+      body = body.replace(REGEX_REPLACE_LEADING_EXCAPED_EXCLAMATION, "!").replace(REGEX_REPLACE_LEADING_EXCAPED_HASH, "#");
+      const regexPrefix = makeRegexPrefix(body);
+      return new IgnoreRule(
+        pattern,
+        mark,
+        body,
+        ignoreCase,
+        negative,
+        regexPrefix
+      );
+    };
+    var RuleManager = class {
+      constructor(ignoreCase) {
+        this._ignoreCase = ignoreCase;
+        this._rules = [];
+        this._basenameCount = 0;
+      }
+      _add(pattern) {
+        if (pattern && pattern[KEY_IGNORE]) {
+          this._rules = this._rules.concat(pattern._rules._rules);
+          this._basenameCount += pattern._rules._basenameCount;
+          this._added = true;
+          return;
+        }
+        if (isString(pattern)) {
+          pattern = {
+            pattern
+          };
+        }
+        const rule = checkPattern(pattern.pattern) && createRule(pattern, this._ignoreCase);
+        if (rule) {
+          this._added = true;
+          this._rules.push(rule);
+          if (matchesBasename(rule.body)) {
+            this._basenameCount++;
+          }
+        }
+      }
+      // @param {Array<string> | string | Ignore} pattern
+      add(pattern) {
+        this._added = false;
+        makeArray(
+          isString(pattern) ? splitPattern(pattern) : pattern
+        ).forEach(this._add, this);
+        if (this._added) {
+          this._literalRules = UNDEFINED;
+        }
+        return this._added;
+      }
+      // Match the literal 'abc/' for `checkIgnore`, last rule wins. Only a rule
+      //   ending in a wildcard can match it (see `checkSourceOf`), so the rest
+      //   are left out once, rather than tested or compiled for every path.
+      testLiteral(path) {
+        const rules = this._literalRules || (this._literalRules = this._rules.filter(
+          ({ body }) => body[body.length - (body[body.length - 1] === SLASH ? 2 : 1)] === "*"
+        ));
+        let ignored = false;
+        let unignored = false;
+        let matchedRule;
+        for (let index = rules.length - 1; index >= 0; index--) {
+          const rule = rules[index];
+          if (rule.checkRegex.test(path)) {
+            ignored = !rule.negative;
+            unignored = rule.negative;
+            matchedRule = rule.negative ? UNDEFINED : rule;
+            break;
+          }
+        }
+        const ret = {
+          ignored,
+          unignored
+        };
+        if (matchedRule) {
+          ret.rule = matchedRule;
+        }
+        return ret;
+      }
+      // Test one single path without recursively checking parent directories
+      //
+      // - mode `string` either `MODE_IGNORE` or `MODE_CHECK_IGNORE`
+      // @returns {TestResult}
+      test(path, mode) {
+        const rules = this._rules;
+        const { length } = rules;
+        const shortcut = this._basenameCount * 2 >= length;
+        const basename = shortcut ? basenameOf(path) : path;
+        for (let index = length - 1; index >= 0; index--) {
+          const rule = rules[index];
+          if (rule[mode].test(
+            shortcut && rule._basenameOnly ? basename : path
+          )) {
+            const { negative } = rule;
+            const ret = {
+              ignored: !negative,
+              unignored: negative
+            };
+            if (!negative) {
+              ret.rule = rule;
+            }
+            return ret;
+          }
+        }
+        return {
+          ignored: false,
+          unignored: false
+        };
+      }
+    };
+    var throwError = (message, Ctor) => {
+      throw new Ctor(message);
+    };
+    var checkPath = (path, originalPath, doThrow) => {
+      if (!isString(path)) {
+        return doThrow(
+          `path must be a string, but got \`${originalPath}\``,
+          TypeError
+        );
+      }
+      if (!path) {
+        return doThrow(`path must not be empty`, TypeError);
+      }
+      if (checkPath.isNotRelative(path)) {
+        const r = "`path.relative()`d";
+        return doThrow(
+          `path should be a ${r} string, but got "${originalPath}"`,
+          RangeError
+        );
+      }
+      return true;
+    };
+    var isNotRelative = (path) => {
+      const first = path.charCodeAt(0);
+      if (first === SLASH_CODE) {
+        return true;
+      }
+      if (first !== DOT_CODE) {
+        return false;
+      }
+      if (path.length === 1) {
+        return true;
+      }
+      const second = path.charCodeAt(1);
+      if (second === SLASH_CODE) {
+        return true;
+      }
+      if (second !== DOT_CODE) {
+        return false;
+      }
+      return path.length === 2 || path.charCodeAt(2) === SLASH_CODE;
+    };
+    checkPath.isNotRelative = isNotRelative;
+    checkPath.convert = (p) => p;
+    var Ignore2 = class {
+      constructor({
+        ignorecase = true,
+        ignoreCase = ignorecase,
+        allowRelativePaths = false
+      } = {}) {
+        define2(this, KEY_IGNORE, true);
+        this._rules = new RuleManager(ignoreCase);
+        this._strictPathCheck = !allowRelativePaths;
+        this._initCache();
+      }
+      _initCache() {
+        this._ignoreCache = /* @__PURE__ */ Object.create(null);
+        this._testCache = /* @__PURE__ */ Object.create(null);
+      }
+      add(pattern) {
+        if (this._rules.add(pattern)) {
+          this._initCache();
+        }
+        return this;
+      }
+      // legacy
+      addPattern(pattern) {
+        return this.add(pattern);
+      }
+      // @returns {TestResult}
+      _test(originalPath, cache2) {
+        const path = originalPath && checkPath.convert(originalPath);
+        checkPath(
+          path,
+          originalPath,
+          this._strictPathCheck ? throwError : RETURN_FALSE
+        );
+        return this._t(path, cache2);
+      }
+      checkIgnore(path) {
+        if (path.charCodeAt(path.length - 1) !== SLASH_CODE) {
+          return this.test(path);
+        }
+        const dir = this._t(path, this._testCache);
+        if (dir.ignored) {
+          return dir;
+        }
+        const literal = this._rules.testLiteral(path);
+        return literal.ignored || literal.unignored ? literal : dir;
+      }
+      _t(path, cache2) {
+        if (path in cache2) {
+          return cache2[path];
+        }
+        const parentPath = parentOf(path);
+        const parent = parentPath ? this._t(parentPath, cache2) : UNDEFINED;
+        return cache2[path] = parent && parent.ignored ? parent : this._rules.test(path, MODE_IGNORE);
+      }
+      ignores(path) {
+        return this._test(path, this._ignoreCache).ignored;
+      }
+      createFilter() {
+        return (path) => !this.ignores(path);
+      }
+      filter(paths) {
+        return makeArray(paths).filter(this.createFilter());
+      }
+      // @returns {TestResult}
+      test(path) {
+        return this._test(path, this._testCache);
+      }
+    };
+    var factory = (options) => new Ignore2(options);
+    var isPathValid = (path) => checkPath(path && checkPath.convert(path), path, RETURN_FALSE);
+    var setupWindows = () => {
+      const makePosix = (str) => /^\\\\\?\\/.test(str) || /["<>|\u0000-\u001F]+/u.test(str) ? str : str.replace(/\\/g, "/");
+      checkPath.convert = makePosix;
+      const REGEX_TEST_WINDOWS_PATH_ABSOLUTE = /^[a-z]:\//i;
+      checkPath.isNotRelative = (path) => REGEX_TEST_WINDOWS_PATH_ABSOLUTE.test(path) || isNotRelative(path);
+    };
+    if (
+      // Detect `process` so that it can run in browsers.
+      typeof process !== "undefined" && process.platform === "win32"
+    ) {
+      setupWindows();
+    }
+    module2.exports = factory;
+    factory.default = factory;
+    module2.exports.isPathValid = isPathValid;
+    define2(module2.exports, /* @__PURE__ */ Symbol.for("setupWindows"), setupWindows);
+  }
+});
+
 // ../node_modules/vscode-languageserver/lib/common/utils/is.js
 var require_is = __commonJS({
   "../node_modules/vscode-languageserver/lib/common/utils/is.js"(exports2) {
@@ -8877,8 +9727,8 @@ var require_node3 = __commonJS({
 });
 
 // ../mangle-lsp/src/cli/commands/check.ts
-var import_fs = require("fs");
-var import_path = require("path");
+var import_fs4 = require("fs");
+var import_path4 = require("path");
 
 // ../mangle-lsp/src/parser/ast.ts
 function containsPosition(range, pos) {
@@ -38007,6 +38857,10 @@ function parse(source) {
   }
 }
 
+// ../mangle-lsp/src/workspace/context.ts
+var import_crypto = require("crypto");
+var import_path3 = require("path");
+
 // ../mangle-lsp/src/analysis/types.ts
 var ANY = { kind: "any" };
 var BOT = { kind: "bot" };
@@ -44374,6 +45228,495 @@ function analyzeUnit(input) {
   return { validation, diagnostics };
 }
 
+// ../mangle-lsp/src/analysis/program.ts
+function lineCount(text) {
+  return text.endsWith("\n") ? text.split("\n").length - 1 : text.split("\n").length;
+}
+function segmentAt(segments, line) {
+  let lo = 0;
+  let hi = segments.length - 1;
+  while (lo < hi) {
+    const mid = lo + hi + 1 >> 1;
+    if (segments[mid].start <= line) lo = mid;
+    else hi = mid - 1;
+  }
+  return segments[lo];
+}
+function shiftRange(r, by) {
+  return {
+    start: { ...r.start, line: r.start.line - by },
+    end: { ...r.end, line: r.end.line - by }
+  };
+}
+function shiftFix(f, by) {
+  return {
+    ...f,
+    range: shiftRange(f.range, by),
+    additionalEdits: f.additionalEdits?.map((e) => ({ ...e, range: shiftRange(e.range, by) }))
+  };
+}
+function relocate(root, lines) {
+  if (lines === 0) return root;
+  const copies = /* @__PURE__ */ new Map();
+  const copy = (v) => {
+    if (v === null || typeof v !== "object") return v;
+    const seen = copies.get(v);
+    if (seen) return seen;
+    if (Array.isArray(v)) {
+      const out3 = [];
+      copies.set(v, out3);
+      for (const item of v) out3.push(copy(item));
+      return out3;
+    }
+    if (v instanceof Set) {
+      const out3 = /* @__PURE__ */ new Set();
+      copies.set(v, out3);
+      for (const item of v) out3.add(copy(item));
+      return out3;
+    }
+    const src = v;
+    const out2 = {};
+    copies.set(v, out2);
+    for (const key of Object.keys(src)) out2[key] = copy(src[key]);
+    if (typeof src["line"] === "number" && typeof src["column"] === "number") out2["line"] = src["line"] + lines;
+    return out2;
+  };
+  return copy(root);
+}
+function mergeUnits(units) {
+  const malformed = /* @__PURE__ */ new Set();
+  for (const u of units) for (const m2 of u.malformed ?? []) malformed.add(m2);
+  const packages = new Set(units.map((u) => u.packageDecl?.name ?? ""));
+  return {
+    packageDecl: packages.size === 1 ? units.find((u) => u.packageDecl)?.packageDecl ?? null : null,
+    useDecls: units.flatMap((u) => u.useDecls),
+    decls: units.flatMap((u) => u.decls),
+    clauses: units.flatMap((u) => u.clauses),
+    malformed: malformed.size > 0 ? malformed : void 0
+  };
+}
+function assembleProgram(files) {
+  const segments = [];
+  const units = [];
+  const parseErrors = /* @__PURE__ */ new Map();
+  let line = 1;
+  for (const f of files) {
+    const parsed = f.parsed ?? parse(f.text);
+    const lines = lineCount(f.text);
+    segments.push({ path: f.path, start: line, lines });
+    parseErrors.set(f.path, parsed.errors);
+    if (parsed.unit) units.push(relocate(parsed.unit, line - 1));
+    line += lines;
+  }
+  return { unit: mergeUnits(units), segments, parseErrors };
+}
+function diagnosticsByFile(program, result) {
+  const out2 = new Map(program.segments.map((s) => [s.path, []]));
+  for (const d of result.diagnostics) {
+    const seg = segmentAt(program.segments, d.range.start.line);
+    const by = seg.start - 1;
+    out2.get(seg.path).push({
+      ...d,
+      range: shiftRange(d.range, by),
+      fixes: d.fixes?.map((f) => shiftFix(f, by))
+    });
+  }
+  return out2;
+}
+function analyzeProgram(files) {
+  const program = assembleProgram(files);
+  const diagnostics = diagnosticsByFile(program, analyzeUnit(program.unit));
+  return files.map((f) => ({
+    path: f.path,
+    parseErrors: program.parseErrors.get(f.path) ?? [],
+    diagnostics: diagnostics.get(f.path) ?? []
+  }));
+}
+
+// ../mangle-lsp/src/workspace/embed.ts
+var import_path = require("path");
+var TOKEN = /"((?:[^"\\]|\\.)*)"|`([^`]*)`|(\S+)/g;
+function parseEmbedDirectives(source) {
+  const out2 = [];
+  let pending = [];
+  for (const raw of source.split("\n")) {
+    const line = raw.trim();
+    const embed = /^\/\/go:embed\s+(.*)$/.exec(line);
+    if (embed) {
+      for (const m2 of embed[1].matchAll(TOKEN)) pending.push(m2[1] ?? m2[2] ?? m2[3]);
+      continue;
+    }
+    if (line === "" || line.startsWith("//") || /^var\s*\($/.test(line)) continue;
+    if (pending.length > 0) {
+      const name = /^(?:var\s+)?([A-Za-z_]\w*)/.exec(line);
+      if (name) out2.push({ variable: name[1], patterns: pending });
+      pending = [];
+    }
+  }
+  return out2;
+}
+function segmentMatcher(segment) {
+  if (!/[*?[]/.test(segment)) return void 0;
+  let re = "";
+  for (let i = 0; i < segment.length; i++) {
+    const c = segment[i];
+    if (c === "*") re += "[^/]*";
+    else if (c === "?") re += "[^/]";
+    else if (c === "[") {
+      const end = segment.indexOf("]", i + 1);
+      if (end < 0) {
+        re += "\\[";
+        continue;
+      }
+      let cls = segment.slice(i + 1, end);
+      if (cls.startsWith("^")) cls = "^" + cls.slice(1);
+      re += `[${cls.replace(/\\/g, "\\\\")}]`;
+      i = end;
+    } else if (c === "\\" && i + 1 < segment.length) re += segment[++i].replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    else re += c.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+  return new RegExp(`^${re}$`);
+}
+function collectMangle(fs, path, all, out2, top) {
+  if (!fs.isDirectory(path)) {
+    if (path.endsWith(".mg")) out2.push(path);
+    return;
+  }
+  if (!top && fs.signature((0, import_path.join)(path, "go.mod")) !== void 0) return;
+  for (const name of fs.readDir(path) ?? []) {
+    if (!all && (name.startsWith(".") || name.startsWith("_"))) continue;
+    collectMangle(fs, (0, import_path.join)(path, name), all, out2, false);
+  }
+}
+function expandEmbedPattern(fs, dir, pattern) {
+  const all = pattern.startsWith("all:");
+  const parts = (all ? pattern.slice(4) : pattern).split("/").filter((p) => p !== "" && p !== ".");
+  if (parts.includes("..")) return [];
+  let paths = [dir];
+  for (const part of parts) {
+    const re = segmentMatcher(part);
+    const next = [];
+    for (const p of paths) {
+      if (!re) {
+        if (fs.signature((0, import_path.join)(p, part)) !== void 0) next.push((0, import_path.join)(p, part));
+      } else {
+        for (const name of fs.readDir(p) ?? []) if (re.test(name)) next.push((0, import_path.join)(p, name));
+      }
+    }
+    paths = next;
+  }
+  const files = [];
+  for (const p of paths) collectMangle(fs, p, all, files, true);
+  return files;
+}
+function embedGroupsOfPackage(fs, dir) {
+  const byId = /* @__PURE__ */ new Map();
+  for (const name of (fs.readDir(dir) ?? []).sort()) {
+    if (!name.endsWith(".go")) continue;
+    const src = fs.readFile((0, import_path.join)(dir, name));
+    if (src === void 0 || !src.includes("go:embed")) continue;
+    for (const d of parseEmbedDirectives(src)) {
+      const files = d.patterns.flatMap((p) => expandEmbedPattern(fs, dir, p));
+      if (files.length === 0) continue;
+      const id = `${dir}:${d.variable}`;
+      const set = byId.get(id) ?? /* @__PURE__ */ new Set();
+      for (const f of files) set.add(f);
+      byId.set(id, set);
+    }
+  }
+  return [...byId].map(([id, files]) => ({ id, files: [...files].sort() }));
+}
+function moduleRootOf(fs, dir) {
+  for (let d = dir; ; d = (0, import_path.dirname)(d)) {
+    if (fs.signature((0, import_path.join)(d, "go.mod")) !== void 0) return d;
+    if ((0, import_path.dirname)(d) === d) return void 0;
+  }
+}
+function embedGroupsAbove(fs, dir) {
+  const root = moduleRootOf(fs, dir);
+  if (root === void 0) return [];
+  const groups = [];
+  for (let d = dir; ; d = (0, import_path.dirname)(d)) {
+    groups.push(...embedGroupsOfPackage(fs, d));
+    if (d === root) break;
+  }
+  return groups;
+}
+
+// ../mangle-lsp/src/workspace/fs.ts
+var import_fs = require("fs");
+var nodeFs = {
+  signature(path) {
+    try {
+      const st = (0, import_fs.statSync)(path);
+      return `${st.isDirectory() ? "d" : "f"}:${st.mtimeMs}:${st.size}`;
+    } catch {
+      return void 0;
+    }
+  },
+  isDirectory(path) {
+    try {
+      return (0, import_fs.statSync)(path).isDirectory();
+    } catch {
+      return false;
+    }
+  },
+  readDir(path) {
+    try {
+      return (0, import_fs.readdirSync)(path);
+    } catch {
+      return void 0;
+    }
+  },
+  readFile(path) {
+    try {
+      return (0, import_fs.readFileSync)(path, "utf-8");
+    } catch {
+      return void 0;
+    }
+  }
+};
+var RecordingFs = class {
+  constructor(inner) {
+    this.inner = inner;
+    this.deps = /* @__PURE__ */ new Map();
+  }
+  note(path) {
+    if (!this.deps.has(path)) this.deps.set(path, this.inner.signature(path) ?? "");
+  }
+  signature(path) {
+    this.note(path);
+    return this.inner.signature(path);
+  }
+  isDirectory(path) {
+    this.note(path);
+    return this.inner.isDirectory(path);
+  }
+  readDir(path) {
+    this.note(path);
+    return this.inner.readDir(path);
+  }
+  readFile(path) {
+    this.note(path);
+    return this.inner.readFile(path);
+  }
+};
+function dependenciesFresh(fs, deps) {
+  for (const [path, sig] of deps) {
+    if ((fs.signature(path) ?? "") !== sig) return false;
+  }
+  return true;
+}
+
+// ../mangle-lsp/src/workspace/ignore.ts
+var import_ignore = __toESM(require_ignore());
+var import_path2 = require("path");
+var IGNORE_FILE = ".mangleignore";
+var DIRECTIVE = /^[ \t]*#[ \t]*mangle-ignore-file\b/m;
+function hasIgnoreDirective(text) {
+  return DIRECTIVE.test(text);
+}
+var IgnoreRules = class {
+  constructor(fs = nodeFs) {
+    this.fs = fs;
+    this.cache = /* @__PURE__ */ new Map();
+  }
+  rulesIn(dir) {
+    const file = (0, import_path2.join)(dir, IGNORE_FILE);
+    const sig = this.fs.signature(file) ?? "";
+    const hit = this.cache.get(dir);
+    if (hit && hit.sig === sig) return hit.rules;
+    const text = sig === "" ? void 0 : this.fs.readFile(file);
+    const rules = text === void 0 ? null : (0, import_ignore.default)().add(text);
+    this.cache.set(dir, { sig, rules });
+    return rules;
+  }
+  /** Whether a `.mangleignore` above the file excludes it (nearest file with an opinion wins). */
+  matches(path) {
+    for (let dir = (0, import_path2.dirname)(path); ; dir = (0, import_path2.dirname)(dir)) {
+      const rules = this.rulesIn(dir);
+      if (rules) {
+        const rel = (0, import_path2.relative)(dir, path).split(import_path2.sep).join("/");
+        if (rel !== "" && !rel.startsWith("..")) {
+          const r = rules.test(rel);
+          if (r.ignored) return true;
+          if (r.unignored) return false;
+        }
+      }
+      if ((0, import_path2.dirname)(dir) === dir) return false;
+    }
+  }
+  /** Pattern match, or the directive in `text` (read from disk when not given). */
+  isIgnored(path, text) {
+    if (this.matches(path)) return true;
+    const body = text ?? this.fs.readFile(path);
+    return body !== void 0 && hasIgnoreDirective(body);
+  }
+};
+
+// ../mangle-lsp/src/workspace/context.ts
+var sha = (s) => (0, import_crypto.createHash)("sha1").update(s).digest("hex");
+var ProgramContext3 = class {
+  constructor(options = {}) {
+    this.embeds = /* @__PURE__ */ new Map();
+    this.texts = /* @__PURE__ */ new Map();
+    this.parses = /* @__PURE__ */ new Map();
+    this.parsedChars = 0;
+    this.programs = /* @__PURE__ */ new Map();
+    this.fs = options.fs ?? nodeFs;
+    this.overlay = options.overlay ?? (() => void 0);
+    this.isolated = !!options.isolated;
+    this.parseBudget = options.parseBudget ?? 6e6;
+    this.ignore = new IgnoreRules(this.fs);
+  }
+  /** Files that analyses of `path` depend on changed in a way the caches cannot see (rare). */
+  reset() {
+    this.embeds.clear();
+    this.texts.clear();
+    this.parses.clear();
+    this.programs.clear();
+    this.parsedChars = 0;
+  }
+  textOf(path) {
+    const open = this.overlay(path);
+    if (open !== void 0) return open;
+    const sig = this.fs.signature(path);
+    if (sig === void 0) return void 0;
+    const hit = this.texts.get(path);
+    if (hit && hit.sig === sig) return hit.text;
+    const text = this.fs.readFile(path);
+    if (text === void 0) return void 0;
+    this.texts.set(path, { sig, text });
+    return text;
+  }
+  parsedOf(path, text) {
+    const hit = this.parses.get(path);
+    if (hit && hit.text === text) return hit.parsed;
+    if (hit) this.parsedChars -= hit.text.length;
+    const parsed = parse(text);
+    this.parses.delete(path);
+    this.parses.set(path, { text, parsed });
+    this.parsedChars += text.length;
+    for (const [p, e] of this.parses) {
+      if (this.parsedChars <= this.parseBudget || p === path) break;
+      this.parses.delete(p);
+      this.parsedChars -= e.text.length;
+    }
+    return parsed;
+  }
+  /** Embed groups that contain at least two files including `path`. */
+  embedGroupsOf(path) {
+    const dir = (0, import_path3.dirname)(path);
+    let hit = this.embeds.get(dir);
+    if (!hit || !dependenciesFresh(this.fs, hit.deps)) {
+      const rec = new RecordingFs(this.fs);
+      hit = { value: embedGroupsAbove(rec, dir), deps: rec.deps };
+      this.embeds.set(dir, hit);
+    }
+    return hit.value.filter((g) => g.files.length > 1 && g.files.includes(path));
+  }
+  /** The files analyzed together with `path` and how they were found. */
+  describe(path) {
+    if (this.isolated) return { kind: "alone", groups: [] };
+    const groups = this.embedGroupsOf(path);
+    if (groups.length > 0) return { kind: "embed", groups: groups.map((g) => g.files) };
+    const dir = (0, import_path3.dirname)(path);
+    const siblings = (this.fs.readDir(dir) ?? []).filter((n2) => n2.endsWith(".mg")).map((n2) => (0, import_path3.join)(dir, n2)).sort();
+    return siblings.some((s) => s !== path) ? { kind: "directory", groups: [siblings] } : { kind: "alone", groups: [] };
+  }
+  /** Diagnostics of `path` (whose current text is `text`) in its program context. */
+  analyze(path, text, parsed = parse(text)) {
+    if (this.ignore.isIgnored(path, text)) {
+      return { ignored: true, kind: "alone", context: [], parseErrors: [], diagnostics: [] };
+    }
+    const { kind, groups } = this.describe(path);
+    const report = { ignored: false, kind, context: [], parseErrors: parsed.errors, diagnostics: [] };
+    if (kind === "alone") {
+      if (parsed.unit) report.diagnostics = analyzeUnit(parsed.unit).diagnostics;
+      return report;
+    }
+    const seen = /* @__PURE__ */ new Set();
+    const context = /* @__PURE__ */ new Set();
+    for (const files of groups) {
+      const { diagnostics, others } = kind === "embed" ? this.analyzeEmbed(files, path, text, parsed) : this.analyzeDirectory(files, path, text, parsed);
+      others.forEach((o) => context.add(o));
+      for (const d of diagnostics) {
+        const key = `${d.code}\0${d.range.start.line}\0${d.range.start.column}\0${d.message}`;
+        if (!seen.has(key)) {
+          seen.add(key);
+          report.diagnostics.push(d);
+        }
+      }
+    }
+    report.context = [...context];
+    report.diagnostics.sort((a, b) => a.range.start.line - b.range.start.line || a.range.start.column - b.range.start.column);
+    return report;
+  }
+  analyzeEmbed(files, path, text, parsed) {
+    const inputs = [];
+    for (const f of files) {
+      if (f === path) {
+        inputs.push({ path, text, parsed });
+        continue;
+      }
+      const t = this.textOf(f);
+      if (t !== void 0) inputs.push({ path: f, text: t, parsed: this.parsedOf(f, t) });
+    }
+    const byFile = this.analyzeAssembled(`embed:${files.join("\0")}`, inputs);
+    return { diagnostics: byFile.get(path) ?? [], others: inputs.map((i) => i.path).filter((p) => p !== path) };
+  }
+  analyzeDirectory(siblings, path, text, parsed) {
+    const own = new Set((parsed.unit?.decls ?? []).map(declKey));
+    const inputs = [];
+    const contributing = [];
+    for (const f of siblings) {
+      if (f === path) continue;
+      const t = this.textOf(f);
+      if (t === void 0 || this.ignore.isIgnored(f, t)) continue;
+      const decls = analyzableDecls(this.parsedOf(f, t).unit).filter((d) => {
+        const k = declKey(d);
+        if (own.has(k)) return false;
+        own.add(k);
+        return true;
+      });
+      if (decls.length === 0) continue;
+      contributing.push(f);
+      inputs.push({ path: f, text: t, parsed: { errors: [], unit: { packageDecl: null, useDecls: [], decls, clauses: [] } } });
+    }
+    if (inputs.length === 0) {
+      return { diagnostics: parsed.unit ? analyzeUnit(parsed.unit).diagnostics : [], others: [] };
+    }
+    inputs.push({ path, text, parsed });
+    const byFile = this.analyzeAssembled(`dir:${path}`, inputs, false);
+    return { diagnostics: byFile.get(path) ?? [], others: contributing };
+  }
+  /** Analyzes the files as one program, once per distinct content. */
+  analyzeAssembled(key, inputs, shared = true) {
+    const h = (0, import_crypto.createHash)("sha1");
+    for (const i of inputs) h.update(i.path).update("\0").update(sha(i.text)).update("\0");
+    const fp = h.digest("hex");
+    const hit = this.programs.get(key);
+    if (hit && hit.fp === fp) return hit.byFile;
+    const program = assembleProgram(inputs);
+    const byFile = diagnosticsByFile(program, analyzeUnit(program.unit));
+    this.programs.set(key, { fp, byFile });
+    if (!shared) this.trimPrograms();
+    return byFile;
+  }
+  trimPrograms() {
+    for (const k of this.programs.keys()) {
+      if (this.programs.size <= 512) return;
+      if (k.startsWith("dir:")) this.programs.delete(k);
+    }
+  }
+};
+var declKey = (d) => `${d.declaredAtom.predicate.symbol}/${d.declaredAtom.predicate.arity}`;
+function analyzableDecls(unit) {
+  if (!unit) return [];
+  const bad = unit.malformed;
+  return bad ? unit.decls.filter((d) => !bad.has(d)) : unit.decls;
+}
+
 // ../mangle-lsp/src/cli/diagnostics.ts
 function toCLIRange(range) {
   return {
@@ -44464,11 +45807,13 @@ function runCheck(files, options) {
       totalInfo: 0
     }
   };
+  const context = new ProgramContext3({ isolated: options.isolated });
+  let ignoredFiles = 0;
   for (const file of files) {
-    const filePath = (0, import_path.resolve)(file);
-    if (!(0, import_fs.existsSync)(filePath)) {
+    const filePath = (0, import_path4.resolve)(file);
+    if (!(0, import_fs4.existsSync)(filePath)) {
       result.files.push({
-        path: (0, import_path.relative)(process.cwd(), filePath),
+        path: (0, import_path4.relative)(process.cwd(), filePath),
         diagnostics: [{
           severity: "error",
           code: "E000",
@@ -44486,10 +45831,10 @@ function runCheck(files, options) {
     }
     let source;
     try {
-      source = (0, import_fs.readFileSync)(filePath, "utf-8");
+      source = (0, import_fs4.readFileSync)(filePath, "utf-8");
     } catch (e) {
       result.files.push({
-        path: (0, import_path.relative)(process.cwd(), filePath),
+        path: (0, import_path4.relative)(process.cwd(), filePath),
         diagnostics: [{
           severity: "error",
           code: "E000",
@@ -44505,7 +45850,11 @@ function runCheck(files, options) {
       result.summary.totalErrors++;
       continue;
     }
-    const fileDiagnostics = checkFile(filePath, source, options);
+    if (!options.noIgnore && context.ignore.isIgnored(filePath, source)) {
+      ignoredFiles++;
+      continue;
+    }
+    const fileDiagnostics = checkFile(filePath, source, options, context);
     result.files.push(fileDiagnostics);
     result.summary.totalFiles++;
     for (const diag of fileDiagnostics.diagnostics) {
@@ -44518,29 +45867,29 @@ function runCheck(files, options) {
       }
     }
   }
+  if (ignoredFiles > 0) result.summary.ignoredFiles = ignoredFiles;
   return result;
 }
-function checkFile(filePath, source, options) {
+function checkFile(filePath, source, options, context = new ProgramContext3({ isolated: options.isolated })) {
   const diagnostics = [];
   const lines = source.split("\n");
   const explain = !!options.explain;
   const parseResult = parse(source);
-  for (const error of parseResult.errors) {
+  const report = context.analyze(filePath, source, parseResult);
+  for (const error of report.parseErrors) {
     const diag = parseErrorToCLIDiagnostic(error, lines, explain);
     if (shouldInclude(diag.severity, options.severity)) {
       diagnostics.push(diag);
     }
   }
-  if (parseResult.unit) {
-    for (const error of analyzeUnit(parseResult.unit).diagnostics) {
-      const diag = analysisToCLIDiagnostic(error, lines, explain);
-      if (shouldInclude(diag.severity, options.severity)) {
-        diagnostics.push(diag);
-      }
+  for (const error of report.diagnostics) {
+    const diag = analysisToCLIDiagnostic(error, lines, explain);
+    if (shouldInclude(diag.severity, options.severity)) {
+      diagnostics.push(diag);
     }
   }
   return {
-    path: (0, import_path.relative)(process.cwd(), filePath),
+    path: (0, import_path4.relative)(process.cwd(), filePath),
     diagnostics
   };
 }
@@ -44562,8 +45911,8 @@ function getExitCode(result, options) {
 }
 
 // ../mangle-lsp/src/cli/commands/symbols.ts
-var import_fs2 = require("fs");
-var import_path2 = require("path");
+var import_fs5 = require("fs");
+var import_path5 = require("path");
 
 // ../mangle-lsp/src/services/symbols.ts
 var import_node = __toESM(require_node3());
@@ -44690,33 +46039,33 @@ function combineRanges(ranges) {
 // ../mangle-lsp/src/cli/commands/symbols.ts
 var import_node2 = __toESM(require_node3());
 function runSymbols(file, _options) {
-  const filePath = (0, import_path2.resolve)(file);
-  if (!(0, import_fs2.existsSync)(filePath)) {
+  const filePath = (0, import_path5.resolve)(file);
+  if (!(0, import_fs5.existsSync)(filePath)) {
     return {
-      path: (0, import_path2.relative)(process.cwd(), filePath),
+      path: (0, import_path5.relative)(process.cwd(), filePath),
       symbols: []
     };
   }
   let source;
   try {
-    source = (0, import_fs2.readFileSync)(filePath, "utf-8");
+    source = (0, import_fs5.readFileSync)(filePath, "utf-8");
   } catch {
     return {
-      path: (0, import_path2.relative)(process.cwd(), filePath),
+      path: (0, import_path5.relative)(process.cwd(), filePath),
       symbols: []
     };
   }
   const parseResult = parse(source);
   if (!parseResult.unit) {
     return {
-      path: (0, import_path2.relative)(process.cwd(), filePath),
+      path: (0, import_path5.relative)(process.cwd(), filePath),
       symbols: []
     };
   }
   const lspSymbols = getDocumentSymbols(parseResult.unit);
   const symbols = lspSymbols.map(convertSymbol);
   return {
-    path: (0, import_path2.relative)(process.cwd(), filePath),
+    path: (0, import_path5.relative)(process.cwd(), filePath),
     symbols
   };
 }
@@ -44762,8 +46111,8 @@ function mapSymbolKind(kind) {
 }
 
 // ../mangle-lsp/src/cli/commands/hover.ts
-var import_fs3 = require("fs");
-var import_path3 = require("path");
+var import_fs6 = require("fs");
+var import_path6 = require("path");
 
 // ../mangle-lsp/src/services/hover.ts
 var import_node3 = __toESM(require_node3());
@@ -44983,13 +46332,13 @@ function calculateNameRange(expressionRange, name) {
 
 // ../mangle-lsp/src/cli/commands/hover.ts
 function runHover(file, options) {
-  const filePath = (0, import_path3.resolve)(file);
-  if (!(0, import_fs3.existsSync)(filePath)) {
+  const filePath = (0, import_path6.resolve)(file);
+  if (!(0, import_fs6.existsSync)(filePath)) {
     return null;
   }
   let source;
   try {
-    source = (0, import_fs3.readFileSync)(filePath, "utf-8");
+    source = (0, import_fs6.readFileSync)(filePath, "utf-8");
   } catch {
     return null;
   }
@@ -45026,8 +46375,8 @@ function runHover(file, options) {
 }
 
 // ../mangle-lsp/src/cli/commands/definition.ts
-var import_fs4 = require("fs");
-var import_path4 = require("path");
+var import_fs7 = require("fs");
+var import_path7 = require("path");
 
 // ../mangle-lsp/src/services/definition.ts
 function getDefinition(uri, symbolTable, position) {
@@ -45066,14 +46415,14 @@ function createLocation(uri, range) {
 
 // ../mangle-lsp/src/cli/commands/definition.ts
 function runDefinition(file, options) {
-  const filePath = (0, import_path4.resolve)(file);
+  const filePath = (0, import_path7.resolve)(file);
   const result = { locations: [] };
-  if (!(0, import_fs4.existsSync)(filePath)) {
+  if (!(0, import_fs7.existsSync)(filePath)) {
     return result;
   }
   let source;
   try {
-    source = (0, import_fs4.readFileSync)(filePath, "utf-8");
+    source = (0, import_fs7.readFileSync)(filePath, "utf-8");
   } catch {
     return result;
   }
@@ -45110,8 +46459,8 @@ function runDefinition(file, options) {
 }
 
 // ../mangle-lsp/src/cli/commands/references.ts
-var import_fs5 = require("fs");
-var import_path5 = require("path");
+var import_fs8 = require("fs");
+var import_path8 = require("path");
 
 // ../mangle-lsp/src/services/references.ts
 function findReferences(uri, symbolTable, position, context) {
@@ -45161,14 +46510,14 @@ function createLocation2(uri, range) {
 
 // ../mangle-lsp/src/cli/commands/references.ts
 function runReferences(file, options) {
-  const filePath = (0, import_path5.resolve)(file);
+  const filePath = (0, import_path8.resolve)(file);
   const result = { locations: [] };
-  if (!(0, import_fs5.existsSync)(filePath)) {
+  if (!(0, import_fs8.existsSync)(filePath)) {
     return result;
   }
   let source;
   try {
-    source = (0, import_fs5.readFileSync)(filePath, "utf-8");
+    source = (0, import_fs8.readFileSync)(filePath, "utf-8");
   } catch {
     return result;
   }
@@ -45202,8 +46551,8 @@ function runReferences(file, options) {
 }
 
 // ../mangle-lsp/src/cli/commands/completion.ts
-var import_fs6 = require("fs");
-var import_path6 = require("path");
+var import_fs9 = require("fs");
+var import_path9 = require("path");
 
 // ../mangle-lsp/src/services/completion.ts
 var import_node4 = __toESM(require_node3());
@@ -45897,14 +47246,14 @@ function getWellformedEdit(textEdit) {
 // ../mangle-lsp/src/cli/commands/completion.ts
 var import_node5 = __toESM(require_node3());
 function runCompletion(file, options) {
-  const filePath = (0, import_path6.resolve)(file);
+  const filePath = (0, import_path9.resolve)(file);
   const result = { items: [] };
-  if (!(0, import_fs6.existsSync)(filePath)) {
+  if (!(0, import_fs9.existsSync)(filePath)) {
     return result;
   }
   let source;
   try {
-    source = (0, import_fs6.readFileSync)(filePath, "utf-8");
+    source = (0, import_fs9.readFileSync)(filePath, "utf-8");
   } catch {
     return result;
   }
@@ -45959,8 +47308,8 @@ function mapCompletionKind(kind) {
 }
 
 // ../mangle-lsp/src/cli/commands/format.ts
-var import_fs7 = require("fs");
-var import_path7 = require("path");
+var import_fs10 = require("fs");
+var import_path10 = require("path");
 
 // ../mangle-lsp/src/services/formatting.ts
 function extractComments(text) {
@@ -46341,9 +47690,9 @@ function runFormat(files, options) {
   return results;
 }
 function formatFile(file, options) {
-  const filePath = (0, import_path7.resolve)(file);
-  const relativePath = (0, import_path7.relative)(process.cwd(), filePath);
-  if (!(0, import_fs7.existsSync)(filePath)) {
+  const filePath = (0, import_path10.resolve)(file);
+  const relativePath = (0, import_path10.relative)(process.cwd(), filePath);
+  if (!(0, import_fs10.existsSync)(filePath)) {
     return {
       path: relativePath,
       formatted: false,
@@ -46352,7 +47701,7 @@ function formatFile(file, options) {
   }
   let source;
   try {
-    source = (0, import_fs7.readFileSync)(filePath, "utf-8");
+    source = (0, import_fs10.readFileSync)(filePath, "utf-8");
   } catch (e) {
     return {
       path: relativePath,
@@ -46389,7 +47738,7 @@ function formatFile(file, options) {
   }
   if (options.write && contentChanged) {
     try {
-      (0, import_fs7.writeFileSync)(filePath, formatted, "utf-8");
+      (0, import_fs10.writeFileSync)(filePath, formatted, "utf-8");
     } catch (e) {
       return {
         path: relativePath,
@@ -46464,19 +47813,20 @@ function getFormatExitCode(results, options) {
 }
 
 // ../mangle-lsp/src/cli/commands/batch.ts
-var import_fs8 = require("fs");
-var import_path8 = require("path");
+var import_fs11 = require("fs");
+var import_path11 = require("path");
 var fileCache = /* @__PURE__ */ new Map();
+var programContext = new ProgramContext3();
 function getFileCache(filePath) {
   if (fileCache.has(filePath)) {
     return fileCache.get(filePath);
   }
-  if (!(0, import_fs8.existsSync)(filePath)) {
+  if (!(0, import_fs11.existsSync)(filePath)) {
     return null;
   }
   let source;
   try {
-    source = (0, import_fs8.readFileSync)(filePath, "utf-8");
+    source = (0, import_fs11.readFileSync)(filePath, "utf-8");
   } catch {
     return null;
   }
@@ -46485,6 +47835,7 @@ function getFileCache(filePath) {
   const parseResult = parse(source);
   const validationResult = parseResult.unit ? validate(parseResult.unit) : null;
   const cache2 = {
+    path: filePath,
     source,
     document,
     parseResult,
@@ -46498,12 +47849,13 @@ function runBatch(queries, _options) {
   let succeeded = 0;
   let failed = 0;
   fileCache.clear();
+  programContext = new ProgramContext3();
   for (const query of queries) {
-    const filePath = (0, import_path8.resolve)(query.file);
+    const filePath = (0, import_path11.resolve)(query.file);
     const result = {
       id: query.id,
       type: query.type,
-      file: (0, import_path8.relative)(process.cwd(), filePath),
+      file: (0, import_path11.relative)(process.cwd(), filePath),
       result: null
     };
     try {
@@ -46584,7 +47936,7 @@ function processDefinition(cache2, query) {
   }
   const symbolTable = cache2.validationResult?.symbolTable ?? buildSymbolTable(cache2.parseResult.unit);
   const position = { line: query.line - 1, character: query.column };
-  const uri = `file://${(0, import_path8.resolve)(query.file)}`;
+  const uri = `file://${(0, import_path11.resolve)(query.file)}`;
   const def = getDefinition(uri, symbolTable, position);
   if (!def) return { locations: [] };
   const locations = Array.isArray(def) ? def : [def];
@@ -46604,7 +47956,7 @@ function processReferences(cache2, query) {
   }
   const symbolTable = cache2.validationResult?.symbolTable ?? buildSymbolTable(cache2.parseResult.unit);
   const position = { line: query.line - 1, character: query.column };
-  const uri = `file://${(0, import_path8.resolve)(query.file)}`;
+  const uri = `file://${(0, import_path11.resolve)(query.file)}`;
   const refs = findReferences(uri, symbolTable, position, {
     includeDeclaration: query.includeDeclaration ?? true
   });
@@ -46654,7 +48006,7 @@ function processSymbols(cache2) {
 function processDiagnostics(cache2) {
   const lines = cache2.source.split("\n");
   const parseErrors = cache2.parseResult.errors.map((e) => parseErrorToCLIDiagnostic(e, lines));
-  const analysis = cache2.parseResult.unit ? analyzeUnit(cache2.parseResult.unit).diagnostics : [];
+  const analysis = programContext.analyze(cache2.path, cache2.source, cache2.parseResult).diagnostics;
   const semanticErrors = analysis.map((e) => analysisToCLIDiagnostic(e, lines));
   return {
     parseErrors,
@@ -46692,7 +48044,7 @@ function processFileInfo(cache2, filePath) {
     referenceCount: info.references.length
   })) ?? [];
   return {
-    path: (0, import_path8.relative)(process.cwd(), filePath),
+    path: (0, import_path11.relative)(process.cwd(), filePath),
     hasSyntaxErrors: cache2.parseResult.errors.length > 0,
     hasSemanticErrors: (cache2.validationResult?.errors.length ?? 0) > 0,
     diagnostics,
@@ -46708,8 +48060,8 @@ function processFileInfo(cache2, filePath) {
 }
 function parseBatchInput(input) {
   let data;
-  if ((0, import_fs8.existsSync)(input)) {
-    data = JSON.parse((0, import_fs8.readFileSync)(input, "utf-8"));
+  if ((0, import_fs11.existsSync)(input)) {
+    data = JSON.parse((0, import_fs11.readFileSync)(input, "utf-8"));
   } else {
     data = JSON.parse(input);
   }
@@ -46821,6 +48173,7 @@ function formatCheckResultText(result) {
     lines.push("");
     lines.push(color("Summary:", COLORS.bold));
     lines.push(`  Files checked: ${result.summary.totalFiles}`);
+    if (result.summary.ignoredFiles) lines.push(`  Ignored: ${result.summary.ignoredFiles} (.mangleignore or # mangle-ignore-file)`);
     if (result.summary.totalErrors > 0) {
       lines.push(`  Errors: ${color(result.summary.totalErrors.toString(), COLORS.red)}`);
     }
@@ -46837,6 +48190,7 @@ function formatCheckResultText(result) {
     }
   } else {
     lines.push(color("No issues found.", COLORS.gray));
+    if (result.summary.ignoredFiles) lines.push(color(`${result.summary.ignoredFiles} file(s) ignored (.mangleignore or # mangle-ignore-file)`, COLORS.gray));
   }
   return lines.join("\n");
 }
@@ -47071,86 +48425,27 @@ function formatCheckResultSarif(result) {
 }
 
 // ../mangle-lsp/src/cli/commands/review.ts
-var import_fs10 = require("fs");
-var import_path11 = require("path");
-
-// ../mangle-lsp/src/analysis/program.ts
-function segmentsOf(files) {
-  const segments = [];
-  let line = 1;
-  const parts = [];
-  for (const f of files) {
-    const text = f.text.endsWith("\n") ? f.text : f.text + "\n";
-    const lines = text.split("\n").length - 1;
-    segments.push({ path: f.path, start: line, lines });
-    parts.push(text);
-    line += lines;
-  }
-  return { text: parts.join(""), segments };
-}
-function segmentAt(segments, line) {
-  let lo = 0;
-  let hi = segments.length - 1;
-  while (lo < hi) {
-    const mid = lo + hi + 1 >> 1;
-    if (segments[mid].start <= line) lo = mid;
-    else hi = mid - 1;
-  }
-  return segments[lo];
-}
-function shiftRange(r, by) {
-  return {
-    start: { ...r.start, line: r.start.line - by },
-    end: { ...r.end, line: r.end.line - by }
-  };
-}
-function shiftFix(f, by) {
-  return {
-    ...f,
-    range: shiftRange(f.range, by),
-    additionalEdits: f.additionalEdits?.map((e) => ({ ...e, range: shiftRange(e.range, by) }))
-  };
-}
-function analyzeProgram(files) {
-  const { text, segments } = segmentsOf(files);
-  const result = new Map(files.map((f) => [f.path, { path: f.path, parseErrors: [], diagnostics: [] }]));
-  const parsed = parse(text);
-  for (const e of parsed.errors) {
-    const seg = segmentAt(segments, e.line);
-    result.get(seg.path).parseErrors.push({ ...e, line: e.line - seg.start + 1 });
-  }
-  if (parsed.unit) {
-    for (const d of analyzeUnit(parsed.unit).diagnostics) {
-      const seg = segmentAt(segments, d.range.start.line);
-      const by = seg.start - 1;
-      result.get(seg.path).diagnostics.push({
-        ...d,
-        range: shiftRange(d.range, by),
-        fixes: d.fixes?.map((f) => shiftFix(f, by))
-      });
-    }
-  }
-  return [...result.values()];
-}
+var import_fs13 = require("fs");
+var import_path14 = require("path");
 
 // ../mangle-lsp/src/oracle/client.ts
 var import_child_process = require("child_process");
-var import_fs9 = require("fs");
-var import_path9 = require("path");
+var import_fs12 = require("fs");
+var import_path12 = require("path");
 function findOracleSource() {
   let dir = __dirname;
   for (let i = 0; i < 5; i++) {
-    const candidate = (0, import_path9.join)(dir, "mangle-oracle");
-    if ((0, import_fs9.existsSync)((0, import_path9.join)(candidate, "go.mod"))) return candidate;
-    dir = (0, import_path9.resolve)(dir, "..");
+    const candidate = (0, import_path12.join)(dir, "mangle-oracle");
+    if ((0, import_fs12.existsSync)((0, import_path12.join)(candidate, "go.mod"))) return candidate;
+    dir = (0, import_path12.resolve)(dir, "..");
   }
-  return (0, import_path9.join)((0, import_path9.resolve)(__dirname, "..", "..", ".."), "mangle-oracle");
+  return (0, import_path12.join)((0, import_path12.resolve)(__dirname, "..", "..", ".."), "mangle-oracle");
 }
 var ORACLE_SOURCE = findOracleSource();
 var ENGINE_MODULE = "codeberg.org/TauCeti/mangle-go";
 var EXE = process.platform === "win32" ? ".exe" : "";
 function binDir() {
-  return process.env["MANGLE_ORACLE_CACHE"] || (0, import_path9.join)(ORACLE_SOURCE, "bin");
+  return process.env["MANGLE_ORACLE_CACHE"] || (0, import_path12.join)(ORACLE_SOURCE, "bin");
 }
 var OracleUnavailableError = class extends Error {
 };
@@ -47164,11 +48459,11 @@ function requiredEngineVersion(goModText) {
   return m2?.[1];
 }
 function projectRootOf(start) {
-  let dir = (0, import_path9.resolve)(start);
-  if ((0, import_fs9.existsSync)(dir) && !(0, import_fs9.statSync)(dir).isDirectory()) dir = (0, import_path9.dirname)(dir);
+  let dir = (0, import_path12.resolve)(start);
+  if ((0, import_fs12.existsSync)(dir) && !(0, import_fs12.statSync)(dir).isDirectory()) dir = (0, import_path12.dirname)(dir);
   for (; ; ) {
-    if ((0, import_fs9.existsSync)((0, import_path9.join)(dir, "go.mod"))) return dir;
-    const up = (0, import_path9.dirname)(dir);
+    if ((0, import_fs12.existsSync)((0, import_path12.join)(dir, "go.mod"))) return dir;
+    const up = (0, import_path12.dirname)(dir);
     if (up === dir) return void 0;
     dir = up;
   }
@@ -47176,10 +48471,10 @@ function projectRootOf(start) {
 function newestSource() {
   let newest = 0;
   const walk = (dir) => {
-    for (const name of (0, import_fs9.readdirSync)(dir)) {
+    for (const name of (0, import_fs12.readdirSync)(dir)) {
       if (name === "bin") continue;
-      const full = (0, import_path9.join)(dir, name);
-      const st = (0, import_fs9.statSync)(full);
+      const full = (0, import_path12.join)(dir, name);
+      const st = (0, import_fs12.statSync)(full);
       if (st.isDirectory()) walk(full);
       else if (/\.(go|mg|json|mod|sum)$/.test(name)) newest = Math.max(newest, st.mtimeMs);
     }
@@ -47188,33 +48483,33 @@ function newestSource() {
   return newest;
 }
 function goBuild(out2, modfile) {
-  (0, import_fs9.mkdirSync)(binDir(), { recursive: true });
+  (0, import_fs12.mkdirSync)(binDir(), { recursive: true });
   const args = ["build", ...modfile ? ["-modfile", modfile] : [], "-o", out2, "."];
   const res = (0, import_child_process.spawnSync)("go", args, { cwd: ORACLE_SOURCE, encoding: "utf-8", env: { ...process.env, GOFLAGS: "-mod=mod" } });
-  return res.status === 0 && (0, import_fs9.existsSync)(out2) ? void 0 : res.stderr || "go build failed";
+  return res.status === 0 && (0, import_fs12.existsSync)(out2) ? void 0 : res.stderr || "go build failed";
 }
 var cache = /* @__PURE__ */ new Map();
 function oracleFor(projectRoot) {
   const fromEnv = process.env["MANGLE_ORACLE"];
   if (fromEnv) {
-    if (!(0, import_fs9.existsSync)(fromEnv)) throw new OracleUnavailableError(`MANGLE_ORACLE=${fromEnv} does not exist`);
+    if (!(0, import_fs12.existsSync)(fromEnv)) throw new OracleUnavailableError(`MANGLE_ORACLE=${fromEnv} does not exist`);
     return { path: fromEnv };
   }
-  const sourceOk = (0, import_fs9.existsSync)((0, import_path9.join)(ORACLE_SOURCE, "go.mod"));
+  const sourceOk = (0, import_fs12.existsSync)((0, import_path12.join)(ORACLE_SOURCE, "go.mod"));
   const goOk = sourceOk && !!onPath("go");
-  const pinned = sourceOk ? requiredEngineVersion((0, import_fs9.readFileSync)((0, import_path9.join)(ORACLE_SOURCE, "go.mod"), "utf-8")) : void 0;
-  const wanted = projectRoot && (0, import_fs9.existsSync)((0, import_path9.join)(projectRoot, "go.mod")) ? requiredEngineVersion((0, import_fs9.readFileSync)((0, import_path9.join)(projectRoot, "go.mod"), "utf-8")) : void 0;
+  const pinned = sourceOk ? requiredEngineVersion((0, import_fs12.readFileSync)((0, import_path12.join)(ORACLE_SOURCE, "go.mod"), "utf-8")) : void 0;
+  const wanted = projectRoot && (0, import_fs12.existsSync)((0, import_path12.join)(projectRoot, "go.mod")) ? requiredEngineVersion((0, import_fs12.readFileSync)((0, import_path12.join)(projectRoot, "go.mod"), "utf-8")) : void 0;
   const key = wanted && wanted !== pinned ? wanted : "pinned";
   const hit = cache.get(key);
   if (hit) return hit;
-  const pinnedPath = (0, import_path9.join)(binDir(), `mangle-oracle${EXE}`);
+  const pinnedPath = (0, import_path12.join)(binDir(), `mangle-oracle${EXE}`);
   const pinnedBinary = () => {
-    if (goOk && (!(0, import_fs9.existsSync)(pinnedPath) || (0, import_fs9.statSync)(pinnedPath).mtimeMs < newestSource())) {
+    if (goOk && (!(0, import_fs12.existsSync)(pinnedPath) || (0, import_fs12.statSync)(pinnedPath).mtimeMs < newestSource())) {
       const err = goBuild(pinnedPath);
       if (err) throw new OracleUnavailableError(`building mangle-oracle failed:
 ${err}`);
     }
-    if ((0, import_fs9.existsSync)(pinnedPath)) return { path: pinnedPath };
+    if ((0, import_fs12.existsSync)(pinnedPath)) return { path: pinnedPath };
     const installed = onPath("mangle-oracle");
     if (installed) return { path: installed };
     throw new OracleUnavailableError(
@@ -47227,14 +48522,14 @@ ${err}`);
   } else if (!goOk) {
     result = { ...pinnedBinary(), note: `the project requires ${ENGINE_MODULE} ${wanted}; without Go only the pinned ${pinned} is available` };
   } else {
-    const variant = (0, import_path9.join)(binDir(), `mangle-oracle-${wanted}${EXE}`);
+    const variant = (0, import_path12.join)(binDir(), `mangle-oracle-${wanted}${EXE}`);
     let err;
-    if (!(0, import_fs9.existsSync)(variant) || (0, import_fs9.statSync)(variant).mtimeMs < newestSource()) {
-      const modDir = (0, import_path9.join)(binDir(), `mod-${wanted}`);
-      (0, import_fs9.mkdirSync)(modDir, { recursive: true });
-      const modfile = (0, import_path9.join)(modDir, "go.mod");
-      (0, import_fs9.copyFileSync)((0, import_path9.join)(ORACLE_SOURCE, "go.mod"), modfile);
-      if ((0, import_fs9.existsSync)((0, import_path9.join)(ORACLE_SOURCE, "go.sum"))) (0, import_fs9.copyFileSync)((0, import_path9.join)(ORACLE_SOURCE, "go.sum"), (0, import_path9.join)(modDir, "go.sum"));
+    if (!(0, import_fs12.existsSync)(variant) || (0, import_fs12.statSync)(variant).mtimeMs < newestSource()) {
+      const modDir = (0, import_path12.join)(binDir(), `mod-${wanted}`);
+      (0, import_fs12.mkdirSync)(modDir, { recursive: true });
+      const modfile = (0, import_path12.join)(modDir, "go.mod");
+      (0, import_fs12.copyFileSync)((0, import_path12.join)(ORACLE_SOURCE, "go.mod"), modfile);
+      if ((0, import_fs12.existsSync)((0, import_path12.join)(ORACLE_SOURCE, "go.sum"))) (0, import_fs12.copyFileSync)((0, import_path12.join)(ORACLE_SOURCE, "go.sum"), (0, import_path12.join)(modDir, "go.sum"));
       const edit = (0, import_child_process.spawnSync)("go", ["mod", "edit", `-modfile=${modfile}`, `-require=${ENGINE_MODULE}@${wanted}`], { cwd: ORACLE_SOURCE, encoding: "utf-8" });
       err = edit.status === 0 ? goBuild(variant, modfile) : edit.stderr;
     }
@@ -47257,7 +48552,7 @@ function runOracle(args, projectRoot) {
 }
 
 // ../mangle-lsp/src/cli/commands/boundary.ts
-var import_path10 = require("path");
+var import_path13 = require("path");
 function messageOf(f) {
   const p = `${f.predicate}/${f.arity}`;
   switch (f.code) {
@@ -47312,7 +48607,7 @@ function toBoundaryDiagnostics(out2) {
   });
 }
 function runBoundary(root, profile) {
-  const abs = (0, import_path10.resolve)(root);
+  const abs = (0, import_path13.resolve)(root);
   const out2 = runOracle(["boundary", "--root", abs, ...profile ? ["--profile", profile] : []], abs);
   const diagnostics = toBoundaryDiagnostics(out2);
   const summary = {};
@@ -47352,9 +48647,9 @@ var SKIP = (name) => name.startsWith(".") || name.startsWith("_") || name === "n
 function findMangleFiles(root) {
   const out2 = [];
   const walk = (dir) => {
-    for (const name of (0, import_fs10.readdirSync)(dir)) {
-      const full = (0, import_path11.join)(dir, name);
-      const st = (0, import_fs10.statSync)(full);
+    for (const name of (0, import_fs13.readdirSync)(dir)) {
+      const full = (0, import_path14.join)(dir, name);
+      const st = (0, import_fs13.statSync)(full);
       if (st.isDirectory()) {
         if (!SKIP(name)) walk(full);
       } else if (name.endsWith(".mg")) {
@@ -47365,17 +48660,26 @@ function findMangleFiles(root) {
   walk(root);
   return out2.sort();
 }
+function analyzeFiles(context, files) {
+  const texts = files.map((f) => ({ path: f, text: (0, import_fs13.readFileSync)(f, "utf-8") }));
+  if (texts.length > 1) return analyzeProgram(texts);
+  return texts.map((t) => {
+    const report = context.analyze(t.path, t.text);
+    return { path: t.path, parseErrors: report.parseErrors, diagnostics: report.diagnostics };
+  });
+}
 var RANK = { error: 0, warning: 1, info: 2 };
 function verifyFor(code, file, root) {
   if (code.startsWith("B")) return `mangle-cli boundary --root ${root}`;
   return `mangle-cli check ${file}`;
 }
 function runReview(rootArg, options = {}) {
-  const root = (0, import_path11.resolve)(rootArg);
-  const files = findMangleFiles(root);
+  const root = (0, import_path14.resolve)(rootArg);
+  const context = new ProgramContext3({ isolated: options.isolated });
+  const files = findMangleFiles(root).filter((f) => !context.ignore.isIgnored(f));
   let boundary;
   let boundaryNote;
-  const hasGo = (0, import_fs10.existsSync)((0, import_path11.join)(root, "go.mod"));
+  const hasGo = (0, import_fs13.existsSync)((0, import_path14.join)(root, "go.mod"));
   if (!options.noBoundary && hasGo) {
     try {
       boundary = runBoundary(root, options.profile);
@@ -47388,17 +48692,18 @@ function runReview(rootArg, options = {}) {
   const programs = [];
   const grouped = /* @__PURE__ */ new Set();
   for (const p of boundary?.programs ?? []) {
-    const abs = p.files.map((f) => (0, import_path11.join)(root, f));
+    const abs = p.files.map((f) => (0, import_path14.join)(root, f)).filter((f) => !context.ignore.isIgnored(f));
+    if (abs.length === 0) continue;
     abs.forEach((f) => grouped.add(f));
-    programs.push({ id: p.id, files: p.files, engine: { stage: p.verdict.stage, error: p.verdict.error } });
+    programs.push({ id: p.id, files: abs.map((f) => (0, import_path14.relative)(root, f)), engine: { stage: p.verdict.stage, error: p.verdict.error } });
   }
   for (const f of files) {
-    if (!grouped.has(f)) programs.push({ id: (0, import_path11.relative)(root, f), files: [(0, import_path11.relative)(root, f)] });
+    if (!grouped.has(f)) programs.push({ id: (0, import_path14.relative)(root, f), files: [(0, import_path14.relative)(root, f)] });
   }
   const actions = [];
   const push = (d, file) => {
     const info = getDiagnosticInfo(d.code);
-    const rel = (0, import_path11.relative)(root, file);
+    const rel = (0, import_path14.relative)(root, file);
     actions.push({
       code: d.code,
       severity: d.severity,
@@ -47418,8 +48723,8 @@ function runReview(rootArg, options = {}) {
     });
   };
   for (const p of programs) {
-    const abs = p.files.map((f) => (0, import_path11.join)(root, f));
-    for (const fa of analyzeProgram(abs.map((f) => ({ path: f, text: (0, import_fs10.readFileSync)(f, "utf-8") })))) {
+    const abs = p.files.map((f) => (0, import_path14.join)(root, f));
+    for (const fa of analyzeFiles(context, abs)) {
       for (const e of fa.parseErrors) {
         push({
           code: "P001",
@@ -47441,7 +48746,7 @@ function runReview(rootArg, options = {}) {
         line: 1,
         message: p.engine.error ?? p.engine.stage,
         why: p.engine.stage === "bounds" ? "The program passes the analysis hosts usually run (no bounds checking) but fails strict bounds checking: some fact or rule writes a type its Decl does not allow." : "The engine rejects the assembled program; the host fails to load it.",
-        verify: `mangle-cli conformance --program ${p.files.map((f) => (0, import_path11.join)(root, f)).join(" ")}`
+        verify: `mangle-cli conformance --program ${p.files.map((f) => (0, import_path14.join)(root, f)).join(" ")}`
       });
     }
   }
@@ -47494,8 +48799,8 @@ function formatReviewText(r) {
 }
 
 // ../mangle-lsp/src/cli/commands/conformance.ts
-var import_fs11 = require("fs");
-var import_path12 = require("path");
+var import_fs14 = require("fs");
+var import_path15 = require("path");
 var BOUNDS_WARNINGS = /* @__PURE__ */ new Set(["E073", "E082", "E083", "E084"]);
 var RUNTIME_WARNINGS = /* @__PURE__ */ new Set(["E016", "E017"]);
 function classify(stage, lspErrors, lspWarnings = []) {
@@ -47515,11 +48820,11 @@ function classify(stage, lspErrors, lspWarnings = []) {
   }
 }
 function lspVerdictOf(files) {
-  const analyses = analyzeProgram(files.map((f) => ({ path: f, text: (0, import_fs11.readFileSync)(f, "utf-8") })));
+  const analyses = analyzeProgram(files.map((f) => ({ path: f, text: (0, import_fs14.readFileSync)(f, "utf-8") })));
   const errors = [];
   const warnings = /* @__PURE__ */ new Set();
   for (const a of analyses) {
-    const rel = (0, import_path12.relative)(process.cwd(), a.path);
+    const rel = (0, import_path15.relative)(process.cwd(), a.path);
     for (const e of a.parseErrors) errors.push(`P001 ${rel}:${e.line} ${e.message}`);
     for (const d of a.diagnostics) {
       if (d.severity === "error") errors.push(`${d.code} ${rel}:${d.range.start.line} ${d.message}`);
@@ -47552,12 +48857,12 @@ function compareWithEngine(groups, engine) {
     summary[agreement]++;
     summary.total++;
     if (isAgreement(agreement)) summary.agreeing++;
-    return { files: files.map((f) => (0, import_path12.relative)(process.cwd(), f)), engine: { stage: v.stage, error: v.error }, lsp, agreement };
+    return { files: files.map((f) => (0, import_path15.relative)(process.cwd(), f)), engine: { stage: v.stage, error: v.error }, lsp, agreement };
   });
   return { engine: engine.engine, ...engine.engineNote ? { engineNote: engine.engineNote } : {}, cases, summary };
 }
 function runConformance(files, asProgram) {
-  const abs = files.map((f) => (0, import_path12.resolve)(f));
+  const abs = files.map((f) => (0, import_path15.resolve)(f));
   const groups = asProgram ? [abs] : abs.map((f) => [f]);
   const engine = runOracle(["verdict", "--at", "2024-01-01T00:00:00Z", ...asProgram ? ["--program"] : [], ...abs], projectRootOf(abs[0]));
   return compareWithEngine(groups, engine);
@@ -47575,17 +48880,17 @@ function formatConformanceText(r) {
 }
 
 // ../mangle-lsp/src/cli/commands/engine.ts
-var import_path13 = require("path");
+var import_path16 = require("path");
 function runEngineQuery(files, options) {
   const args = ["run", "--query", options.query];
   if (options.why) args.push("--why", options.why);
   if (options.at) args.push("--at", options.at);
-  return runOracle([...args, ...files.map((f) => (0, import_path13.resolve)(f))], projectRootOf(files[0]));
+  return runOracle([...args, ...files.map((f) => (0, import_path16.resolve)(f))], projectRootOf(files[0]));
 }
 function runWhyNot(files, goal, at) {
   const args = ["whynot", "--goal", goal];
   if (at) args.push("--at", at);
-  return runOracle([...args, ...files.map((f) => (0, import_path13.resolve)(f))], projectRootOf(files[0]));
+  return runOracle([...args, ...files.map((f) => (0, import_path16.resolve)(f))], projectRootOf(files[0]));
 }
 function proofLines(p, indent2, out2) {
   out2.push(`${indent2}${p.fact}  [${p.kind}${p.partial ? ", partial" : ""}]${p.rule ? `  by ${p.rule}` : ""}`);
@@ -47655,7 +48960,8 @@ function handleAgentCommand(command, files, format, options) {
       const report = runReview(String(options["root"] ?? files[0] ?? "."), {
         noBoundary: !!options["no-boundary"],
         severity: options["severity"],
-        profile: options["profile"]
+        profile: options["profile"],
+        isolated: !!options["isolated"]
       });
       out(json ? JSON.stringify(report, null, 2) : formatReviewText(report));
       return report.plan.some((a) => a.severity === "error") ? 1 : 0;
@@ -47709,7 +49015,9 @@ var BOOLEAN_FLAGS = /* @__PURE__ */ new Set([
   "markdown",
   "list",
   "program",
-  "no-boundary"
+  "no-boundary",
+  "isolated",
+  "no-ignore"
 ]);
 function printUsage() {
   console.log(`
@@ -47741,6 +49049,9 @@ Check Options:
   --severity      Minimum severity: error | warning | info (default: info)
   --fail-on       Exit non-zero on: error | warning | never (default: error)
   --explain       Include the full explanation, fix and example of every code
+  --isolated      Analyze each file alone (default: in its program context: the .mg files
+                  a Go package //go:embeds together, else the Decls of the files beside it)
+  --no-ignore     Check files that .mangleignore or '# mangle-ignore-file' exclude
 
 Explain Options:
   mangle-cli explain E002          Explain one code
@@ -47940,7 +49251,9 @@ function handleCheck(files, format, options) {
     quiet: !!options["quiet"],
     severity: options["severity"] || "info",
     failOn: options["fail-on"] || "error",
-    explain: !!options["explain"]
+    explain: !!options["explain"],
+    isolated: !!options["isolated"],
+    noIgnore: !!options["no-ignore"]
   };
   const result = runCheck(files, checkOptions);
   switch (format) {

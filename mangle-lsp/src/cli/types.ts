@@ -84,6 +84,8 @@ export interface CheckSummary {
     totalErrors: number;
     totalWarnings: number;
     totalInfo: number;
+    /** Files skipped because .mangleignore or `# mangle-ignore-file` excludes them. */
+    ignoredFiles?: number;
 }
 
 /**
@@ -193,6 +195,10 @@ export interface CheckOptions extends CommonOptions {
     failOn: 'error' | 'warning' | 'never';
     /** Include the long-form explanation of each code in the output */
     explain?: boolean;
+    /** Analyze each file alone, without the program context (embedded or neighbouring files). */
+    isolated?: boolean;
+    /** Check files that .mangleignore or `# mangle-ignore-file` exclude. */
+    noIgnore?: boolean;
 }
 
 /**

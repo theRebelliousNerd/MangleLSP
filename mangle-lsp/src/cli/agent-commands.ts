@@ -57,6 +57,7 @@ export function handleAgentCommand(command: string, files: string[], format: str
                 noBoundary: !!options['no-boundary'],
                 severity: options['severity'] as 'error' | 'warning' | 'info' | undefined,
                 profile: options['profile'] as string | undefined,
+                isolated: !!options['isolated'],
             });
             out(json ? JSON.stringify(report, null, 2) : formatReviewText(report));
             return report.plan.some(a => a.severity === 'error') ? 1 : 0;

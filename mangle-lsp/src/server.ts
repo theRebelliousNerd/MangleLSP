@@ -14,6 +14,7 @@ import {
     Diagnostic,
     DiagnosticSeverity,
     DidChangeConfigurationNotification,
+    DidChangeWatchedFilesNotification,
     HoverParams,
     CompletionParams,
     CompletionItem,
@@ -35,8 +36,10 @@ import {
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
 import { parse, ParseError, ParseResult } from './parser/index';
-import { ValidationResult, QuickFix } from './analysis/index';
+import { QuickFix } from './analysis/index';
 import { analyzeUnit, AnalysisDiagnostic } from './analysis/pipeline';
+import { ProgramContext } from './workspace/context';
+import { fileURLToPath } from 'url';
 import { getDiagnosticInfo, diagnosticDocUrl, renderExplanation } from './analysis/diagnostics';
 import { parseErrorHint } from './cli/diagnostics';
 import { SymbolTable, buildSymbolTable } from './analysis/symbols';
@@ -63,7 +66,10 @@ interface DocumentState {
     uri: string;
     version: number;
     parseResult: ParseResult;
-    validationResult: ValidationResult | null;
+    /** Symbol table of the file itself (hover, completion, definition). */
+    symbolTable: SymbolTable | null;
+    /** The file is excluded from diagnostics (.mangleignore or `# mangle-ignore-file`). */
+    ignored: boolean;
     /** All analysis diagnostics (semantic, type, stratification, advice) */
     analysis: AnalysisDiagnostic[];
     /** Source text (for hints that need line context) */
@@ -75,6 +81,20 @@ interface DiagnosticData {
     fixes?: QuickFix[];
 }
 const documentStates = new Map<string, DocumentState>();
+
+// Open buffers by file path: sibling files are analyzed with the editor's
+// text, not the saved file, and the files of one program re-check each other.
+const openPaths = new Map<string, string>();
+const programContext = new ProgramContext({
+    overlay: path => {
+        const uri = openPaths.get(path);
+        return uri === undefined ? undefined : documents.get(uri)?.getText();
+    },
+});
+
+function pathOf(uri: string): string | undefined {
+    try { return uri.startsWith('file:') ? fileURLToPath(uri) : undefined; } catch { return undefined; }
+}
 
 // Validation debouncing - prevents excessive revalidation during rapid typing
 const validationTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
@@ -95,6 +115,7 @@ const documentSettings = new Map<string, Thenable<MangleLSPSettings>>();
 
 let hasConfigurationCapability = false;
 let hasWorkspaceFolderCapability = false;
+let hasWatchedFilesCapability = false;
 
 /**
  * Initialize the server.
@@ -105,6 +126,7 @@ connection.onInitialize((params: InitializeParams): InitializeResult => {
     hasConfigurationCapability = !!(
         capabilities.workspace && !!capabilities.workspace.configuration
     );
+    hasWatchedFilesCapability = !!capabilities.workspace?.didChangeWatchedFiles?.dynamicRegistration;
     hasWorkspaceFolderCapability = !!(
         capabilities.workspace && !!capabilities.workspace.workspaceFolders
     );
@@ -156,6 +178,11 @@ connection.onInitialized(() => {
     if (hasConfigurationCapability) {
         connection.client.register(DidChangeConfigurationNotification.type, undefined);
     }
+    if (hasWatchedFilesCapability) {
+        connection.client.register(DidChangeWatchedFilesNotification.type, {
+            watchers: [{ globPattern: '**/{*.mg,*.go,go.mod,.mangleignore}' }],
+        });
+    }
     if (hasWorkspaceFolderCapability) {
         connection.workspace.onDidChangeWorkspaceFolders((_event: WorkspaceFoldersChangeEvent) => {
             connection.console.log('Workspace folder change event received.');
@@ -200,6 +227,8 @@ function getDocumentSettings(uri: string): Thenable<MangleLSPSettings> {
  * Document opened.
  */
 documents.onDidOpen((event: TextDocumentChangeEvent<TextDocument>) => {
+    const path = pathOf(event.document.uri);
+    if (path) openPaths.set(path, event.document.uri);
     validateDocument(event.document);
 });
 
@@ -208,6 +237,31 @@ documents.onDidOpen((event: TextDocumentChangeEvent<TextDocument>) => {
  */
 documents.onDidChangeContent((change: TextDocumentChangeEvent<TextDocument>) => {
     scheduleValidation(change.document);
+    scheduleNeighbours(change.document);
+});
+
+/**
+ * The open files of the same program see this file's declarations, so they
+ * are checked again (the analysis of a program is shared, so this is cheap).
+ */
+function scheduleNeighbours(document: TextDocument): void {
+    const path = pathOf(document.uri);
+    if (!path) return;
+    for (const group of programContext.describe(path).groups) {
+        for (const other of group) {
+            const uri = other === path ? undefined : openPaths.get(other);
+            const doc = uri === undefined ? undefined : documents.get(uri);
+            if (doc) scheduleValidation(doc);
+        }
+    }
+}
+
+/**
+ * A .mg, .go, go.mod or .mangleignore file changed on disk: the context caches
+ * compare file signatures, so checking the open files again is enough.
+ */
+connection.onDidChangeWatchedFiles(() => {
+    documents.all().forEach(scheduleValidation);
 });
 
 /**
@@ -245,6 +299,8 @@ documents.onDidClose((event: TextDocumentChangeEvent<TextDocument>) => {
         validationTimeouts.delete(uri);
     }
 
+    const closedPath = pathOf(uri);
+    if (closedPath) openPaths.delete(closedPath);
     documentSettings.delete(uri);
     documentStates.delete(uri);
     // Clear diagnostics
@@ -257,18 +313,26 @@ documents.onDidClose((event: TextDocumentChangeEvent<TextDocument>) => {
 function analyzeDocument(document: TextDocument, semantic: boolean): DocumentState {
     const text = document.getText();
     const parseResult = parse(text);
-    let validationResult: ValidationResult | null = null;
     let analysis: AnalysisDiagnostic[] = [];
-    if (parseResult.unit && semantic) {
-        const result = analyzeUnit(parseResult.unit);
-        validationResult = result.validation;
-        analysis = result.diagnostics;
+    let parseErrors = parseResult.errors;
+    let ignored = false;
+    const path = pathOf(document.uri);
+    if (path) {
+        // The file in its program context: the declarations of what the host
+        // loads with it are visible, and only this file's problems come back.
+        const report = programContext.analyze(path, text, parseResult);
+        ignored = report.ignored;
+        parseErrors = report.parseErrors;
+        analysis = semantic ? report.diagnostics : [];
+    } else if (semantic && parseResult.unit) {
+        analysis = analyzeUnit(parseResult.unit).diagnostics;
     }
     const state: DocumentState = {
         uri: document.uri,
         version: document.version,
-        parseResult,
-        validationResult,
+        parseResult: parseErrors === parseResult.errors ? parseResult : { ...parseResult, errors: parseErrors },
+        symbolTable: parseResult.unit ? buildSymbolTable(parseResult.unit) : null,
+        ignored,
         analysis,
         text,
     };
@@ -436,13 +500,7 @@ connection.onCodeAction((params: CodeActionParams): CodeAction[] => {
  * Get the symbol table for a document.
  */
 function getSymbolTable(state: DocumentState): SymbolTable | null {
-    if (state.validationResult) {
-        return state.validationResult.symbolTable;
-    }
-    if (state.parseResult.unit) {
-        return buildSymbolTable(state.parseResult.unit);
-    }
-    return null;
+    return state.symbolTable;
 }
 
 /**
@@ -1001,7 +1059,7 @@ connection.onRequest('mangle/getFileInfo', async (params: { uri: string }) => {
             exists: true,
             version: state.version,
             hasSyntaxErrors: state.parseResult.errors.length > 0,
-            hasSemanticErrors: (state.validationResult?.errors.length ?? 0) > 0,
+            hasSemanticErrors: state.analysis.some(e => e.source === 'mangle-semantic'),
             diagnostics: diagResult,
             symbols,
             predicates,
@@ -1098,7 +1156,7 @@ connection.onRequest('mangle/getWorkspaceSummary', async () => {
         fileInfos.push({
             uri,
             hasSyntaxErrors: state.parseResult.errors.length > 0,
-            hasSemanticErrors: (state.validationResult?.errors.length ?? 0) > 0,
+            hasSemanticErrors: state.analysis.some(e => e.source === 'mangle-semantic'),
             declCount: state.parseResult.unit?.decls.length ?? 0,
             clauseCount: state.parseResult.unit?.clauses.length ?? 0,
         });

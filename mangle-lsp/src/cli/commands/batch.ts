@@ -14,7 +14,8 @@ import { getDocumentSymbols } from '../../services/symbols';
 import { formatDocument } from '../../services/formatting';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { CommonOptions } from '../types';
-import { analyzeUnit, AnalysisDiagnostic } from '../../analysis/pipeline';
+import { AnalysisDiagnostic } from '../../analysis/pipeline';
+import { ProgramContext } from '../../workspace/context';
 import { analysisToCLIDiagnostic, parseErrorToCLIDiagnostic } from '../diagnostics';
 
 /**
@@ -62,6 +63,7 @@ export interface BatchOutput {
  * File cache for batch processing.
  */
 interface FileCache {
+    path: string;
     source: string;
     document: TextDocument;
     parseResult: ReturnType<typeof parse>;
@@ -69,6 +71,7 @@ interface FileCache {
 }
 
 const fileCache = new Map<string, FileCache>();
+let programContext = new ProgramContext();
 
 /**
  * Get or create file cache entry.
@@ -95,6 +98,7 @@ function getFileCache(filePath: string): FileCache | null {
     const validationResult = parseResult.unit ? validate(parseResult.unit) : null;
 
     const cache: FileCache = {
+        path: filePath,
         source,
         document,
         parseResult,
@@ -115,6 +119,7 @@ export function runBatch(queries: BatchQuery[], _options: CommonOptions): BatchO
 
     // Clear cache for fresh analysis
     fileCache.clear();
+    programContext = new ProgramContext();
 
     for (const query of queries) {
         const filePath = resolve(query.file);
@@ -325,8 +330,8 @@ function processDiagnostics(cache: FileCache): any {
     const lines = cache.source.split('\n');
     const parseErrors = cache.parseResult.errors.map(e => parseErrorToCLIDiagnostic(e, lines));
 
-    // Full pipeline: semantic validation, type checking, stratification and advice.
-    const analysis: AnalysisDiagnostic[] = cache.parseResult.unit ? analyzeUnit(cache.parseResult.unit).diagnostics : [];
+    // Full pipeline, in the program context of the file (what check and the editor report).
+    const analysis: AnalysisDiagnostic[] = programContext.analyze(cache.path, cache.source, cache.parseResult).diagnostics;
     const semanticErrors = analysis.map(e => analysisToCLIDiagnostic(e, lines));
 
     return {
