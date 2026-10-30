@@ -74,3 +74,6 @@ mangle-oracle/bin/
 
 # Separate monorepo packages (mangle-ts, mangle-py ports)
 packages/
+
+# `go build .` in mangle-oracle writes this binary
+mangle-oracle/mangle-oracle
