@@ -39,6 +39,9 @@ so the recursion explores far less than the full path set.
   `SimpleInMemoryStore` beside its temporal store.
 - On a cyclic graph a lattice shortest path terminates; the all-paths
   closure doesn't (verified: 5-edge cycle, 16 facts vs the 100k limit).
+  A **self-loop** edge under a recursive cost lattice never terminates, and
+  the fact limit does not stop it: strip self-loops first
+  ([verified-traps-evaluation](verified-traps-evaluation.md)).
 
 ## Hosting a lattice (verified on v0.7 in codeNERD's first production lattice)
 

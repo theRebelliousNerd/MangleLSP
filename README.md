@@ -10,6 +10,9 @@ Language Server Protocol (LSP) implementation and VS Code extension for the [Man
 - **Syntax Highlighting** - Full TextMate grammar support for `.mg` files
 - **Diagnostics** - Real-time syntax and semantic error reporting
 - **Semantic Analysis** - Variable binding, arity checking, and safety validation
+- **Program context** - A file is diagnosed with the declarations of the program the host loads it in: the `.mg` files a Go package `//go:embed`s together, else the `Decl`s beside it (`mangle-cli check --isolated` turns it off)
+- **Go boundary findings** - Predicates nothing produces, rules that can never fire, conclusions nothing reads, facts Go asserts with no `Decl` (B-codes, from a background scan of the Go module)
+- **Excluding files** - `.mangleignore` (gitignore syntax) or a `# mangle-ignore-file` comment: no problems for deliberately invalid Mangle, highlighting and navigation stay
 - **CLI Tools** - Command-line interface for CI/CD integration (SARIF output support)
 
 ## Project Structure

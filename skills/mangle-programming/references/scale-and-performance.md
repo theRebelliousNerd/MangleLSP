@@ -35,6 +35,9 @@ binder. `mangle-cli check` flags cross products (E019) and late negation
 (E022), but it can't see row counts. Weighting E019 by real cardinalities
 (a sizes file from Go's fact counts) is a tooling idea for the backlog.
 
+A self-join over an id is quadratic in the biggest group, and the plain
+store scans a relation per lookup: [verified-traps-evaluation](verified-traps-evaluation.md).
+
 ## Rules of shape
 
 - Join on stable, selective, scalar, consistently typed keys.

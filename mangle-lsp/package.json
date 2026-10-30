@@ -1,6 +1,6 @@
 {
   "name": "@mangle/mangle-lsp",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Language Server Protocol (LSP) implementation for the Mangle declarative programming language",
   "author": "Next-Gen Engineering and Research Development LLC",
   "license": "MIT",
@@ -39,6 +39,8 @@
   },
   "devDependencies": {
     "antlr4ng-cli": "^2.0.0",
-    "vitest": "^2.1.8"
+    "esbuild": "^0.27.7",
+    "vitest": "^2.1.8",
+    "vscode-jsonrpc": "^8.2.0"
   }
 }

@@ -26,4 +26,9 @@ learn from.
   run. A lab result that hasn't shipped is a backlog item, not an entry.
 - Every new entry gets a link in SKILL.md's Showcase section, in the same
   change.
-- Entries so far: [boundary-judge](boundary-judge.md).
+- Entries so far: [boundary-judge](boundary-judge.md),
+  [component-label-lattice](component-label-lattice.md).
+- Ruled out: codeNERD's shard completeness guard (`internal/core/derivation_map.go`)
+  is a presence/completeness lattice written in Go; Mangle is only the object it
+  analyzes. It becomes an entry when the lattice is a Mangle program
+  ([pushing-mangle-forward](../references/pushing-mangle-forward.md) item 18).

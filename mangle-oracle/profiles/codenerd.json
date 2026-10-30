@@ -9,7 +9,7 @@
   ],
   "assertPrefixes": ["Assert", "AddFact"],
   "retractPrefixes": ["Retract"],
-  "queryMethods": ["Query", "QueryFacts", "GetFacts", "QueryPredicate"],
+  "queryMethods": ["Query", "QueryFacts", "GetFacts", "QueryPredicate", "QueryCallback", "QueryRouting", "QueryAllLearned", "SubscribeToFacts", "turnRows", "derivedFor", "oneDerivedFor", "first", "acceptanceDerived", "askWithCampaignState", "derivedColumn", "queryKernelStrings", "queryOrBlock", "episodeRows", "turnHolds", "roundValues", "fragmentsIn"],
   "variadicAssert": {"method": "AddFact", "regime": "/decl_coerced"},
   "assertHelperVerbs": ["add", "assert", "emit", "push", "record", "insert", "fact"],
   "nameTypes": ["MangleAtom"],

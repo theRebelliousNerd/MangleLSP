@@ -25,6 +25,8 @@ Run `mangle-cli explain <CODE>` for the same text in a terminal.
 | [B010](#b010) | Callback modes disagree with the Decl | boundary | error |
 | [B011](#b011) | Rule negates an external; its Go callback never runs | boundary | warning |
 | [B012](#b012) | Rule reads a predicate with no recognized producer | boundary | info |
+| [B013](#b013) | Rule can never fire: a premise is starved | boundary | warning |
+| [B014](#b014) | Conclusion nothing reads | boundary | warning |
 | [E000](#e000) | File or I/O error | io | error |
 | [E001](#e001) | Variables in facts must be ground | safety | error |
 | [E002](#e002) | Range restriction violation | safety | error |
@@ -289,6 +291,22 @@ The cross-file form of E081: a rule negates an external predicate, and the engin
 As B001, except that Go mentions the name somewhere the scan does not read as an assert: a list of predicate names, a map, a log line or a producer whose predicate is computed. Check the listed places; if none of them asserts the predicate, the rule never fires.
 
 **How to fix:** Assert the predicate where it is produced, with the Decl's shape.
+
+## B013
+
+**Rule can never fire: a premise is starved** - boundary, default severity: warning
+
+A positive premise of this rule can never hold: nothing produces it (no fact, no Go assert, no external callback, no recognized Go producer), or every rule that derives it is itself blocked by such a premise. The check is a least fixpoint over the whole module (a predicate is live when a fact of it can exist or a rule for it can fire; a rule fires when every positive body atom is live), so a block that travels through several derived predicates is found. Negated premises never block (an empty relation makes the negation true). The finding names the first starved premise, and its proof lists the absences it rests on.
+
+**How to fix:** Wire a producer for the starved premise (a Go assert with the Decl's shape, a fact, or a rule that can fire), or delete the rule and everything that only exists to read its head.
+
+## B014
+
+**Conclusion nothing reads** - boundary, default severity: warning
+
+The predicate is derived by rules, but no rule premise (positive or negated) of a needed predicate reads it and no Go query names it. A predicate is needed when Go queries it (a query call the host profile knows) or a needed rule reads it; a bare string literal naming it elsewhere does not count. Facts only stated as ground data are tables, not conclusions, and are not reported.
+
+**How to fix:** Query it from the code that should act on it, read it in a rule that is itself used, or delete the rules that derive it. If Go reaches it through a query helper the scan does not know, list the helper in the project profile (`queryMethods` in .mangle/oracle-profile.json).
 
 ## E000
 

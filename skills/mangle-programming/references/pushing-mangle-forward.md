@@ -37,7 +37,9 @@ verdict exists (and record the verdict in agent memory).
 4. ~~Decl/producer/consumer audit with Mangle over code.~~ Shipped as
    `mangle-cli boundary` (MangleLSP `mangle-oracle/boundary.mg`): 66 rules
    read predicates nothing produces, 27 wrong-arity and 11 wrong-shape
-   asserts in codeNERD. Next: fix them, and gate new ones in CI.
+   asserts in codeNERD; B013/B014 add the liveness and consumption
+   fixpoints (rules that can never fire, conclusions nothing reads).
+   Next: fix them, and gate new ones in CI.
 5. **Temporal leases for file ownership.** Expiring locks for shards, with
    time pinned in tests, compared against the current lock code for
    behavior and line count.
@@ -65,6 +67,23 @@ verdict exists (and record the verdict in agent memory).
 14. **Strict-bounds census, all at once.** The LSP's assembled-program
     check lists every mismatch (68 sites in the core program) where the
     engine stops at the first. Work through them with `mangle-cli review`.
+
+15. **Upstream repro for the lattice self-loop hang.** One recursive cost
+    lattice plus `edge(/a,/a,1)` never returns and ignores the fact limit
+    ([verified-traps-evaluation](verified-traps-evaluation.md)). Find which
+    delta row re-derives, and whether a guard in the engine is one line.
+16. **Value-level liveness.** B013 treats a predicate as live when any fact
+    can exist. Carry the constants Go can write per column, and a rule
+    testing a constant nothing writes is dead too (A003, across files).
+17. **Explain through comparisons.** Post-hoc proofs stop at a `>` premise
+    (`partial`); a builtin-aware explainer would let every finding that
+    measures a count carry its proof without moving the test into the EDB.
+
+18. **The shard presence lattice as a Mangle program.** codeNERD's
+    `derivation_map.go` computes where each predicate's facts can exist (a
+    presence lattice) and where none is missing (completeness) in Go. The
+    same judgment as rules over `mg_rule/mg_premise`, like B013, would make
+    it a showcase entry and let `review` run it on any sharded program.
 
 ## How to push one run further
 

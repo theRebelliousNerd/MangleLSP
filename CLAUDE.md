@@ -43,6 +43,8 @@ mangle-lsp/        # LSP server + CLI (TypeScript, implemented)
                    # type expressions (types.ts), diagnostic catalog (diagnostics.ts),
                    # shared pipeline (pipeline.ts)
   src/builtins/    # typed catalog of upstream builtin functions and predicates
+  src/workspace/   # program context (go:embed assembly, sibling Decls), .mangleignore, background
+                   # Go-boundary scan for the editor
   src/services/    # hover, completion, definition, references, symbols, formatting, rename
   src/cli/         # mangle-cli commands and formatters (json/text/sarif)
   test/            # vitest suites, incl. test/conformance (upstream examples)

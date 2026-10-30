@@ -11,6 +11,12 @@ Decl decl_external(Pred, Arity, Modes) descr [extensional()] bound [/string, /nu
 Decl mg_defines(Pred, Arity) descr [extensional()] bound [/string, /number].
 Decl mg_uses(Pred, Arity, File) descr [extensional()] bound [/string, /number, /string].
 Decl mg_negates(Pred, Arity, File, Line) descr [extensional()] bound [/string, /number, /string, /number].
+# One rule or fact (Len atoms in its body), and its body atoms in order; a
+# negated atom (/neg) never blocks a rule, a positive one (/pos) does.
+Decl mg_rule(Rule, Pred, Arity, File, Line, Len) descr [extensional()] bound [/number, /string, /number, /string, /number, /number].
+# A rule with at least one body atom: it derives, where a fact only states.
+Decl mg_derivation(Rule, Pred, Arity, File, Line) descr [extensional()] bound [/number, /string, /number, /string, /number].
+Decl mg_premise(Rule, Idx, Pred, Arity, Sign) descr [extensional()] bound [/number, /number, /string, /number, /name].
 
 # ---------------------------------------------------------------- EDB: Go side
 Decl go_assert(Site, Pred, Arity, File, Line) descr [extensional()] bound [/number, /string, /number, /string, /number].
@@ -110,3 +116,49 @@ finding(/B009, P, A, F, L, -1, M) :- go_external(P, A, M, F, L), !external_decl(
 finding(/B010, P, A, F, L, -1, M) :- go_external(P, A, M, F, L), decl_external(P, A, D), M != "", M != D.
 # B011: a rule negates an external; the engine never calls Go for a negation.
 finding(/B011, P, A, F, L, -1, "") :- mg_negates(P, A, F, L), external_decl(P, A).
+
+# ------------------------------------------------- liveness: what can ever hold
+# A predicate is live when some fact of it can exist: Go asserts it, a Go
+# callback answers it, Go names it somewhere the scan reads as a possible
+# producer, or a rule for it can fire. A rule fires when every positive body
+# atom is live (a negated atom never blocks it). chain(R, K) says the first K
+# atoms of rule R are live; it only grows through live atoms, so the whole
+# computation is positive recursion (no negation inside the fixpoint), and
+# "starved" is the complement taken once the fixpoint is done.
+known_arity(P, A) :- decl(P, A, _, _).
+known_arity(P, A) :- mg_defines(P, A).
+known_arity(P, A) :- read_in_mg(P, A).
+
+live(P, A) :- asserted(P, A).
+live(P, A) :- external_decl(P, A).
+live(P, A) :- declared(P, A), asserted_unknown_arity(P).
+live(P, A) :- mentioned(P), known_arity(P, A).
+chain(R, 0) :- mg_rule(R, _, _, _, _, _).
+chain(R, K1) :- chain(R, K), mg_premise(R, K, _, _, /neg), K1 = fn:plus(K, 1).
+chain(R, K1) :- chain(R, K), mg_premise(R, K, P, A, /pos), live(P, A), K1 = fn:plus(K, 1).
+live(P, A) :- mg_rule(R, P, A, _, _, N), chain(R, N).
+
+blocked(R, P, A) :- chain(R, K), mg_premise(R, K, P, A, /pos), !live(P, A).
+
+# B013: a rule that can never fire: a positive premise is starved, because
+# nothing produces it or every rule that derives it is itself blocked.
+finding(/B013, HP, HA, F, L, -1, N) :-
+    blocked(R, P, A), mg_rule(R, HP, HA, F, L, _),
+    N = fn:string:concat(P, "/", fn:number:to_string(A)).
+
+# ------------------------------------------------- consumption: who reads what
+# A predicate is needed when Go queries it (a query call with the name, per the
+# host profile; a bare string literal elsewhere does not count: a check a
+# literal satisfies teaches writing literals), or a rule reads it whose own
+# head is needed. Predicates of ground facts only are tables, not conclusions.
+needed(P, A) :- known_arity(P, A), go_query(P, _, _, _).
+needed(P, A) :- mg_rule(R, Q, QA, _, _, _), needed(Q, QA), mg_premise(R, _, P, A, _).
+
+# B014: derived by rules or facts, but no rule premise and no Go query reaches it.
+derived(P, A) :- mg_derivation(_, P, A, _, _).
+unconsumed(P, A) :- derived(P, A), !needed(P, A).
+# One finding per predicate and file, at its first rule. (No `do` transform
+# here: a post-hoc proof cannot explain a fact that came out of one.)
+derived_site(P, A, F, L) :- mg_derivation(_, P, A, F, L).
+site_after(P, A, F, L) :- derived_site(P, A, F, L0), derived_site(P, A, F, L), L0 < L.
+finding(/B014, P, A, F, L, -1, "") :- unconsumed(P, A), derived_site(P, A, F, L), !site_after(P, A, F, L).

@@ -40,6 +40,8 @@ import { QuickFix } from './analysis/index';
 import { analyzeUnit, AnalysisDiagnostic } from './analysis/pipeline';
 import { ProgramContext } from './workspace/context';
 import { fileURLToPath } from 'url';
+import { BoundaryService } from './workspace/boundary-service';
+import type { BoundaryDiagnostic } from './cli/commands/boundary';
 import { getDiagnosticInfo, diagnosticDocUrl, renderExplanation } from './analysis/diagnostics';
 import { parseErrorHint } from './cli/diagnostics';
 import { SymbolTable, buildSymbolTable } from './analysis/symbols';
@@ -92,6 +94,18 @@ const programContext = new ProgramContext({
     },
 });
 
+// Go <-> .mg findings (producers and consumers a predicate lacks): scanned in
+// the background per Go module, shown on the files they are anchored at.
+const boundary = new BoundaryService({
+    onScan: (root, failed) => {
+        if (failed) connection.console.warn(`Go boundary scan of ${root} failed: ${failed.message.split('\n')[0]}`);
+        for (const doc of documents.all()) {
+            const p = pathOf(doc.uri);
+            if (p && p.startsWith(root)) void validateDocument(doc);
+        }
+    },
+});
+
 function pathOf(uri: string): string | undefined {
     try { return uri.startsWith('file:') ? fileURLToPath(uri) : undefined; } catch { return undefined; }
 }
@@ -103,11 +117,14 @@ const validationTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
 interface MangleLSPSettings {
     maxNumberOfProblems: number;
     enableSemanticAnalysis: boolean;
+    /** Show Go <-> .mg findings (B-codes) from a background scan of the Go module. */
+    enableBoundaryAnalysis: boolean;
 }
 
 const defaultSettings: MangleLSPSettings = {
     maxNumberOfProblems: 100,
     enableSemanticAnalysis: true,
+    enableBoundaryAnalysis: true,
 };
 
 let globalSettings: MangleLSPSettings = defaultSettings;
@@ -235,6 +252,11 @@ documents.onDidOpen((event: TextDocumentChangeEvent<TextDocument>) => {
 /**
  * Document content changed.
  */
+documents.onDidSave(event => {
+    const path = pathOf(event.document.uri);
+    if (path) boundary.request(path);
+});
+
 documents.onDidChangeContent((change: TextDocumentChangeEvent<TextDocument>) => {
     scheduleValidation(change.document);
     scheduleNeighbours(change.document);
@@ -261,7 +283,11 @@ function scheduleNeighbours(document: TextDocument): void {
  * compare file signatures, so checking the open files again is enough.
  */
 connection.onDidChangeWatchedFiles(() => {
-    documents.all().forEach(scheduleValidation);
+    documents.all().forEach(doc => {
+        scheduleValidation(doc);
+        const path = pathOf(doc.uri);
+        if (path) boundary.request(path);
+    });
 });
 
 /**
@@ -358,7 +384,31 @@ async function validateDocument(document: TextDocument): Promise<void> {
         diagnostics.push(analysisToDiagnostic(error));
     }
 
+    const path = pathOf(document.uri);
+    if (path && !state.ignored && settings.enableSemanticAnalysis && settings.enableBoundaryAnalysis !== false) {
+        boundary.ensure(path);
+        for (const finding of boundary.findingsFor(path)) {
+            if (diagnostics.length >= settings.maxNumberOfProblems) break;
+            diagnostics.push(boundaryToDiagnostic(finding, lines));
+        }
+    }
+
     connection.sendDiagnostics({ uri: document.uri, diagnostics });
+}
+
+/** A boundary finding on its line: the message says which producer or consumer is missing. */
+function boundaryToDiagnostic(f: BoundaryDiagnostic, lines: string[]): Diagnostic {
+    const line = Math.max(0, f.line - 1);
+    const text = lines[line] ?? '';
+    const diagnostic: Diagnostic = {
+        severity: toLspSeverity(f.severity),
+        range: { start: { line, character: text.length - text.trimStart().length }, end: { line, character: text.length } },
+        message: f.hint ? `${f.message}\nhelp: ${f.hint}` : f.message,
+        source: 'mangle-boundary',
+        code: f.code,
+        codeDescription: { href: diagnosticDocUrl(f.code) },
+    };
+    return diagnostic;
 }
 
 function toLspSeverity(severity: 'error' | 'warning' | 'info'): DiagnosticSeverity {

@@ -86,6 +86,44 @@ describe.skipIf(!goAvailable)('Engine-backed commands', () => {
         writeFileSync(join(repo, 'core', 'policy.mg'), '# policy\nhigh(I) :- score(I, S), S > 3.\nmiss(I) :- score(I, _), !ext(I, "x").\n');
     }, 120_000);
 
+    it('boundary and review report rules that can never fire and conclusions nothing reads, with proofs', () => {
+        const dead = mkdtempSync(join(tmpdir(), 'mangle-dead-'));
+        mkdirSync(join(dead, 'core'), { recursive: true });
+        writeFileSync(join(dead, 'go.mod'), 'module example.com/d\n\ngo 1.22\n');
+        writeFileSync(join(dead, 'core', 'kernel.go'), [
+            'package core', '',
+            'type Fact struct {', '\tPredicate string', '\tArgs      []any', '}', '',
+            'func facts(id string, q interface{ Query(string) ([]Fact, error) }) []Fact {',
+            '\t_, _ = q.Query("shown")',
+            '\treturn []Fact{{Predicate: "score", Args: []any{id, 1}}}',
+            '}', '',
+        ].join('\n'));
+        writeFileSync(join(dead, 'core', 'rules.mg'), [
+            'Decl score(Id, S) bound [/string, /number].',
+            'Decl never(Id) bound [/string].',
+            'dead(I) :- never(I).',
+            'dead_too(I) :- score(I, _), dead(I).',
+            'quiet(I) :- score(I, _), !dead(I).',
+            'shown(I) :- score(I, _), !dead(I).',
+            'side(I) :- score(I, _).',
+            '',
+        ].join('\n'));
+        const r = runReview(dead);
+        const at = (code: string) => r.plan.filter(a => a.code === code).map(a => `${a.file}:${a.line}`).sort();
+        // Blocked: the premise nothing produces, and the rule that reads the blocked rule's head.
+        expect(at('B013')).toEqual(['core/rules.mg:3', 'core/rules.mg:4']);
+        const direct = r.plan.find(a => a.code === 'B013' && a.line === 3)!;
+        expect(direct.message).toContain('never/1');
+        expect(direct.message).toContain('never fire');
+        expect(r.plan.find(a => a.code === 'B013' && a.line === 4)!.message).toContain('dead/1');
+        expect(direct.proof?.some(p => p.startsWith('not live('))).toBe(true);
+        // Not read by anything that reaches a Go query: dead_too, quiet, side. shown is queried, and
+        // its negated premise makes dead a needed predicate.
+        expect(at('B014')).toEqual(['core/rules.mg:4', 'core/rules.mg:5', 'core/rules.mg:7']);
+        expect(r.plan.find(a => a.code === 'B014' && a.line === 7)!.message).toContain('side/1');
+        expect(r.plan.find(a => a.code === 'B014')!.severity).toBe('warning');
+    }, 120_000);
+
     it('mangle-oracle passes its own Go tests', () => {
         const res = spawnSync('go', ['test', '-count=1', './...'], { cwd: ORACLE_DIR, encoding: 'utf-8' });
         expect(res.status, res.stdout + res.stderr).toBe(0);

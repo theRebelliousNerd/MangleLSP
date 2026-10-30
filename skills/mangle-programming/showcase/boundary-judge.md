@@ -60,6 +60,21 @@ next_action/1`), 11 build the wrong constant type (`float64` into
 `/number`, `"/verify"` into `/string`), and the 10 externals are all wired
 with agreeing modes.
 
+## Two fixpoints on top (B013, B014)
+
+Liveness and consumption are least fixpoints, written as positive recursion
+over a `chain(Rule, Index)` relation (no negation inside the fixpoint; the
+complement is taken once afterwards, see
+[graphs-and-closure](../references/graphs-and-closure.md)). B013 names the
+premise that stops a rule, even through derived predicates that are
+themselves blocked; B014 lists conclusions no query reaches. On codeNERD:
+131 rules blocked at 84 heads (101 by a predicate its own starved list
+names, 30 further down a chain), and 530 of the 535 conclusions its own gate
+lists, plus 80 more outside that gate's scope. Of the five it lists
+that B014 does not, four are read (some through a negated premise) by a
+predicate Go queries through a constant defined in another package, which
+the gate's scan does not resolve; the fifth was not traced.
+
 ## Cost
 
 1385 Go files, 166 `.mg` files, 1345 assert sites: 3.5 s, almost all of it

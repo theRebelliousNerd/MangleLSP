@@ -31,6 +31,15 @@ the arithmetic, interval merging and the reference "now".
   design means giving its program a temporal store and showing that
   boot cost and cone evaluation still hold.
 
+## Age without a temporal store
+
+When the embedder has no temporal store, pin the clock as a fact and compute
+recency in the rule: `current_time(Now)` plus
+`T > fn:minus(Now, fn:mult(Days, 86400))` (verified on v0.7; `Now` and
+`Days` bound by earlier premises). A decision replays at any clock by
+changing the fact. Details and the failure mode in
+[verified-traps-evaluation](verified-traps-evaluation.md).
+
 ## codeNERD seams to try
 
 - **Leases and locks**: file and shard ownership with expiry. Expired

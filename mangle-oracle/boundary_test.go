@@ -39,6 +39,13 @@ hit(I) :- user(I, _), lookup(I, R), R = "ok".
 seen(I) :- listed(I).
 fast(I) :- score(I, S), S > 3.
 noted(I) :- note(I, _).
+chain_a(I) :- ghost(I).
+chain_b(I) :- chain_a(I), score(I, _).
+guarded(I) :- user(I, _), haunted(I).
+alive(I) :- score(I, _), !ghost(I).
+helper(I) :- user(I, _).
+hidden(I) :- ghost(I).
+shown(I) :- helper(I), !hidden(I).
 `,
 	"core/producer.go": `package core
 
@@ -78,6 +85,8 @@ func register(mk func(string, int, func(), ...ArgMode)) {
 func consume(q interface{ Query(string) ([]Fact, error) }) {
 	_, _ = q.Query("admin")
 	_, _ = q.Query("nonexistent_pred")
+	_, _ = q.Query("shown")
+	_, _ = q.Query("alive")
 }
 `,
 }
@@ -143,6 +152,15 @@ func TestBoundaryFindings(t *testing.T) {
 		"B010": {"probe"},            // callback modes -- vs Decl +-
 		"B011": {"lookup"},           // a rule negates an external
 		"B012": {"listed"},           // read; Go only lists the name
+		// A rule that can never fire: a positive premise is starved, directly
+		// (ghost) or through a rule that is itself blocked (chain_a, haunted).
+		// Near misses: seen (its premise is listed in Go), alive (it only
+		// negates the starved ghost), shown (a negated premise never blocks).
+		"B013": {"chain_a", "chain_b", "guarded", "haunted", "hidden"},
+		// Derived by a rule, read by no rule that leads to a Go query. Near
+		// misses: admin, shown and alive (queried), helper (read by shown),
+		// hidden (read by shown through a negation).
+		"B014": {"chain_a", "chain_b", "fast", "guarded", "haunted", "hit", "noted", "seen"},
 	}
 	for code, ps := range want {
 		if got := preds(by[code]); strings.Join(got, ",") != strings.Join(ps, ",") {
@@ -164,6 +182,27 @@ func TestBoundaryFindings(t *testing.T) {
 	for _, f := range by["B001"] {
 		if !strings.Contains(strings.Join(f.Proof, " "), "not produced(") {
 			t.Errorf("B001 proof lacks the absence of a producer: %v", f.Proof)
+		}
+	}
+	// B013 names the blocking premise, and the proof rests on its absence from
+	// the live set; the block travels through a derived predicate.
+	for _, f := range by["B013"] {
+		if f.Predicate == "chain_b" && f.Note != "chain_a/1" {
+			t.Errorf("B013 chain_b blocked by %q, want chain_a/1", f.Note)
+		}
+		if f.Predicate == "chain_a" && f.Note != "ghost/1" {
+			t.Errorf("B013 chain_a blocked by %q, want ghost/1", f.Note)
+		}
+		if !strings.Contains(strings.Join(f.Proof, " "), "not live(") {
+			t.Errorf("B013 %s proof lacks the absence of a producer: %v", f.Predicate, f.Proof)
+		}
+		if f.At.File != "core/schema.mg" || f.At.Line == 0 {
+			t.Errorf("B013 %s is not anchored at its rule: %+v", f.Predicate, f.At)
+		}
+	}
+	for _, f := range by["B014"] {
+		if !strings.Contains(strings.Join(f.Proof, " "), "not needed(") {
+			t.Errorf("B014 %s proof lacks the absence of a consumer: %v", f.Predicate, f.Proof)
 		}
 	}
 	// The B011 finding names the Go callback that never runs.

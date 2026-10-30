@@ -44,8 +44,22 @@ Options:
   --severity      Minimum severity: error | warning | info (default: info)
   --fail-on       Exit non-zero on: error | warning | never (default: error)
   --explain       Include explanation, general fix and example for every code
+  --isolated      Analyze each file alone (default: in its program context, below)
+  --no-ignore     Check files that .mangleignore or `# mangle-ignore-file` exclude
   --quiet, -q     Suppress non-essential output
 ```
+
+**Program context.** A file is analyzed with what the host loads together with it, and only
+its own diagnostics are reported (in its own lines). If a Go package `//go:embed`s several
+`.mg` files into one variable, those files are one program (as in `review`); otherwise the
+`Decl`s of the `.mg` files in the same directory are visible. The language server does the
+same, with unsaved buffers.
+
+**Ignoring files.** `.mangleignore` uses gitignore syntax, relative to its own directory
+(a nearer file overrides a farther one); a comment line `# mangle-ignore-file` excludes one
+file. Ignored files are skipped by `check`, `batch` and `review` (the JSON summary counts
+`ignoredFiles`) and get no problems in the editor, which keeps highlighting and navigation.
+An ignored file is never context for its neighbours.
 
 **Examples:**
 

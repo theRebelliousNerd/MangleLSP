@@ -42023,6 +42023,22 @@ best_obs(F, fn:pair(T, V)) :- obs(F, T, V).`
     severity: "info",
     explanation: "As B001, except that Go mentions the name somewhere the scan does not read as an assert: a list of predicate names, a map, a log line or a producer whose predicate is computed. Check the listed places; if none of them asserts the predicate, the rule never fires.",
     fix: "Assert the predicate where it is produced, with the Decl's shape."
+  },
+  {
+    code: "B013",
+    title: "Rule can never fire: a premise is starved",
+    category: "boundary",
+    severity: "warning",
+    explanation: "A positive premise of this rule can never hold: nothing produces it (no fact, no Go assert, no external callback, no recognized Go producer), or every rule that derives it is itself blocked by such a premise. The check is a least fixpoint over the whole module (a predicate is live when a fact of it can exist or a rule for it can fire; a rule fires when every positive body atom is live), so a block that travels through several derived predicates is found. Negated premises never block (an empty relation makes the negation true). The finding names the first starved premise, and its proof lists the absences it rests on.",
+    fix: "Wire a producer for the starved premise (a Go assert with the Decl's shape, a fact, or a rule that can fire), or delete the rule and everything that only exists to read its head."
+  },
+  {
+    code: "B014",
+    title: "Conclusion nothing reads",
+    category: "boundary",
+    severity: "warning",
+    explanation: "The predicate is derived by rules, but no rule premise (positive or negated) of a needed predicate reads it and no Go query names it. A predicate is needed when Go queries it (a query call the host profile knows) or a needed rule reads it; a bare string literal naming it elsewhere does not count. Facts only stated as ground data are tables, not conclusions, and are not reported.",
+    fix: "Query it from the code that should act on it, read it in a rule that is itself used, or delete the rules that derive it. If Go reaches it through a query helper the scan does not know, list the helper in the project profile (`queryMethods` in .mangle/oracle-profile.json)."
   }
 ];
 var DIAGNOSTIC_CATALOG = new Map(entries.map((e) => [e.code, e]));
@@ -48296,7 +48312,7 @@ function formatFormatResultText(results) {
 }
 
 // ../mangle-lsp/src/version.ts
-var VERSION = "1.2.0";
+var VERSION = "1.3.0";
 var UPSTREAM_MANGLE_MODULE = "codeberg.org/TauCeti/mangle-go";
 var UPSTREAM_MANGLE_VERSION = "v0.7.0";
 var UPSTREAM_MANGLE_REVISION = "7cd2543 (2026-10-15)";
@@ -48583,6 +48599,16 @@ function messageOf(f) {
       return { message: `A rule negates the external ${p}: the engine answers negations from stored facts only, so ${f.related?.length ? `the Go callback at ${f.related.map((r) => `${r.file}:${r.line}`).join(", ")}` : "its Go callback"} never runs for it`, hint: `${f.predicate}_holds(...) :- <premises binding the inputs>, ${f.predicate}(...). then negate ${f.predicate}_holds` };
     case "B012":
       return { message: `A rule reads ${p}, and no producer the scan recognizes asserts it; Go mentions the name at ${(f.related ?? []).slice(0, 3).map((r) => `${r.file}:${r.line}`).join(", ")}${(f.related?.length ?? 0) > 3 ? ", ..." : ""}`, hint: "check whether those places assert it; if none does, the rule never fires" };
+    case "B013":
+      return {
+        message: `${p} is derived by a rule that can never fire: its premise ${f.note} is starved (nothing produces it, or every rule that derives it is itself blocked)`,
+        hint: `give ${f.note} a producer (a Go assert, a fact, or a rule that can fire), or delete the rule; the proof lists the absences it rests on`
+      };
+    case "B014":
+      return {
+        message: `${p} is derived here, but nothing reads it: no rule premise and no Go query reaches it`,
+        hint: "query it from Go, read it in a rule that is itself used, or delete the rules that derive it"
+      };
     default:
       return { message: `${f.code} on ${p}` };
   }

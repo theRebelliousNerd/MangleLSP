@@ -57,6 +57,14 @@ function messageOf(f: BoundaryFinding): { message: string; hint?: string } {
         case 'B010': return { message: `The Go callback for ${p} is registered with modes ${f.note}, which differ from the Decl's mode(...)` };
         case 'B011': return { message: `A rule negates the external ${p}: the engine answers negations from stored facts only, so ${f.related?.length ? `the Go callback at ${f.related.map(r => `${r.file}:${r.line}`).join(', ')}` : 'its Go callback'} never runs for it`, hint: `${f.predicate}_holds(...) :- <premises binding the inputs>, ${f.predicate}(...). then negate ${f.predicate}_holds` };
         case 'B012': return { message: `A rule reads ${p}, and no producer the scan recognizes asserts it; Go mentions the name at ${(f.related ?? []).slice(0, 3).map(r => `${r.file}:${r.line}`).join(', ')}${(f.related?.length ?? 0) > 3 ? ', ...' : ''}`, hint: 'check whether those places assert it; if none does, the rule never fires' };
+        case 'B013': return {
+            message: `${p} is derived by a rule that can never fire: its premise ${f.note} is starved (nothing produces it, or every rule that derives it is itself blocked)`,
+            hint: `give ${f.note} a producer (a Go assert, a fact, or a rule that can fire), or delete the rule; the proof lists the absences it rests on`,
+        };
+        case 'B014': return {
+            message: `${p} is derived here, but nothing reads it: no rule premise and no Go query reaches it`,
+            hint: 'query it from Go, read it in a rule that is itself used, or delete the rules that derive it',
+        };
         default: return { message: `${f.code} on ${p}` };
     }
 }

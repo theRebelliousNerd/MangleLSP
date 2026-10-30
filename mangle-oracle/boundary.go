@@ -113,7 +113,9 @@ func judge(gf *GoFacts, mf *MgFacts) ([]Finding, error) {
 	if err != nil {
 		return nil, fmt.Errorf("boundary.mg: %w", err)
 	}
-	store := factstore.NewSimpleInMemoryStore()
+	// Indexed: the liveness rules join on rule id and premise index, and the
+	// plain store scans every row of a relation per lookup.
+	store := factstore.NewMultiIndexedArrayInMemoryStore()
 	e := edb{store}
 	declAt := map[string]Location{}
 	declTypes := map[string][][]string{}
@@ -140,6 +142,19 @@ func judge(gf *GoFacts, mf *MgFacts) ([]Finding, error) {
 	for k := range mf.Defines {
 		p, a := splitKey(k)
 		e.add("mg_defines", str(p), num(a))
+	}
+	for _, r := range mf.Rules {
+		e.add("mg_rule", num(r.ID), str(r.Pred), num(r.Arity), str(r.File), num(r.Line), num(len(r.Premises)))
+		if len(r.Premises) > 0 {
+			e.add("mg_derivation", num(r.ID), str(r.Pred), num(r.Arity), str(r.File), num(r.Line))
+		}
+		for i, p := range r.Premises {
+			sign := "/pos"
+			if p.Negated {
+				sign = "/neg"
+			}
+			e.add("mg_premise", num(r.ID), num(i), str(p.Pred), num(p.Arity), name(sign))
+		}
 	}
 	for _, u := range mf.Uses {
 		if u.Negated {

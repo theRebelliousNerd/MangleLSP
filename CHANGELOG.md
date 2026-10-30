@@ -3,6 +3,69 @@
 All notable changes to the Mangle language server (`mangle-lsp`), CLI (`mangle-cli`)
 and VS Code extension (`mangle-vscode`).
 
+## 1.3.0 — 2026-10-29
+
+### A file is diagnosed in its program
+
+A `.mg` file is rarely a program of its own, so diagnosing it alone reported false errors
+(a comparator rule next to the `Decl` that gives it modes: 4 E002 and 4 E004). The editor,
+`mangle-cli check`, `batch` and `review` now analyze a file in the context the host loads
+it with, and still report only that file's problems, in its own lines:
+
+- **embed:** the `.mg` files a Go package `//go:embed`s together (several files, same
+  variable) are one program, analyzed whole, exactly as `review` always did. The embed
+  directives are read in TypeScript the way the Go toolchain reads them (globs per path
+  element, directories walked without dot and underscore entries, `all:`), from the
+  package of the file up to its `go.mod`.
+- **directory:** a file no embed groups with others sees the `Decl`s (modes, bounds, merge,
+  deferred, external) of the `.mg` files beside it. Rules do not leak across files that may
+  be unrelated; a `Decl` the file repeats wins over the neighbour's.
+- **alone:** nothing else to see. `check --isolated` (and `review --isolated`) restores the
+  old behaviour.
+- Each file is parsed on its own and the units are merged by line range, so a syntax error
+  in one file can no longer swallow the first statement of the next (the concatenated text
+  used to). Open buffers are used instead of saved files, parse trees of neighbours are
+  cached, one analysis of a program serves every file in it, and every cache is keyed by
+  file signatures: a changed neighbour, a new file in an embedded directory or an edited
+  `go:embed` line invalidates exactly what read it. The open files of a program are checked
+  again when one of them changes. On a 167-file, 1.5 MB embed program an edit re-analyzes
+  in about 0.4 s.
+
+### Excluding deliberately invalid Mangle
+
+- **`.mangleignore`** (gitignore syntax; patterns relative to the file's directory, a nearer
+  file overrides a farther one) and the file-level comment **`# mangle-ignore-file`**. Both
+  are honoured by the server, `check` (`--no-ignore` overrides; the summary counts
+  `ignoredFiles`), `batch` and `review`. An ignored file keeps syntax highlighting and
+  navigation, gets no problems, and is never used as context for its neighbours.
+
+### Rules that can never fire, conclusions nothing reads (B013, B014)
+
+`mangle-oracle`'s boundary program now computes two least fixpoints on the engine: a
+predicate is **live** when a fact of it can exist (Go asserts it, a callback answers it, Go
+names it as a possible producer) or a rule for it can fire, and a rule fires when every
+positive body atom is live; a predicate is **needed** when Go queries it or a needed rule
+reads it. Both are positive recursion over a `chain(Rule, Index)` relation, with the
+complement taken once afterwards (no negation inside the fixpoint).
+
+- **B013** a rule that can never fire because a positive premise is starved, directly or
+  through rules that are themselves blocked. Names the blocking premise; the proof lists the
+  absences it rests on. Negated premises never block.
+- **B014** a predicate derived by rules that no rule premise (positive or negated) of a
+  needed predicate reads and no Go query names. A bare string literal elsewhere does not
+  count as a read; ground-fact tables are not conclusions.
+- The editor shows the findings anchored at `.mg` files as warnings, from a background scan
+  of the enclosing Go module (child process, one scan per module at a time, debounced;
+  setting `mangle.enableBoundaryAnalysis`); `review` already lists every B-code.
+- The boundary program runs on an indexed fact store (the plain store scanned every row per
+  join: the new rules did not finish on a 20k-rule repository, and finish in seconds with it).
+- The `codenerd` profile lists that project's query helpers.
+
+### Also
+
+- `check` JSON output: `summary.ignoredFiles` (additive).
+- `mangle-lsp` depends on `ignore`.
+
 ## 1.2.0 — 2026-10-28
 
 Tracks the tagged upstream release **v0.7.0** (`7cd2543`, 2026-10-15) of

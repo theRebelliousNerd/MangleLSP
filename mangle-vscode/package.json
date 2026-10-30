@@ -2,7 +2,7 @@
   "name": "mangle-vscode",
   "displayName": "Mangle Language Support",
   "description": "Language support for Mangle (.mg files) - syntax highlighting, diagnostics with fixes and explanations, type checking, hover, completion and CLI tools",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "publisher": "theRebelliousNerd",
   "license": "MIT",
   "icon": "images/icon.png",
@@ -96,6 +96,12 @@
           "type": "boolean",
           "default": true,
           "description": "Enable semantic analysis (variable binding, arity checking)."
+        },
+        "mangle.enableBoundaryAnalysis": {
+          "scope": "resource",
+          "type": "boolean",
+          "default": true,
+          "description": "Show Go <-> .mg findings (predicates nothing produces, rules that can never fire, conclusions nothing reads) from a background scan of the enclosing Go module."
         },
         "mangle.trace.server": {
           "scope": "window",

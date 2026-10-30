@@ -36,9 +36,28 @@ type MgUse struct {
 	Negated bool
 }
 
+// MgPremise is one atom of a rule body (builtins and comparisons are not atoms
+// of the program and are left out). A negated atom never blocks a rule.
+type MgPremise struct {
+	Pred    string
+	Arity   int
+	Negated bool
+}
+
+// MgRule is one rule or fact with the atoms of its body, in order.
+type MgRule struct {
+	ID       int
+	Pred     string
+	Arity    int
+	File     string
+	Line     int // 0 when the statement could not be located
+	Premises []MgPremise
+}
+
 // MgFacts is everything the .mg scan found.
 type MgFacts struct {
 	Decls   []MgDecl
+	Rules   []MgRule
 	Defines map[string]bool // "pred/arity" defined by a rule or fact
 	Uses    []MgUse
 	// Files are the .mg files read; ParseErrors those the engine rejected.
@@ -130,13 +149,22 @@ func (m *MgFacts) add(file, text string, unit parse.SourceUnit) {
 		m.Decls = append(m.Decls, decl)
 	}
 	negLines := map[string]int{}
-	for _, c := range unit.Clauses {
+	lines := clauseLines(text)
+	if len(lines) != len(unit.Clauses) {
+		lines = nil
+	}
+	for i, c := range unit.Clauses {
 		m.Defines[key(c.Head.Predicate.Symbol, c.Head.Predicate.Arity)] = true
+		rule := MgRule{ID: len(m.Rules) + 1, Pred: c.Head.Predicate.Symbol, Arity: c.Head.Predicate.Arity, File: file}
+		if lines != nil {
+			rule.Line = lines[i]
+		}
 		for _, p := range c.Premises {
 			atom, neg, ok := premiseAtom(p)
 			if !ok || atom.Predicate.IsBuiltin() {
 				continue
 			}
+			rule.Premises = append(rule.Premises, MgPremise{Pred: atom.Predicate.Symbol, Arity: atom.Predicate.Arity, Negated: neg})
 			use := MgUse{Pred: atom.Predicate.Symbol, Arity: atom.Predicate.Arity, File: file, Negated: neg}
 			if neg {
 				k := key(use.Pred, use.Arity)
@@ -147,7 +175,60 @@ func (m *MgFacts) add(file, text string, unit parse.SourceUnit) {
 			}
 			m.Uses = append(m.Uses, use)
 		}
+		m.Rules = append(m.Rules, rule)
 	}
+}
+
+// clauseLines returns the 1-based line each rule or fact starts on, in source
+// order. The parser keeps no positions, so statements are split here: one ends
+// at a '.' followed by whitespace, '#' or the end of the text, outside strings
+// and comments (a name may contain '.', which is why the next character
+// decides). Decl, Package and Use statements are skipped.
+func clauseLines(text string) []int {
+	var out []int
+	line, start, startLine := 1, -1, 0
+	flush := func(end int) {
+		if start < 0 {
+			return
+		}
+		head := strings.TrimLeft(text[start:end], " \t")
+		if !strings.HasPrefix(head, "Decl ") && !strings.HasPrefix(head, "Decl\t") &&
+			!strings.HasPrefix(head, "Package ") && !strings.HasPrefix(head, "Use ") {
+			out = append(out, startLine)
+		}
+		start = -1
+	}
+	for i := 0; i < len(text); i++ {
+		c := text[i]
+		if c == '\n' {
+			line++
+			continue
+		}
+		if start < 0 && c != ' ' && c != '\t' && c != '\r' && c != '#' {
+			start, startLine = i, line
+		}
+		switch c {
+		case '#':
+			for i < len(text) && text[i] != '\n' {
+				i++
+			}
+			i--
+		case '"', '\'', '`':
+			for i++; i < len(text) && text[i] != c; i++ {
+				if text[i] == '\n' {
+					line++
+				}
+				if text[i] == '\\' && c != '`' {
+					i++
+				}
+			}
+		case '.':
+			if i+1 >= len(text) || text[i+1] == ' ' || text[i+1] == '\t' || text[i+1] == '\r' || text[i+1] == '\n' || text[i+1] == '#' {
+				flush(i)
+			}
+		}
+	}
+	return out
 }
 
 func premiseAtom(t ast.Term) (ast.Atom, bool, bool) {

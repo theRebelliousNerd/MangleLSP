@@ -53,6 +53,19 @@ computed.
   `ancestor.mg` are the classics. They're useful for "siblings in the task
   tree" questions.
 
+## Liveness: a least fixpoint without negation inside it
+
+"Can this rule ever fire?" needs every positive premise live, which reads as
+a universal and tempts a negation inside the recursion (not stratifiable).
+Chain over the premise index instead: `chain(R, 0) :- rule(R).`,
+`chain(R, K1) :- chain(R, K), premise(R, K, P), live(P), K1 = fn:plus(K, 1).`,
+`live(P) :- head(R, P), len(R, N), chain(R, N).`, plus the base producers.
+All of it is positive recursion bounded by the premise table; "starved" is
+`!live(P)` taken once afterwards, and a rule is blocked at the premise where
+its chain stops. mangle-oracle's boundary program uses it (B013), and the
+same shape with edges reversed answers "is this read by anything that
+reaches a query" (B014). Join on `(R, K)` needs an indexed store.
+
 ## Cost control
 
 - Close only in the direction the question needs. A symmetric closure

@@ -1,5 +1,7 @@
 # Verified traps on the pinned engine (v0.7.0)
 
+More, on evaluation and hosting: [verified-traps-evaluation](verified-traps-evaluation.md).
+
 Each line below was checked on the engine in this repo, not recalled from
 memory. Re-run a lab before trusting anything not listed here, and add
 every new trap you find.

@@ -1076,8 +1076,8 @@ var require_semaphore = __commonJS({
         this._waiting = [];
       }
       lock(thunk) {
-        return new Promise((resolve, reject) => {
-          this._waiting.push({ thunk, resolve, reject });
+        return new Promise((resolve2, reject) => {
+          this._waiting.push({ thunk, resolve: resolve2, reject });
           this.runNext();
         });
       }
@@ -2567,9 +2567,9 @@ ${JSON.stringify(message, null, 4)}`);
           if (typeof cancellationStrategy.sender.enableCancellation === "function") {
             cancellationStrategy.sender.enableCancellation(requestMessage);
           }
-          return new Promise(async (resolve, reject) => {
+          return new Promise(async (resolve2, reject) => {
             const resolveWithCleanup = (r) => {
-              resolve(r);
+              resolve2(r);
               cancellationStrategy.sender.cleanup(id);
               disposable?.dispose();
             };
@@ -2980,10 +2980,10 @@ var require_ril = __commonJS({
         return api_1.Disposable.create(() => this.stream.off("end", listener));
       }
       write(data, encoding) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve2, reject) => {
           const callback = (error) => {
             if (error === void 0 || error === null) {
-              resolve();
+              resolve2();
             } else {
               reject(error);
             }
@@ -3235,10 +3235,10 @@ var require_main = __commonJS({
     exports2.generateRandomPipeName = generateRandomPipeName;
     function createClientPipeTransport(pipeName, encoding = "utf-8") {
       let connectResolve;
-      const connected = new Promise((resolve, _reject) => {
-        connectResolve = resolve;
+      const connected = new Promise((resolve2, _reject) => {
+        connectResolve = resolve2;
       });
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve2, reject) => {
         let server = (0, net_1.createServer)((socket) => {
           server.close();
           connectResolve([
@@ -3249,7 +3249,7 @@ var require_main = __commonJS({
         server.on("error", reject);
         server.listen(pipeName, () => {
           server.removeListener("error", reject);
-          resolve({
+          resolve2({
             onConnected: () => {
               return connected;
             }
@@ -3268,10 +3268,10 @@ var require_main = __commonJS({
     exports2.createServerPipeTransport = createServerPipeTransport;
     function createClientSocketTransport(port, encoding = "utf-8") {
       let connectResolve;
-      const connected = new Promise((resolve, _reject) => {
-        connectResolve = resolve;
+      const connected = new Promise((resolve2, _reject) => {
+        connectResolve = resolve2;
       });
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve2, reject) => {
         const server = (0, net_1.createServer)((socket) => {
           server.close();
           connectResolve([
@@ -3282,7 +3282,7 @@ var require_main = __commonJS({
         server.on("error", reject);
         server.listen(port, "127.0.0.1", () => {
           server.removeListener("error", reject);
-          resolve({
+          resolve2({
             onConnected: () => {
               return connected;
             }
@@ -8068,8 +8068,8 @@ var require_server = __commonJS({
         if (value instanceof Promise) {
           return value;
         } else if (Is.thenable(value)) {
-          return new Promise((resolve, reject) => {
-            value.then((resolved) => resolve(resolved), (error) => reject(error));
+          return new Promise((resolve2, reject) => {
+            value.then((resolved) => resolve2(resolved), (error) => reject(error));
           });
         } else {
           return Promise.resolve(value);
@@ -8339,7 +8339,7 @@ var require_files = __commonJS({
     function isWindows() {
       return process.platform === "win32";
     }
-    function resolve(moduleName, nodePath, cwd, tracer) {
+    function resolve2(moduleName, nodePath, cwd, tracer) {
       const nodePathKey = "NODE_PATH";
       const app = [
         "var p = process;",
@@ -8358,7 +8358,7 @@ var require_files = __commonJS({
         "}",
         "});"
       ].join("");
-      return new Promise((resolve2, reject) => {
+      return new Promise((resolve3, reject) => {
         let env = process.env;
         let newEnv = /* @__PURE__ */ Object.create(null);
         Object.keys(env).forEach((key) => newEnv[key] = env[key]);
@@ -8390,7 +8390,7 @@ var require_files = __commonJS({
             if (message2.c === "r") {
               cp.send({ c: "e" });
               if (message2.s) {
-                resolve2(message2.r);
+                resolve3(message2.r);
               } else {
                 reject(new Error(`Failed to resolve module: ${moduleName}`));
               }
@@ -8406,7 +8406,7 @@ var require_files = __commonJS({
         }
       });
     }
-    exports2.resolve = resolve;
+    exports2.resolve = resolve2;
     function resolveGlobalNodePath(tracer) {
       let npmCommand = "npm";
       const env = /* @__PURE__ */ Object.create(null);
@@ -8521,17 +8521,17 @@ var require_files = __commonJS({
         if (!path.isAbsolute(nodePath)) {
           nodePath = path.join(workspaceRoot, nodePath);
         }
-        return resolve(moduleName, nodePath, nodePath, tracer).then((value) => {
+        return resolve2(moduleName, nodePath, nodePath, tracer).then((value) => {
           if (FileSystem.isParent(nodePath, value)) {
             return value;
           } else {
             return Promise.reject(new Error(`Failed to load ${moduleName} from node path location.`));
           }
         }).then(void 0, (_error) => {
-          return resolve(moduleName, resolveGlobalNodePath(tracer), workspaceRoot, tracer);
+          return resolve2(moduleName, resolveGlobalNodePath(tracer), workspaceRoot, tracer);
         });
       } else {
-        return resolve(moduleName, resolveGlobalNodePath(tracer), workspaceRoot, tracer);
+        return resolve2(moduleName, resolveGlobalNodePath(tracer), workspaceRoot, tracer);
       }
     }
     exports2.resolveModulePath = resolveModulePath;
@@ -42282,6 +42282,22 @@ best_obs(F, fn:pair(T, V)) :- obs(F, T, V).`
     severity: "info",
     explanation: "As B001, except that Go mentions the name somewhere the scan does not read as an assert: a list of predicate names, a map, a log line or a producer whose predicate is computed. Check the listed places; if none of them asserts the predicate, the rule never fires.",
     fix: "Assert the predicate where it is produced, with the Decl's shape."
+  },
+  {
+    code: "B013",
+    title: "Rule can never fire: a premise is starved",
+    category: "boundary",
+    severity: "warning",
+    explanation: "A positive premise of this rule can never hold: nothing produces it (no fact, no Go assert, no external callback, no recognized Go producer), or every rule that derives it is itself blocked by such a premise. The check is a least fixpoint over the whole module (a predicate is live when a fact of it can exist or a rule for it can fire; a rule fires when every positive body atom is live), so a block that travels through several derived predicates is found. Negated premises never block (an empty relation makes the negation true). The finding names the first starved premise, and its proof lists the absences it rests on.",
+    fix: "Wire a producer for the starved premise (a Go assert with the Decl's shape, a fact, or a rule that can fire), or delete the rule and everything that only exists to read its head."
+  },
+  {
+    code: "B014",
+    title: "Conclusion nothing reads",
+    category: "boundary",
+    severity: "warning",
+    explanation: "The predicate is derived by rules, but no rule premise (positive or negated) of a needed predicate reads it and no Go query names it. A predicate is needed when Go queries it (a query call the host profile knows) or a needed rule reads it; a bare string literal naming it elsewhere does not count. Facts only stated as ground data are tables, not conclusions, and are not reported.",
+    fix: "Query it from the code that should act on it, read it in a rule that is itself used, or delete the rules that derive it. If Go reaches it through a query helper the scan does not know, list the helper in the project profile (`queryMethods` in .mangle/oracle-profile.json)."
   }
 ];
 var DIAGNOSTIC_CATALOG = new Map(entries.map((e) => [e.code, e]));
@@ -45950,6 +45966,103 @@ function analyzableDecls(unit) {
 // ../mangle-lsp/src/server.ts
 var import_url = require("url");
 
+// ../mangle-lsp/src/workspace/boundary-service.ts
+var import_child_process = require("child_process");
+var import_fs4 = require("fs");
+var import_path4 = require("path");
+function cliBoundaryRunner(cli = defaultCli()) {
+  return (root) => new Promise((resolveRun, reject) => {
+    (0, import_child_process.execFile)(
+      process.execPath,
+      [cli, "boundary", "--root", root, "--format", "json"],
+      { maxBuffer: 512 * 1024 * 1024, cwd: root, env: process.env },
+      (err, stdout, stderr) => {
+        if (stdout.trim().startsWith("{")) {
+          try {
+            resolveRun(JSON.parse(stdout));
+            return;
+          } catch {
+          }
+        }
+        reject(new Error(stderr.trim() || (err ? err.message : "boundary produced no report")));
+      }
+    );
+  });
+}
+function defaultCli() {
+  for (const name of ["cli.bundle.js", "cli.js"]) {
+    const p = (0, import_path4.join)(__dirname, name);
+    if ((0, import_fs4.existsSync)(p)) return p;
+  }
+  return (0, import_path4.join)(__dirname, "cli.js");
+}
+var BoundaryService = class {
+  constructor(options = {}) {
+    this.modules = /* @__PURE__ */ new Map();
+    this.run = options.run ?? cliBoundaryRunner();
+    this.fs = options.fs ?? nodeFs;
+    this.onScan = options.onScan ?? (() => void 0);
+    this.debounceMs = options.debounceMs ?? 1500;
+  }
+  /** The Go module a file belongs to. */
+  rootOf(path) {
+    return moduleRootOf(this.fs, (0, import_path4.resolve)(path, ".."));
+  }
+  /** Ask for a scan of the module of `path` (no-op outside a Go module). `soon` skips the debounce. */
+  request(path, soon = false) {
+    const root = this.rootOf(path);
+    if (root === void 0) return;
+    const state = this.modules.get(root) ?? { running: false, again: false, attempted: false };
+    this.modules.set(root, state);
+    if (state.timer) clearTimeout(state.timer);
+    state.timer = setTimeout(() => {
+      state.timer = void 0;
+      void this.scan(root, state);
+    }, soon ? 0 : this.debounceMs);
+  }
+  /** Asks for the first scan of a module only when there is no report yet. */
+  ensure(path) {
+    const root = this.rootOf(path);
+    if (root !== void 0 && !this.modules.get(root)?.attempted && !this.modules.get(root)?.timer) this.request(path, true);
+  }
+  async scan(root, state) {
+    if (state.running) {
+      state.again = true;
+      return;
+    }
+    state.running = true;
+    state.attempted = true;
+    try {
+      state.report = await this.run(root);
+      this.onScan(root);
+    } catch (e) {
+      this.onScan(root, e instanceof Error ? e : new Error(String(e)));
+    } finally {
+      state.running = false;
+      if (state.again) {
+        state.again = false;
+        void this.scan(root, state);
+      }
+    }
+  }
+  /** Findings of the last scan anchored at a .mg file. */
+  findingsFor(path) {
+    const root = this.rootOf(path);
+    const report = root === void 0 ? void 0 : this.modules.get(root)?.report;
+    if (!root || !report) return [];
+    const rel = (0, import_path4.resolve)(path).slice(root.length + 1).split("\\").join("/");
+    return report.diagnostics.filter((d) => d.file === rel);
+  }
+  /** True while no scan of the module has finished. */
+  pending(path) {
+    const root = this.rootOf(path);
+    return root !== void 0 && !this.modules.get(root)?.report;
+  }
+  dispose() {
+    for (const s of this.modules.values()) if (s.timer) clearTimeout(s.timer);
+  }
+};
+
 // ../mangle-lsp/src/cli/diagnostics.ts
 function parseErrorHint(message, lineText) {
   const trimmed = lineText.trim();
@@ -47335,6 +47448,15 @@ var programContext = new ProgramContext3({
     return uri === void 0 ? void 0 : documents.get(uri)?.getText();
   }
 });
+var boundary = new BoundaryService({
+  onScan: (root, failed) => {
+    if (failed) connection.console.warn(`Go boundary scan of ${root} failed: ${failed.message.split("\n")[0]}`);
+    for (const doc of documents.all()) {
+      const p = pathOf(doc.uri);
+      if (p && p.startsWith(root)) void validateDocument(doc);
+    }
+  }
+});
 function pathOf(uri) {
   try {
     return uri.startsWith("file:") ? (0, import_url.fileURLToPath)(uri) : void 0;
@@ -47345,7 +47467,8 @@ function pathOf(uri) {
 var validationTimeouts = /* @__PURE__ */ new Map();
 var defaultSettings = {
   maxNumberOfProblems: 100,
-  enableSemanticAnalysis: true
+  enableSemanticAnalysis: true,
+  enableBoundaryAnalysis: true
 };
 var globalSettings = defaultSettings;
 var documentSettings = /* @__PURE__ */ new Map();
@@ -47437,6 +47560,10 @@ documents.onDidOpen((event) => {
   if (path) openPaths.set(path, event.document.uri);
   validateDocument(event.document);
 });
+documents.onDidSave((event) => {
+  const path = pathOf(event.document.uri);
+  if (path) boundary.request(path);
+});
 documents.onDidChangeContent((change) => {
   scheduleValidation(change.document);
   scheduleNeighbours(change.document);
@@ -47453,7 +47580,11 @@ function scheduleNeighbours(document) {
   }
 }
 connection.onDidChangeWatchedFiles(() => {
-  documents.all().forEach(scheduleValidation);
+  documents.all().forEach((doc) => {
+    scheduleValidation(doc);
+    const path = pathOf(doc.uri);
+    if (path) boundary.request(path);
+  });
 });
 function scheduleValidation(document) {
   const uri = document.uri;
@@ -47520,7 +47651,29 @@ async function validateDocument(document) {
     if (diagnostics.length >= settings.maxNumberOfProblems) break;
     diagnostics.push(analysisToDiagnostic(error));
   }
+  const path = pathOf(document.uri);
+  if (path && !state.ignored && settings.enableSemanticAnalysis && settings.enableBoundaryAnalysis !== false) {
+    boundary.ensure(path);
+    for (const finding of boundary.findingsFor(path)) {
+      if (diagnostics.length >= settings.maxNumberOfProblems) break;
+      diagnostics.push(boundaryToDiagnostic(finding, lines));
+    }
+  }
   connection.sendDiagnostics({ uri: document.uri, diagnostics });
+}
+function boundaryToDiagnostic(f, lines) {
+  const line = Math.max(0, f.line - 1);
+  const text = lines[line] ?? "";
+  const diagnostic = {
+    severity: toLspSeverity(f.severity),
+    range: { start: { line, character: text.length - text.trimStart().length }, end: { line, character: text.length } },
+    message: f.hint ? `${f.message}
+help: ${f.hint}` : f.message,
+    source: "mangle-boundary",
+    code: f.code,
+    codeDescription: { href: diagnosticDocUrl(f.code) }
+  };
+  return diagnostic;
 }
 function toLspSeverity(severity) {
   switch (severity) {

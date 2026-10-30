@@ -31,9 +31,14 @@ question is "what does the engine say about this file?".
   (`mangle-oracle/boundary.mg`, strictly typed itself). Each finding comes
   with its proof, including the absences it rests on. Codes: B001 a rule
   reads something nothing produces; B004 wrong arity; B007 wrong constant
-  type; B008-B011 externals. Host conventions come from a profile
+  type; B008-B011 externals; B013 a rule that can never fire (a premise is
+  starved, directly or down a chain of blocked rules); B014 a conclusion no
+  rule or Go query reads. Host conventions come from a profile
   (`mangle-oracle/profiles/codenerd.json`): `types.Fact` uses the
   name-looking-string heuristic, `mangle.Fact` coerces to the Decl's type.
+- **check** and the editor analyze a file in its program: the files one
+  `//go:embed` groups, else the Decls beside it (`--isolated` opts out);
+  `.mangleignore` or `# mangle-ignore-file` excludes deliberate junk.
 - **whynot** turns the program into data: one probe rule per body prefix
   (in RewriteClause order), one evaluation, and a row funnel per rule:
   `3 rows after user(U,R), 1 after R = /admin, 0 after !banned(U)`.

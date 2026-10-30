@@ -6,7 +6,7 @@
  * (mirrored at github.com/google/mangle). The LSP names the tagged release
  * first, because that is what a host pins in go.mod, and the commit second.
  */
-export const VERSION = '1.2.0';
+export const VERSION = '1.3.0';
 
 /** Upstream module and release whose semantics this release follows. */
 export const UPSTREAM_MANGLE_MODULE = 'codeberg.org/TauCeti/mangle-go';

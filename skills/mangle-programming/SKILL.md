@@ -126,7 +126,10 @@ advise, run with proofs, whynot): [engine-backed-tooling](references/engine-back
   `/bool` bounds fail strict checking for every value. Lattices need a
   store with `Remove`: every in-memory store, not the temporal adapter.
 
-Details and the rest: [verified-traps](references/verified-traps.md).
+Details and the rest: [verified-traps](references/verified-traps.md), and for
+evaluation, hosting and cleanup (lattice self-loops, stratification, cost
+cliffs, dead-rule removal, recency without a temporal store):
+[verified-traps-evaluation](references/verified-traps-evaluation.md).
 What models get wrong about Mangle, as v0.7 tables: [ai-failure-modes](references/ai-failure-modes.md).
 How v0.7 really calls a Go external, with a correct cache and error policy:
 [external-predicates-in-go](references/external-predicates-in-go.md).
@@ -154,7 +157,10 @@ and link it here.
 
 Entries:
 - [boundary-judge](showcase/boundary-judge.md): Mangle judges the Go code
-  that feeds it, and each finding's proof lists the absences it rests on.
+  that feeds it, and each finding's proof lists the absences it rests on;
+  liveness and consumption are least fixpoints (B013, B014).
+- [component-label-lattice](showcase/component-label-lattice.md): a merge
+  lattice keeps one minimum label per connected component inside the fixpoint.
 
 ## Where truth lives
 
