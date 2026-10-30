@@ -335,8 +335,8 @@ const entries: DiagnosticInfo[] = [
     },
     {
         code: 'E046', title: 'Declaration arity mismatch', category: 'declaration', severity: 'error',
-        explanation: 'The declared arity differs from every clause that defines the predicate.',
-        fix: 'Make the Decl and the clauses use the same number of arguments.',
+        explanation: 'Reserved; no longer emitted. Predicates are identified by name and arity, so a declaration and clauses at another arity describe independent relations. A declared input relation needs no defining clauses.',
+        fix: 'Keep valid arity overloads. E040 reports body calls whose exact name/arity has no declaration or definition.',
     },
     {
         code: 'E051', title: 'Multiple doc descriptors', category: 'declaration', severity: 'error',

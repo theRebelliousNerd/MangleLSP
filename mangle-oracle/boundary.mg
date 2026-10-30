@@ -84,15 +84,11 @@ finding(/B012, P, A, F, L, -1, "") :- decl(P, A, F, L), read_in_mg(P, A), !produ
 finding(/B002, P, A, F, L, -1, "") :- decl(P, A, F, L), !produced(P, A), !read_in_mg(P, A), !queried(P), !mentioned(P).
 # B003: Go asserts a predicate no .mg file declares or defines.
 finding(/B003, P, A, F, L, -1, "") :- go_assert(_, P, A, F, L), !declared_name(P), !defined_name(P).
-# B004: Go asserts a declared name at an arity no Decl or rule has (a different
-# predicate). A Fact value built outside an Assert call may be a retraction key
-# (codeNERD retracts by prefix), so it counts only when it is longer than every Decl.
-max_decl_arity(P, M) :- decl(P, A, _, _) |> do fn:group_by(P), let M = fn:max(A).
+# B004: a value proven to reach an assertion has an arity no Decl or rule
+# defines. Routing envelopes, retrieval fixtures and retraction keys never
+# enter go_assert just because they use the same Go Fact representation.
 arity_unknown_to_mg(S) :- go_assert(S, P, A, _, _), A >= 0, declared_name(P), !declared(P, A), !mg_defines(P, A).
 finding(/B004, P, A, F, L, -1, "") :- go_assert(S, P, A, F, L), arity_unknown_to_mg(S), site_role(S, /assert).
-finding(/B004, P, A, F, L, -1, "") :-
-    go_assert(S, P, A, F, L), arity_unknown_to_mg(S), site_role(S, /literal),
-    max_decl_arity(P, M), A > M.
 # B005: Go queries a predicate the program never declares or defines.
 finding(/B005, P, A, F, L, -1, "") :- go_query(P, A, F, L), !declared_name(P), !defined_name(P).
 # B006: Go asserts it, and nothing reads it: no rule body, no Go query.

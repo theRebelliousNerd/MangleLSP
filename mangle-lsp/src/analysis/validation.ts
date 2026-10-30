@@ -208,8 +208,9 @@ export function validate(input: SourceUnit): ValidationResult {
         }
     }
 
-    // E046: Check arity mismatches between declarations and clauses
-    validateArityConsistency(unit, errors);
+    // Each name/arity is a separate relation. A Decl needs no defining
+    // clauses: the host may supply its facts. E040 still checks body calls
+    // whose exact name/arity has neither a declaration nor a definition.
 
     // Advice lints (singleton variables, duplicate premises, collect+len)
     checkClauseLints(unit, errors);
@@ -2051,39 +2052,5 @@ function collectPremiseVariables(premise: Term, vars: Set<string>): void {
             // For other term types, try to collect from them directly
             collectTermVariables(premise, vars);
             break;
-    }
-}
-
-/**
- * Validate arity consistency between declarations and clauses (E046).
- */
-function validateArityConsistency(
-    unit: SourceUnit,
-    errors: SemanticError[]
-): void {
-    // Collect all arities used for each predicate name in clauses
-    const predicateArities = new Map<string, Set<number>>();
-    for (const clause of unit.clauses) {
-        const name = clause.head.predicate.symbol;
-        const arity = clause.head.predicate.arity;
-        if (!predicateArities.has(name)) {
-            predicateArities.set(name, new Set());
-        }
-        predicateArities.get(name)!.add(arity);
-    }
-
-    // Check declarations match clause arities
-    for (const decl of unit.decls) {
-        const name = decl.declaredAtom.predicate.symbol;
-        const arity = decl.declaredAtom.predicate.arity;
-        const arities = predicateArities.get(name);
-        if (arities && !arities.has(arity)) {
-            errors.push({
-                code: 'E046',
-                message: `Declaration arity ${arity} doesn't match clause arities: ${[...arities].join(', ')}`,
-                range: decl.range,
-                severity: 'error',
-            });
-        }
     }
 }

@@ -25,9 +25,8 @@ type GoSite struct {
 	Regime    string
 	ArgKinds  []string // per position; "" when unknown
 	Modes     string   // externals: "+-" etc.
-	// Role of an assert site: /assert (inside an Assert/AddFact call or an
-	// assert helper), /literal (a Fact value built elsewhere) or /text (a
-	// fact written as Mangle text).
+	// Role of an assert site: /assert (proven to reach an assertion),
+	// /helper (a predicate-name parameter of such a producer), or /text.
 	Role string
 }
 
@@ -39,7 +38,8 @@ type GoFacts struct {
 	// Mentions are other string literals equal to a known predicate name
 	// (lists, maps, logs): evidence that Go handles the name somehow.
 	Mentions []GoSite
-	// Embeds maps an embedding variable ("pkgdir:Var") to the .mg files it embeds.
+	// Embeds maps a discovered host load (or an unused embed variable) to
+	// the .mg files that form its program.
 	Embeds map[string][]string
 	Files  int
 }
@@ -53,7 +53,7 @@ type goScanner struct {
 	// declared names predicates the .mg side declares or defines; helper
 	// calls and text atoms are only trusted for those names.
 	declared map[string]bool
-	// roles of Fact literals that are direct call arguments.
+	// roles of Fact literals proven to flow to an assertion.
 	roles map[*ast.CompositeLit]string
 	// predParams maps a function name to the index of its predicate parameter.
 	predParams map[string]int
@@ -76,11 +76,7 @@ func ScanGo(root string, declared map[string]bool, prof *Profile) (*GoFacts, err
 	s := &goScanner{prof: prof, fset: token.NewFileSet(), root: root, out: &GoFacts{Embeds: map[string][]string{}},
 		declared: declared, roles: map[*ast.CompositeLit]string{}, predParams: map[string]int{},
 		siteNames: map[*ast.BasicLit]bool{}, dirConsts: map[string]map[string]string{}, qualConsts: map[string]string{}}
-	type parsed struct {
-		path string
-		file *ast.File
-	}
-	var files []parsed
+	var files []parsedGo
 	err := filepath.WalkDir(root, func(path string, d os.DirEntry, err error) error {
 		if err != nil {
 			return err
@@ -94,11 +90,11 @@ func ScanGo(root string, declared map[string]bool, prof *Profile) (*GoFacts, err
 		if !strings.HasSuffix(path, ".go") || strings.HasSuffix(path, "_test.go") {
 			return nil
 		}
-		f, perr := parser.ParseFile(s.fset, path, nil, parser.ParseComments|parser.SkipObjectResolution)
+		f, perr := parser.ParseFile(s.fset, path, nil, parser.ParseComments)
 		if perr != nil {
 			return nil // a file that does not parse is not part of the build
 		}
-		files = append(files, parsed{path, f})
+		files = append(files, parsedGo{path, f})
 		return nil
 	})
 	if err != nil {
@@ -107,8 +103,16 @@ func ScanGo(root string, declared map[string]bool, prof *Profile) (*GoFacts, err
 	// Pass 1: functions that take the predicate name as a parameter, and
 	// package-level string constants (predicate names live in those).
 	for _, p := range files {
-		collectPredicateParams(p.file, s.predParams, s.prof.VariadicAssert.Method)
 		s.collectConsts(p.path, p.file)
+		for _, decl := range p.file.Decls {
+			if gd, ok := decl.(*ast.GenDecl); ok && gd.Tok == token.VAR && gd.Doc != nil {
+				s.embeds(p.path, gd)
+			}
+		}
+	}
+	newGoFlow(s, files).classify()
+	for _, p := range files {
+		collectPredicateParams(p.file, s.predParams, s.prof.VariadicAssert.Method, s.roles)
 	}
 	// Pass 2: the facts.
 	for _, p := range files {
@@ -156,7 +160,7 @@ func (s *goScanner) collectConsts(path string, f *ast.File) {
 
 // collectPredicateParams finds functions whose parameter becomes a Fact's
 // Predicate (or AddFact's first argument): assertVetCounts(turn, predicate, ...).
-func collectPredicateParams(f *ast.File, out map[string]int, variadicMethod string) {
+func collectPredicateParams(f *ast.File, out map[string]int, variadicMethod string, roles map[*ast.CompositeLit]string) {
 	for _, decl := range f.Decls {
 		fd, ok := decl.(*ast.FuncDecl)
 		if !ok || fd.Body == nil || fd.Type.Params == nil {
@@ -176,9 +180,13 @@ func collectPredicateParams(f *ast.File, out map[string]int, variadicMethod stri
 		ast.Inspect(fd.Body, func(n ast.Node) bool {
 			var pred ast.Expr
 			switch n := n.(type) {
-			case *ast.KeyValueExpr:
-				if k, ok := n.Key.(*ast.Ident); ok && k.Name == "Predicate" {
-					pred = n.Value
+			case *ast.CompositeLit:
+				if roles[n] == "/assert" {
+					for _, el := range n.Elts {
+						if kv, ok := el.(*ast.KeyValueExpr); ok && calleeName(kv.Key) == "Predicate" {
+							pred = kv.Value
+						}
+					}
 				}
 			case *ast.CallExpr:
 				if calleeName(n.Fun) == variadicMethod && len(n.Args) > 0 {
@@ -252,9 +260,6 @@ func (s *goScanner) file(path string, f *ast.File) {
 					sc.bind(name.Name, vs.Values[i])
 				}
 			}
-		}
-		if gd.Tok == token.VAR && gd.Doc != nil {
-			s.embeds(path, gd)
 		}
 	}
 	for _, decl := range f.Decls {
@@ -447,11 +452,8 @@ func sliceElem(t ast.Expr) ast.Expr {
 
 func (s *goScanner) factElement(path string, lit *ast.CompositeLit, sc *scope, regime string) {
 	role := s.roles[lit]
-	if role == "/retract" {
+	if role != "/assert" {
 		return
-	}
-	if role == "" {
-		role = "/literal"
 	}
 	var predExpr, argsExpr ast.Expr
 	for i, el := range lit.Elts {
@@ -514,36 +516,6 @@ func (sc *scope) factRegime(t ast.Expr) (string, bool) {
 
 func (s *goScanner) call(path string, call *ast.CallExpr, sc *scope) {
 	name := calleeName(call.Fun)
-	role := ""
-	switch {
-	case s.prof.hasPrefix(name, s.prof.RetractPrefixes):
-		role = "/retract"
-	case s.prof.hasPrefix(name, s.prof.AssertPrefixes):
-		role = "/assert"
-	case name == "append" && len(call.Args) > 0:
-		// append(retractions, Fact{...}) collects keys to retract, not facts.
-		role = "/assert"
-		if id, ok := call.Args[0].(*ast.Ident); ok && strings.Contains(strings.ToLower(id.Name), "retract") {
-			role = "/retract"
-		}
-	}
-	if role != "" {
-		for _, a := range call.Args {
-			if u, ok := a.(*ast.UnaryExpr); ok && u.Op == token.AND {
-				a = u.X
-			}
-			if lit, ok := a.(*ast.CompositeLit); ok {
-				s.roles[lit] = role
-				if elem := sliceElem(lit.Type); elem != nil {
-					for _, el := range lit.Elts {
-						if inner, ok := el.(*ast.CompositeLit); ok {
-							s.roles[inner] = role
-						}
-					}
-				}
-			}
-		}
-	}
 	switch {
 	case name == s.prof.VariadicAssert.Method && len(call.Args) >= 1:
 		pred, ok := sc.stringValue(call.Args[0])
@@ -576,10 +548,8 @@ func (s *goScanner) call(path string, call *ast.CallExpr, sc *scope) {
 		site.Role = "/helper"
 		s.out.Asserts = append(s.out.Asserts, site)
 	case s.isAssertHelper(name) && len(call.Args) >= 1:
-		// add("working_span", ...), assertToKernel("tool_known_issue", ...):
-		// trusted only for names the .mg side knows.
-		// Their other arguments are not reliably the fact's arguments, so the
-		// site counts as a producer of the name at an unknown arity.
+		// Profile conventions for predicate-name APIs remain useful when
+		// the implementation is external to the scanned module.
 		if pred, ok := sc.stringValue(call.Args[0]); ok && s.declared[pred] {
 			s.markName(call.Args[0])
 			site := s.site(path, call.Pos(), pred, RegimeUnknown)

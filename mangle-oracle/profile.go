@@ -32,7 +32,8 @@ type Profile struct {
 		Method string `json:"method"`
 		Regime string `json:"regime"`
 	} `json:"variadicAssert"`
-	AssertHelperVerbs []string `json:"assertHelperVerbs"`
+	ProgramLoadMethods []string `json:"programLoadMethods"`
+	AssertHelperVerbs  []string `json:"assertHelperVerbs"`
 	// NameTypes and StringTypes are Go types whose values become names or strings.
 	NameTypes   []string `json:"nameTypes"`
 	StringTypes []string `json:"stringTypes"`
@@ -55,6 +56,9 @@ func readProfile(data []byte, from string) (*Profile, error) {
 	var p Profile
 	if err := json.Unmarshal(data, &p); err != nil {
 		return nil, fmt.Errorf("profile %s: %w", from, err)
+	}
+	if p.ProgramLoadMethods == nil {
+		p.ProgramLoadMethods = []string{"LoadSchemaString", "LoadProgramString", "LoadProgram", "LoadString"}
 	}
 	return &p, nil
 }

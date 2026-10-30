@@ -828,9 +828,9 @@ A transform (`|> ...`) operates on the rows produced by a rule body; a fact has 
 
 **Declaration arity mismatch** - declaration, default severity: error
 
-The declared arity differs from every clause that defines the predicate.
+Reserved; no longer emitted. Predicates are identified by name and arity, so a declaration and clauses at another arity describe independent relations. A declared input relation needs no defining clauses.
 
-**How to fix:** Make the Decl and the clauses use the same number of arguments.
+**How to fix:** Keep valid arity overloads. E040 reports body calls whose exact name/arity has no declaration or definition.
 
 ## E047
 

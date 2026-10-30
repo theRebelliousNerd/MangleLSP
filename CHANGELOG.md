@@ -3,6 +3,35 @@
 All notable changes to the Mangle language server (`mangle-lsp`), CLI (`mangle-cli`)
 and VS Code extension (`mangle-vscode`).
 
+## Unreleased
+
+### Review false positives
+
+- Go Fact literals count as assertions only when their values flow to an
+  assertion call. The scan follows aliases, slices, function parameters and
+  return slots, closures and struct fields. Routing envelopes, returned
+  visualization fixtures and retraction keys no longer trigger B004 solely
+  because they share a Fact type with stored relations. Real assertions still
+  receive arity and constant-type checks, including values used for both routing
+  and assertion.
+- Review discovers programs at host load calls, following concatenated embeds,
+  source-returning helpers, embedded-filesystem reads and string builders.
+  Loads on the same engine receiver accumulate into one program, including
+  schema loads in helpers passed that engine. Receiver aliases and return slots
+  retain identity; separate engines and constructor invocations retain separate
+  program contexts. Files follow host call order, including helper loads. An
+  embedded filesystem's unused policies are not added to a schema-only load.
+  A fragment included in a discovered program is no longer judged separately
+  when that program covers its embed group. Profiles can configure
+  `programLoadMethods`.
+- Retire E046's name-only declaration/clause comparison: name and arity identify
+  independent predicates, and an input Decl needs no defining rule. E040 still
+  reports body calls whose exact predicate is undefined. Keep E046 reserved in
+  the diagnostic catalog for consumers of older reports.
+- Add Go flow, program-assembly and engine regression cases, plus validator and
+  CLI review regressions. Existing producer fixtures now explicitly assert
+  their returned facts.
+
 ## 1.3.0 — 2026-10-29
 
 ### A file is diagnosed in its program

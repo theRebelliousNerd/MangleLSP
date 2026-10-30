@@ -2,9 +2,9 @@
  * review: everything an agent needs about the Mangle in a repository, as one
  * machine-readable plan.
  *
- * 1. Programs: the .mg files each //go:embed assembles (from the boundary
- *    scan), analyzed as one program so cross-file checks see what the engine
- *    sees; every other .mg file on its own.
+ * 1. Programs: the .mg files each Go host load assembles (from the boundary
+ *    scan), with unused embed groups as fallback contexts. Analyze programs
+ *    whole; every remaining .mg file is analyzed on its own.
  * 2. The engine's verdict on each assembled program (parse, loose analysis,
  *    strict bounds, evaluation).
  * 3. The boundary findings (Go <-> .mg).
@@ -125,7 +125,7 @@ export function runReview(rootArg: string, options: ReviewOptions = {}): ReviewR
         boundaryNote = 'no go.mod at the root: no Go boundary to scan';
     }
 
-    // Programs: embed groups, then the remaining files one by one.
+    // Programs: host load contexts and unused embed groups, then remaining files.
     const programs: ReviewReport['programs'] = [];
     const grouped = new Set<string>();
     for (const p of boundary?.programs ?? []) {

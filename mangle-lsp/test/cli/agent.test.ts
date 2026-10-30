@@ -81,6 +81,7 @@ describe.skipIf(!goAvailable)('Engine-backed commands', () => {
             'func facts(id string) []Fact {',
             '\treturn []Fact{{Predicate: "score", Args: []any{id, 0.5}}}',
             '}', '',
+            'func load(k interface{ AssertBatch([]Fact) }) { k.AssertBatch(facts("demo")) }', '',
         ].join('\n'));
         writeFileSync(join(repo, 'core', 'schema.mg'), 'Decl score(Id, S) bound [/string, /number].\nDecl ext(X, Y) descr [external(), mode(\'+\', \'-\')] bound [/string, /string].\n');
         writeFileSync(join(repo, 'core', 'policy.mg'), '# policy\nhigh(I) :- score(I, S), S > 3.\nmiss(I) :- score(I, _), !ext(I, "x").\n');
@@ -97,6 +98,7 @@ describe.skipIf(!goAvailable)('Engine-backed commands', () => {
             '\t_, _ = q.Query("shown")',
             '\treturn []Fact{{Predicate: "score", Args: []any{id, 1}}}',
             '}', '',
+            'func load(k interface{ AssertBatch([]Fact); Query(string) ([]Fact, error) }) { k.AssertBatch(facts("demo", k)) }', '',
         ].join('\n'));
         writeFileSync(join(dead, 'core', 'rules.mg'), [
             'Decl score(Id, S) bound [/string, /number].',
@@ -146,6 +148,65 @@ describe.skipIf(!goAvailable)('Engine-backed commands', () => {
         expect(r.plan.find(a => a.code === 'B011')).toBeDefined();
         expect(r.plan.some(a => a.code === 'E075')).toBe(false); // score is declared in schema.mg
         expect(r.plan[0]!.severity).toBe('error'); // most severe first
+    }, 120_000);
+
+    it('review uses the host assembly and distinguishes envelopes from asserted values', () => {
+        const project = mkdtempSync(join(tmpdir(), 'mangle-host-program-'));
+        const write = (path: string, text: string) => {
+            mkdirSync(join(project, path, '..'), { recursive: true });
+            writeFileSync(join(project, path), text);
+        };
+        write('go.mod', 'module example.test/host\n\ngo 1.22\n');
+        write('core/schemas.mg', `
+Decl next_action(Action) bound [/name].
+Decl conversation_turn(Id, Speaker, Text, At) bound [/number, /string, /string, /number].
+Decl task_complexity(Level) bound [/name].
+Decl task_complexity(Task, Level) bound [/string, /name].
+task("demo").
+task_complexity(Task, /high) :- task(Task).
+seed(3).
+`);
+        write('core/params.mg', 'Decl config_param(Key, Value) bound [/name, /number].\nconfig_param(/rounds, 3).\n');
+        write('core/source.go', `package core
+//go:embed schemas.mg
+var schemas string
+//go:embed params.mg
+var params string
+func DefaultCorpusText() (string, string, error) { return schemas, "", nil }
+func GetDefaultContent(path string) (string, error) { return params, nil }
+`);
+        write('context/working.mg', 'working(X) :- seed(X), config_param(/rounds, X).\n');
+        write('context/render.mg', 'render(X) :- working(X), config_param(/rounds, X).\n');
+        write('context/host.go', `package context
+import "example.test/host/core"
+//go:embed working.mg
+var working string
+//go:embed render.mg
+var render string
+type Fact struct { Predicate string; Args []any }
+func RouteAction(f Fact) { _ = f.Args }
+func fixture() []Fact {
+    return []Fact{{Predicate: "conversation_turn", Args: []any{1, "user", "mock"}}}
+}
+func load(e interface{ LoadSchemaString(string) error; Assert(Fact) }) {
+    schemas, _, _ := core.DefaultCorpusText()
+    params, _ := core.GetDefaultContent("params.mg")
+    e.LoadSchemaString(schemas + "\\n" + params + "\\n" + working + "\\n" + render)
+    RouteAction(Fact{Predicate: "next_action", Args: []any{1, "/read", "path"}})
+    _ = fixture()
+    bad := Fact{Predicate: "next_action", Args: []any{1, 2}}
+    e.Assert(bad)
+}
+`);
+        const r = runReview(project, { severity: 'error' });
+        // Before: B004 on both non-asserted values, E046 on the input Decl,
+        // and ENGINE on each fragment. The real assertion error survives.
+        expect(r.plan.map(a => a.code)).toEqual(['B004']);
+        expect(r.plan[0]!.file).toBe('context/host.go');
+        const assembled = r.programs.find(p => p.id.startsWith('load:context/host.go:'))!;
+        expect(assembled.engine?.stage).toBe('ok');
+        expect(assembled.files).toEqual(['core/schemas.mg', 'core/params.mg', 'context/working.mg', 'context/render.mg']);
+        expect(r.programs).toHaveLength(1);
     }, 120_000);
 
     it('review without the boundary scan still assembles nothing and says why', () => {

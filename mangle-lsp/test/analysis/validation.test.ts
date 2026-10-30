@@ -738,21 +738,39 @@ describe('Validation Module', () => {
         });
     });
 
-    describe('E046: Arity mismatch between declaration and clauses', () => {
-        it('should error when clause arity differs from declaration', () => {
+    describe('Predicate identity includes arity (former E046)', () => {
+        it('allows an input Decl alongside a fact at another arity', () => {
             const source = `
                 Decl parent(X, Y).
                 parent(/alice, /bob, /extra).
             `;
-            expectError(source, 'E046');
+            expectNoErrors(source);
         });
 
-        it('should error when rule arity differs from declaration', () => {
+        it('allows an input Decl alongside a rule at another arity', () => {
             const source = `
                 Decl ancestor(X, Y).
+                Decl parent(X, Y).
                 ancestor(X, Y, Z) :- parent(X, Y), parent(Y, Z).
             `;
-            expectError(source, 'E046');
+            expectNoErrors(source);
+        });
+
+        it('allows declared overloads when only the binary relation has rules', () => {
+            expectNoErrors(`
+                Decl task_complexity(Level) bound [/name].
+                Decl task_complexity(Task, Level) bound [/string, /name].
+                task("demo").
+                task_complexity(Task, /high) :- task(Task).
+            `);
+        });
+
+        it('still rejects a body call at an undefined arity', () => {
+            expectError(`
+                Decl task_complexity(Level) bound [/name].
+                task("demo").
+                result(Task) :- task(Task), task_complexity(Task, /high).
+            `, 'E040');
         });
 
         it('should allow matching arities', () => {

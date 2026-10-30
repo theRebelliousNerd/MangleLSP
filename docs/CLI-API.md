@@ -388,7 +388,7 @@ engine version the target project's `go.mod` requires (cached as
 so in `engineNote`. `MANGLE_ORACLE=/path/to/binary` overrides.
 
 ```bash
-# Whole repository: programs assembled from //go:embed, every diagnostic,
+# Whole repository: programs assembled at host load calls, every diagnostic,
 # engine verdicts, Go <-> .mg findings, and one numbered plan with edits
 mangle-cli review --root . [--severity warning] [--no-boundary] [--profile codenerd]
 
@@ -420,6 +420,27 @@ Built-ins: `generic` (any `Fact{Predicate, Args}`, `Assert*`/`AddFact*`/`Query*`
 A project file `.mangle/oracle-profile.json` (same shape as
 `mangle-oracle/profiles/generic.json`) takes precedence; otherwise the profile whose
 `modules` lists the go.mod module is used.
+
+Fact construction alone is not an assertion. The scan follows values through
+aliases, containers, wrappers and return slots to the profile's assertion APIs.
+Extracting fields from a routing envelope to construct a different asserted Fact
+does not make the envelope a store write.
+
+`programLoadMethods` names calls whose string arguments load a program; when
+omitted it defaults to `LoadSchemaString`, `LoadProgramString`, `LoadProgram` and
+`LoadString`. An explicit empty list disables load-call discovery. Discovery
+follows local Go functions (including imports within the module), concatenation,
+string builders and reads from embedded filesystems with statically known paths.
+Loads on the same engine receiver form one cumulative program, including loads
+inside helpers passed that engine. Aliases, individual return slots and receiver
+fields preserve identity; distinct engine values and constructor invocations
+retain separate contexts. Files are deduplicated in host call order, expanding
+helper loads at their call sites. Thus a helper's schema declarations are visible
+to a subsequent policy load on the same engine. Unused embed groups retain their
+previous fallback context. The scan does not execute Go: it unions branches and
+does not model engine resets or repeated loop allocations. Loads with multiple
+possible receivers stay separate; dynamic filenames, unresolved callbacks and
+ambiguous receiver types can remain undiscovered.
 
 ### Output Formats
 

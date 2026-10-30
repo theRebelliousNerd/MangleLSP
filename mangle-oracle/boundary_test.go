@@ -64,7 +64,8 @@ func produce(id string, role string, f float64) []Fact {
 	}
 }
 
-func assertAll(k interface{ Assert(Fact) error }, id string) {
+func assertAll(k interface{ Assert(Fact) error; AssertBatch([]Fact) error }, id string) {
+	_ = k.AssertBatch(produce(id, "admin", 1.5))
 	_ = k.Assert(Fact{Predicate: "user", Args: []any{id, MangleAtom("/dev"), 1}})
 }
 

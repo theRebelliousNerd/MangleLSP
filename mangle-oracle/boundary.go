@@ -38,7 +38,7 @@ type Finding struct {
 	Proof     []string   `json:"proof"`
 }
 
-// ProgramReport is the engine's verdict on one program assembled from //go:embed.
+// ProgramReport is the engine's verdict on one discovered host program.
 type ProgramReport struct {
 	ID      string   `json:"id"`
 	Files   []string `json:"files"`
@@ -275,8 +275,10 @@ func judgePrograms(root string, embeds map[string][]string) []ProgramReport {
 	sort.Strings(ids)
 	out := []ProgramReport{}
 	for _, id := range ids {
-		files := embeds[id]
-		sort.Strings(files)
+		files := append([]string(nil), embeds[id]...)
+		if !strings.HasPrefix(id, "load:") {
+			sort.Strings(files)
+		}
 		abs := make([]string, len(files))
 		for i, f := range files {
 			abs[i] = root + "/" + f

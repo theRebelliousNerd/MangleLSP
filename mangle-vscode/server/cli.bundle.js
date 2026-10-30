@@ -26,9 +26,9 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
-// ../node_modules/ignore/index.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/ignore/index.js
 var require_ignore = __commonJS({
-  "../node_modules/ignore/index.js"(exports2, module2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/ignore/index.js"(exports2, module2) {
     function makeArray(subject) {
       return Array.isArray(subject) ? subject : [subject];
     }
@@ -876,9 +876,9 @@ var require_ignore = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/utils/is.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/utils/is.js
 var require_is = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/utils/is.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/utils/is.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.thenable = exports2.typedArray = exports2.stringArray = exports2.array = exports2.func = exports2.error = exports2.number = exports2.string = exports2.boolean = void 0;
@@ -921,9 +921,9 @@ var require_is = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/is.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/is.js
 var require_is2 = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/is.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/is.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.stringArray = exports2.array = exports2.func = exports2.error = exports2.number = exports2.string = exports2.boolean = void 0;
@@ -958,9 +958,9 @@ var require_is2 = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/messages.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/messages.js
 var require_messages = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/messages.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/messages.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.Message = exports2.NotificationType9 = exports2.NotificationType8 = exports2.NotificationType7 = exports2.NotificationType6 = exports2.NotificationType5 = exports2.NotificationType4 = exports2.NotificationType3 = exports2.NotificationType2 = exports2.NotificationType1 = exports2.NotificationType0 = exports2.NotificationType = exports2.RequestType9 = exports2.RequestType8 = exports2.RequestType7 = exports2.RequestType6 = exports2.RequestType5 = exports2.RequestType4 = exports2.RequestType3 = exports2.RequestType2 = exports2.RequestType1 = exports2.RequestType = exports2.RequestType0 = exports2.AbstractMessageSignature = exports2.ParameterStructures = exports2.ResponseError = exports2.ErrorCodes = void 0;
@@ -1196,9 +1196,9 @@ var require_messages = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/linkedMap.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/linkedMap.js
 var require_linkedMap = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/linkedMap.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/linkedMap.js"(exports2) {
     "use strict";
     var _a;
     Object.defineProperty(exports2, "__esModule", { value: true });
@@ -1566,9 +1566,9 @@ var require_linkedMap = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/disposable.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/disposable.js
 var require_disposable = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/disposable.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/disposable.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.Disposable = void 0;
@@ -1584,9 +1584,9 @@ var require_disposable = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/ral.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/ral.js
 var require_ral = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/ral.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/ral.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     var _ral;
@@ -1609,9 +1609,9 @@ var require_ral = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/events.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/events.js
 var require_events = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/events.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/events.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.Emitter = exports2.Event = void 0;
@@ -1738,9 +1738,9 @@ var require_events = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/cancellation.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/cancellation.js
 var require_cancellation = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/cancellation.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/cancellation.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.CancellationTokenSource = exports2.CancellationToken = void 0;
@@ -1827,9 +1827,9 @@ var require_cancellation = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/sharedArrayCancellation.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/sharedArrayCancellation.js
 var require_sharedArrayCancellation = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/sharedArrayCancellation.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/sharedArrayCancellation.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.SharedArrayReceiverStrategy = exports2.SharedArraySenderStrategy = void 0;
@@ -1905,9 +1905,9 @@ var require_sharedArrayCancellation = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/semaphore.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/semaphore.js
 var require_semaphore = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/semaphore.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/semaphore.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.Semaphore = void 0;
@@ -1973,9 +1973,9 @@ var require_semaphore = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/messageReader.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/messageReader.js
 var require_messageReader = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/messageReader.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/messageReader.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ReadableStreamMessageReader = exports2.AbstractMessageReader = exports2.MessageReader = void 0;
@@ -2162,9 +2162,9 @@ ${JSON.stringify(Object.fromEntries(headers))}`));
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/messageWriter.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/messageWriter.js
 var require_messageWriter = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/messageWriter.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/messageWriter.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.WriteableStreamMessageWriter = exports2.AbstractMessageWriter = exports2.MessageWriter = void 0;
@@ -2274,9 +2274,9 @@ var require_messageWriter = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/messageBuffer.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/messageBuffer.js
 var require_messageBuffer = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/messageBuffer.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/messageBuffer.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.AbstractMessageBuffer = void 0;
@@ -2422,9 +2422,9 @@ ${header}`);
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/connection.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/connection.js
 var require_connection = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/connection.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/connection.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.createMessageConnection = exports2.ConnectionOptions = exports2.MessageStrategy = exports2.CancellationStrategy = exports2.CancellationSenderStrategy = exports2.CancellationReceiverStrategy = exports2.RequestCancellationReceiverStrategy = exports2.IdCancellationReceiverStrategy = exports2.ConnectionStrategy = exports2.ConnectionError = exports2.ConnectionErrors = exports2.LogTraceNotification = exports2.SetTraceNotification = exports2.TraceFormat = exports2.TraceValues = exports2.Trace = exports2.NullLogger = exports2.ProgressType = exports2.ProgressToken = void 0;
@@ -3550,9 +3550,9 @@ ${JSON.stringify(message, null, 4)}`);
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/common/api.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/api.js
 var require_api = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/common/api.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/common/api.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ProgressType = exports2.ProgressToken = exports2.createMessageConnection = exports2.NullLogger = exports2.ConnectionOptions = exports2.ConnectionStrategy = exports2.AbstractMessageBuffer = exports2.WriteableStreamMessageWriter = exports2.AbstractMessageWriter = exports2.MessageWriter = exports2.ReadableStreamMessageReader = exports2.AbstractMessageReader = exports2.MessageReader = exports2.SharedArrayReceiverStrategy = exports2.SharedArraySenderStrategy = exports2.CancellationToken = exports2.CancellationTokenSource = exports2.Emitter = exports2.Event = exports2.Disposable = exports2.LRUCache = exports2.Touch = exports2.LinkedMap = exports2.ParameterStructures = exports2.NotificationType9 = exports2.NotificationType8 = exports2.NotificationType7 = exports2.NotificationType6 = exports2.NotificationType5 = exports2.NotificationType4 = exports2.NotificationType3 = exports2.NotificationType2 = exports2.NotificationType1 = exports2.NotificationType0 = exports2.NotificationType = exports2.ErrorCodes = exports2.ResponseError = exports2.RequestType9 = exports2.RequestType8 = exports2.RequestType7 = exports2.RequestType6 = exports2.RequestType5 = exports2.RequestType4 = exports2.RequestType3 = exports2.RequestType2 = exports2.RequestType1 = exports2.RequestType0 = exports2.RequestType = exports2.Message = exports2.RAL = void 0;
@@ -3752,9 +3752,9 @@ var require_api = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/node/ril.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/node/ril.js
 var require_ril = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/node/ril.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/node/ril.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     var util_1 = require("util");
@@ -3908,9 +3908,9 @@ var require_ril = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/lib/node/main.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/node/main.js
 var require_main = __commonJS({
-  "../node_modules/vscode-jsonrpc/lib/node/main.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/lib/node/main.js"(exports2) {
     "use strict";
     var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m2, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -4168,17 +4168,17 @@ var require_main = __commonJS({
   }
 });
 
-// ../node_modules/vscode-jsonrpc/node.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/node.js
 var require_node = __commonJS({
-  "../node_modules/vscode-jsonrpc/node.js"(exports2, module2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-jsonrpc/node.js"(exports2, module2) {
     "use strict";
     module2.exports = require_main();
   }
 });
 
-// ../node_modules/vscode-languageserver-types/lib/umd/main.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-types/lib/umd/main.js
 var require_main2 = __commonJS({
-  "../node_modules/vscode-languageserver-types/lib/umd/main.js"(exports2, module2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-types/lib/umd/main.js"(exports2, module2) {
     (function(factory) {
       if (typeof module2 === "object" && typeof module2.exports === "object") {
         var v = factory(require, exports2);
@@ -5693,9 +5693,9 @@ var require_main2 = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/messages.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/messages.js
 var require_messages2 = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/messages.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/messages.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ProtocolNotificationType = exports2.ProtocolNotificationType0 = exports2.ProtocolRequestType = exports2.ProtocolRequestType0 = exports2.RegistrationType = exports2.MessageDirection = void 0;
@@ -5739,9 +5739,9 @@ var require_messages2 = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/utils/is.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/utils/is.js
 var require_is3 = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/utils/is.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/utils/is.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.objectLiteral = exports2.typedArray = exports2.stringArray = exports2.array = exports2.func = exports2.error = exports2.number = exports2.string = exports2.boolean = void 0;
@@ -5784,9 +5784,9 @@ var require_is3 = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.implementation.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.implementation.js
 var require_protocol_implementation = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.implementation.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.implementation.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ImplementationRequest = void 0;
@@ -5800,9 +5800,9 @@ var require_protocol_implementation = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.typeDefinition.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.typeDefinition.js
 var require_protocol_typeDefinition = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.typeDefinition.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.typeDefinition.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.TypeDefinitionRequest = void 0;
@@ -5816,9 +5816,9 @@ var require_protocol_typeDefinition = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.workspaceFolder.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.workspaceFolder.js
 var require_protocol_workspaceFolder = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.workspaceFolder.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.workspaceFolder.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.DidChangeWorkspaceFoldersNotification = exports2.WorkspaceFoldersRequest = void 0;
@@ -5838,9 +5838,9 @@ var require_protocol_workspaceFolder = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.configuration.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.configuration.js
 var require_protocol_configuration = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.configuration.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.configuration.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ConfigurationRequest = void 0;
@@ -5854,9 +5854,9 @@ var require_protocol_configuration = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.colorProvider.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.colorProvider.js
 var require_protocol_colorProvider = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.colorProvider.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.colorProvider.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ColorPresentationRequest = exports2.DocumentColorRequest = void 0;
@@ -5876,9 +5876,9 @@ var require_protocol_colorProvider = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.foldingRange.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.foldingRange.js
 var require_protocol_foldingRange = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.foldingRange.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.foldingRange.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.FoldingRangeRefreshRequest = exports2.FoldingRangeRequest = void 0;
@@ -5898,9 +5898,9 @@ var require_protocol_foldingRange = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.declaration.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.declaration.js
 var require_protocol_declaration = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.declaration.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.declaration.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.DeclarationRequest = void 0;
@@ -5914,9 +5914,9 @@ var require_protocol_declaration = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.selectionRange.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.selectionRange.js
 var require_protocol_selectionRange = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.selectionRange.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.selectionRange.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.SelectionRangeRequest = void 0;
@@ -5930,9 +5930,9 @@ var require_protocol_selectionRange = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.progress.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.progress.js
 var require_protocol_progress = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.progress.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.progress.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.WorkDoneProgressCancelNotification = exports2.WorkDoneProgressCreateRequest = exports2.WorkDoneProgress = void 0;
@@ -5961,9 +5961,9 @@ var require_protocol_progress = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.callHierarchy.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.callHierarchy.js
 var require_protocol_callHierarchy = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.callHierarchy.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.callHierarchy.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.CallHierarchyOutgoingCallsRequest = exports2.CallHierarchyIncomingCallsRequest = exports2.CallHierarchyPrepareRequest = void 0;
@@ -5989,9 +5989,9 @@ var require_protocol_callHierarchy = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.semanticTokens.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.semanticTokens.js
 var require_protocol_semanticTokens = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.semanticTokens.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.semanticTokens.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.SemanticTokensRefreshRequest = exports2.SemanticTokensRangeRequest = exports2.SemanticTokensDeltaRequest = exports2.SemanticTokensRequest = exports2.SemanticTokensRegistrationType = exports2.TokenFormat = void 0;
@@ -6035,9 +6035,9 @@ var require_protocol_semanticTokens = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.showDocument.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.showDocument.js
 var require_protocol_showDocument = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.showDocument.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.showDocument.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ShowDocumentRequest = void 0;
@@ -6051,9 +6051,9 @@ var require_protocol_showDocument = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.linkedEditingRange.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.linkedEditingRange.js
 var require_protocol_linkedEditingRange = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.linkedEditingRange.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.linkedEditingRange.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.LinkedEditingRangeRequest = void 0;
@@ -6067,9 +6067,9 @@ var require_protocol_linkedEditingRange = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.fileOperations.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.fileOperations.js
 var require_protocol_fileOperations = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.fileOperations.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.fileOperations.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.WillDeleteFilesRequest = exports2.DidDeleteFilesNotification = exports2.DidRenameFilesNotification = exports2.WillRenameFilesRequest = exports2.DidCreateFilesNotification = exports2.WillCreateFilesRequest = exports2.FileOperationPatternKind = void 0;
@@ -6118,9 +6118,9 @@ var require_protocol_fileOperations = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.moniker.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.moniker.js
 var require_protocol_moniker = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.moniker.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.moniker.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.MonikerRequest = exports2.MonikerKind = exports2.UniquenessLevel = void 0;
@@ -6148,9 +6148,9 @@ var require_protocol_moniker = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.typeHierarchy.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.typeHierarchy.js
 var require_protocol_typeHierarchy = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.typeHierarchy.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.typeHierarchy.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.TypeHierarchySubtypesRequest = exports2.TypeHierarchySupertypesRequest = exports2.TypeHierarchyPrepareRequest = void 0;
@@ -6176,9 +6176,9 @@ var require_protocol_typeHierarchy = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineValue.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineValue.js
 var require_protocol_inlineValue = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineValue.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineValue.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.InlineValueRefreshRequest = exports2.InlineValueRequest = void 0;
@@ -6198,9 +6198,9 @@ var require_protocol_inlineValue = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.inlayHint.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.inlayHint.js
 var require_protocol_inlayHint = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.inlayHint.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.inlayHint.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.InlayHintRefreshRequest = exports2.InlayHintResolveRequest = exports2.InlayHintRequest = void 0;
@@ -6226,9 +6226,9 @@ var require_protocol_inlayHint = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.diagnostic.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.diagnostic.js
 var require_protocol_diagnostic = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.diagnostic.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.diagnostic.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.DiagnosticRefreshRequest = exports2.WorkspaceDiagnosticRequest = exports2.DocumentDiagnosticRequest = exports2.DocumentDiagnosticReportKind = exports2.DiagnosticServerCancellationData = void 0;
@@ -6271,9 +6271,9 @@ var require_protocol_diagnostic = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.notebook.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.notebook.js
 var require_protocol_notebook = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.notebook.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.notebook.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.DidCloseNotebookDocumentNotification = exports2.DidSaveNotebookDocumentNotification = exports2.DidChangeNotebookDocumentNotification = exports2.NotebookCellArrayChange = exports2.DidOpenNotebookDocumentNotification = exports2.NotebookDocumentSyncRegistrationType = exports2.NotebookDocument = exports2.NotebookCell = exports2.ExecutionSummary = exports2.NotebookCellKind = void 0;
@@ -6460,9 +6460,9 @@ var require_protocol_notebook = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineCompletion.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineCompletion.js
 var require_protocol_inlineCompletion = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineCompletion.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.inlineCompletion.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.InlineCompletionRequest = void 0;
@@ -6476,9 +6476,9 @@ var require_protocol_inlineCompletion = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/protocol.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.js
 var require_protocol = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/protocol.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/protocol.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.WorkspaceSymbolRequest = exports2.CodeActionResolveRequest = exports2.CodeActionRequest = exports2.DocumentSymbolRequest = exports2.DocumentHighlightRequest = exports2.ReferencesRequest = exports2.DefinitionRequest = exports2.SignatureHelpRequest = exports2.SignatureHelpTriggerKind = exports2.HoverRequest = exports2.CompletionResolveRequest = exports2.CompletionRequest = exports2.CompletionTriggerKind = exports2.PublishDiagnosticsNotification = exports2.WatchKind = exports2.RelativePattern = exports2.FileChangeType = exports2.DidChangeWatchedFilesNotification = exports2.WillSaveTextDocumentWaitUntilRequest = exports2.WillSaveTextDocumentNotification = exports2.TextDocumentSaveReason = exports2.DidSaveTextDocumentNotification = exports2.DidCloseTextDocumentNotification = exports2.DidChangeTextDocumentNotification = exports2.TextDocumentContentChangeEvent = exports2.DidOpenTextDocumentNotification = exports2.TextDocumentSyncKind = exports2.TelemetryEventNotification = exports2.LogMessageNotification = exports2.ShowMessageRequest = exports2.ShowMessageNotification = exports2.MessageType = exports2.DidChangeConfigurationNotification = exports2.ExitNotification = exports2.ShutdownRequest = exports2.InitializedNotification = exports2.InitializeErrorCodes = exports2.InitializeRequest = exports2.WorkDoneProgressOptions = exports2.TextDocumentRegistrationOptions = exports2.StaticRegistrationOptions = exports2.PositionEncodingKind = exports2.FailureHandlingKind = exports2.ResourceOperationKind = exports2.UnregistrationRequest = exports2.RegistrationRequest = exports2.DocumentSelector = exports2.NotebookCellTextDocumentFilter = exports2.NotebookDocumentFilter = exports2.TextDocumentFilter = void 0;
@@ -7112,9 +7112,9 @@ var require_protocol = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/connection.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/connection.js
 var require_connection2 = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/connection.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/connection.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.createProtocolConnection = void 0;
@@ -7129,9 +7129,9 @@ var require_connection2 = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/common/api.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/api.js
 var require_api2 = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/common/api.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/common/api.js"(exports2) {
     "use strict";
     var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m2, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -7171,9 +7171,9 @@ var require_api2 = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/lib/node/main.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/node/main.js
 var require_main3 = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/lib/node/main.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/lib/node/main.js"(exports2) {
     "use strict";
     var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m2, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -7203,9 +7203,9 @@ var require_main3 = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/utils/uuid.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/utils/uuid.js
 var require_uuid = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/utils/uuid.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/utils/uuid.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.generateUuid = exports2.parse = exports2.isUUID = exports2.v4 = exports2.empty = void 0;
@@ -7294,9 +7294,9 @@ var require_uuid = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/progress.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/progress.js
 var require_progress = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/progress.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/progress.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.attachPartialResult = exports2.ProgressFeature = exports2.attachWorkDone = void 0;
@@ -7452,9 +7452,9 @@ var require_progress = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/configuration.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/configuration.js
 var require_configuration = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/configuration.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/configuration.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ConfigurationFeature = void 0;
@@ -7489,9 +7489,9 @@ var require_configuration = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/workspaceFolder.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/workspaceFolder.js
 var require_workspaceFolder = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/workspaceFolder.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/workspaceFolder.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.WorkspaceFoldersFeature = void 0;
@@ -7535,9 +7535,9 @@ var require_workspaceFolder = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/callHierarchy.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/callHierarchy.js
 var require_callHierarchy = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/callHierarchy.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/callHierarchy.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.CallHierarchyFeature = void 0;
@@ -7571,9 +7571,9 @@ var require_callHierarchy = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/semanticTokens.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/semanticTokens.js
 var require_semanticTokens = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/semanticTokens.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/semanticTokens.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.SemanticTokensBuilder = exports2.SemanticTokensDiff = exports2.SemanticTokensFeature = void 0;
@@ -7719,9 +7719,9 @@ var require_semanticTokens = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/showDocument.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/showDocument.js
 var require_showDocument = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/showDocument.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/showDocument.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ShowDocumentFeature = void 0;
@@ -7737,9 +7737,9 @@ var require_showDocument = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/fileOperations.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/fileOperations.js
 var require_fileOperations = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/fileOperations.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/fileOperations.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.FileOperationsFeature = void 0;
@@ -7782,9 +7782,9 @@ var require_fileOperations = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/linkedEditingRange.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/linkedEditingRange.js
 var require_linkedEditingRange = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/linkedEditingRange.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/linkedEditingRange.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.LinkedEditingRangeFeature = void 0;
@@ -7802,9 +7802,9 @@ var require_linkedEditingRange = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/typeHierarchy.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/typeHierarchy.js
 var require_typeHierarchy = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/typeHierarchy.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/typeHierarchy.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.TypeHierarchyFeature = void 0;
@@ -7838,9 +7838,9 @@ var require_typeHierarchy = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/inlineValue.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/inlineValue.js
 var require_inlineValue = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/inlineValue.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/inlineValue.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.InlineValueFeature = void 0;
@@ -7865,9 +7865,9 @@ var require_inlineValue = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/foldingRange.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/foldingRange.js
 var require_foldingRange = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/foldingRange.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/foldingRange.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.FoldingRangeFeature = void 0;
@@ -7893,9 +7893,9 @@ var require_foldingRange = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/inlayHint.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/inlayHint.js
 var require_inlayHint = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/inlayHint.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/inlayHint.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.InlayHintFeature = void 0;
@@ -7925,9 +7925,9 @@ var require_inlayHint = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/diagnostic.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/diagnostic.js
 var require_diagnostic = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/diagnostic.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/diagnostic.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.DiagnosticFeature = void 0;
@@ -7957,9 +7957,9 @@ var require_diagnostic = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/textDocuments.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/textDocuments.js
 var require_textDocuments = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/textDocuments.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/textDocuments.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.TextDocuments = void 0;
@@ -8122,9 +8122,9 @@ var require_textDocuments = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/notebook.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/notebook.js
 var require_notebook = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/notebook.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/notebook.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.NotebookDocuments = exports2.NotebookSyncFeature = void 0;
@@ -8381,9 +8381,9 @@ var require_notebook = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/moniker.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/moniker.js
 var require_moniker = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/moniker.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/moniker.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.MonikerFeature = void 0;
@@ -8406,9 +8406,9 @@ var require_moniker = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/server.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/server.js
 var require_server = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/server.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/server.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.createConnection = exports2.combineFeatures = exports2.combineNotebooksFeatures = exports2.combineLanguagesFeatures = exports2.combineWorkspaceFeatures = exports2.combineWindowFeatures = exports2.combineClientFeatures = exports2.combineTracerFeatures = exports2.combineTelemetryFeatures = exports2.combineConsoleFeatures = exports2._NotebooksImpl = exports2._LanguagesImpl = exports2.BulkUnregistration = exports2.BulkRegistration = exports2.ErrorMessageTracker = void 0;
@@ -9153,9 +9153,9 @@ var require_server = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/node/files.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/node/files.js
 var require_files = __commonJS({
-  "../node_modules/vscode-languageserver/lib/node/files.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/node/files.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.resolveModulePath = exports2.FileSystem = exports2.resolveGlobalYarnPath = exports2.resolveGlobalNodePath = exports2.resolve = exports2.uriToFilePath = void 0;
@@ -9384,17 +9384,17 @@ var require_files = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver-protocol/node.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/node.js
 var require_node2 = __commonJS({
-  "../node_modules/vscode-languageserver-protocol/node.js"(exports2, module2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-protocol/node.js"(exports2, module2) {
     "use strict";
     module2.exports = require_main3();
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/inlineCompletion.proposed.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/inlineCompletion.proposed.js
 var require_inlineCompletion_proposed = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/inlineCompletion.proposed.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/inlineCompletion.proposed.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.InlineCompletionFeature = void 0;
@@ -9416,9 +9416,9 @@ var require_inlineCompletion_proposed = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/common/api.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/api.js
 var require_api3 = __commonJS({
-  "../node_modules/vscode-languageserver/lib/common/api.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/common/api.js"(exports2) {
     "use strict";
     var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m2, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -9463,9 +9463,9 @@ var require_api3 = __commonJS({
   }
 });
 
-// ../node_modules/vscode-languageserver/lib/node/main.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/node/main.js
 var require_main4 = __commonJS({
-  "../node_modules/vscode-languageserver/lib/node/main.js"(exports2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/lib/node/main.js"(exports2) {
     "use strict";
     var __createBinding = exports2 && exports2.__createBinding || (Object.create ? (function(o, m2, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -9718,9 +9718,9 @@ ${stack}`);
   }
 });
 
-// ../node_modules/vscode-languageserver/node.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/node.js
 var require_node3 = __commonJS({
-  "../node_modules/vscode-languageserver/node.js"(exports2, module2) {
+  "../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver/node.js"(exports2, module2) {
     "use strict";
     module2.exports = require_main4();
   }
@@ -10029,7 +10029,7 @@ function temporalOperatorToString(op) {
   return symbol;
 }
 
-// ../node_modules/antlr4ng/dist/index.mjs
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/antlr4ng/dist/index.mjs
 var __defProp2 = Object.defineProperty;
 var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
 var IntStream;
@@ -41550,8 +41550,8 @@ var entries = [
     title: "Declaration arity mismatch",
     category: "declaration",
     severity: "error",
-    explanation: "The declared arity differs from every clause that defines the predicate.",
-    fix: "Make the Decl and the clauses use the same number of arguments."
+    explanation: "Reserved; no longer emitted. Predicates are identified by name and arity, so a declaration and clauses at another arity describe independent relations. A declared input relation needs no defining clauses.",
+    fix: "Keep valid arity overloads. E040 reports body calls whose exact name/arity has no declaration or definition."
   },
   {
     code: "E051",
@@ -43213,7 +43213,6 @@ function validate(input) {
       }
     }
   }
-  validateArityConsistency(unit, errors);
   checkClauseLints(unit, errors);
   checkAdvice(unit, errors);
   checkBounds(unit, declaredPredicates, errors);
@@ -44621,30 +44620,6 @@ function collectPremiseVariables(premise, vars) {
       }
       collectTermVariables(premise, vars);
       break;
-  }
-}
-function validateArityConsistency(unit, errors) {
-  const predicateArities = /* @__PURE__ */ new Map();
-  for (const clause of unit.clauses) {
-    const name = clause.head.predicate.symbol;
-    const arity = clause.head.predicate.arity;
-    if (!predicateArities.has(name)) {
-      predicateArities.set(name, /* @__PURE__ */ new Set());
-    }
-    predicateArities.get(name).add(arity);
-  }
-  for (const decl of unit.decls) {
-    const name = decl.declaredAtom.predicate.symbol;
-    const arity = decl.declaredAtom.predicate.arity;
-    const arities = predicateArities.get(name);
-    if (arities && !arities.has(arity)) {
-      errors.push({
-        code: "E046",
-        message: `Declaration arity ${arity} doesn't match clause arities: ${[...arities].join(", ")}`,
-        range: decl.range,
-        severity: "error"
-      });
-    }
   }
 }
 
@@ -47004,7 +46979,7 @@ function builtinPredicateDocs(pred2) {
   return { kind: import_node4.MarkupKind.Markdown, value: parts.join("\n\n") };
 }
 
-// ../node_modules/vscode-languageserver-textdocument/lib/esm/main.js
+// ../../../../../../../home/rebelliousnerd/codeProjects/MangleLSP/node_modules/vscode-languageserver-textdocument/lib/esm/main.js
 var FullTextDocument = class _FullTextDocument {
   constructor(uri, languageId, version, content) {
     this._uri = uri;
